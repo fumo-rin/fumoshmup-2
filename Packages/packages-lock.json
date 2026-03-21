@@ -23,6 +23,12 @@
         "com.unity.ugui": "1.0.0"
       }
     },
+    "com.assetstore.alfish.kraster-importer": {
+      "version": "file:com.assetstore.alfish.kraster-importer",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.fumorin.tools": {
       "version": "file:E:/Github/Fumorin",
       "depth": 0,

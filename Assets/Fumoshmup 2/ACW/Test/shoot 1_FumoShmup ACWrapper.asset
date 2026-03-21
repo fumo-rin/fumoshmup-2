@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56a2e8f152cdd254ea1b3f5896d1546e, type: 3}
+  m_Name: shoot 1_FumoShmup ACWrapper
+  m_EditorClassIdentifier: 
+  SoundName: shoot 1_FumoShmup ACWrapper
+  soundVolume: 0.7
+  audioMixerOverride: {fileID: -1549346045928506887, guid: 2d90163c4095a0a4283cc9766c8294e4, type: 2}
+  <soundClips>k__BackingField:
+  - clip: {fileID: 8300000, guid: e6957584a6d1e314cae836ef9c12f137, type: 3}
+    PitchVariancePercent: 5
+    PitchOrigin: 3.37
+    Volume: 0.294
+    Muted: 0
+  - clip: {fileID: 8300000, guid: e6957584a6d1e314cae836ef9c12f137, type: 3}
+    PitchVariancePercent: 5
+    PitchOrigin: 0.8
+    Volume: 0.091
+    Muted: 0
+  - clip: {fileID: 8300000, guid: e6957584a6d1e314cae836ef9c12f137, type: 3}
+    PitchVariancePercent: 5
+    PitchOrigin: 1.38
+    Volume: 0.266
+    Muted: 0
+  <singleChannel>k__BackingField: 1
+  <singleRepeatLockoutTime>k__BackingField: 0.02
+  <Is3D>k__BackingField: 1

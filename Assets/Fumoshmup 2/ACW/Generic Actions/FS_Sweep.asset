@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56a2e8f152cdd254ea1b3f5896d1546e, type: 3}
+  m_Name: FS_Sweep
+  m_EditorClassIdentifier: rinCore::RinCore.ACWrapper
+  SoundName: Sweep
+  soundVolume: 1
+  audioMixerOverride: {fileID: -1549346045928506887, guid: 2d90163c4095a0a4283cc9766c8294e4, type: 2}
+  <soundClips>k__BackingField:
+  - clip: {fileID: 8300000, guid: 2790318f3fcf86b40adadb459f6f7af2, type: 3}
+    PitchVariancePercent: 16.7
+    PitchOrigin: 0.38
+    Volume: 1
+    Muted: 0
+  - clip: {fileID: 8300000, guid: 9c87854e8c57b63478dfce5a4d1ab854, type: 3}
+    PitchVariancePercent: 15
+    PitchOrigin: 3.03
+    Volume: 1
+    Muted: 0
+  - clip: {fileID: 8300000, guid: e777f11669564d748afec8130a516656, type: 3}
+    PitchVariancePercent: 15
+    PitchOrigin: 0.74
+    Volume: 1
+    Muted: 0
+  - clip: {fileID: 8300000, guid: 4b2f1c78f5df14e4fbefcd6b47bca22e, type: 3}
+    PitchVariancePercent: 15
+    PitchOrigin: 2.06
+    Volume: 1
+    Muted: 0
+  <singleChannel>k__BackingField: 1
+  <singleRepeatLockoutTime>k__BackingField: 0.01
+  <Is3D>k__BackingField: 1

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d95ebabf004c804abdb2cf6d226a6f1, type: 3}
+  m_Name: Shitty balls
+  m_EditorClassIdentifier: 
+  ColliderShape:
+    rid: 4211194609454809088
+  Size: 0.6
+  SizeSortingMultiplier: 10
+  Color:
+    serializedVersion: 2
+    rgba: 4294967295
+  animationSpeed: 3
+  animationSpreadPercent: 0
+  spin: 0
+  particleSystemPrefab: {fileID: 3217051552466667707, guid: db4d1325f6a1b65449aa8742988e547b, type: 3}
+  SortingLayer: Projectile
+  useFlare: 1
+  FlareColor:
+    serializedVersion: 2
+    rgba: 4294950330
+  references:
+    version: 2
+    RefIds:
+    - rid: 4211194609454809088
+      type: {class: CircleShape, ns: FumoShmup, asm: FumoShmup}
+      data:
+        Radius: 0.1
