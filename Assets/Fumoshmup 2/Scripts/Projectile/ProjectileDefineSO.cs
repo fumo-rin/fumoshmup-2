@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using UnityEditor;
 using UnityEngine.Serialization;
+using System.Collections.Generic;
 
 namespace FumoShmup
 {
@@ -18,6 +19,50 @@ namespace FumoShmup
         public abstract string ShapeName { get; }
         public abstract bool OverlapsPoint(Vector2 point, float radius, Vector2 position, float angleDeg);
         public abstract void DrawGizmo(Vector2 position, float angleDeg, Color color);
+        public abstract IEnumerable<int> GetOccupiedPixels(Vector2 position, float angleDeg);
+        #region Helper Rect Finder
+        protected IEnumerable<int> GetPixelsInRotatedRect(Vector2 position, float angleDeg, Vector2 halfSize)
+        {
+            Rect space = ShmupWorldspace.WorldSpace;
+            int width = ProjectileRunner.COLLISION_BITMAP_SIZE_XY.Item1;
+            int height = ProjectileRunner.COLLISION_BITMAP_SIZE_XY.Item2;
+
+            Quaternion rot = Quaternion.Euler(0, 0, angleDeg);
+            Vector2 c1 = (Vector2)(rot * new Vector2(-halfSize.x, -halfSize.y)) + position;
+            Vector2 c2 = (Vector2)(rot * new Vector2(halfSize.x, -halfSize.y)) + position;
+            Vector2 c3 = (Vector2)(rot * new Vector2(halfSize.x, halfSize.y)) + position;
+            Vector2 c4 = (Vector2)(rot * new Vector2(-halfSize.x, halfSize.y)) + position;
+
+            float minX = Mathf.Min(c1.x, Mathf.Min(c2.x, Mathf.Min(c3.x, c4.x)));
+            float maxX = Mathf.Max(c1.x, Mathf.Max(c2.x, Mathf.Max(c3.x, c4.x)));
+            float minY = Mathf.Min(c1.y, Mathf.Min(c2.y, Mathf.Min(c3.y, c4.y)));
+            float maxY = Mathf.Max(c1.y, Mathf.Max(c2.y, Mathf.Max(c3.y, c4.y)));
+
+            int xStart = Mathf.Clamp(Mathf.FloorToInt(((minX - space.xMin) / space.width) * width), 0, width - 1);
+            int xEnd = Mathf.Clamp(Mathf.FloorToInt(((maxX - space.xMin) / space.width) * width), 0, width - 1);
+            int yStart = Mathf.Clamp(Mathf.FloorToInt(((minY - space.yMin) / space.height) * height), 0, height - 1);
+            int yEnd = Mathf.Clamp(Mathf.FloorToInt(((maxY - space.yMin) / space.height) * height), 0, height - 1);
+
+            float cellW = space.width / width;
+            float cellH = space.height / height;
+
+            for (int y = yStart; y <= yEnd; y++)
+            {
+                for (int x = xStart; x <= xEnd; x++)
+                {
+                    Vector2 cellCenter = new Vector2(
+                        space.xMin + (x * cellW) + (cellW * 0.5f),
+                        space.yMin + (y * cellH) + (cellH * 0.5f)
+                    );
+
+                    if (OverlapsPoint(cellCenter, 0.1f, position, angleDeg))
+                    {
+                        yield return y * width + x;
+                    }
+                }
+            }
+        }
+        #endregion
     }
 
     #region Drawer
@@ -132,6 +177,10 @@ namespace FumoShmup
             Gizmos.color = color;
             Gizmos.DrawWireSphere(position, Radius);
         }
+        public override IEnumerable<int> GetOccupiedPixels(Vector2 position, float angleDeg)
+        {
+            return GetPixelsInRotatedRect(position, 0, new Vector2(Radius, Radius));
+        }
     }
     #endregion
     #region Box
@@ -170,6 +219,10 @@ namespace FumoShmup
             for (int i = 0; i < 4; i++)
                 Gizmos.DrawLine(corners[i], corners[(i + 1) % 4]);
         }
+        public override IEnumerable<int> GetOccupiedPixels(Vector2 position, float angleDeg)
+        {
+            return GetPixelsInRotatedRect(position, angleDeg, Size * 0.5f);
+        }
     }
     #endregion
     #region Capsule
@@ -190,6 +243,10 @@ namespace FumoShmup
             float distSq = (local - linePoint).sqrMagnitude;
             float combined = Radius + radius;
             return distSq <= combined * combined;
+        }
+        public override IEnumerable<int> GetOccupiedPixels(Vector2 position, float angleDeg)
+        {
+            return GetPixelsInRotatedRect(position, angleDeg, new Vector2(Width * 0.5f, Radius));
         }
 
         public override void DrawGizmo(Vector2 position, float angleDeg, Color color)

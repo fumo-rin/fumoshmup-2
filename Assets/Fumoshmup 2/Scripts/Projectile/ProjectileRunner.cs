@@ -7,7 +7,6 @@ using System.Runtime.CompilerServices;
 
 namespace FumoShmup
 {
-
     #region Slowdown
     public partial class ProjectileRunner
     {
@@ -77,72 +76,173 @@ namespace FumoShmup
     #region Bitmap Collision
     public partial class ProjectileRunner
     {
+        #region Gizmos
+        private void OnDrawGizmos()
+        {
+            Rect space = ShmupWorldspace.WorldSpace;
+            if (space.width <= 0 || space.height <= 0) return;
+
+            int cols = COLLISION_BITMAP_SIZE_XY.Item1;
+            int rows = COLLISION_BITMAP_SIZE_XY.Item2;
+
+            float cellW = space.width / cols;
+            float cellH = space.height / rows;
+
+            Gizmos.color = new Color(0.5f, 0.5f, 0.5f, 0.2f);
+            for (int i = 0; i <= cols; i++)
+            {
+                float x = space.xMin + (i * cellW);
+                Gizmos.DrawLine(new Vector3(x, space.yMin, 0), new Vector3(x, space.yMax, 0));
+            }
+            for (int j = 0; j <= rows; j++)
+            {
+                float y = space.yMin + (j * cellH);
+                Gizmos.DrawLine(new Vector3(space.xMin, y, 0), new Vector3(space.xMax, y, 0));
+            }
+
+            if (collisionLookup == null) return;
+
+            DrawDebugCells(CollisionBitmask.EnemyProjectiles, Color.red);
+            DrawDebugCells(CollisionBitmask.PlayerProjectiles, Color.blue);
+
+            void DrawDebugCells(CollisionBitmask mask, Color color)
+            {
+                if (collisionLookup.TryGetValue(mask, out int[] table))
+                {
+                    Gizmos.color = color;
+                    for (int i = 0; i < table.Length; i++)
+                    {
+                        if (table[i] == Time.frameCount)
+                        {
+                            int y = i / cols;
+                            int x = i % cols;
+
+                            Vector3 pos = new Vector3(
+                                space.xMin + (x * cellW) + (cellW * 0.5f),
+                                space.yMin + (y * cellH) + (cellH * 0.5f),
+                                0
+                            );
+                            Gizmos.DrawCube(pos, new Vector3(cellW * 0.9f, cellH * 0.9f, 0.1f));
+                        }
+                    }
+                }
+            }
+        }
+        #endregion
         public enum CollisionBitmask
         {
-            DefaultProjectile,
-            EnemyProjectile,
-            PlayerProjectile
+            Default,
+            EnemyProjectiles,
+            PlayerProjectiles
         }
 
-        public static readonly (int, int) COLLISION_BITMAP_SIZE = (180, 240);
-        static Dictionary<CollisionBitmask, int[]> collisionLookup;
+        public static readonly (int, int) COLLISION_BITMAP_SIZE_XY = (120, 160);
+        public static int COLLISION_BITMAP_SIZE => COLLISION_BITMAP_SIZE_XY.Item1 * COLLISION_BITMAP_SIZE_XY.Item2;
+
+        static Dictionary<CollisionBitmask, int[]> collisionLookup = new();
 
         [Initialize(-99999)]
         private static void ResetCollisionLookup()
         {
-            collisionLookup = null;
+            collisionLookup = new();
         }
-        private static void WriteCollisionPixel(int pixel, CollisionBitmask mask)
-        {
-            if (collisionLookup == null)
-                collisionLookup = new();
-
-            int size = COLLISION_BITMAP_SIZE.Item1 * COLLISION_BITMAP_SIZE.Item2;
-
-            if (!collisionLookup.TryGetValue(mask, out int[] collisionArray) || collisionArray.Length != size)
-            {
-                collisionArray = new int[size];
-                collisionLookup[mask] = collisionArray;
-            }
-
-            if ((uint)pixel < (uint)size)
-                collisionArray[pixel] = Time.frameCount;
-        }
+        #region Mapping
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static int Vec2ToArrayPixel(Vector2 v)
+        public static int Vec2ToArrayPixel(Vector2 v)
         {
-            Vector2 min = ShmupWorldspace.WorldSpace.min;
-            Vector2 max = ShmupWorldspace.WorldSpace.max;
+            Rect space = ShmupWorldspace.WorldSpace;
+            if (space.width <= 0 || space.height <= 0) return 0;
 
-            int width = COLLISION_BITMAP_SIZE.Item1;
-            int height = COLLISION_BITMAP_SIZE.Item2;
+            int width = COLLISION_BITMAP_SIZE_XY.Item1;
+            int height = COLLISION_BITMAP_SIZE_XY.Item2;
 
-            float scaleX = (width - 1) / (max.x - min.x);
-            float scaleY = (height - 1) / (max.y - min.y);
+            float tx = (v.x - space.xMin) / space.width;
+            float ty = (v.y - space.yMin) / space.height;
 
-            int x = Mathf.FloorToInt((v.x - min.x) * scaleX);
-            int y = Mathf.FloorToInt((v.y - min.y) * scaleY);
+            int x = Mathf.FloorToInt(tx * width);
+            int y = Mathf.FloorToInt(ty * height);
 
             x = Mathf.Clamp(x, 0, width - 1);
             y = Mathf.Clamp(y, 0, height - 1);
 
             return y * width + x;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static IEnumerable<int> GetColliderPixels(Collider2D col)
+        {
+            if (col == null) yield break;
+
+            Bounds b = col.bounds;
+            Rect space = ShmupWorldspace.WorldSpace;
+            int width = COLLISION_BITMAP_SIZE_XY.Item1;
+            int height = COLLISION_BITMAP_SIZE_XY.Item2;
+
+            float txMin = (b.min.x - space.xMin) / space.width;
+            float tyMin = (b.min.y - space.yMin) / space.height;
+            float txMax = (b.max.x - space.xMin) / space.width;
+            float tyMax = (b.max.y - space.yMin) / space.height;
+
+            int xStart = Mathf.Clamp(Mathf.FloorToInt(txMin * width), 0, width - 1);
+            int yStart = Mathf.Clamp(Mathf.FloorToInt(tyMin * height), 0, height - 1);
+            int xEnd = Mathf.Clamp(Mathf.FloorToInt(txMax * width), 0, width - 1);
+            int yEnd = Mathf.Clamp(Mathf.FloorToInt(tyMax * height), 0, height - 1);
+
+            for (int y = yStart; y <= yEnd; y++)
+            {
+                for (int x = xStart; x <= xEnd; x++)
+                {
+                    yield return y * width + x;
+                }
+            }
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void ProjectileWritePixel(Projectile p)
+        {
+            if (p.data == null || p.data.ColliderShape == null) return;
+
+            ProjectileRunner.CollisionBitmask mask = (p.Faction == ProjectileFaction.Player)
+                ? ProjectileRunner.CollisionBitmask.PlayerProjectiles
+                : ProjectileRunner.CollisionBitmask.EnemyProjectiles;
+
+            foreach (int pixelIndex in p.data.ColliderShape.GetOccupiedPixels(p.Position, p.EffectiveAngle + (p.data.spin * (Time.time - p.spawnTime))))
+            {
+                WriteCollisionPixel(pixelIndex, mask);
+            }
+        }
+        #endregion
+        #region Read Write
         private static bool ReadCollisionPixel(int pixel, CollisionBitmask mask)
         {
-            if (collisionLookup == null)
-                return false;
+            if (collisionLookup == null) collisionLookup = new();
 
             if (!collisionLookup.TryGetValue(mask, out int[] table))
-                return false;
+            {
+                table = new int[COLLISION_BITMAP_SIZE];
+                collisionLookup[mask] = table;
+            }
 
-            if ((uint)pixel >= (uint)table.Length)
-                return false;
+            if ((uint)pixel >= (uint)table.Length) return false;
 
             return table[pixel] == Time.frameCount;
         }
+
+        private static void WriteCollisionPixel(int pixel, CollisionBitmask mask)
+        {
+            if (collisionLookup == null) collisionLookup = new();
+
+            if (!collisionLookup.TryGetValue(mask, out int[] collisionArray))
+            {
+                collisionArray = new int[COLLISION_BITMAP_SIZE];
+                collisionLookup[mask] = collisionArray;
+            }
+
+            if ((uint)pixel < (uint)COLLISION_BITMAP_SIZE)
+                collisionArray[pixel] = Time.frameCount;
+        }
+        #endregion
     }
     #endregion
+
     public partial class ProjectileRunner : MonoBehaviour
     {
         public static void Bind(Projectile p)
@@ -152,18 +252,21 @@ namespace FumoShmup
             instance.projectiles.Add(p);
             ProjectileRenderer.AddDefine(p.data);
         }
+
         private void LateUpdate()
         {
             float timescale;
             timescale = GetTargetSlowdown(250);
             TimeSlowHandler.SetSimulatedSlowdownTarget(timescale);
         }
+
         private HashSet<Projectile> grazedProjectiles = new();
         static ProjectileRunner instance;
         public List<Projectile> projectiles = new();
         [SerializeField] ACWrapper grazeSound;
         [SerializeField] ParticleSystem FlareRenderer;
         [SerializeField] ProjectileRenderer projectileRenderer;
+
         public static void Flare(Vector2 position, Vector2 velocity, Color32 color)
         {
             if (instance == null || instance.FlareRenderer == null)
@@ -172,12 +275,15 @@ namespace FumoShmup
             }
             instance.FlareRenderer.EmitSingleCached(position, velocity, 0f, color);
         }
+
         public static int BulletCount => instance == null ? 0 : instance.projectiles.Count;
+
         private void Awake()
         {
             instance = this;
             Application.targetFrameRate = 120;
         }
+
         public enum ProjectileHit
         {
             NoHit,
@@ -185,6 +291,7 @@ namespace FumoShmup
             Hit,
             Iframes
         }
+
         public static void TriggerSweep(float sweepDuration, byte lootChance, bool slowdown, out List<Vector2> sweeps)
         {
             sweeps = new();
@@ -216,57 +323,89 @@ namespace FumoShmup
             }
             ProjectileRenderer.SpawnPointItems(sweeps, lootChance);
         }
+
         public static void Ungraze(Projectile p)
         {
             instance.grazedProjectiles.Remove(p);
         }
+
         [SerializeField] LayerMask clearLayer;
+
         [QFSW.QC.Command("iddqd")]
         static void Invincible(bool state = true)
         {
             FumoSettingsTags.SetBoolTag(FumoSettingsTags.KeysShmup.Invincible, state);
         }
+
         void Update()
         {
-            float dt = Time.deltaTime;
-            int frame = Time.frameCount;
+            void RemoveAndWipe(int index)
+            {
+                Projectile cleared = projectiles.RemoveAndReplaceWithLast(index);
+                if (cleared != null)
+                {
+                    cleared.SetActive(false);
+                    grazedProjectiles.Remove(cleared);
+                    Projectile.Wipe(cleared);
+                }
+            }
 
+            bool TryCollide(Vector2 position, ProjectileFaction faction)
+            {
+                int pixel = Vec2ToArrayPixel(position);
+
+                if (faction == ProjectileFaction.Enemy)
+                {
+                    if (ShmupUnit.PlayerAs(out ShmupPlayer p) && p.IsAlive)
+                    {
+                        if (Vec2ToArrayPixel(p.CurrentPosition) == pixel)
+                            return true;
+                    }
+                }
+                else if (faction == ProjectileFaction.Player)
+                {
+                    foreach (var enemy in FumoUnit.AliveEnemiesList)
+                    {
+                        if (enemy != null && enemy.IsAlive)
+                        {
+                            if (Vec2ToArrayPixel(enemy.CurrentPosition) == pixel)
+                                return true;
+                        }
+                    }
+                }
+                return false;
+            }
+
+            float dt = Time.deltaTime;
+
+            // PASS 1: Projectiles Write to Bitmap
             for (int i = 0; i < projectiles.Count; i++)
             {
                 Projectile proj = projectiles[i];
                 if (proj == null || proj.data == null) continue;
 
-                int pixel = Vec2ToArrayPixel(proj.Position);
-                switch (proj.Faction)
-                {
-                    case ProjectileFaction.Player:
-                        WriteCollisionPixel(pixel, CollisionBitmask.PlayerProjectile);
-                        break;
-                    case ProjectileFaction.Enemy:
-                        WriteCollisionPixel(pixel, CollisionBitmask.EnemyProjectile);
-                        break;
-                    default:
-                        WriteCollisionPixel(pixel, CollisionBitmask.DefaultProjectile);
-                        break;
-                }
+                CollisionBitmask mask = proj.Faction == ProjectileFaction.Player ?
+                    CollisionBitmask.PlayerProjectiles : CollisionBitmask.EnemyProjectiles;
+
+                ProjectileWritePixel(proj);
+                //WriteCollisionPixel(Vec2ToArrayPixel(proj.Position), mask);
             }
 
+            // PASS 2: Projectile Loop
             for (int i = 0; i < projectiles.Count; i++)
             {
                 Projectile proj = projectiles[i];
 
-                // Null/Data Safety
                 if (proj == null || proj.data == null)
                 {
-                    projectiles.RemoveAndReplaceWithLast(i);
-                    Projectile.Wipe(proj);
+                    RemoveAndWipe(i);
                     i--;
                     continue;
                 }
 
                 proj.RunMods();
-                Vector2 nextPosition = proj.Position + (proj.EffectiveVelocity * dt);
-                proj.SetNewPosition(nextPosition);
+                Vector2 nextPos = proj.Position + (proj.EffectiveVelocity * dt);
+                proj.SetNewPosition(nextPos);
 
                 bool shouldRemove = false;
 
@@ -279,19 +418,7 @@ namespace FumoShmup
 
                 if (!shouldRemove)
                 {
-                    int projPixel = Vec2ToArrayPixel(proj.Position);
-                    switch (proj.Faction)
-                    {
-                        case ProjectileFaction.Player:
-                            if (ReadCollisionPixel(projPixel, CollisionBitmask.EnemyProjectile))
-                                shouldRemove = true;
-                            break;
-
-                        case ProjectileFaction.Enemy:
-                            if (ReadCollisionPixel(projPixel, CollisionBitmask.PlayerProjectile))
-                                shouldRemove = true;
-                            break;
-                    }
+                    shouldRemove = TryCollide(nextPos, proj.Faction);
                 }
 
                 if (clearLayer != 0 && !shouldRemove)
@@ -310,17 +437,11 @@ namespace FumoShmup
 
                 if (shouldRemove)
                 {
-                    Projectile cleared = projectiles.RemoveAndReplaceWithLast(i);
-                    if (cleared != null)
-                    {
-                        cleared.SetActive(false);
-                        grazedProjectiles.Remove(cleared);
-                        Projectile.Wipe(cleared);
-                    }
+                    RemoveAndWipe(i);
                     i--;
-                    continue;
                 }
             }
+
             projectileRenderer.RenderProjectiles(projectiles);
         }
     }

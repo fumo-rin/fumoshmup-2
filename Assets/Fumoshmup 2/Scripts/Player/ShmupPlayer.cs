@@ -46,6 +46,8 @@ public class ShmupPlayer : ShmupUnit
     }
     protected override void WhenUpdate()
     {
+        if (GeneralManager.IsPaused)
+            return;
         void MoveLoop()
         {
             Vector2 input = GenericInput.Move;
@@ -68,15 +70,16 @@ public class ShmupPlayer : ShmupUnit
             }
         }
         MoveLoop();
-        ShmupWorldspace.MapToWorldspaceUnclamped(0.5f, 0.75f, out Vector2 space);
-        for (int i = 0; i < 30; i++)
+        ShmupWorldspace.MapToWorldspaceUnclamped(0.5f, 0.5f, out Vector2 space);
+        for (int i = 0; i < 1; i++)
         {
-            if (iteration % 2 == 0)
+            if (iteration % 4 == 0)
             {
                 var input = new Projectile.InputSettings(space, null, Vector2.down, new Projectile.ProjectileDamage(null, 10, 1), ProjectileFaction.Enemy);
                 float offset = -iteration.AsFloat(0.1f) * iteration.AsFloat(0.1f);
+                input.addedForward = 0f;
 
-                new Projectile.ArcSettings(0f + offset, 315f + offset, 45f, 8f + i.AsFloat(0.05f)).Spawn(input, testProjectile, out _);
+                new Projectile.ArcSettings(0f + offset, 315f + offset, 45f, 10f + i.AsFloat(0.05f)).Spawn(input, testProjectile, out _);
             }
         }
         iteration += 1;
