@@ -1,8 +1,10 @@
 using rinCore;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class ShmupUnit : FumoUnit
+public abstract class ShmupUnit : FumoUnit
 {
+    public abstract IEnumerable<Collider2D> Hitboxes { get; }
     protected override bool CalculateAlive()
     {
         return gameObject != null && gameObject.activeInHierarchy;

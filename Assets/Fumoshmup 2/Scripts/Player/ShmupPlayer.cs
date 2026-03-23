@@ -6,7 +6,19 @@ using UnityEngine.InputSystem;
 
 public class ShmupPlayer : ShmupUnit
 {
-    [SerializeField] Transform centerObject;
+    [SerializeField] List<Collider2D> playerHitboxes = new List<Collider2D>();
+    public override IEnumerable<Collider2D> Hitboxes
+    {
+        get
+        {
+            foreach (var item in playerHitboxes)
+            {
+                yield return item;
+            }
+        }
+    }
+    [SerializeField]
+    Transform centerObject;
     public override Vector2 CurrentPosition => centerObject == null ? base.CurrentPosition : centerObject.position;
     private bool manualAliveFlag => true;
     IShmupMover[] playerMovers;
@@ -20,6 +32,7 @@ public class ShmupPlayer : ShmupUnit
             return false;
         }
     }
+
     protected override bool CalculateAlive()
     {
         return manualAliveFlag;
@@ -71,7 +84,7 @@ public class ShmupPlayer : ShmupUnit
         }
         MoveLoop();
         ShmupWorldspace.MapToWorldspaceUnclamped(0.5f, 0.5f, out Vector2 space);
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 10; i++)
         {
             if (iteration % 4 == 0)
             {
