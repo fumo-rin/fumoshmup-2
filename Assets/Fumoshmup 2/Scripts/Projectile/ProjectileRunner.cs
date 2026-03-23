@@ -136,7 +136,7 @@ namespace FumoShmup
             PlayerProjectiles
         }
 
-        public static readonly (int, int) COLLISION_BITMAP_SIZE_XY = (120, 160);
+        public static readonly (int, int) COLLISION_BITMAP_SIZE_XY = (30, 40);
         public static int COLLISION_BITMAP_SIZE => COLLISION_BITMAP_SIZE_XY.Item1 * COLLISION_BITMAP_SIZE_XY.Item2;
 
         static Dictionary<CollisionBitmask, int[]> collisionLookup = new();
@@ -193,20 +193,6 @@ namespace FumoShmup
                 {
                     yield return y * width + x;
                 }
-            }
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void ProjectileWritePixel(Projectile p)
-        {
-            if (p.data == null || p.data.ColliderShape == null) return;
-
-            ProjectileRunner.CollisionBitmask mask = (p.Faction == ProjectileFaction.Player)
-                ? ProjectileRunner.CollisionBitmask.PlayerProjectiles
-                : ProjectileRunner.CollisionBitmask.EnemyProjectiles;
-
-            foreach (int pixelIndex in p.data.ColliderShape.GetOccupiedPixels(p.Position, p.EffectiveAngle + (p.data.spin * (Time.time - p.spawnTime))))
-            {
-                WriteCollisionPixel(pixelIndex, mask);
             }
         }
         #endregion
@@ -349,49 +335,94 @@ namespace FumoShmup
                     Projectile.Wipe(cleared);
                 }
             }
-
-            bool TryCollide(Vector2 position, ProjectileFaction faction)
+            void WriteUnits(CollisionBitmask layer, params FumoUnit[] units)
             {
-                int pixel = Vec2ToArrayPixel(position);
-
-                if (faction == ProjectileFaction.Enemy)
+                foreach (FumoUnit unit in units)
                 {
-                    if (ShmupUnit.PlayerAs(out ShmupPlayer p) && p.IsAlive)
+                    foreach (var hitbox in unit.Hitboxes)
                     {
-                        if (Vec2ToArrayPixel(p.CurrentPosition) == pixel)
-                            return true;
-                    }
-                }
-                else if (faction == ProjectileFaction.Player)
-                {
-                    foreach (var enemy in FumoUnit.AliveEnemiesList)
-                    {
-                        if (enemy != null && enemy.IsAlive)
+                        foreach (var pixel in GetColliderPixels(hitbox))
                         {
-                            if (Vec2ToArrayPixel(enemy.CurrentPosition) == pixel)
-                                return true;
+                            WriteCollisionPixel(pixel, layer);
                         }
                     }
                 }
-                return false;
+            }
+            bool TryCollide(Projectile p, out Collider2D hit)
+            {
+                void TryCollideWithUnits(out Collider2D hit)
+                {
+                    hit = null;
+                    switch (p.Faction)
+                    {
+                        case ProjectileFaction.None:
+                            break;
+                        case ProjectileFaction.Enemy:
+                            if (ShmupPlayer.PlayerAs(out ShmupPlayer player))
+                            {
+                                if (p.CollidesWith(player, out hit))
+                                    break;
+                            }
+                            break;
+                        case ProjectileFaction.Player:
+                            foreach (var item in FumoUnit.AliveEnemiesList)
+                            {
+                                if (p.CollidesWith(item, out hit))
+                                    break;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                hit = null;
+                CollisionBitmask mask = CollisionBitmask.EnemyProjectiles;
+                switch (p.Faction)
+                {
+                    case ProjectileFaction.None:
+                        break;
+                    case ProjectileFaction.Enemy:
+                        break;
+                    case ProjectileFaction.Player:
+                        mask = CollisionBitmask.PlayerProjectiles;
+                        break;
+                    default:
+                        break;
+                }
+                int vectorPosition = Vec2ToArrayPixel(p.Position);
+                if (ReadCollisionPixel(vectorPosition, mask))
+                {
+                    TryCollideWithUnits(out hit);
+                }
+                else
+                {
+                    int scanSize = 1;
+                    for (int i = -scanSize; i <= scanSize; i++)
+                    {
+                        int biggerPos = vectorPosition + i;
+                        for (int j = -scanSize; j <= scanSize; j++)
+                        {
+                            biggerPos += j * COLLISION_BITMAP_SIZE_XY.Item2;
+                            if (biggerPos >= 0 && biggerPos < COLLISION_BITMAP_SIZE)
+                            {
+                                if (ReadCollisionPixel(biggerPos, mask))
+                                {
+                                    TryCollideWithUnits(out hit);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return hit != null;
             }
 
             float dt = Time.deltaTime;
+            if (ShmupPlayer.PlayerAs(out ShmupPlayer hitPlayer))
+                WriteUnits(CollisionBitmask.EnemyProjectiles, new ShmupPlayer[1] { hitPlayer });
+            WriteUnits(CollisionBitmask.PlayerProjectiles, FumoUnit.AliveEnemiesList.ToArray());
 
-            // PASS 1: Projectiles Write to Bitmap
-            for (int i = 0; i < projectiles.Count; i++)
-            {
-                Projectile proj = projectiles[i];
-                if (proj == null || proj.data == null) continue;
-
-                CollisionBitmask mask = proj.Faction == ProjectileFaction.Player ?
-                    CollisionBitmask.PlayerProjectiles : CollisionBitmask.EnemyProjectiles;
-
-                ProjectileWritePixel(proj);
-                //WriteCollisionPixel(Vec2ToArrayPixel(proj.Position), mask);
-            }
-
-            // PASS 2: Projectile Loop
             for (int i = 0; i < projectiles.Count; i++)
             {
                 Projectile proj = projectiles[i];
@@ -416,9 +447,9 @@ namespace FumoShmup
                     shouldRemove = true;
                 }
 
-                if (!shouldRemove)
+                if (!shouldRemove && TryCollide(proj, out Collider2D resultHitbox))
                 {
-                    shouldRemove = TryCollide(nextPos, proj.Faction);
+                    shouldRemove = true;
                 }
 
                 if (clearLayer != 0 && !shouldRemove)

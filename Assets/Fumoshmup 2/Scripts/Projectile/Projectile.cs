@@ -569,6 +569,24 @@ namespace FumoShmup
         }
     }
     #endregion
+    #region Collision Checks
+    public partial class Projectile
+    {
+        public bool CollidesWith(FumoUnit other, out Collider2D collisionHitbox)
+        {
+            collisionHitbox = null;
+            foreach (var item in other.Hitboxes)
+            {
+                Vector2 closest = item.ClosestPoint(Position);
+                if (data.ColliderShape.OverlapsPoint(closest, data.HalfLength, Position, (Time.time - spawnTime) * data.spin + EffectiveAngle))
+                {
+                    collisionHitbox = item;
+                }
+            }
+            return collisionHitbox != null;
+        }
+    }
+    #endregion
     public partial class Projectile
     {
         public struct ProjectileDamage

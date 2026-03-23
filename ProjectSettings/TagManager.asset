@@ -41,6 +41,21 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Loot
+    uniqueID: 3164713073
+    locked: 0
+  - name: Effects
+    uniqueID: 2800787963
+    locked: 0
+  - name: Player Projectiles
+    uniqueID: 2895793171
+    locked: 0
+  - name: Projectiles
+    uniqueID: 3975774537
+    locked: 0
+  - name: Flare
+    uniqueID: 1277946055
+    locked: 0
   m_RenderingLayers:
   - Default
   - Light Layer 1
