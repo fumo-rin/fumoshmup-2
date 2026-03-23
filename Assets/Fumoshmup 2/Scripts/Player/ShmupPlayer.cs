@@ -33,6 +33,7 @@ public partial class ShmupPlayer : IHit
         {
             return false;
         }
+        return false;
         currentHit = StageRoutines.StartRoutine("Player Hit", CO_Hit(), true);
         IEnumerator CO_Hit()
         {
@@ -169,12 +170,12 @@ public partial class ShmupPlayer : ShmupUnit
         float offset = -iteration.AsFloat(0.1f) * iteration.AsFloat(0.1f);
         input.addedForward = 0.5f;
 
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 20; i++)
         {
-            if (iteration % 4 == 0)
+            if (iteration % 2 == 0)
             {
 
-                new Projectile.ArcSettings(0f + offset, 315f + offset, 45f, 10f + i.AsFloat(0.5f)).Spawn(input, testProjectile, out _);
+                new Projectile.ArcSettings(0f + offset, 315f + offset, 45f, 10f + i.AsFloat(0.05f)).Spawn(input, testProjectile, out _);
             }
         }
         iteration += 1;
