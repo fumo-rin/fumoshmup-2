@@ -348,9 +348,9 @@ namespace FumoShmup
                     }
                 }
             }
-            bool TryCollide(Projectile p, out Collider2D hit)
+            bool TryCollide(Projectile p, out Projectile.HitPacket hit)
             {
-                void TryCollideWithUnits(out Collider2D hit)
+                void TryCollideWithUnits(out Projectile.HitPacket hit)
                 {
                     hit = null;
                     switch (p.Faction)
@@ -446,9 +446,21 @@ namespace FumoShmup
                     proj.TriggerOffscreenEvent();
                     shouldRemove = true;
                 }
-
-                if (!shouldRemove && TryCollide(proj, out Collider2D resultHitbox))
+                if (ShmupPlayer.PlayerAs(out ShmupPlayer grazePlayer) && !grazedProjectiles.Contains(proj))
                 {
+                    if (proj.Position.InBoxDistance(grazePlayer.CurrentPosition, 1f))
+                    {
+                        grazedProjectiles.Add(proj);
+                        grazeSound.Play(proj.Position);
+                    }
+                }
+
+                if (!shouldRemove && TryCollide(proj, out Projectile.HitPacket resultPacket))
+                {
+                    if (resultPacket.hitUnit.TryGetComponent(out IHit hit))
+                    {
+                        hit.Sendhit(new(resultPacket.hitCollider.ClosestPoint(proj.Position), proj.damageInfo), out float damageDealt);
+                    }
                     shouldRemove = true;
                 }
 

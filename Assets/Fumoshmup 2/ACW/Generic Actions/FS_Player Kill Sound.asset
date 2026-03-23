@@ -28,8 +28,8 @@ MonoBehaviour:
     Muted: 0
   - clip: {fileID: 8300000, guid: b1d8aa514836f454e915b91a7ddbe29e, type: 3}
     PitchVariancePercent: 4.5
-    PitchOrigin: 0.34
-    Volume: 0.135
+    PitchOrigin: 0.57
+    Volume: 0.062
     Muted: 0
   - clip: {fileID: 8300000, guid: cea981e6689ba684288f38263942bef7, type: 3}
     PitchVariancePercent: 4.5

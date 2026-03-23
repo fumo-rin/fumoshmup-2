@@ -1,0 +1,3 @@
+Use files from "Small_Animal" folder.
+
+The only sound featured in the Skunk folder is the walking sound to sync with the Minifantasy sprites animation.
