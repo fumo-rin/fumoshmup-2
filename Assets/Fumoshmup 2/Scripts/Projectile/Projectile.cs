@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using System.Linq;
 
-namespace FumoShmup
+namespace FumoShmup2
 {
     public enum ProjectileFaction
     {

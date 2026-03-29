@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEngine.Serialization;
 using System.Collections.Generic;
 
-namespace FumoShmup
+namespace FumoShmup2
 {
 
     #region Collider Shapes

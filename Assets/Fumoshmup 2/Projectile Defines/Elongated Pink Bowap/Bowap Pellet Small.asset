@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bowap Pellet Small
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup.ProjectileDefineSO
   ColliderShape:
-    rid: 172798679179067661
+    rid: 172798803861569638
   Size: 0.5
   SizeSortingMultiplier: 1
   Color:
@@ -31,7 +31,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 172798679179067661
-      type: {class: CircleShape, ns: FumoShmup, asm: Fumoshmup2}
+    - rid: 172798803861569638
+      type: {class: CircleShape, ns: FumoShmup2, asm: Fumoshmup2}
       data:
         Radius: 0.05

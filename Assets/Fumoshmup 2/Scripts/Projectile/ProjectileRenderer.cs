@@ -5,7 +5,7 @@ using System.Collections;
 using rinCore;
 using UnityEngine.SceneManagement;
 
-namespace FumoShmup
+namespace FumoShmup2
 {
     #region Hit Particle
     public partial class ProjectileRenderer

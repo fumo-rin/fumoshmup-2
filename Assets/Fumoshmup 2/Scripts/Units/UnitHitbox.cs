@@ -1,4 +1,4 @@
-using FumoShmup;
+using FumoShmup2;
 using UnityEngine;
 
 public enum ShmupFaction

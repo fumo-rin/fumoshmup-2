@@ -1,4 +1,4 @@
-using FumoShmup;
+using FumoShmup2;
 using rinCore;
 using System.Collections;
 using System.Collections.Generic;
@@ -33,46 +33,59 @@ public partial class ShmupPlayer : IHit
         {
             return false;
         }
-        return false;
         currentHit = StageRoutines.StartRoutine("Player Hit", CO_Hit(), true);
         IEnumerator CO_Hit()
         {
-            hitData.HitVolume.weight = 1f;
-            bool cancelable = true;
-            if (cancelable)
+            bool hasSession = GameSession.CurrentAs(out ShmupSession session);
+            IEnumerator KillAndRespawn()
             {
-                hitData.HitSound.Play(CurrentPosition);
-                bool cancelled = false;
-                float endUnscaled = 0.2f;
-                while (endUnscaled > 0f && !cancelled)//cancelling window
+                manualAliveFlag = false;
+                gameObject.SetActive(false);
+                hitData.DeathSound.Play(CurrentPosition);
+                yield return 1f.WaitForSeconds();
+                Vector2 v = new Vector2Shmup(0.5f, 0.2f).Vector2Now;
+                manualAliveFlag = true;
+                transform.position = v;
+                gameObject.SetActive(true);
+                session.SetResource(ShmupSession.keys.CurrentBombs, session.GetResource(ShmupSession.keys.StartingBombs));
+            }
+            bool cancelable = hasSession && session.GetResource(ShmupSession.keys.CurrentBombs) > 0;
+            if (!cancelable)
+            {
+                yield return KillAndRespawn();
+                currentHit = null;
+                yield break;
+            }
+            hitData.HitVolume.weight = 1f;
+            hitData.HitSound.Play(CurrentPosition);
+            bool cancelled = false;
+            float endUnscaled = 0.2f;
+            while (endUnscaled > 0f && !cancelled)//cancelling window
+            {
+                TimeSlowHandler.AddSlow("HitCancel", 0.05f, 0.2f, 0f);
+                if (GeneralManager.IsPaused)
                 {
-                    TimeSlowHandler.AddSlow("HitCancel", 0.05f, 0.2f, 0f);
-                    if (GeneralManager.IsPaused)
-                    {
-                        yield return null;
-                        continue;
-                    }
-                    if (ShmupInput.BombJustPressed)
-                        cancelled = true;
-
-                    endUnscaled -= Time.unscaledDeltaTime;
                     yield return null;
+                    continue;
                 }
-                TimeSlowHandler.RemoveSlow("HitCancel");
-                hitData.HitVolume.weight = 0f;
-                if (!cancelled)//no cancel, death
+                if (ShmupInput.BombJustPressed)
                 {
-                    manualAliveFlag = false;
-                    gameObject.SetActive(false);
-                    hitData.DeathSound.Play(CurrentPosition);
-                    yield return 1f.WaitForSeconds();
-                    manualAliveFlag = true;
-                    gameObject.SetActive(true);
+                    cancelled = true;
+                    session.ChangeResource(ShmupSession.keys.CurrentBombs, -1);
                 }
-                else
-                {
 
-                }
+                endUnscaled -= Time.unscaledDeltaTime;
+                yield return null;
+            }
+            TimeSlowHandler.RemoveSlow("HitCancel");
+            hitData.HitVolume.weight = 0f;
+            if (!cancelled)//no cancel, death
+            {
+                yield return KillAndRespawn();
+            }
+            else
+            {
+
             }
             currentHit = null;
         }
@@ -97,7 +110,6 @@ public partial class ShmupPlayer : ShmupUnit
     Transform centerObject;
     public override Vector2 CurrentPosition => centerObject == null ? base.CurrentPosition : centerObject.position;
     private bool manualAliveFlag = true;
-    IShmupMover[] playerMovers;
     [SerializeField] InputActionReference focusKey;
     [SerializeField] ProjectileDefineSO testProjectile;
     int iteration = 0;
@@ -116,11 +128,6 @@ public partial class ShmupPlayer : ShmupUnit
     protected override void WhenAwake()
     {
         base.WhenAwake();
-        playerMovers = new IShmupMover[2]
-        {
-            new PlayerShmupMover(11f),
-            new PlayerShmupMover(6f)
-        };
         Player = this;
     }
     protected override void WhenDestroy()
@@ -143,7 +150,7 @@ public partial class ShmupPlayer : ShmupUnit
             IShmupMover.MoveSuccess moveResult = IShmupMover.MoveSuccess.Default;
             if (focusKey.IsPressed())
             {
-                if (playerMovers[1] is IShmupMover mover)
+                if (shmupMovers[1] is IShmupMover mover)
                 {
                     mover.Move(this, input, out moveResult);
                     return;
@@ -151,7 +158,7 @@ public partial class ShmupPlayer : ShmupUnit
             }
             else
             {
-                if (playerMovers[0] is IShmupMover mover)
+                if (shmupMovers[0] is IShmupMover mover)
                 {
                     mover.Move(this, input, out moveResult);
                     return;
@@ -174,7 +181,6 @@ public partial class ShmupPlayer : ShmupUnit
         {
             if (iteration % 2 == 0)
             {
-
                 new Projectile.ArcSettings(0f + offset, 315f + offset, 45f, 10f + i.AsFloat(0.05f)).Spawn(input, testProjectile, out _);
             }
         }

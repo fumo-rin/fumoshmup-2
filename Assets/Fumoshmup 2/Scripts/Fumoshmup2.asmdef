@@ -1,6 +1,6 @@
 {
     "name": "Fumoshmup2",
-    "rootNamespace": "",
+    "rootNamespace": "FumoShmup2",
     "references": [
         "GUID:86243866967d1c4448a04efe09901936",
         "GUID:75469ad4d38634e559750d17036d5f7c",

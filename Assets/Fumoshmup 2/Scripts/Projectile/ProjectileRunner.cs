@@ -5,7 +5,7 @@ using TMPro;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace FumoShmup
+namespace FumoShmup2
 {
     #region Slowdown
     public partial class ProjectileRunner

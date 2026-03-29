@@ -1,7 +1,7 @@
 using UnityEngine;
 using rinCore;
 
-namespace FumoShmup
+namespace FumoShmup2
 {
     public struct Vector2Shmup
     {

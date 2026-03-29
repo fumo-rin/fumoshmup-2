@@ -2,7 +2,7 @@ using rinCore;
 using TMPro;
 using UnityEngine;
 
-namespace FumoShmup
+namespace FumoShmup2
 {
     [RequireComponent(typeof(TMP_Text))]
     public class ProjectileCountDisplay : MonoBehaviour
