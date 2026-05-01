@@ -250,6 +250,7 @@ GameObject:
   - component: {fileID: 6333903949812880131}
   - component: {fileID: 6582323571233060469}
   - component: {fileID: 4027149098193355120}
+  - component: {fileID: 608300809069777662}
   m_Layer: 0
   m_Name: Test Player Object
   m_TagString: Untagged
@@ -328,6 +329,23 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &608300809069777662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1307867543639036374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 738e516e88022384780fd6fec114c40a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: rinCore::rinCore.PlayerVelocityRotator
+  rotationAnchor: {fileID: 7824840563526253758}
+  weight: 3
+  idleMultiplier: 2.5
+  leftAngle: {x: 0.028251054, y: 0.21458806, z: -0.12743221, w: -0.96794367}
+  rightAngle: {x: 0.028251123, y: -0.21458797, z: 0.12743255, w: -0.9679436}
 --- !u!1 &2199287923336604523
 GameObject:
   m_ObjectHideFlags: 0

@@ -229,6 +229,13 @@ namespace FumoShmup2
     }
     #endregion
 
+    #region Removal Delegate
+    public partial class ProjectileRunner
+    {
+        public delegate bool RemoveAction(Projectile p);
+        public static RemoveAction RemoveActionOverride = null;
+    }
+    #endregion
     public partial class ProjectileRunner : MonoBehaviour
     {
         public static void Bind(Projectile p)
@@ -440,12 +447,26 @@ namespace FumoShmup2
 
                 bool shouldRemove = false;
 
-                if (!Projectile.IsOnScreen(proj))
+                if (RemoveActionOverride != null && RemoveActionOverride.Invoke(proj) is bool removeActionResult)
+                {
+                    switch (removeActionResult)
+                    {
+                        case true:
+                            proj.SetNewPosition(proj.PreviousPosition);
+                            proj.TriggerOffscreenEvent();
+                            shouldRemove = true;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else if (!Projectile.IsOnScreen(proj))
                 {
                     proj.SetNewPosition(proj.PreviousPosition);
                     proj.TriggerOffscreenEvent();
                     shouldRemove = true;
                 }
+
                 if (ShmupPlayer.PlayerAs(out ShmupPlayer grazePlayer) && !grazedProjectiles.Contains(proj))
                 {
                     if (proj.Position.InBoxDistance(grazePlayer.CurrentPosition, 1f))
