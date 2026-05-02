@@ -56,6 +56,9 @@ TagManager:
   - name: Flare
     uniqueID: 1277946055
     locked: 0
+  - name: Boss Front
+    uniqueID: 864358923
+    locked: 0
   m_RenderingLayers:
   - Default
   - Light Layer 1

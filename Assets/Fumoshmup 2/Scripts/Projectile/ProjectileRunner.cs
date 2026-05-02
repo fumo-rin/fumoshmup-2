@@ -480,7 +480,16 @@ namespace FumoShmup2
                 {
                     if (resultPacket.hitUnit.TryGetComponent(out IHit hit))
                     {
-                        hit.Sendhit(new(resultPacket.hitCollider.ClosestPoint(proj.Position), proj.damageInfo), out float damageDealt);
+                        Vector2 closest = resultPacket.hitCollider.ClosestPoint(proj.Position);
+                        Vector2 norm = (proj.Position - closest).normalized;
+                        hit.Sendhit(new(closest, proj.damageInfo), out float damageDealt);
+                        if (damageDealt > 0f)
+                        {
+                            ProjectileRenderer.HitParticle(closest, norm, new()
+                            {
+                                forceMultiplier = 1f
+                            });
+                        }
                     }
                     shouldRemove = true;
                 }
