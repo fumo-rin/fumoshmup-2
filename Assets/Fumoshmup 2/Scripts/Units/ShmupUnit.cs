@@ -3,7 +3,14 @@ using rinCore;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ShmupUnit : FumoUnit
+#region Iframes
+public abstract partial class ShmupUnit
+{
+    public abstract bool HasIframes { get; }
+    public float CurrentIFramesDamageReductionPercent = 0f;
+}
+#endregion
+public abstract partial class ShmupUnit : FumoUnit
 {
     public readonly IShmupMover fallbackMover = new ShmupMovers.PlayerShmupMover(5f);
     public List<IShmupMover> shmupMovers = new();

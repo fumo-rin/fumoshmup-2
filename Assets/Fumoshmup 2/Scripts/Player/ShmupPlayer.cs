@@ -173,7 +173,7 @@ public partial class ShmupPlayer : ShmupUnit
             ProjectileRunner.TriggerSweep(0.5f, 255, true, out _);
         }
 
-        var input = new Projectile.InputSettings(space, null, Vector2.down, new Projectile.ProjectileDamage(null, 10, 1), ProjectileFaction.Enemy);
+        /*var input = new Projectile.InputSettings(space, null, Vector2.down, new Projectile.ProjectileDamage(null, 10, 1), ProjectileFaction.Enemy);
         float offset = -iteration.AsFloat(0.1f) * iteration.AsFloat(0.1f);
         input.addedForward = 0.5f;
 
@@ -185,5 +185,6 @@ public partial class ShmupPlayer : ShmupUnit
             }
         }
         iteration += 1;
+        */
     }
 }

@@ -17,6 +17,7 @@ public interface IHit
     {
         public Vector2 position;
         public Projectile.ProjectileDamage damagePacket;
+        public float FinalDamage => damagePacket.DamageMultiplier * damagePacket.BaseDamage;
         public HitPacket(Vector2 position, Projectile.ProjectileDamage damagePacket)
         {
             this.position = position;
