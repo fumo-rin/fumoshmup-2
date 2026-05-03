@@ -51,7 +51,7 @@ namespace FumoShmup2
     }
     #endregion
 
-    #region Sweeping
+    #region Sweeping & Sealing
     public partial class ProjectileRunner
     {
         static float SweepEndTime;
@@ -69,6 +69,27 @@ namespace FumoShmup2
         private static void ResetSweeping()
         {
             SweepEndTime = -2f;
+        }
+        public static void SealBullets(Vector2 position, ShmupUnit owner, float radius, byte lootChance, out List<Projectile> removed)
+        {
+            if (instance == null)
+            {
+                removed = null;
+                return;
+            }
+            removed = new();
+            foreach (var item in instance.projectiles.Where(x => x.Sender == owner))
+            {
+                if (item.Position.SquareDistanceToLessThan(position, radius))
+                {
+                    removed.Add(item);
+
+                }
+            }
+            foreach (var item in removed)
+            {
+                Projectile.Wipe(item);
+            }
         }
     }
     #endregion
@@ -234,6 +255,30 @@ namespace FumoShmup2
     {
         public delegate bool RemoveAction(Projectile p);
         public static RemoveAction RemoveActionOverride = null;
+    }
+    #endregion
+
+    #region Bullet Backdrop Render
+    public partial class ProjectileRunner
+    {
+        [SerializeField] ParticleSystem backdropRenderer;
+        static List<Vector2> backdropIteration;
+        private void RenderBackdrop(List<Projectile> projectiles)
+        {
+            Projectile iteration;
+            if (backdropIteration == null) backdropIteration = new();
+            backdropIteration.Clear();
+            for (int i = 0; i < projectiles.Count; i++)
+            {
+                iteration = projectiles[i];
+                if (iteration == null || !iteration.IsActive || !iteration.isOnScreen)
+                {
+                    continue;
+                }
+                backdropIteration.Add(iteration.Position);
+            }
+            backdropRenderer.RenderAnimatedPoints(backdropIteration, Time.time, true);
+        }
     }
     #endregion
     public partial class ProjectileRunner : MonoBehaviour
@@ -482,7 +527,7 @@ namespace FumoShmup2
                     {
                         Vector2 closest = resultPacket.hitCollider.ClosestPoint(proj.Position);
                         Vector2 norm = (proj.Position - closest).normalized;
-                        hit.Sendhit(new(closest, proj.damageInfo), out float damageDealt);
+                        hit.SendHit(new(closest, proj.damageInfo), out float damageDealt);
                         if (damageDealt > 0f)
                         {
                             ProjectileRenderer.HitParticle(closest, norm, new()
@@ -502,7 +547,7 @@ namespace FumoShmup2
                         if (terrainHit.transform.GetComponent<ShmupUnit>() is ShmupUnit hitUnit && hitUnit is not ShmupPlayer)
                         {
                             if (hitUnit is IHit hitable)
-                                hitable.Sendhit(new IHit.HitPacket(proj.Position, proj.damageInfo), out _);
+                                hitable.SendHit(new IHit.HitPacket(proj.Position, proj.damageInfo), out _);
                         }
                         shouldRemove = true;
                     }
@@ -516,6 +561,7 @@ namespace FumoShmup2
             }
 
             projectileRenderer.RenderProjectiles(projectiles);
+            RenderBackdrop(projectiles);
         }
     }
 }

@@ -62,6 +62,7 @@ namespace FumoShmup2
         {
             public float duration;
             public byte lootChance;
+            public ACWrapper sweepSound;
         }
         SweepOverride? sweepOverride = null;
         private bool TryGetSweepOverride(out SweepOverride sweep)
@@ -69,12 +70,13 @@ namespace FumoShmup2
             sweep = sweepOverride ?? new SweepOverride();
             return sweepOverride != null && sweep.duration > 0f;
         }
-        public void SetSweepOverride(float duration, byte lootChange)
+        public void SetSweepOverride(float duration, byte lootChange, ACWrapper sound)
         {
             sweepOverride = new SweepOverride()
             {
                 duration = duration,
-                lootChance = lootChange
+                lootChance = lootChange,
+                sweepSound = sound
             };
         }
         RevengeAttackOverride revengeOverride;
@@ -100,8 +102,7 @@ namespace FumoShmup2
             {
                 int loot = 999;
                 //ClearAllAttackRoutines();
-                CreateLoot(loot, 4.5f);
-                Action_ClearBossMover();
+                CreateLootItem(loot, 4.5f);
                 Action_BossRecenter(0.65f);
             }
             currentPhase = false;
@@ -145,7 +146,7 @@ namespace FumoShmup2
         public void SetSealRadius(float r) => sealRadius = r;
         int LootCount => !IsBoss ? CurrentMaxHealth.Multiply(0.333f).ToInt() : 0;
         [NYI("Refactor")]
-        public void Sendhit(IHit.HitPacket packet, out float damageDealt)
+        public void SendHit(IHit.HitPacket packet, out float damageDealt)
         {
             damageDealt = 0f;
             if (IsAlive)
@@ -195,36 +196,34 @@ namespace FumoShmup2
                     damage *= Mathf.Max(0f, 1f - CurrentIFramesDamageReductionPercent * 0.01f);
                 }
                 damage *= PhaseDamageTakenMod;
-                PlayerScoring.AddScoreWithoutMultiplier(damage * 250d, "Enemy Damage", false);
+                GameSession.TryAddScoreRaw(damage * 250d, "Enemy Damage");
                 damageDealt = damage.Min(CurrentHealth);
                 StartNewHealth(CurrentHealth - damage, CurrentMaxHealth);
             }
         }
+        [NYI("Spellcard, kill event")]
         public void ForceKill()
         {
-            if (this is TargetDummyUnit)
-            {
-                return;
-            }
             if (this == null)
             {
                 return;
             }
             if (IsBoss)
             {
-                Spellcard.FailSpell();
-                Spellcard.EndSpell();
+                //Spellcard.FailSpell();
+                //Spellcard.EndSpell();
             }
             CurrentHealth = 0f;
-            TriggerKillEvent(true);
+            //TriggerKillEvent(true);
             gameObject.SetActive(false);
             Destroy(gameObject);
         }
+        [NYI("No Point Items spawning yet, and kill event")]
         public void KillWithLoot()
         {
             if (sealRadius > 0.1f) ProjectileRunner.SealBullets(CurrentPosition, this, sealRadius, 255, out _);
-            CreateLoot(LootCount, 2.5f);
-            TriggerKillEvent(false);
+            CreateLootItem(LootCount, 2.5f);
+            //TriggerKillEvent(false);
             TriggerRevengeOverride();
             if (TryGetSweepOverride(out SweepOverride sweep))
             {
@@ -239,7 +238,7 @@ namespace FumoShmup2
             {
                 void SpawnLoot(Vector2 position)
                 {
-                    CreateLootOnPosition(position, 20, 0.35f);
+                    CreateLootItemOnPosition(position, 20, 0.35f);
                 }
                 var explosion = new BossExplosion.data()
                 {
@@ -253,14 +252,16 @@ namespace FumoShmup2
             }
             Destroy(gameObject);
         }
-        private void CreateLoot(int lootCount, float areaSize = 1f)
+        private void CreateLootItem(int lootCount, float areaSize = 1f)
         {
-            CreateLootOnPosition(CurrentPosition, lootCount, areaSize);
+            CreateLootItemOnPosition(CurrentPosition, lootCount, areaSize);
         }
-        private void CreateLootOnPosition(Vector2 position, int lootCount, float areaSize = 1f)
+        private void CreateLootItemOnPosition(Vector2 position, int lootCount, float areaSize = 1f)
         {
             for (int i = 0; i < IntExtensions.Clamp(lootCount, 0, 10000); i++)
-                PointItemRunner.Create(position + (Random.insideUnitCircle.normalized * 0.75f.Spread(50f) * areaSize));
+            {
+                //PointItemRunner.Create(position + (Random.insideUnitCircle.normalized * 0.75f.Spread(50f) * areaSize));
+            }
         }
 
     }
@@ -378,7 +379,7 @@ namespace FumoShmup2
         {
             foreach (var item in AliveEnemiesOnScreen.ToList())
             {
-                item.SendHit(HitPacket.Create(item.CurrentPosition, new(null, 1000000, 1f)), out float hit);
+                item.SendHit(new IHit.HitPacket(item.CurrentPosition, new(null, 1000000, 1f)), out float hit);
             }
         }
     }
@@ -408,7 +409,7 @@ namespace FumoShmup2
 
         public override IEnumerable<Collider2D> Hitboxes => throw new System.NotImplementedException();
 
-        public override bool HasIframes => throw new System.NotImplementedException();
+        public override bool HasIframes => false;
         [NYI("No Phases Default Health")]
         protected override void WhenAwake()
         {

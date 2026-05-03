@@ -3,7 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace FumoShmup2
 {
-    public class ShmupSession : rinCore.GameSession
+    #region Game Actions
+    public partial class ShmupSession
+    {
+        public delegate void GameAction();
+        public static event GameAction WhenContinue;
+        public static void TriggerContinue()
+        {
+            WhenContinue?.Invoke();
+        }
+    }
+    #endregion
+    public partial class ShmupSession : rinCore.GameSession
     {
         public struct keys
         {

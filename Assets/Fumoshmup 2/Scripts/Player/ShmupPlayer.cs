@@ -18,7 +18,29 @@ public partial class ShmupPlayer : IHit
         public ACWrapper DeathSound;
     }
     [SerializeField] HitRoutineData hitData = new();
-    public void Sendhit(IHit.HitPacket packet, out float damageDealt)
+    [SerializeField] SpriteFlashMaterial iframesFlashMaterial;
+    private float iframesEndTime = 0f;
+    public delegate void IframesDurationActivation(float duration);
+    public static event IframesDurationActivation WhenIframesActivatedGetDuration;
+    public void SetCurrentIFrames(float duration)
+    {
+        CurrentIFramesDamageReductionPercent = 100f;
+        iframesEndTime = Time.time + duration;
+        WhenIframesActivatedGetDuration?.Invoke(duration);
+    }
+    [SerializeField] float hitIframesDuration = 2.25f;
+    public override bool HasIframes
+    {
+        get
+        {
+            if (iframesEndTime > Time.time)
+            {
+                return true;
+            }
+            return false;
+        }
+    }
+    public void SendHit(IHit.HitPacket packet, out float damageDealt)
     {
         damageDealt = 0f;
         if (!StartHitRoutine())
@@ -33,6 +55,8 @@ public partial class ShmupPlayer : IHit
         {
             return false;
         }
+        if (HasIframes)
+            return false;
         currentHit = StageRoutines.StartRoutine("Player Hit", CO_Hit(), true);
         IEnumerator CO_Hit()
         {
@@ -47,6 +71,7 @@ public partial class ShmupPlayer : IHit
                 manualAliveFlag = true;
                 transform.position = v;
                 gameObject.SetActive(true);
+                SetCurrentIFrames(hitIframesDuration);
                 session.SetResource(ShmupSession.keys.CurrentBombs, session.GetResource(ShmupSession.keys.StartingBombs));
             }
             bool cancelable = hasSession && session.GetResource(ShmupSession.keys.CurrentBombs) > 0;
@@ -58,6 +83,7 @@ public partial class ShmupPlayer : IHit
             }
             hitData.HitVolume.weight = 1f;
             hitData.HitSound.Play(CurrentPosition);
+            SetCurrentIFrames(hitIframesDuration);
             bool cancelled = false;
             float endUnscaled = 0.2f;
             while (endUnscaled > 0f && !cancelled)//cancelling window
@@ -71,7 +97,8 @@ public partial class ShmupPlayer : IHit
                 if (ShmupInput.BombJustPressed)
                 {
                     cancelled = true;
-                    session.ChangeResource(ShmupSession.keys.CurrentBombs, -1);
+                    //session.ChangeResource(ShmupSession.keys.CurrentBombs, -1);
+                    //economy is paid for elsewhere
                 }
 
                 endUnscaled -= Time.unscaledDeltaTime;
@@ -95,6 +122,7 @@ public partial class ShmupPlayer : IHit
 #endregion
 public partial class ShmupPlayer : ShmupUnit
 {
+    [field: SerializeField] public ACWrapper SweepSound { get; private set; }
     [SerializeField] List<Collider2D> playerHitboxes = new List<Collider2D>();
     public override IEnumerable<Collider2D> Hitboxes
     {
@@ -111,8 +139,8 @@ public partial class ShmupPlayer : ShmupUnit
     public override Vector2 CurrentPosition => centerObject == null ? base.CurrentPosition : centerObject.position;
     private bool manualAliveFlag = true;
     [SerializeField] InputActionReference focusKey;
+    [SerializeField] InputActionReference bombKey;
     [SerializeField] ProjectileDefineSO testProjectile;
-    int iteration = 0;
     public static bool BlockProjectileSpawning
     {
         get
@@ -140,6 +168,8 @@ public partial class ShmupPlayer : ShmupUnit
     {
         base.WhenStart();
     }
+
+    int iteration = 0;
     protected override void WhenUpdate()
     {
         if (GeneralManager.IsPaused)
@@ -165,26 +195,24 @@ public partial class ShmupPlayer : ShmupUnit
                 }
             }
         }
+        if (bombKey.JustPressed())
+        {
+            Debug.Log(PlayerBomb.TryTriggerBomb(this));
+        }
         MoveLoop();
         ShmupWorldspace.MapToWorldspaceUnclamped(0.5f, 0.5f, out Vector2 space);
 
-        if (ShmupInput.BombJustPressed)
-        {
-            ProjectileRunner.TriggerSweep(0.5f, 255, true, out _);
-        }
-
-        /*var input = new Projectile.InputSettings(space, null, Vector2.down, new Projectile.ProjectileDamage(null, 10, 1), ProjectileFaction.Enemy);
+        var input = new Projectile.InputSettings(space, null, Vector2.down, new Projectile.ProjectileDamage(null, 10, 1), ProjectileFaction.Enemy);
         float offset = -iteration.AsFloat(0.1f) * iteration.AsFloat(0.1f);
         input.addedForward = 0.5f;
 
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 1; i++)
         {
-            if (iteration % 2 == 0)
+            if (iteration % 3 == 0)
             {
-                new Projectile.ArcSettings(0f + offset, 315f + offset, 45f, 10f + i.AsFloat(0.05f)).Spawn(input, testProjectile, out _);
+                new Projectile.ArcSettings(0f + offset, 315f + offset, 45f, 8f + i.AsFloat(0.05f)).Spawn(input, testProjectile, out _);
             }
         }
         iteration += 1;
-        */
     }
 }

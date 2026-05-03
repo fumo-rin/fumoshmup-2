@@ -2,6 +2,7 @@ using UnityEngine;
 using rinCore;
 using TMPro;
 using UnityEngine.Rendering;
+using FumoShmup2;
 namespace FumoShmup
 {
     #region Popup
@@ -30,11 +31,11 @@ namespace FumoShmup
         public delegate void PickupAction();
         public static event PickupAction WhenPickup;
 
-        public static double Score => GeneralManager.VisibleScore;
-        public static double HighScore => GeneralManager.HighestScore;
+        public static double Score => 0D;
+        public static double HighScore => 0D;
         public static float GrazeScoreMultiplier => 1f + (GrazeCount.AsFloat().Multiply(0.00001f));
 
-        public static bool IsPracticeMode => ShmupPracticeMode.IsOn;
+        public static bool IsPracticeMode => false;
         public static int GrazeCount;
 
         private static double lastScore = -1;
@@ -56,38 +57,42 @@ namespace FumoShmup
         }
         private void Start()
         {
-            ShmupState.WhenContinue += WhenContinue;
+            ShmupSession.WhenContinue += WhenContinue;
         }
         private void OnDestroy()
         {
-            ShmupState.WhenContinue -= WhenContinue;
+            GameSession.TryStoreSessionHighscore();
+            ShmupSession.WhenContinue -= WhenContinue;
         }
-        private static void WhenContinue(bool resetState)
+        private static void WhenContinue()
         {
-            if (resetState)
-            {
-                ResetScoringState();
-                RefreshScore();
-                RefreshGraze();
-            }
+            ResetScoringState();
+            RefreshScore();
+            RefreshGraze();
         }
         public static void WhenEndGame()
         {
+
         }
+        [NYI]
         public static void WhenStartGame()
         {
             ResetScoringState();
             RefreshScore();
             RefreshGraze();
         }
-        public static double AddScoreWithoutMultiplier(double value, string key, bool contributePopup = true)
+        [NYI("Scoring References for session")]
+        public static double AddScoreWithoutMultiplier(double baseValue, string key, bool contributePopup = true)
         {
             bool noHighscore = IsPracticeMode;
-            double score = GeneralManager.AddScore(value, noHighscore);
+            double score = baseValue;
+
+            GameSession.TryAddScoreRaw(score, new(key));
+            /*double score = GeneralManager.AddScore(value, noHighscore);
             if (!string.IsNullOrEmpty(key))
             {
                 GeneralManager.AddScoreAnalysisKey(key, value);
-            }
+            }*/
             if (contributePopup)
             {
                 AddToScorePopup(((float)score));
@@ -110,9 +115,9 @@ namespace FumoShmup
             AddScoreWithoutMultiplier(1000d * value, "Grazing", false);
             return GrazeCount;
         }
-        public static void AddPickupScore()
+        public static void AddPickupScore(double baseScore)
         {
-            double score = AddScore(PointItemValueUI.GetPickupScore, "Pickups");
+            double score = AddScore(baseScore, "Pickups");
             WhenPickup?.Invoke();
         }
         public static void RefreshGraze()

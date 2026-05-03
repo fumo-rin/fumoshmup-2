@@ -1,5 +1,6 @@
 namespace FumoShmup
 {
+    using FumoShmup2;
     using rinCore;
     using System.Collections.Generic;
     using System.Linq;
@@ -30,8 +31,7 @@ namespace FumoShmup
         {
             void WhenPickup(Vector2 position)
             {
-                PlayerScoring.AddPickupScore();
-                ProjectileSystem.SpawnYellowItem(position, 1);
+                PlayerScoring.AddPickupScore(1234d);
             }
             bool playerAlive = ShmupPlayer.PlayerAs(out ShmupPlayer player) && player.IsAlive;
             float maxFocusTime = 1.15f;
@@ -68,7 +68,7 @@ namespace FumoShmup
                     continue;
                 }
             }
-            itemParticle.RenderPointsSingleFrame(PointItems, Time.time);
+            itemParticle.RenderAnimatedPoints(PointItems, Time.time);
             focusWasHeld = ShmupInput.Focus;
         }
         public static void Create(Vector2 worldPosition)

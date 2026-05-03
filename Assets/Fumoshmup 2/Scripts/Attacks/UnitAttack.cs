@@ -11,16 +11,6 @@ namespace FumoShmup2
     #region Shortcuts
     public partial class UnitAttack
     {
-        public void AttackRoutine(IEnumerator co, ShmupUnit sender)
-        {
-            if (sender == null || co == null) return;
-            sender.AttackRoutine(co);
-        }
-        public WaitForSeconds WaitWithFireRateItems(float baseDuration)
-        {
-            float wait = baseDuration;
-            return wait.WaitForSeconds();
-        }
         public Projectile.ArcSettings Arc(float centerAimAngle, float arcSize, int shotCount, float projectileSpeed)
             => ProjectileFactory.Arc(centerAimAngle, arcSize, shotCount, projectileSpeed);
 
@@ -81,14 +71,12 @@ namespace FumoShmup2
                         input.AimTo(p);
                     }
                     input.AssignTarget(p);
-
-                    e.AddQueuedAttack(TEMPORARY_Attackpayload(e, input), false);
                 }
             }
             else if (Sender is ShmupPlayer player)
             {
                 var input = new Projectile.InputSettings(origin, Sender, Vector2.up, new(Sender, 1f, 1f), ProjectileFaction.Player);
-                //input.Flare = false;
+                input.Flare = false;
                 if (PlayerAutoAim(player, out EnemyUnit autoTarget))
                 {
                     input.AssignTarget(autoTarget);
@@ -112,7 +100,7 @@ namespace FumoShmup2
                     }
                     input.AssignTarget(p);
                 }
-                yield return e.AddQueuedAttack(TEMPORARY_Attackpayload(e, input), false);
+                //yield return e.AddQueuedAttack(TEMPORARY_Attackpayload(e, input), false);
             }
             else if (Sender is ShmupPlayer player)
             {
@@ -121,7 +109,7 @@ namespace FumoShmup2
                 if (EnemyUnit.FindEnemyFromDotProduct(player.CurrentPosition, Vector2.up, out EnemyUnit autoTarget, 0.25f))
                     input.AssignTarget(autoTarget);
 
-                yield return player.AddQueuedAttack(TEMPORARY_Attackpayload(player, input), false);
+                //yield return player.AddQueuedAttack(TEMPORARY_Attackpayload(player, input), false);
             }
             yield break;
         }

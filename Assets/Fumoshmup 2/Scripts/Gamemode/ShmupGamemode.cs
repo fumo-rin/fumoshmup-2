@@ -44,11 +44,10 @@ namespace FumoShmup2
                 cachedCurrent = value;
             }
         }
-        public void StartGamemode(int shotIndex, params (string key, int value)[] resources)
+        public void StartGamemode(int shotIndex, GameSession.sessionData data, params (string key, int value)[] resources)
         {
             ShottypeIndex = shotIndex;
             CurrentMode = this;
-            GameSession.sessionData data = new GameSession.sessionData() { UserName = "Nanashi" };
             ShmupSession.shmupPlayerResources playerEconomy = new ShmupSession.shmupPlayerResources();
             foreach (var item in resources)
             {

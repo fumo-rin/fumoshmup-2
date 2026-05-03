@@ -1,28 +1,30 @@
-using FumoShmup2;
 using UnityEngine;
 
-public enum ShmupFaction
+namespace FumoShmup2
 {
-    Default,
-    Player,
-    Hostile
-}
-public class UnitHitbox : MonoBehaviour
-{
-    [SerializeField] ShmupFaction hitboxFaction = ShmupFaction.Hostile;
-}
-public interface IHit
-{
-    public struct HitPacket
+    public enum ShmupFaction
     {
-        public Vector2 position;
-        public Projectile.ProjectileDamage damagePacket;
-        public float FinalDamage => damagePacket.DamageMultiplier * damagePacket.BaseDamage;
-        public HitPacket(Vector2 position, Projectile.ProjectileDamage damagePacket)
-        {
-            this.position = position;
-            this.damagePacket = damagePacket;
-        }
+        Default,
+        Player,
+        Hostile
     }
-    public void Sendhit(HitPacket packet, out float damageDealt);
+    public class UnitHitbox : MonoBehaviour
+    {
+        [SerializeField] ShmupFaction hitboxFaction = ShmupFaction.Hostile;
+    }
+    public interface IHit
+    {
+        public struct HitPacket
+        {
+            public Vector2 position;
+            public Projectile.ProjectileDamage damagePacket;
+            public float FinalDamage => damagePacket.DamageMultiplier * damagePacket.BaseDamage;
+            public HitPacket(Vector2 position, Projectile.ProjectileDamage damagePacket)
+            {
+                this.position = position;
+                this.damagePacket = damagePacket;
+            }
+        }
+        public void SendHit(HitPacket packet, out float damageDealt);
+    }
 }

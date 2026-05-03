@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56a2e8f152cdd254ea1b3f5896d1546e, type: 3}
+  m_Name: FS_BOMBA 1
+  m_EditorClassIdentifier: rinCore::RinCore.ACWrapper
+  SoundName: BOMBA 1
+  soundVolume: 0.696
+  <soundClips>k__BackingField:
+  - clip: {fileID: 8300000, guid: 7390ee03d6d59bd41b014d1096e2f8ef, type: 3}
+    PitchVariancePercent: 15
+    PitchOrigin: 2.42
+    Volume: 0.205
+    Muted: 0
+  - clip: {fileID: 8300000, guid: 14335cdeffb1d124181454ffd0a47ac5, type: 3}
+    PitchVariancePercent: 15
+    PitchOrigin: 0.47
+    Volume: 0.42
+    Muted: 0
+  - clip: {fileID: 8300000, guid: 97c21deeea1eb904a8447f2116d6ee54, type: 3}
+    PitchVariancePercent: 15
+    PitchOrigin: 0.68
+    Volume: 1
+    Muted: 0
+  - clip: {fileID: 8300000, guid: 880f172b0efdf1f47aa1a6428a1e9790, type: 3}
+    PitchVariancePercent: 15
+    PitchOrigin: 2.39
+    Volume: 1
+    Muted: 0
+  - clip: {fileID: 8300000, guid: 36d4d5d73ac83114c8e5b805b68173ac, type: 3}
+    PitchVariancePercent: 15
+    PitchOrigin: 0.62
+    Volume: 0.343
+    Muted: 0
+  - clip: {fileID: 8300000, guid: 7b363f586c688ac408370ae4358d82a7, type: 3}
+    PitchVariancePercent: 15
+    PitchOrigin: 0.38
+    Volume: 0.564
+    Muted: 0
+  <singleChannel>k__BackingField: 1
+  <singleRepeatLockoutTime>k__BackingField: 0.01
+  <Is3D>k__BackingField: 1

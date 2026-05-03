@@ -12,6 +12,7 @@ TagManager:
   - Water
   - UI
   - 3D World
+  - World Constraints
   - 
   - 
   - 
@@ -35,8 +36,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - UI 3D
   m_SortingLayers:
   - name: Default
     uniqueID: 0
