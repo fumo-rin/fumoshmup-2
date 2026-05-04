@@ -2355,10 +2355,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2177139420486650473, guid: 52e572bc2b914e3428b2db0a70e1685f, type: 3}
-      propertyPath: startingScene
-      value: 
-      objectReference: {fileID: 11400000, guid: 49b88cf1033524245b6320badf79430c, type: 2}
     - target: {fileID: 4483719465121273444, guid: 52e572bc2b914e3428b2db0a70e1685f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2420,7 +2416,7 @@ GameObject:
   - component: {fileID: 1458012519}
   - component: {fileID: 1458012518}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: 3D Cam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
