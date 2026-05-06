@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c84717cc8fb2c2e40a3805cc40e46096, type: 3}
+  m_Name: Bowap Pellet Spinning
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup.ProjectileDefineSO
+  ColliderShape:
+    rid: 172798803861569638
+  Size: 0.5
+  SizeSortingMultiplier: 1
+  Color:
+    serializedVersion: 2
+    rgba: 4294215935
+  animationSpeed: 3
+  animationSpreadPercent: 0
+  spin: 540
+  particleSystemPrefab: {fileID: 3217051552466667707, guid: 9df42d65e1495a746a1adbef0fc760e0, type: 3}
+  SortingLayer: Default
+  useFlare: 1
+  FlareColor:
+    serializedVersion: 2
+    rgba: 4294215935
+  references:
+    version: 2
+    RefIds:
+    - rid: 172798803861569638
+      type: {class: CircleShape, ns: FumoShmup2, asm: Fumoshmup2}
+      data:
+        Radius: 0.05

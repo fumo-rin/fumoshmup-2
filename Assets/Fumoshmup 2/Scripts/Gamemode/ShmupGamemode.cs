@@ -1,5 +1,6 @@
 using rinCore;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -124,21 +125,26 @@ namespace FumoShmup2
             }
         }
         #region Request Player
-        public ShmupPlayer RequestPlayer(Shottype shot)
+        public void RequestPlayer(Shottype shot)
         {
-            Vector2 playerPos = new Vector2Shmup(0.5f, 0.2f).Vector2Now;
-            if (ShmupPlayer.PlayerAs(out ShmupPlayer p))
+            IEnumerator SpawnAfterLoad()
             {
-                playerPos = p.CurrentPosition;
-                Destroy(p);
-            }
-            var output = shot.PlayerObject.Instantiate2D(playerPos);
-            output.shmupMovers = new()
-            {
+                yield return new WaitUntil(() => !SceneLoader.IsLoading);
+
+                Vector2 playerPos = new Vector2Shmup(0.5f, 0.2f).Vector2Now;
+                if (ShmupPlayer.PlayerAs(out ShmupPlayer p))
+                {
+                    playerPos = p.CurrentPosition;
+                    Destroy(p);
+                }
+                var output = shot.PlayerObject.Instantiate2D(playerPos);
+                output.shmupMovers = new()
+                {
                 shot.UnfocusMover,
-                shot.FocusMover,
-            };
-            return output;
+                shot.FocusMover
+                };
+            }
+            SpawnAfterLoad().RunRoutine("Load Player", true);
         }
         #endregion
         #region Start Eco

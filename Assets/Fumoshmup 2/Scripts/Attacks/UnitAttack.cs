@@ -32,21 +32,6 @@ namespace FumoShmup2
     public abstract partial class UnitAttack
     {
         protected static List<Projectile> iterationList;
-        public static IEnumerator CO_RunAttack(UnitAttack attack, ShmupUnit Sender)
-        {
-            if (attack == null)
-            {
-                yield break;
-            }
-            yield return attack.TryAttack(Sender);
-        }
-        public static void RunExtras(UnitAttack attack, ShmupUnit Sender)
-        {
-            if (attack == null) return;
-            attack.RunExtrasUpdate(Sender);
-        }
-        public virtual void Init() { }
-        public virtual void UnInit() { }
         protected bool PlayerAutoAim(ShmupPlayer player, out EnemyUnit autoTarget)
         {
             autoTarget = null;
@@ -56,35 +41,7 @@ namespace FumoShmup2
             }
             return false;
         }
-        public bool ForceAttack(ShmupUnit Sender)
-        {
-            Vector2 origin = Sender.CurrentPosition;
-            if (Sender is EnemyUnit e)
-            {
-                bool foundPlayer = ShmupPlayer.PlayerAs(out ShmupPlayer p);
-                var input = new Projectile.InputSettings(origin, Sender, Vector2.down, new(Sender, 1f, 1f), ProjectileFaction.Enemy);
-
-                if (foundPlayer)
-                {
-                    if (p.IsAlive)
-                    {
-                        input.AimTo(p);
-                    }
-                    input.AssignTarget(p);
-                }
-            }
-            else if (Sender is ShmupPlayer player)
-            {
-                var input = new Projectile.InputSettings(origin, Sender, Vector2.up, new(Sender, 1f, 1f), ProjectileFaction.Player);
-                input.Flare = false;
-                if (PlayerAutoAim(player, out EnemyUnit autoTarget))
-                {
-                    input.AssignTarget(autoTarget);
-                }
-            }
-            return true;
-        }
-        private IEnumerator TryAttack(ShmupUnit Sender)
+        private IEnumerator DEPRECATED_TryAttack(ShmupUnit Sender)
         {
             Vector2 origin = Sender.CurrentPosition;
             if (Sender is EnemyUnit e)
@@ -113,6 +70,38 @@ namespace FumoShmup2
             }
             yield break;
         }
-        protected abstract IEnumerator TEMPORARY_Attackpayload(ShmupUnit sender, Projectile.InputSettings input);
+        public Coroutine StartWithSender(ShmupUnit Sender, Action callback = null)
+        {
+            if (Sender == null)
+                return null;
+
+            Vector2 origin = Sender.CurrentPosition;
+            if (Sender is EnemyUnit e)
+            {
+                bool foundPlayer = ShmupPlayer.PlayerAs(out ShmupPlayer p);
+                var input = new Projectile.InputSettings(origin, Sender, Vector2.down, new(Sender, 1f, 1f), ProjectileFaction.Enemy);
+
+                if (foundPlayer)
+                {
+                    if (p.IsAlive)
+                    {
+                        input.AimTo(p);
+                    }
+                    input.AssignTarget(p);
+                }
+                return Sender.StartCoroutineWithCallback(CO_Attackpayload(e, input), callback);
+            }
+            else if (Sender is ShmupPlayer player)
+            {
+                var input = new Projectile.InputSettings(origin, Sender, Vector2.up, new(Sender, 1f, 1f), ProjectileFaction.Player);
+                input.Flare = false;
+                if (EnemyUnit.FindEnemyFromDotProduct(player.CurrentPosition, Vector2.up, out EnemyUnit autoTarget, 0.25f))
+                    input.AssignTarget(autoTarget);
+
+                return Sender.StartCoroutineWithCallback(CO_Attackpayload(player, input), callback);
+            }
+            return null;
+        }
+        protected abstract IEnumerator CO_Attackpayload(ShmupUnit sender, Projectile.InputSettings input);
     }
 }

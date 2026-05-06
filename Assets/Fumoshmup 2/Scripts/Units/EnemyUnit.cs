@@ -3,6 +3,8 @@ using rinCore;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
+using UnityEditor;
+using System;
 
 namespace FumoShmup2
 {
@@ -90,6 +92,122 @@ namespace FumoShmup2
         }
     }
     #endregion
+    #region Editor Drawer
+#if UNITY_EDITOR
+    [CustomPropertyDrawer(typeof(UnitAttack), true)]
+    public class UnitAttackDrawer : PropertyDrawer
+    {
+        private static List<Type> cachedTypes;
+
+        static UnitAttackDrawer()
+        {
+            CacheTypes();
+        }
+
+        private static void CacheTypes()
+        {
+            cachedTypes = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(a =>
+                {
+                    try { return a.GetTypes(); }
+                    catch { return Array.Empty<Type>(); }
+                })
+                .Where(t =>
+                    typeof(UnitAttack).IsAssignableFrom(t) &&
+                    !t.IsAbstract &&
+                    !t.IsGenericType &&
+                    t.IsClass)
+                .ToList();
+        }
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            if (property.managedReferenceValue == null)
+                return EditorGUIUtility.singleLineHeight;
+
+            return EditorGUI.GetPropertyHeight(property, label, true);
+        }
+        private static string GetDisplayName(SerializedProperty property, GUIContent label)
+        {
+            if (property.managedReferenceValue == null)
+                return "Select UnitAttack";
+
+            Type type = property.managedReferenceValue.GetType();
+
+            return CleanName(type.Name).SpaceByCapitals();
+        }
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            EditorGUI.BeginProperty(position, label, property);
+            position = EditorGUI.IndentedRect(position);
+
+            string displayName = GetDisplayName(property, label);
+
+            if (property.managedReferenceValue == null)
+            {
+                if (GUI.Button(position, displayName))
+                {
+                    GenericMenu menu = new GenericMenu();
+
+                    menu.AddItem(new GUIContent("None"), false, () =>
+                    {
+                        property.managedReferenceValue = null;
+                        property.serializedObject.ApplyModifiedProperties();
+                    });
+
+                    menu.AddSeparator("");
+
+                    foreach (var type in cachedTypes.OrderBy(t => GetNestedPath(t)))
+                    {
+                        string path = GetNestedPath(type);
+
+                        menu.AddItem(new GUIContent(path), false, () =>
+                        {
+                            property.managedReferenceValue = Activator.CreateInstance(type);
+                            property.serializedObject.ApplyModifiedProperties();
+                            property.serializedObject.Update();
+                        });
+                    }
+
+                    menu.ShowAsContext();
+                }
+            }
+            else
+            {
+                label.text = displayName;
+                EditorGUI.PropertyField(position, property, label, true);
+            }
+
+            EditorGUI.EndProperty();
+        }
+
+        private static string GetNestedPath(Type type)
+        {
+            List<string> parts = new List<string>();
+
+            Type current = type;
+            while (current != null)
+            {
+                parts.Add(CleanName(current.Name));
+                current = current.DeclaringType;
+            }
+
+            parts.Reverse();
+
+            return string.Join("/", parts);
+        }
+
+        private static string CleanName(string name)
+        {
+            int index = name.IndexOf('`');
+            if (index >= 0)
+                name = name.Substring(0, index);
+
+            return name;
+        }
+    }
+#endif
+    #endregion
     #region Boss Phases
     public partial class EnemyUnit
     {
@@ -107,7 +225,7 @@ namespace FumoShmup2
             }
             currentPhase = false;
         }
-        public void ForceNextPhase()
+        public void ForceNextPhaseSet()
         {
             /*if (phases.TryStartNextPhase(out BossPhaseSO nextPhase))
             {
@@ -116,6 +234,118 @@ namespace FumoShmup2
             {
                 ProjectileRunner.TriggerSweep(0f, 0, false, out _);
                 ForceKill();
+            }
+        }
+        float PhasesTotalHealth
+        {
+            get
+            {
+                float total = 0f;
+                foreach (var item in phases)
+                {
+                    total += item.phaseHealth;
+                }
+                return total;
+            }
+        }
+        float phaseTrackedDamage;
+        [SerializeField] List<UnitPhase> phases = new();
+        public bool HasPhases => phases != null && phases.Count > 0;
+        public UnitPhase CurrentPhase
+        {
+            get
+            {
+                UnitPhase found = null;
+                bool overkill = phaseTrackedDamage >= PhasesTotalHealth;
+                if (overkill)
+                {
+                    return null;
+                }
+                float remaining = phaseTrackedDamage;
+                foreach (var item in phases)
+                {
+                    if (remaining < item.phaseHealth)
+                    {
+                        found = item;
+                        break;
+                    }
+                    remaining -= item.phaseHealth;
+                }
+                return found;
+            }
+        }
+        public bool TryStartNextPhase(out Coroutine routine, Action callback)
+        {
+            routine = null;
+            if (CurrentPhase == null)
+            {
+                return false;
+            }
+            if (CurrentPhase.DetermineNext(out UnitAttack next))
+            {
+                routine = next.StartWithSender(this, callback);
+            }
+            return routine != null;
+        }
+        [System.Serializable]
+        public class UnitPhase
+        {
+            [SerializeReference] public List<UnitAttack> phaseAttacks = new();
+            public float phaseHealth = 2000f;
+            int phaseIndex;
+            public bool DetermineNext(out UnitAttack next)
+            {
+                next = null;
+                if (phaseAttacks != null && phaseAttacks.Count > 0)
+                {
+                    int selection = phaseIndex % phaseAttacks.Count;
+                    next = phaseAttacks[selection];
+                    phaseIndex = phaseIndex + 1;
+                }
+                return next != null;
+            }
+        }
+    }
+    #endregion
+    #region Phase Skipping & Utility
+    public partial class EnemyUnit
+    {
+        [Initialize(-9999)]
+        private static void ReinitializePhaseStall()
+        {
+            phaseStallTimeEnd = -1f;
+        }
+        Coroutine CurrentRunningBossAttack;
+        public static float phaseStallTimeEnd { get; private set; }
+        public void SkipAndStallPhase(float duration)
+        {
+            phaseStallTimeEnd = Time.time + duration;
+            if (CurrentRunningBossAttack != null)
+            {
+                StopCoroutine(CurrentRunningBossAttack);
+            }
+            CurrentRunningBossAttack = null;
+        }
+        private void BossAttackStarterLoop()
+        {
+            if (phaseStallTimeEnd < Time.time)
+            {
+                if (this.IsRunningActions)
+                {
+                    return;
+                }
+                if (ShmupPlayer.PlayerAs(out ShmupPlayer p) && (!p.IsAlive || p.IframesDurationLeft > 0.75f))
+                {
+                    return;
+                }
+                if (CurrentRunningBossAttack != null)
+                {
+                    return;
+                }
+                if (TryStartNextPhase(out Coroutine next, () => CurrentRunningBossAttack = null))
+                {
+                    CurrentRunningBossAttack = next;
+                }
             }
         }
     }
@@ -361,7 +591,7 @@ namespace FumoShmup2
                     }
                     if (leashPosition.SquareDistanceToLessThan(e.CurrentPosition, 0.01f))
                     {
-                        leashPosition = e.CurrentPosition + Random.insideUnitCircle;
+                        leashPosition = e.CurrentPosition + RNG.SeededRandomVector2;
                     }
                     RB.VelocityTowards((leashPosition - CurrentPosition) * speed, 1.25f);
                 }
@@ -492,6 +722,7 @@ namespace FumoShmup2
         protected override void WhenUpdate()
         {
             base.WhenUpdate();
+            BossAttackStarterLoop();
         }
     }
 }

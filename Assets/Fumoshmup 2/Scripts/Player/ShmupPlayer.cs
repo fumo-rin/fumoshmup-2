@@ -40,6 +40,7 @@ public partial class ShmupPlayer : IHit
             return false;
         }
     }
+    public float IframesDurationLeft => (iframesEndTime - Time.time).Max(0f);
     public void SendHit(IHit.HitPacket packet, out float damageDealt)
     {
         damageDealt = 0f;
@@ -168,8 +169,6 @@ public partial class ShmupPlayer : ShmupUnit
     {
         base.WhenStart();
     }
-
-    int iteration = 0;
     protected override void WhenUpdate()
     {
         if (GeneralManager.IsPaused)
@@ -201,18 +200,5 @@ public partial class ShmupPlayer : ShmupUnit
         }
         MoveLoop();
         ShmupWorldspace.MapToWorldspaceUnclamped(0.5f, 0.5f, out Vector2 space);
-
-        var input = new Projectile.InputSettings(space, null, Vector2.down, new Projectile.ProjectileDamage(null, 10, 1), ProjectileFaction.Enemy);
-        float offset = -iteration.AsFloat(0.1f) * iteration.AsFloat(0.1f);
-        input.addedForward = 0.5f;
-
-        for (int i = 0; i < 1; i++)
-        {
-            if (iteration % 3 == 0)
-            {
-                new Projectile.ArcSettings(0f + offset, 315f + offset, 45f, 8f + i.AsFloat(0.05f)).Spawn(input, testProjectile, out _);
-            }
-        }
-        iteration += 1;
     }
 }

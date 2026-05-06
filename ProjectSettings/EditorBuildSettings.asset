@@ -17,6 +17,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Fumoshmup 2/Scenes/Shmup 2/UI Shmup.unity
     guid: 9a3c78f426bb7ff48888de9eb5b06d77
+  - enabled: 1
+    path: Assets/Fumoshmup 2/Scenes/Shmup 2/UI Mainmenu.unity
+    guid: a8a0f604daafc034cb353c8d0281fba7
+  - enabled: 1
+    path: Assets/Fumoshmup 2/Scenes/Shmup 2/UI Select Shot.unity
+    guid: 82b3c258ad88d0049a2ef6abe18b74fe
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 110e20d7a6ff8ca4b8458fb1fd21f51c, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: 6f979259336e6f24eb17e5e584e7477e, type: 2}

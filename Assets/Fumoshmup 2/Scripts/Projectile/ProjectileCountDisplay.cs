@@ -30,19 +30,22 @@ namespace FumoShmup2
             if (value == null)
                 value = string.Empty;
 
+            if (value.Length > targetLength)
+                return value.Substring(0, targetLength);
+
             int missing = targetLength - value.Length;
 
-            if (missing <= 0)
-                return value;
+            if (missing > 0)
+                return value + new string(fillChar, missing);
 
-            return value + new string(fillChar, missing);
+            return value;
         }
         public void RefreshUI()
         {
             if (bulletCountText == null)
                 return;
             float simSlow = TimeSlowHandler.SimulatedSlowdown;
-            bulletCountText.text = "P: " + PadToLength(ProjectileRunner.BulletCount.ToString(), 6, ' ') + (simSlow != 1f ? $" ({((1f / simSlow) * 100f - 100f).ToString("F0")}%)" : "");
+            bulletCountText.text = "P: " + PadToLength(ProjectileRunner.BulletCount.ToString(), 6, ' ') + (simSlow != 1f ? $" [{((1f / simSlow) * 100f - 100f).ToString("F0")}%]" : "");
         }
     }
 }

@@ -15554,10 +15554,54 @@ MonoBehaviour:
   moveFlipAnchor: {fileID: 0}
   rb: {fileID: 997502155}
   CurrentIFramesDamageReductionPercent: 0
+  phases:
+  - phaseAttacks:
+    - rid: 697205971041910962
+    - rid: 697205971041910961
+    - rid: 697205971041910986
+    - rid: 697205971041910976
+    - rid: 697205971041910987
+    - rid: -2
+    phaseHealth: 1500
   startingHealth: 350
   hitSound: {fileID: 0}
   lowHitSound: {fileID: 0}
   enemyRenderer: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 697205971041910961
+      type: {class: TestingAttacks/ShotArc, ns: FumoShmup2, asm: Fumoshmup2}
+      data:
+        shot: {fileID: 11400000, guid: ec5127393eed65d4bb8c76934cdf796a, type: 2}
+    - rid: 697205971041910962
+      type: {class: TestingAttacks/ShotCircle, ns: FumoShmup2, asm: Fumoshmup2}
+      data:
+        shot: {fileID: 11400000, guid: 8174b572503b3ce4c8ada9b497f311e4, type: 2}
+    - rid: 697205971041910976
+      type: {class: TestingAttacks/TestingBowap, ns: FumoShmup2, asm: Fumoshmup2}
+      data:
+        bowapProjectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+        bowap:
+          angleSpin: -0.2
+          anglePower: 2.4
+          frameCount: 1
+          arms: 12
+          initialOffset: -20
+          startingSpeed: 7
+          maxSpeed: 11
+          speedRampTime: 6
+          duration: 7
+    - rid: 697205971041910986
+      type: {class: UtilityAttacks/AttackWait, ns: FumoShmup2, asm: Fumoshmup2}
+      data:
+        waitDuration: 1
+    - rid: 697205971041910987
+      type: {class: UtilityAttacks/AttackWait, ns: FumoShmup2, asm: Fumoshmup2}
+      data:
+        waitDuration: 0.25
 --- !u!50 &997502155
 Rigidbody2D:
   serializedVersion: 5
