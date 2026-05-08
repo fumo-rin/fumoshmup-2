@@ -16,6 +16,7 @@ namespace FumoShmup2
     #endregion
     public partial class ShmupSession : rinCore.GameSession
     {
+        public static bool SkipDialogue;
         public struct keys
         {
             public static string CurrentBombs => "CurrentBombs";
@@ -82,6 +83,7 @@ namespace FumoShmup2
                 return false;
             }
         }
+        [field: SerializeField] public ACWrapper SweepSound { get; private set; }
         public shmupPlayerResources playerResources;
         #region Int
         public int GetInt(string key) => playerResources.GetInt(key);

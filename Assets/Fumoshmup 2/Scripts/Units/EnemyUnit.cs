@@ -65,7 +65,15 @@ namespace FumoShmup2
         {
             public float duration;
             public byte lootChance;
-            public ACWrapper sweepSound;
+            public ACWrapper sweepSound
+            {
+                get
+                {
+                    ShmupSession.CurrentAs(out ShmupSession sess);
+                    ACWrapper a = sess != null ? sess.SweepSound : null;
+                    return a;
+                }
+            }
         }
         SweepOverride? sweepOverride = null;
         private bool TryGetSweepOverride(out SweepOverride sweep)
@@ -73,13 +81,12 @@ namespace FumoShmup2
             sweep = sweepOverride ?? new SweepOverride();
             return sweepOverride != null && sweep.duration > 0f;
         }
-        public void SetSweepOverride(float duration, byte lootChange, ACWrapper sound)
+        public void SetSweepOverride(float duration, byte lootChange)
         {
             sweepOverride = new SweepOverride()
             {
                 duration = duration,
                 lootChance = lootChange,
-                sweepSound = sound
             };
         }
         RevengeAttackOverride revengeOverride;
@@ -444,7 +451,7 @@ namespace FumoShmup2
                 GameSession.TryAddScoreRaw(scoreReward, "Boss Damage");
             }
         }
-        public void ForceKill()
+        public override void ForceKill()
         {
             if (this == null)
             {
@@ -458,6 +465,7 @@ namespace FumoShmup2
             CurrentHealth = 0f;
             //TriggerKillEvent(true);
             PlayDeathEffects();
+            CalculateAlive();
             gameObject.SetActive(false);
         }
         public void KillWithLoot()
@@ -670,12 +678,16 @@ namespace FumoShmup2
                 SetIframes(2f, 90f);
             }
         }
-        public static void Despawn(in List<EnemyUnit> enemies)
+        public static void Despawn(in List<FumoUnit> enemies)
         {
             var validEnemies = enemies.Where(x => x != null).ToList();
             for (int i = 0; i < validEnemies.Count; i++)
             {
-                validEnemies[i].ForceKill();
+                FumoUnit f = validEnemies[i];
+                if (f is EnemyUnit e)
+                {
+                    e.ForceKill();
+                }
             }
             validEnemies.Clear();
             validEnemies = null;
@@ -694,6 +706,7 @@ namespace FumoShmup2
         {
             ClearAllActions();
             StopAllCoroutines();
+            CalculateAlive();
         }
         private void OnEnable()
         {

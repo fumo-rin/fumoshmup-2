@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4611d76c6df344f929574dcefa35c6, type: 3}
+  m_Name: Okuu Minesweeper
+  m_EditorClassIdentifier: rinCore::RinCore.DialogueStackSO
+  characterList:
+  - characterName: Okuu
+    character: {fileID: 11400000, guid: 6f0658f0c50ed1f40adc5a891615c826, type: 2}
+  - characterName: Rin
+    character: {fileID: 11400000, guid: 1771713a7c860cf49bfc2a4bbb2ef7a6, type: 2}
+  <dialogueTextFile>k__BackingField: {fileID: 4900000, guid: 60f52bb7faf617a46b2f17bb25267de3, type: 3}
+  containedDialogue:
+    parts:
+    - ContainedMessage: I've placed 10 BOMBS! on the map.
+      CharacterName: Okuu
+      Command: 
+    - ContainedMessage: Mewo mewo!
+      CharacterName: Rin
+      Command: 
+    - ContainedMessage: Good luck!
+      CharacterName: Okuu
+      Command: 
+    - ContainedMessage: Exceptionally long piece of dialogue! very cool and epic...
+        your mom
+      CharacterName: Okuu
+      Command: 

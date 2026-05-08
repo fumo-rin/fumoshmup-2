@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4611d76c6df344f929574dcefa35c6, type: 3}
+  m_Name: Ciro
+  m_EditorClassIdentifier: rinCore::RinCore.DialogueStackSO
+  characterList:
+  - characterName: Cirno
+    character: {fileID: 11400000, guid: f20cb9ecaeaaf7c429cac329342d6036, type: 2}
+  - characterName: Letty
+    character: {fileID: 11400000, guid: f20cb9ecaeaaf7c429cac329342d6036, type: 2}
+  <dialogueTextFile>k__BackingField: {fileID: 4900000, guid: 5066f4c0b9d96ed489419ea0eec79db1, type: 3}
+  containedDialogue:
+    parts:
+    - ContainedMessage: Big and strong winter quest
+      CharacterName: Cirno
+      Command: 
+    - ContainedMessage: UNlimited snow and no more bacon.
+      CharacterName: Letty
+      Command: 
+    - ContainedMessage: Ruh roh.
+      CharacterName: Cirno
+      Command: 

@@ -38,6 +38,7 @@
   <Project Path="Unity.Services.Authentication.csproj" />
   <Project Path="Unity.VisualStudio.Editor.csproj" />
   <Project Path="PPv2URPConverters.csproj" />
+  <Project Path="Fumoshmup2.csproj" />
   <Project Path="QFSW.QC.csproj" />
   <Project Path="Unity.2D.Animation.Editor.csproj" />
   <Project Path="Unity.Services.Authentication.Editor.csproj" />
@@ -101,7 +102,6 @@
   <Project Path="Unity.Services.Core.Components.csproj" />
   <Project Path="Unity.Mathematics.Editor.csproj" />
   <Project Path="Unity.VisualScripting.SettingsProvider.Editor.csproj" />
-  <Project Path="Fumoshmup2.csproj" />
   <Project Path="UnityEditor.UI.Analytics.csproj" />
   <Project Path="QFSW.QC.Serializers.csproj" />
   <Project Path="Unity.2D.Common.Runtime.csproj" />

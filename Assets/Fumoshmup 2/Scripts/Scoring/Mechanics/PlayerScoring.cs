@@ -3,7 +3,7 @@ using rinCore;
 using TMPro;
 using UnityEngine.Rendering;
 using FumoShmup2;
-namespace FumoShmup
+namespace FumoShmup2
 {
     #region Popup
     public partial class PlayerScoring
