@@ -32,6 +32,10 @@ public partial class ShmupPlayer : IHit
     {
         get
         {
+            if (iframesEndTime == 0f)
+            {
+                return false;
+            }
             if (iframesEndTime > Time.time)
             {
                 return true;
@@ -72,9 +76,9 @@ public partial class ShmupPlayer : IHit
                 transform.position = v;
                 gameObject.SetActive(true);
                 SetCurrentIFrames(hitIframesDuration);
-                session.SetResource(ShmupSession.keys.CurrentBombs, session.GetResource(ShmupSession.keys.StartingBombs));
+                session.SetInt(ShmupSession.keys.CurrentBombs, session.GetInt(ShmupSession.keys.StartingBombs), 0, 6);
             }
-            bool cancelable = hasSession && session.GetResource(ShmupSession.keys.CurrentBombs) > 0;
+            bool cancelable = hasSession && session.GetInt(ShmupSession.keys.CurrentBombs) > 0;
             if (!cancelable)
             {
                 yield return KillAndRespawn();

@@ -7,10 +7,69 @@ namespace FumoShmup2
     public class TestingAttacks
     {
         [System.Serializable]
+        public class FutariS2BossRings : UnitAttack
+        {
+            public float duration = 20f;
+            public ProjectileDefineSO ringProjectile, spamProjectile;
+            protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
+            {
+                float localDuration = duration;
+                input.addedForward = 0.35f;
+                int cycle = 0;
+                float angle = RNG.FloatRange(-180f, 180f);
+                float startTime = Time.time;
+                float loopTime;
+                while (localDuration > 0f && sender.IsAlive)
+                {
+                    input.SetDirection(Vector2.down);
+                    loopTime = Time.time - startTime;
+                    angle += RNG.FloatRange(-3f, 3f) * (cycle - 15).Clamp(0, 3);
+                    if (cycle < 5)
+                    {
+                        for (int i = 0; i < 12; i++)
+                        {
+                            input.SetOrigin(sender.CurrentPosition);
+                            Circle(angle + i + (cycle % 2 == 0 ? 360f / 40 : 0f), 20, 8.5f - cycle.AsFloat(1f).Clamp(0f, 4f)).Spawn(input, ringProjectile, out iterationList);
+                        }
+                        yield return 0.11f.WaitForSeconds();
+                        if (cycle == 4)
+                        {
+                            yield return 0.20f.WaitForSeconds();
+                        }
+                        cycle++;
+                        continue;
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 12; i++)
+                        {
+                            input.SetOrigin(sender.CurrentPosition);
+                            Circle(angle + i + (cycle % 2 == 0 ? 360f / 40 : 0f), 20, 8.5f - cycle.AsFloat(1f).Clamp(0f, 4f)).Spawn(input, ringProjectile, out iterationList);
+                        }
+                    }
+                    for (int i = 0; i < 7; i++)
+                    {
+                        loopTime = Time.time - startTime;
+                        //float modifier = (loopTime.Multiply(90f).SineAmp(1.5f));
+                        float modifier = (loopTime.Multiply(90f).SineAmp(1.5f));
+                        int signedMod = modifier > 0 ? 1 : -1;
+                        float finalMod = modifier.Absolute().Max(1f) * signedMod;
+                        input.ReAimWithOptionalTarget(sender.CurrentPosition + new Vector2(-1.75f, 0.75f));
+                        Circle((loopTime) * finalMod * 135f, 7, 6.5f).Spawn(input, spamProjectile, out iterationList);
+                        input.ReAimWithOptionalTarget(sender.CurrentPosition + new Vector2(1.75f, 0.75f));
+                        Circle(-(loopTime) * finalMod * 100f, 7, 6.5f).Spawn(input, spamProjectile, out iterationList);
+                        localDuration -= 0.04f;
+                        yield return 0.04f.WaitForSeconds();
+                    }
+                    cycle++;
+                }
+            }
+        }
+        [System.Serializable]
         public class ShotArc : UnitAttack
         {
             public ProjectileDefineSO shot;
-            protected override IEnumerator CO_Attackpayload(ShmupUnit sender, Projectile.InputSettings input)
+            protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
             {
                 for (int i = 0; i < 13; i++)
                 {
@@ -27,7 +86,7 @@ namespace FumoShmup2
         public class ShotCircle : UnitAttack
         {
             public ProjectileDefineSO shot;
-            protected override IEnumerator CO_Attackpayload(ShmupUnit sender, Projectile.InputSettings input)
+            protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
             {
                 Circle(0f, 16, 7.5f).Spawn(input, shot, out _);
                 Circle(360f / 32, 16, 8.5f).Spawn(input, shot, out _);
@@ -42,7 +101,7 @@ namespace FumoShmup2
             public ProjectileDefineSO shot;
             public int projectilePerSecond = 10000;
             public int seconds = 8;
-            protected override IEnumerator CO_Attackpayload(ShmupUnit sender, Projectile.InputSettings input)
+            protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
             {
                 int repeats = 60;
                 int shotCount = projectilePerSecond / repeats;
@@ -87,7 +146,7 @@ namespace FumoShmup2
                 public float speedRampTime;
                 public float duration;
             }
-            protected override IEnumerator CO_Attackpayload(ShmupUnit sender, Projectile.InputSettings input)
+            protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
             {
                 float lerpTime = 0f;
                 int iteration = 0;

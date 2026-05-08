@@ -1,18 +1,40 @@
-namespace FumoShmup
-{
-    using FumoShmup2;
-    using rinCore;
-    using System.Collections.Generic;
-    using System.Linq;
-    using UnityEditor;
-    using UnityEngine;
+using rinCore;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
+using UnityEngine;
 
+namespace FumoShmup2
+{
     public class PointItemRunner : MonoBehaviour
     {
+        public static void SpawnPointItem(Vector2 position)
+        {
+            bool scoringActivated = false;
+            double scoreValue = 1000d;
+            if (ShmupSession.CurrentAs(out ShmupSession s))
+            {
+                scoringActivated = s.GetFloat(ShmupSession.keys.CashoutActivation060) <= 1f;
+                if (scoringActivated)
+                {
+                    scoreValue += s.GetFloat(ShmupSession.keys.HitCounter) * 0.1f;
+                }
+                else
+                {
+                    if (ShmupInput.FocusReleasedLongerThan(0.15f))
+                    {
+                        s.ChangeFloat(ShmupSession.keys.CashoutActivation060, 1, 0, 60);
+                    }
+                }
+            }
+            PointItemRunner.Create(position, scoringActivated, scoreValue);
+        }
         internal static readonly List<PointItem> items = new();
-        [SerializeField] ParticleSystem itemParticle;
+        [SerializeField] ParticleSystem itemParticle, cashInRenderer;
         internal static readonly List<Vector2> pointItemPositions = new(50000);
+        internal static readonly List<Vector2> cashInItemPositions = new(50000);
         internal static List<Vector2> PointItems => GetPointItemPositions();
+        internal static List<Vector2> ChargedPointItems => GetCashInItemPositions();
         private static List<Vector2> GetPointItemPositions()
         {
             pointItemPositions.Clear();
@@ -22,20 +44,49 @@ namespace FumoShmup
             }
             return pointItemPositions;
         }
+        private static List<Vector2> GetCashInItemPositions()
+        {
+            cashInItemPositions.Clear();
+            for (int i = 0; i < items.Count; i++)
+            {
+                var item = items[i];
+                if (!item.scoringCashIn)
+                    continue;
+                cashInItemPositions.Add(item.Position);
+            }
+            return cashInItemPositions;
+        }
         [rinCore.Initialize(0)]
         internal static void ResetPointItems() => items.Clear();
         private void Awake() => items.Clear();
         float focusReleaseTime = 0f;
         bool focusWasHeld;
+        void WhenPickup(PointItem item)
+        {
+            GameSession.TryAddScoreRaw(item.scoreValue, "Score Pickup");
+            if (ShmupSession.CurrentAs(out ShmupSession s))
+            {
+                s.ChangeFloat(ShmupSession.keys.HitCounter, item.scoringCashIn ? -50f : 10f, 0f, 99999f);
+            }
+            ProjectileRenderer.SpawnCosmeticLootParticle(item.Position);
+        }
         private void Update()
         {
-            void WhenPickup(Vector2 position)
-            {
-                PlayerScoring.AddPickupScore(1234d);
-            }
             bool playerAlive = ShmupPlayer.PlayerAs(out ShmupPlayer player) && player.IsAlive;
             float maxFocusTime = 1.15f;
             float minDelay = 0.35f;
+            float basePickupRadius = 2.5f;
+            if (!ShmupInput.Focus)
+            {
+                if (focusWasHeld)
+                    focusReleaseTime = Time.time;
+
+                float elapsed = (Time.time - focusReleaseTime) - minDelay;
+                float focusLerp = elapsed.Clamp(0f, maxFocusTime - minDelay) / (maxFocusTime - minDelay);
+                focusLerp = focusLerp.Clamp(0f, 1f);
+                basePickupRadius = focusLerp.MapFrom01(2.5f, 20f);
+            }
+
             for (int i = items.Count - 1; i >= 0; i--)
             {
                 var item = items[i];
@@ -44,36 +95,40 @@ namespace FumoShmup
                     items.RemoveAt(i);
                     continue;
                 }
-
-                float pickupRadius = 2.5f;
-                ShmupWorldspace.MapToWorldspaceUnclamped(0.5f, 0.7f, out Vector2 topOfScreen);
-                if (playerAlive && topOfScreen.y <= player.CurrentPosition.y)
+                if (Time.time < item.minimumPickupTime)
                 {
-                    WhenPickup(item.Position);
-                    items.RemoveAt(i);
                     continue;
                 }
-                if (!ShmupInput.Focus)
+                float finalPickupRadius = basePickupRadius;
+                if (ShmupInput.FocusReleasedLongerThan(minDelay))
                 {
-                    if (focusWasHeld) focusReleaseTime = Time.time;
-                    float elapsed = (Time.time - focusReleaseTime) - minDelay;
-                    float focusLerp = elapsed.Clamp(0f, maxFocusTime - minDelay) / (maxFocusTime - minDelay);
-                    focusLerp = focusLerp.Clamp(0f, 1f);
-                    pickupRadius = focusLerp.MapFrom01(2.5f, 20f);
+                    float itemAge = Time.time - (item.minimumPickupTime - 0.5f);
+                    float itemPickupLerp = itemAge.Clamp(0f, 1.5f) / 1.5f;
+
+                    itemPickupLerp = itemPickupLerp.Clamp(0f, 1f);
+                    itemPickupLerp *= itemPickupLerp;
+
+                    float additionalRadius = itemPickupLerp.MapFrom01(0f, 6f);
+                    finalPickupRadius += additionalRadius;
                 }
-                if (playerAlive && item.Position.SquareDistanceToLessThan(player.CurrentPosition, pickupRadius))
+                if (playerAlive && item.Position.SquareDistanceToLessThan(player.CurrentPosition, finalPickupRadius))
                 {
-                    WhenPickup(item.Position);
+                    WhenPickup(item);
                     items.RemoveAt(i);
                     continue;
                 }
             }
-            itemParticle.RenderAnimatedPoints(PointItems, Time.time);
+            itemParticle.RenderAnimatedPoints(PointItems, 0.3f, false);
+            cashInRenderer.RenderAnimatedPoints(ChargedPointItems, 0.3f, false);
             focusWasHeld = ShmupInput.Focus;
         }
-        public static void Create(Vector2 worldPosition)
+        public static void Create(Vector2 worldPosition, bool scoringCashIn, double scoreValue)
         {
-            items.Add(new(worldPosition));
+            items.Add(new(worldPosition)
+            {
+                scoringCashIn = scoringCashIn,
+                scoreValue = scoreValue
+            });
         }
         public static void RestartPointItems()
         {
@@ -85,12 +140,18 @@ namespace FumoShmup
     {
         private static readonly float GravityStrength = -5.5f;
         private static readonly float MaxFallSpeed = -5.5f;
+        public bool scoringCashIn;
+        public double scoreValue;
+        public float minimumPickupTime;
         public Vector2 Position { get; set; }
         public Vector2 Velocity { get; private set; }
         public PointItem(Vector2 position)
         {
             this.Position = position;
             this.Velocity = new Vector2(10f.RandomPositiveNegativeRange(), 3.5f.Spread(45f));
+            this.scoringCashIn = false;
+            this.scoreValue = 1000d;
+            this.minimumPickupTime = Time.time + 0.35f.Spread(20f);
         }
         public void ApplyGravity(float deltaTime)
         {

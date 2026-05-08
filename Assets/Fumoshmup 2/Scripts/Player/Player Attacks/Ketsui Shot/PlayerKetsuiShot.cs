@@ -1,4 +1,5 @@
 using rinCore;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace FumoShmup2
     {
         [SerializeField] InputActionReference shootingAction, focusAction;
         [SerializeField] ShmupUnit Owner;
-        [SerializeField] ProjectileDefineSO unfocusShot, optionShot, focusShot;
+        [SerializeField] ProjectileDefineSO unfocusShot, optionShot, superShot;
         [SerializeField] ACWrapper unfocusShotSound;
         [SerializeField] Transform[] shotOptionNests4 = new Transform[4];
         AttackBuilder a = new();
@@ -46,8 +47,13 @@ namespace FumoShmup2
             }
             IEnumerator CO_Supershot()
             {
+                yield return 0.05f.WaitForSeconds();
+                a.BuildInput(Owner, out Projectile.InputSettings input);
+                if (a.Single(0f, 30f).Spawn(input, superShot, out Projectile p))
+                {
+                    p.SetDamage(new(Owner, 100f, 1f));
+                }
                 currentShot = null;
-                yield break;
             }
             IEnumerator CO_Shot()
             {
@@ -57,7 +63,6 @@ namespace FumoShmup2
                         return;
                     a.BuildInput(Owner, out var forward);
                     forward.SetDirection(Vector2.up);
-                    forward.Flare = true;
                     for (var i = 0; i < 3; i++)
                     {
                         float speed = 36f + i.AsFloat(8f);
@@ -86,14 +91,12 @@ namespace FumoShmup2
 
                         foreach (var shot in Options(cachedFocusLerp))
                         {
-
                             input.SetOrigin(shot + Owner.CurrentPosition);
                             for (int i = 0; i < 3; i++)
                             {
                                 float xMod = (shot.x.Absolute() - 0.5f);
                                 xMod = xMod.MapTo01(0f, 1f, true);
                                 float angle = xMod.MapFrom01(0f, 30f) * -shot.x.SignInt();
-                                input.Flare = true;
                                 if (a.Single(angle, 25f + i.AsFloat(5f)).Spawn(input, optionShot, out Projectile p))
                                 {
                                     shotcap.Add(p);

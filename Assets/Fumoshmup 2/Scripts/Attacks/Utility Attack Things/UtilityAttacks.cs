@@ -11,7 +11,7 @@ namespace FumoShmup2
         public class AttackWait : UnitAttack
         {
             public float waitDuration = 1f;
-            protected override IEnumerator CO_Attackpayload(ShmupUnit sender, Projectile.InputSettings input)
+            protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
             {
                 yield return waitDuration.WaitForSeconds();
             }

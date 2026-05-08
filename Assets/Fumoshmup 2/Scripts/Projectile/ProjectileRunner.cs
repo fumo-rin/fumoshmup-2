@@ -358,8 +358,8 @@ namespace FumoShmup2
             int removed = sweeps.Count;
             if (sweepDuration > 0f && slowdown)
             {
-                float slowdownDuration = sweepDuration + removed.AsFloat().Multiply(0.001f).Clamp(0f, 2f);
-                TimeSlowHandler.CombineSlow("Sweep Slowdown", 0.6f, slowdownDuration);
+                float slowdownDuration = sweepDuration + removed.AsFloat().Multiply(0.001f).Clamp(0f, 0.5f);
+                TimeSlowHandler.CombineSlow("Sweep Slowdown", 0.75f, slowdownDuration);
             }
             ProjectileRenderer.SpawnPointItems(sweeps, lootChance);
         }

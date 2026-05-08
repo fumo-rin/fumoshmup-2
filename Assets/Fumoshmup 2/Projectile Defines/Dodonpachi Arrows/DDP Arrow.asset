@@ -15,7 +15,7 @@ MonoBehaviour:
   ColliderShape:
     rid: 697205976453611520
   Size: 0.5
-  SizeSortingMultiplier: 2.77
+  SizeSortingMultiplier: 0.1
   Color:
     serializedVersion: 2
     rgba: 4294967295

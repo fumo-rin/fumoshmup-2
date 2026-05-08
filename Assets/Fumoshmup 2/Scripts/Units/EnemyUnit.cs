@@ -247,19 +247,12 @@ namespace FumoShmup2
             bool currentPhase = true;
             if (currentPhase)
             {
-                int loot = 999;
-                //ClearAllAttackRoutines();
-                CreateLootItem(loot, 4.5f);
                 Action_BossRecenter(0.65f);
             }
             currentPhase = false;
         }
         public void ForceNextPhaseSet()
         {
-            /*if (phases.TryStartNextPhase(out BossPhaseSO nextPhase))
-            {
-                StartNewHealth(nextPhase.phaseHealth, nextPhase.phaseHealth);
-            }*/
             {
                 ProjectileRunner.TriggerSweep(0f, 0, false, out _);
                 ForceKill();
@@ -405,7 +398,7 @@ namespace FumoShmup2
             });
         }
         public void SetSealRadius(float r) => sealRadius = r;
-        int LootCount => !IsBoss ? CurrentMaxHealth.Multiply(0.333f).ToInt() : 0;
+        int LootCount => !IsBoss ? CurrentMaxHealth.Multiply(0.333f).ToInt() : PhasesTotalHealth.Multiply(0.02f).Clamp(50f, 1000f).ToInt();
         public void SendHit(IHit.HitPacket packet, out float damageDealt)
         {
             damageDealt = 0f;
@@ -451,7 +444,6 @@ namespace FumoShmup2
                 GameSession.TryAddScoreRaw(scoreReward, "Boss Damage");
             }
         }
-        [NYI("Spellcard, kill event")]
         public void ForceKill()
         {
             if (this == null)
@@ -467,9 +459,7 @@ namespace FumoShmup2
             //TriggerKillEvent(true);
             PlayDeathEffects();
             gameObject.SetActive(false);
-            Destroy(gameObject);
         }
-        [NYI("No Point Items spawning yet")]
         public void KillWithLoot()
         {
             if (sealRadius > 0.1f) ProjectileRunner.SealBullets(CurrentPosition, this, sealRadius, 255, out _);
@@ -489,7 +479,7 @@ namespace FumoShmup2
                 {
                     if (ShmupPlayer.PlayerAs(out ShmupPlayer p))
                     {
-                        SweepOnKill.SweepData s = new(1.35f, 255, p.SweepSound);
+                        SweepOnKill.SweepData s = new(0.35f, 255, p.SweepSound);
                         SweepOnKill.SweepStuff(this, s, false);
                     }
                 }
@@ -506,7 +496,7 @@ namespace FumoShmup2
         {
             for (int i = 0; i < IntExtensions.Clamp(lootCount, 0, 10000); i++)
             {
-                //PointItemRunner.Create(position + (Random.insideUnitCircle.normalized * 0.75f.Spread(50f) * areaSize));
+                PointItemRunner.SpawnPointItem(position + (RNG.SeededRandomVector2.normalized * 0.75f.Spread(50f) * areaSize));
             }
         }
 
@@ -669,7 +659,7 @@ namespace FumoShmup2
             CurrentIFramesDamageReductionPercent = iFramesDamageReduction100.Clamp(0f, 100f);
             IframesEndTime = duration + Time.time;
         }
-        public override bool HasIframes => IframesEndTime > Time.time;
+        public override bool HasIframes => IframesEndTime > Time.time && IframesEndTime > 0f;
         protected override void WhenAwake()
         {
             bool hasPhases = HasPhases;
@@ -714,6 +704,8 @@ namespace FumoShmup2
         }
         private void Think()
         {
+            if (SceneLoader.IsLoading)
+                return;
             ShmupPlayer.PlayerAs(out ShmupPlayer p);
             if (IsOnScreenAndAlive)
             {

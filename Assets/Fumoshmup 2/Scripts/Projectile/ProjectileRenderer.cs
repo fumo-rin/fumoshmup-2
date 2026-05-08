@@ -103,21 +103,14 @@ namespace FumoShmup2
                 }
             }
         }
-        public static void SpawnPointItem(Vector2 position, int lootValue)
+        public static void SpawnCosmeticLootParticle(Vector2 position)
         {
             if (ShmupPlayer.Player.UnitAs<ShmupPlayer>(out ShmupPlayer player))
             {
-                //TODO PointItemRunner.Create(position);
+                SingleCosmeticPickupParticle(position, player.transform, 0.5f, 50f, 50f);
             }
         }
-        public static void SpawnYellowItem(Vector2 position, int lootValue)
-        {
-            if (ShmupPlayer.Player.UnitAs<ShmupPlayer>(out ShmupPlayer player))
-            {
-                SinglePickupParticle(position, player.transform, 0.5f, 50f, 50f, lootValue);
-            }
-        }
-        static void SinglePickupParticle(Vector2 position, Transform target, float duration = 0.5f, float startTimeSpreadPercent = 50f, float durationSpreadPercent = 50f, int lootValue = 1)
+        static void SingleCosmeticPickupParticle(Vector2 position, Transform target, float duration = 0.5f, float startTimeSpreadPercent = 50f, float durationSpreadPercent = 50f)
         {
             if (instance == null)
             {
@@ -150,7 +143,6 @@ namespace FumoShmup2
             }
 
             batch.particles.Add(data);
-            //TODO PointItemValueUI.AddPickupCount(1 * lootValue);
             if (!instance.coroutineRunning)
             {
                 instance.StartCoroutine(instance.LootParticleUpdateCoroutine());
@@ -163,7 +155,7 @@ namespace FumoShmup2
             {
                 if (lootChance > RNG.Byte255)
                 {
-                    //TODO PointItemRunner.Create(item);
+                    PointItemRunner.SpawnPointItem(item);
                 }
             }
         }

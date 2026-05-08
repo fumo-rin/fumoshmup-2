@@ -38,17 +38,17 @@ TagManager:
   - 
   - UI 3D
   m_SortingLayers:
-  - name: Player Projectiles
-    uniqueID: 2895793171
-    locked: 0
   - name: Player
     uniqueID: 467262385
     locked: 0
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: Loot
     uniqueID: 3164713073
+    locked: 0
+  - name: Player Projectiles
+    uniqueID: 2895793171
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
   - name: Effects
     uniqueID: 2800787963

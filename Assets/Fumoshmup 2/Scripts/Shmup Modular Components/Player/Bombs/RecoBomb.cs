@@ -26,7 +26,7 @@ namespace FumoShmup2
                 bool canBomb = false;
                 if (ShmupSession.CurrentAs(out ShmupSession session))
                 {
-                    canBomb = session.GetResource(ShmupSession.keys.CurrentBombs) > 0;
+                    canBomb = session.GetInt(ShmupSession.keys.CurrentBombs) > 0;
                 }
                 if (ShmupPlayer.PlayerAs(out ShmupPlayer p) && p.IsAlive)
                 {
@@ -41,7 +41,7 @@ namespace FumoShmup2
             lastBombTime = Time.time;
             if (ShmupSession.CurrentAs(out ShmupSession session))
             {
-                session.ChangeResource(ShmupSession.keys.CurrentBombs, -1);
+                session.ChangeInt(ShmupSession.keys.CurrentBombs, -1, 0, 6);
             }
             ShmupPlayer ownerPlayer = Owner as ShmupPlayer;
             ownerPlayer.SetCurrentIFrames(BombIframesTime);
