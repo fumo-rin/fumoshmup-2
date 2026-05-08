@@ -208,7 +208,7 @@ namespace FumoShmup2
         {
             if (original == null || activeStage == null)
                 return;
-
+            Undo.RecordObject(activeStage, "Duplicate Node");
             StageNode newNode = ScriptableObject.CreateInstance(original.GetType()) as StageNode;
             if (newNode == null)
             {
@@ -223,15 +223,15 @@ namespace FumoShmup2
             newNode.title = original.title;
             newNode.skipIndex = original.skipIndex;
             newNode.name = original.name + "_Copy";
+            newNode.IsEnabled = original.IsEnabled;
 
             AssetDatabase.AddObjectToAsset(newNode, activeStage);
-            AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(activeStage));
-
             activeStage.nodes.Add(newNode);
-
-            Undo.RecordObject(activeStage, "Duplicate Node");
+            EditorUtility.SetDirty(newNode);
             EditorUtility.SetDirty(activeStage);
             AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
             Repaint();
         }
         private StageNode GetHoveredNode(Vector2 mousePosition)
@@ -755,10 +755,11 @@ namespace FumoShmup2
         }
         void AddNodeByType(Type nodeType, Vector2 mousePosition)
         {
-            if (activeStage == null) return;
+            if (activeStage == null)
+                return;
 
+            Undo.RecordObject(activeStage, "Add Stage Node");
             Vector2 graphPos = mousePosition - viewOffset;
-
             StageNode node = ScriptableObject.CreateInstance(nodeType) as StageNode;
             if (node == null)
             {
@@ -773,12 +774,11 @@ namespace FumoShmup2
             node.IsEnabled = true;
 
             AssetDatabase.AddObjectToAsset(node, activeStage);
-            AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(activeStage));
-
             activeStage.nodes.Add(node);
-
-            Undo.RecordObject(activeStage, "Add Stage Node");
+            EditorUtility.SetDirty(node);
             EditorUtility.SetDirty(activeStage);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
 
             Repaint();
         }

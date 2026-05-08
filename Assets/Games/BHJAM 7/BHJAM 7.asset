@@ -18,6 +18,6 @@ MonoBehaviour:
     enabled: 1
   stageScene: {fileID: 0}
   currentLinkAttempt: {fileID: 0}
-  selectedSkipIndex: -1
+  selectedSkipIndex: 0
   StageEndDialogue: {fileID: 0}
   nodes: []
