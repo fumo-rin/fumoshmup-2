@@ -27,7 +27,7 @@ namespace FumoShmup2
             {
                 float force = setting == null ? defaultSetting.forceMultiplier : setting.Value.forceMultiplier;
                 Color32? color = setting == null ? defaultSetting.colorOverride : setting.Value.colorOverride;
-                s.hitParticle.EmitSingleCached(position, normal.QuantizeToStepSize(15f).Rotate2D(10f.RandomPositiveNegativeRange()).ScaleToMagnitude(3f.Spread(55f) * force), 25f, color);
+                s.hitParticle.EmitSingleParticleCached(position, normal.QuantizeToStepSize(15f).Rotate2D(10f.RandomPositiveNegativeRange()).ScaleToMagnitude(3f.Spread(55f) * force), 25f, color);
             }
         }
     }
@@ -40,7 +40,7 @@ namespace FumoShmup2
         {
             if (instance == null || instance.bulletCancelParticlePrefab == null)
                 return;
-            instance.bulletCancelParticlePrefab.EmitSingleCached(position, velocity * velocityMultiplier, 50f);
+            instance.bulletCancelParticlePrefab.EmitSingleParticleCached(position, velocity * velocityMultiplier, 50f);
         }
     }
     #endregion
@@ -474,7 +474,8 @@ namespace FumoShmup2
                     }
                     else
                     {
-                        scaleFactor = 1f;
+                        //scaleFactor = 1f;
+                        scaleFactor = Mathf.Lerp(peakScale, 1f, (t - growTime) / shrinkTime);
                     }
                 }
 

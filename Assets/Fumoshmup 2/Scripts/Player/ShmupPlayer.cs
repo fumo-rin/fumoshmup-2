@@ -18,7 +18,6 @@ public partial class ShmupPlayer : IHit
         public ACWrapper DeathSound;
     }
     [SerializeField] HitRoutineData hitData = new();
-    [SerializeField] SpriteFlashMaterial iframesFlashMaterial;
     private float iframesEndTime = 0f;
     public delegate void IframesDurationActivation(float duration);
     public static event IframesDurationActivation WhenIframesActivatedGetDuration;
@@ -141,7 +140,6 @@ public partial class ShmupPlayer : ShmupUnit
     private bool manualAliveFlag = true;
     [SerializeField] InputActionReference focusKey;
     [SerializeField] InputActionReference bombKey;
-    [SerializeField] ProjectileDefineSO testProjectile;
     public static bool BlockProjectileSpawning
     {
         get
@@ -196,7 +194,7 @@ public partial class ShmupPlayer : ShmupUnit
         }
         if (bombKey.JustPressed())
         {
-            Debug.Log(PlayerBomb.TryTriggerBomb(this));
+            PlayerBomb.TryTriggerBomb(this);
         }
         MoveLoop();
         ShmupWorldspace.MapToWorldspaceUnclamped(0.5f, 0.5f, out Vector2 space);

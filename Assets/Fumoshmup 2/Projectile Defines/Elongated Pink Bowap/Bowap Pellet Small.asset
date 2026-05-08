@@ -23,7 +23,7 @@ MonoBehaviour:
   animationSpreadPercent: 0
   spin: 0
   particleSystemPrefab: {fileID: 3217051552466667707, guid: 9df42d65e1495a746a1adbef0fc760e0, type: 3}
-  SortingLayer: Default
+  SortingLayer: Projectiles
   useFlare: 1
   FlareColor:
     serializedVersion: 2

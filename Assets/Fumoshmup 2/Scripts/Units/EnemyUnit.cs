@@ -5,6 +5,7 @@ using System.Collections;
 using System.Linq;
 using UnityEditor;
 using System;
+using UnityEngine.Rendering;
 
 namespace FumoShmup2
 {
@@ -89,6 +90,35 @@ namespace FumoShmup2
         void TriggerRevengeOverride()
         {
             if (revengeOverride != null) revengeOverride.TriggerRevenge(this);
+        }
+    }
+    #endregion
+    #region Death Effect
+    public partial class EnemyUnit
+    {
+        [System.Serializable]
+        class deathEffect
+        {
+            [SerializeField] ParticleSystem ps;
+            [SerializeField] float delay;
+            [SerializeField] Vector2 randomRadiusRange = new(0.45f, 0.65f);
+            public void Play(EnemyUnit e)
+            {
+                IEnumerator CO_Play()
+                {
+                    yield return delay.WaitForSeconds();
+                    ps.PlayCachedOnce(e.CurrentPosition + (RNG.SeededRandomVector2.normalized * RNG.RandomFloatRange(randomRadiusRange.x, randomRadiusRange.y)));
+                }
+                CO_Play().RunRoutine();
+            }
+        }
+        [SerializeField] List<deathEffect> effects = new();
+        private void PlayDeathEffects()
+        {
+            foreach (var effect in effects)
+            {
+                effect.Play(this);
+            }
         }
     }
     #endregion
@@ -211,8 +241,7 @@ namespace FumoShmup2
     #region Boss Phases
     public partial class EnemyUnit
     {
-        public bool IsBoss => false;
-        public float PhaseDamageTakenMod => IsBoss ? 1f : 1f;
+        public bool IsBoss => HasPhases;
         public void ClearPhase()
         {
             bool currentPhase = true;
@@ -250,6 +279,7 @@ namespace FumoShmup2
         }
         float phaseTrackedDamage;
         [SerializeField] List<UnitPhase> phases = new();
+        HashSet<UnitPhase> spentPhases = new();
         public bool HasPhases => phases != null && phases.Count > 0;
         public UnitPhase CurrentPhase
         {
@@ -270,6 +300,11 @@ namespace FumoShmup2
                         break;
                     }
                     remaining -= item.phaseHealth;
+                }
+                if (found != null && !spentPhases.TryGetValue(found, out _))
+                {
+                    spentPhases.Add(found);
+                    StartNewHealth(found.phaseHealth, found.phaseHealth);
                 }
                 return found;
             }
@@ -364,45 +399,24 @@ namespace FumoShmup2
         {
             CurrentMaxHealth = maxHealth;
             CurrentHealth = newHealth.Clamp(0, maxHealth);
-            if (CurrentHealth > 0)
+            MaintainAliveEnemy(this, new AliveSetterPacket()
             {
-                aliveEnemies.Add(this);
-            }
-            else
-            {
-                aliveEnemies.Remove(this);
-            }
+
+            });
         }
         public void SetSealRadius(float r) => sealRadius = r;
         int LootCount => !IsBoss ? CurrentMaxHealth.Multiply(0.333f).ToInt() : 0;
-        [NYI("Refactor")]
         public void SendHit(IHit.HitPacket packet, out float damageDealt)
         {
             damageDealt = 0f;
             if (IsAlive)
             {
-                //Phase changes is handled elsewhere. apart from the start next phase.
-                //it is handled on bossphases.phase class
                 if (packet.FinalDamage >= CurrentHealth)
                 {
                     CurrentHealth = 0f;
-                    if (IsBoss)
-                    {
-                        //Spellcard.EndSpell();
-                    }
-                    bool hasNextPhase = false;
-                    if (!hasNextPhase)
-                    {
-                        //WhenPhaseKilled?.Invoke(this, nextPhase);
-                        //TriggerPhaseChange(false);
-                        float phaseHealth = 1000f;
-                        StartNewHealth(phaseHealth, phaseHealth);
-                    }
-                    else
-                    {
-                        ClearPhase();
-                        KillWithLoot();
-                    }
+                    ClearPhase();
+                    KillWithLoot();
+                    return;
                 }
                 if (!IsOnScreenAndAlive)
                 {
@@ -425,10 +439,16 @@ namespace FumoShmup2
                 {
                     damage *= Mathf.Max(0f, 1f - CurrentIFramesDamageReductionPercent * 0.01f);
                 }
-                damage *= PhaseDamageTakenMod;
+                damage *= 1f;
                 GameSession.TryAddScoreRaw(damage * 250d, "Enemy Damage");
                 damageDealt = damage.Min(CurrentHealth);
+                double healthPercentDelta = (double)damageDealt / (double)CurrentMaxHealth;
                 StartNewHealth(CurrentHealth - damage, CurrentMaxHealth);
+
+                const double bossScorePercent = 0.05d;
+                GameSession.ReadCurrentRawScore(out double currentScore);
+                double scoreReward = currentScore * healthPercentDelta * bossScorePercent;
+                GameSession.TryAddScoreRaw(scoreReward, "Boss Damage");
             }
         }
         [NYI("Spellcard, kill event")]
@@ -445,15 +465,15 @@ namespace FumoShmup2
             }
             CurrentHealth = 0f;
             //TriggerKillEvent(true);
+            PlayDeathEffects();
             gameObject.SetActive(false);
             Destroy(gameObject);
         }
-        [NYI("No Point Items spawning yet, and kill event")]
+        [NYI("No Point Items spawning yet")]
         public void KillWithLoot()
         {
             if (sealRadius > 0.1f) ProjectileRunner.SealBullets(CurrentPosition, this, sealRadius, 255, out _);
             CreateLootItem(LootCount, 2.5f);
-            //TriggerKillEvent(false);
             TriggerRevengeOverride();
             if (TryGetSweepOverride(out SweepOverride sweep))
             {
@@ -463,24 +483,20 @@ namespace FumoShmup2
                     SweepOnKill.SweepStuff(this, s, false);
                 }
             }
-            gameObject.SetActive(false);
-            if (IsBoss)
+            else
             {
-                void SpawnLoot(Vector2 position)
+                if (IsBoss)
                 {
-                    CreateLootItemOnPosition(position, 20, 0.35f);
+                    if (ShmupPlayer.PlayerAs(out ShmupPlayer p))
+                    {
+                        SweepOnKill.SweepData s = new(1.35f, 255, p.SweepSound);
+                        SweepOnKill.SweepStuff(this, s, false);
+                    }
                 }
-                var explosion = new BossExplosion.data()
-                {
-                    maxRadius = 3.5f,
-                    minRadius = 0.35f,
-                    delay = 0.1f,
-                    repeatDelay = 0.06f,
-                    sizeRange = new(0.65f, 1.65f)
-                };
-                new BossExplosion(CurrentPosition, 6, explosion, SpawnLoot);
             }
-            Destroy(gameObject);
+            PlayDeathEffects();
+            gameObject.SetActive(false);
+            CalculateAlive();
         }
         private void CreateLootItem(int lootCount, float areaSize = 1f)
         {
@@ -607,7 +623,7 @@ namespace FumoShmup2
         [QFSW.QC.Command("-slay")]
         public static void KillCommand()
         {
-            foreach (var item in AliveEnemiesOnScreen.ToList())
+            foreach (var item in AliveEnemiesOnScreen)
             {
                 item.SendHit(new IHit.HitPacket(item.CurrentPosition, new(null, 1000000, 1f)), out float hit);
             }
@@ -618,37 +634,51 @@ namespace FumoShmup2
     {
         public bool IsOnScreenAndAlive => IsAliveInsideRect(ShmupWorldspace.WorldSpace);
         public bool IsAliveInsideRect(in Rect r) => IsAlive && r.Contains(CurrentPosition);
-        static EnemyUnit()
-        {
-            aliveEnemies = new();
-        }
-        static HashSet<EnemyUnit> aliveEnemies;
         [SerializeField] SpriteRenderer enemyRenderer;
-        public static HashSet<EnemyUnit> AliveEnemies => aliveEnemies;
         public static IEnumerable<EnemyUnit> AliveEnemiesOnScreen
         {
             get
             {
-                foreach (var item in aliveEnemies)
+                foreach (var item in FumoUnit.AliveEnemies)
                 {
-                    if (item.IsOnScreenAndAlive)
-                        yield return item;
+                    if (item is EnemyUnit e && e != null)
+                    {
+                        if (e.IsOnScreenAndAlive)
+                            yield return e;
+                    }
+                }
+            }
+        }
+        [SerializeField] List<Collider2D> shotHitboxes = new();
+        public override IEnumerable<Collider2D> Hitboxes
+        {
+            get
+            {
+                foreach (var item in shotHitboxes)
+                {
+                    if (item == null)
+                        continue;
+                    yield return item;
                 }
             }
         }
 
-        public override IEnumerable<Collider2D> Hitboxes => throw new System.NotImplementedException();
-
-        public override bool HasIframes => false;
-        [NYI("No Phases Default Health")]
+        private float IframesEndTime = 0f;
+        public void SetIframes(float duration, float iFramesDamageReduction100)
+        {
+            CurrentIFramesDamageReductionPercent = iFramesDamageReduction100.Clamp(0f, 100f);
+            IframesEndTime = duration + Time.time;
+        }
+        public override bool HasIframes => IframesEndTime > Time.time;
         protected override void WhenAwake()
         {
-            if (aliveEnemies == null)
-            {
-                aliveEnemies = new();
-            }
-            bool hasPhases = false;
+            bool hasPhases = HasPhases;
             if (!hasPhases) StartNewHealth(startingHealth, startingHealth);
+            else
+            {
+                StartNewHealth(99999f, 99999f);
+                SetIframes(2f, 90f);
+            }
         }
         public static void Despawn(in List<EnemyUnit> enemies)
         {
@@ -660,30 +690,23 @@ namespace FumoShmup2
             validEnemies.Clear();
             validEnemies = null;
         }
-        [NYI("Missing Spellcard")]
         protected override void WhenDestroy()
         {
             base.WhenDestroy();
-            //SpellcardUI.WhenTimerExpire -= ForceNextPhase;
-            aliveEnemies.Remove(this);
             ClearAllActions();
             StopAllCoroutines();
         }
-        [NYI("Missing Spellcard")]
         protected override void WhenStart()
         {
             base.WhenStart();
-            //SpellcardUI.WhenTimerExpire += ForceNextPhase;
-        }
-        private void OnEnable()
-        {
-            aliveEnemies.Add(this);
         }
         private void OnDisable()
         {
-            aliveEnemies.Remove(this);
             ClearAllActions();
             StopAllCoroutines();
+        }
+        private void OnEnable()
+        {
         }
         private void LateUpdate()
         {
@@ -694,17 +717,8 @@ namespace FumoShmup2
             ShmupPlayer.PlayerAs(out ShmupPlayer p);
             if (IsOnScreenAndAlive)
             {
-                //TryAttack();
+
             }
-            /*if (BossMover != null)
-            {
-                Vector2 directionToPlayer = Vector2.down;
-                if (p.IsAlive)
-                {
-                    directionToPlayer = (p.CurrentPosition - CurrentPosition).normalized;
-                }
-                BossMover.MoveUnit(this, directionToPlayer);
-            }*/
             if (!IsRunningActions)
             {
                 if (leashRoutine == null)
@@ -716,7 +730,20 @@ namespace FumoShmup2
 
         protected override bool CalculateAlive()
         {
-            return base.CalculateAlive();
+            bool isAlive = CurrentHealth > 0f && gameObject != null && gameObject.activeInHierarchy;
+            if (isAlive)
+            {
+                BossbarUI.AssignUnit(new()
+                {
+                    target = this,
+                    weight = GetHashCode()
+                });
+            }
+            else
+            {
+                BossbarUI.UnassignUnit(this);
+            }
+            return isAlive;
         }
 
         protected override void WhenUpdate()

@@ -37,6 +37,28 @@ namespace FumoShmup2
             }
         }
         [System.Serializable]
+        public class StressTestSpam : UnitAttack
+        {
+            public ProjectileDefineSO shot;
+            public int projectilePerSecond = 10000;
+            public int seconds = 8;
+            protected override IEnumerator CO_Attackpayload(ShmupUnit sender, Projectile.InputSettings input)
+            {
+                int repeats = 60;
+                int shotCount = projectilePerSecond / repeats;
+                int durationLeft = seconds;
+                while (durationLeft > 0 && sender != null && sender.IsAlive)
+                {
+                    for (int i = 0; i < repeats; i++)
+                    {
+                        Circle(RNG.FloatRange(0f, 360f), shotCount, 11f).Spawn(input, shot, out _);
+                        yield return 0.016f.WaitForSeconds();
+                    }
+                    durationLeft -= 1;
+                }
+            }
+        }
+        [System.Serializable]
         public class TestingBowap : UnitAttack
         {
             public ProjectileDefineSO bowapProjectile;

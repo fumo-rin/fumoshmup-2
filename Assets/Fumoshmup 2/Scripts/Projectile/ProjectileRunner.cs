@@ -275,6 +275,8 @@ namespace FumoShmup2
                 {
                     continue;
                 }
+                if (iteration.Faction == ProjectileFaction.Player)
+                    continue;
                 backdropIteration.Add(iteration.Position);
             }
             backdropRenderer.RenderAnimatedPoints(backdropIteration, Time.time, true);
@@ -311,7 +313,7 @@ namespace FumoShmup2
             {
                 return;
             }
-            instance.FlareRenderer.EmitSingleCached(position, velocity, 0f, color);
+            instance.FlareRenderer.EmitSingleParticleCached(position, velocity, 0f, color);
         }
 
         public static int BulletCount => instance == null ? 0 : instance.projectiles.Count;
@@ -417,7 +419,7 @@ namespace FumoShmup2
                             }
                             break;
                         case ProjectileFaction.Player:
-                            foreach (var item in FumoUnit.AliveEnemiesList)
+                            foreach (var item in FumoUnit.AliveEnemies)
                             {
                                 if (p.CollidesWith(item, out hit))
                                     break;
@@ -473,7 +475,7 @@ namespace FumoShmup2
             float dt = Time.deltaTime;
             if (ShmupPlayer.PlayerAs(out ShmupPlayer hitPlayer))
                 WriteUnits(CollisionBitmask.EnemyProjectiles, new ShmupPlayer[1] { hitPlayer });
-            WriteUnits(CollisionBitmask.PlayerProjectiles, FumoUnit.AliveEnemiesList.ToArray());
+            WriteUnits(CollisionBitmask.PlayerProjectiles, FumoUnit.AliveEnemies.ToArray());
 
             for (int i = 0; i < projectiles.Count; i++)
             {
@@ -512,12 +514,13 @@ namespace FumoShmup2
                     shouldRemove = true;
                 }
 
-                if (ShmupPlayer.PlayerAs(out ShmupPlayer grazePlayer) && !grazedProjectiles.Contains(proj))
-                {
+                if (proj.Faction != ProjectileFaction.Player && ShmupPlayer.PlayerAs(out ShmupPlayer grazePlayer) && !grazedProjectiles.Contains(proj))
+                {//Player Graze
                     if (proj.Position.InBoxDistance(grazePlayer.CurrentPosition, 1f))
                     {
                         grazedProjectiles.Add(proj);
                         grazeSound.Play(proj.Position);
+                        ShmupGamemode.TriggerGraze(1);
                     }
                 }
 
@@ -540,7 +543,7 @@ namespace FumoShmup2
                 }
 
                 if (clearLayer != 0 && !shouldRemove)
-                {
+                {//terrain fallback hit
                     RaycastHit2D terrainHit = Physics2D.Raycast(proj.Position, proj.EffectiveVelocity, proj.HalfLength, clearLayer);
                     if (terrainHit.transform != null)
                     {

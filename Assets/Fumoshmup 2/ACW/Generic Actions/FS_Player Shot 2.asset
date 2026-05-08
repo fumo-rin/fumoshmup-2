@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: rinCore::RinCore.ACWrapper
   SoundName: Player Shot 2
   soundVolume: 0.428
-  audioMixerOverride: {fileID: -1549346045928506887, guid: 2d90163c4095a0a4283cc9766c8294e4, type: 2}
   <soundClips>k__BackingField:
   - clip: {fileID: 8300000, guid: ed505820b12b40742b46631716b495de, type: 3}
     PitchVariancePercent: 4.5
@@ -35,7 +34,7 @@ MonoBehaviour:
     PitchVariancePercent: 7.2
     PitchOrigin: 6
     Volume: 0.068
-    Muted: 0
+    Muted: 1
   <singleChannel>k__BackingField: 1
   <singleRepeatLockoutTime>k__BackingField: 0.008333334
   <Is3D>k__BackingField: 1

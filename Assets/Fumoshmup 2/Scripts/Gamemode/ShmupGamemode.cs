@@ -19,10 +19,22 @@ namespace FumoShmup2
 
     }
     #endregion
-    #region New
+    #region Graze Action
     public partial class ShmupGamemode
     {
-
+        public delegate void ShmupGrazeAction(int grazeIncrease, int totalGraze);
+        public static event ShmupGrazeAction WhenGraze;
+        public double scorePerGraze = 100f;
+        public static int TotalGraze { get; private set; }
+        public static void TriggerGraze(int grazeIncrease)
+        {
+            TotalGraze += grazeIncrease;
+            WhenGraze?.Invoke(grazeIncrease, TotalGraze);
+            if (CurrentMode is ShmupGamemode mode && mode.scorePerGraze > 0d)
+            {
+                GameSession.TryAddScoreRaw(grazeIncrease * mode.scorePerGraze, "Player Grazing");
+            }
+        }
     }
     #endregion
     #region Current Mode Select

@@ -8,6 +8,49 @@ using UnityEditor;
 
 namespace FumoShmup2
 {
+    #region Targetting Helper
+    public class AttackBuilder
+    {
+        public Projectile.ArcSettings Arc(float centerAimAngle, float arcSize, int shotCount, float projectileSpeed)
+            => ProjectileFactory.Arc(centerAimAngle, arcSize, shotCount, projectileSpeed);
+
+        public Projectile.SingleSettings Single(float addedAngle, float projectileSpeed)
+            => ProjectileFactory.Single(addedAngle, projectileSpeed);
+
+        public Projectile.CircleSettings Circle(float addedAngle, int segments, float projectileSpeed)
+            => ProjectileFactory.Circle(addedAngle, segments, projectileSpeed);
+
+        public bool BuildInput(ShmupUnit Sender, out Projectile.InputSettings result)
+        {
+            result = default;
+            if (Sender == null)
+                return false;
+
+            Vector2 origin = Sender.CurrentPosition;
+            if (Sender is EnemyUnit e)
+            {
+                bool foundPlayer = ShmupPlayer.PlayerAs(out ShmupPlayer p);
+                result = new Projectile.InputSettings(origin, Sender, Vector2.down, new(Sender, 1f, 1f), ProjectileFaction.Enemy);
+                if (foundPlayer)
+                {
+                    if (p.IsAlive)
+                    {
+                        result.AimTo(p);
+                    }
+                    result.AssignTarget(p);
+                }
+            }
+            else if (Sender is ShmupPlayer player)
+            {
+                result = new Projectile.InputSettings(origin, Sender, Vector2.up, new(Sender, 1f, 1f), ProjectileFaction.Player);
+                result.Flare = false;
+                if (EnemyUnit.FindEnemyFromDotProduct(player.CurrentPosition, Vector2.up, out EnemyUnit autoTarget, 0.25f))
+                    result.AssignTarget(autoTarget);
+            }
+            return true;
+        }
+    }
+    #endregion
     #region Shortcuts
     public partial class UnitAttack
     {
