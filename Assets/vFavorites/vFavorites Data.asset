@@ -85,15 +85,6 @@ MonoBehaviour:
       isSceneGameObject: 0
       isFolder: 0
       isAsset: 1
-      _id: 1060983561
-    - globalId:
-        globalObjectIdString: GlobalObjectId_V1-3-53a4ec68fe04c9442ae185744c57e372-11400000-0
-      _typeString: FumoShmup2.ShmupNodeStage, Fumoshmup2, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      _obj: {fileID: 11400000, guid: 53a4ec68fe04c9442ae185744c57e372, type: 2}
-      isSceneGameObject: 0
-      isFolder: 0
-      isAsset: 1
       _id: 1063750898
     - globalId:
         globalObjectIdString: GlobalObjectId_V1-3-bb00bf84c7c986841b1bc6edc1b0338d-11400000-0

@@ -33,6 +33,10 @@ namespace FumoShmup2
         public bool RunSeperately => false;
         public float RunDuration => WaitAfterSpawn;
         public bool WasModifiedByModifier { get; set; } = false;
+
+        public bool Sealing = false;
+        public float SealingRadius = 0f;
+
         public bool SweepOverride = false;
         public float SweepDuration = 0f;
         public int SweepLootChance = 255;
@@ -73,12 +77,13 @@ namespace FumoShmup2
                 {
                     result.SetSweepOverride(SweepDuration, ((byte)SweepLootChance));
                 }
+                if (Sealing) result.SetSealRadius(SealingRadius);
                 result.Action_ExitAfter(new(ExitDelay, ExitDuration, exitPos));
                 yield return WaitAfterSpawn.WaitForSeconds();
             }
             yield return Spawn();
         }
-        protected override Vector2 BuildSize() => new(350f, 240f);
+        protected override Vector2 BuildSize() => new(350f, 260f);
 
         private void FlipXPositions()
         {
@@ -109,6 +114,13 @@ namespace FumoShmup2
             ExitDuration = EF_Slider(Helper_BuildFieldRect(rect, ref index), nameof(ExitDuration), ExitDuration, 0.35f, 10f);
             RecordUndo("Modify Node Value");
             EntryDuration = EF_Slider(Helper_BuildFieldRect(rect, ref index), nameof(EntryDuration), EntryDuration, 0.05f, 10f);
+
+
+            Sealing = EF_BoolField(Helper_BuildFieldRect(rect, ref index), nameof(Sealing), Sealing);
+            if (Sealing)
+            {
+                SealingRadius = EF_Slider(Helper_BuildFieldRect(rect, ref index), nameof(SealingRadius), SealingRadius, 0.25f, 20f);
+            }
 
             RecordUndo("Modify Node Value");
             SweepOverride = EF_BoolField(Helper_BuildFieldRect(rect, ref index), nameof(SweepOverride), SweepOverride);

@@ -38,6 +38,8 @@ namespace FumoShmup2
         public bool runSeperately;
         public float RunDuration => WaitBetweenEachSpawn * EnemyCount;
         public bool WasModifiedByModifier { get; set; } = false;
+        public bool Sealing = false;
+        public float SealingRadius = 0f;
         public bool SweepOverride = false;
         public float SweepDuration = 0f;
         public int SweepLootChance = 255;
@@ -75,6 +77,7 @@ namespace FumoShmup2
                         mod.ModifyEnemy(result);
                     }
                     if (SweepOverride) result.SetSweepOverride(SweepDuration, ((byte)SweepLootChance));
+                    if (Sealing) result.SetSealRadius(SealingRadius);
                     result.Action_ExitAfter(new(ExitDelay, ExitDuration, exitPos));
                     yield return WaitBetweenEachSpawn.WaitForSeconds();
                 }
@@ -86,7 +89,7 @@ namespace FumoShmup2
             }
             yield return Spawn();
         }
-        protected override Vector2 BuildSize() => new(350f, 280f);
+        protected override Vector2 BuildSize() => new(350f, 300f);
         private void FlipXPositions()
         {
             Vector2 FlipX(Vector2 v) => new(1f - v.x, v.y);
@@ -125,15 +128,22 @@ namespace FumoShmup2
             EntryDuration = EF_Slider(Helper_BuildFieldRect(rect, ref index), nameof(EntryDuration), EntryDuration, 0.05f, 10f);
 
             RecordUndo("Modify Node Value");
-            SweepOverride = EF_BoolField(Helper_BuildFieldRect(rect, ref index), nameof(SweepOverride), SweepOverride);
 
+
+            Sealing = EF_BoolField(Helper_BuildFieldRect(rect, ref index), nameof(Sealing), Sealing);
+
+            if (Sealing)
+            {
+                SealingRadius = EF_Slider(Helper_BuildFieldRect(rect, ref index), nameof(SealingRadius), SealingRadius, 0.25f, 20f);
+            }
+
+            SweepOverride = EF_BoolField(Helper_BuildFieldRect(rect, ref index), nameof(SweepOverride), SweepOverride);
             if (SweepOverride)
             {
-                RecordUndo("Modify Node Value");
                 SweepDuration = EF_Slider(Helper_BuildFieldRect(rect, ref index), nameof(SweepDuration), SweepDuration, 0.05f, 1.5f);
-                RecordUndo("Modify Node Value");
                 SweepLootChance = EF_Slider(Helper_BuildFieldRect(rect, ref index), nameof(SweepLootChance), SweepLootChance, 0, 255);
             }
+
             RecordUndo("Modify Node Value");
             if (EF_Button(Helper_BuildFieldRect(rect, ref index), "Flip X"))
             {
