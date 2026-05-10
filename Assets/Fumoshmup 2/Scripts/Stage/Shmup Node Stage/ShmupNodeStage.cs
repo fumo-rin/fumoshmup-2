@@ -574,6 +574,7 @@ namespace FumoShmup2
             }
             if (activeStage == null) return;
             RefreshLinks();
+
             foreach (var node in activeStage.nodes)
             {
                 if (node == null)
@@ -584,42 +585,45 @@ namespace FumoShmup2
                 node.unityBackingObject = node;
                 if (!ShowWithSkipIndex(node))
                     continue;
+
                 Rect rect = new Rect(node.position + viewOffset, node.Size);
+                Color prevColor = GUI.color;
+
                 #region Draw Links
                 if (node is IStageNodeModifier mod)
                 {
                     mod.RevalidateNodes();
                     foreach (var item in mod.LinkedNodes)
-                    {
-                        StageNode runable = item;
-                        DrawNodeConnection(mod as StageNode, runable);
-                    }
+                        DrawNodeConnection(mod as StageNode, item);
                 }
                 if (node is EnemyModifierNode enemyModLink)
                 {
                     enemyModLink.RevalidateNodes();
                     foreach (var item in enemyModLink.LinkedNodes)
-                    {
                         DrawNodeConnection(enemyModLink, item);
-                    }
                 }
                 #endregion
-                if (activeNode != node && (rect.xMax < -1000 || rect.yMax < -1000 || rect.xMin > position.width + 1000 || rect.yMin > position.height + 1000))
-                    continue; //SKIP IF VERY OFFSCREEN
+                if (activeNode != node &&
+                    (rect.xMax < -1000 || rect.yMax < -1000 ||
+                     rect.xMin > position.width + 1000 ||
+                     rect.yMin > position.height + 1000))
+                    continue;
 
-                GUI.color = node == activeNode ? new Color(0.5f, 0.7f, 1f, 1f) : Color.white;
+                bool isActive = node == activeNode;
+                if (!node.IsEnabled)
+                    GUI.color = ColorHelper.Gray3;
+                else
+                    GUI.color = isActive ? new Color(0.5f, 0.7f, 1f, 1f) : Color.white;
+
                 string extraText = "";
-                if (activeStage.IsLinking && (node is IStageNodeRunable linkable && linkable.IsLinkable || node is EnemyModifierNode enemyMod))
+                if (activeStage.IsLinking && ((node is IStageNodeRunable linkable && linkable.IsLinkable) || node is EnemyModifierNode))
                 {
                     GUI.color = ColorHelper.PastelYellow;
                     extraText += "(Linkable)";
                 }
-                if (!node.IsEnabled)
-                {
-                    GUI.color = ColorHelper.Gray3;
-                }
                 GUI.Box(rect, extraText + node.title.SpaceByCapitals());
-                node.DrawFromEditor(activeStage, rect, activeNode == node);
+                GUI.color = prevColor;
+                node.DrawFromEditor(activeStage, rect, isActive);
                 EditorGUIUtility.AddCursorRect(rect, MouseCursor.MoveArrow);
             }
             GUI.color = Color.white;

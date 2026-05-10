@@ -69,6 +69,24 @@ MonoBehaviour:
       isAsset: 0
       _id: 1063645154
     - globalId:
+        globalObjectIdString: GlobalObjectId_V1-3-444e79f657a8402429c2b5fb66e68aa6-11400000-0
+      _typeString: FumoShmup2.ShmupNodeStage, Fumoshmup2, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      _obj: {fileID: 11400000, guid: 444e79f657a8402429c2b5fb66e68aa6, type: 2}
+      isSceneGameObject: 0
+      isFolder: 0
+      isAsset: 1
+      _id: 1048276682
+    - globalId:
+        globalObjectIdString: GlobalObjectId_V1-3-53a4ec68fe04c9442ae185744c57e372-11400000-0
+      _typeString: FumoShmup2.ShmupNodeStage, Fumoshmup2, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      _obj: {fileID: 11400000, guid: 53a4ec68fe04c9442ae185744c57e372, type: 2}
+      isSceneGameObject: 0
+      isFolder: 0
+      isAsset: 1
+      _id: 1060983561
+    - globalId:
         globalObjectIdString: GlobalObjectId_V1-3-53a4ec68fe04c9442ae185744c57e372-11400000-0
       _typeString: FumoShmup2.ShmupNodeStage, Fumoshmup2, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
