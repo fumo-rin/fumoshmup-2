@@ -62,6 +62,11 @@ namespace FumoShmup2
 
         public Projectile.CircleSettings Circle(float addedAngle, int segments, float projectileSpeed)
             => ProjectileFactory.Circle(addedAngle, segments, projectileSpeed);
+
+        protected void AttackRoutine(IEnumerator co, ShmupUnit sender)
+        {
+            sender.StartCoroutine(co);
+        }
     }
     #endregion
     #region Extra Render

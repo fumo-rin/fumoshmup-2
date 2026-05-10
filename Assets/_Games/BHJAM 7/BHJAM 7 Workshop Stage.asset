@@ -1,5 +1,23 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8090872423810295944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299281ec626e5854db3167f10fb0c2c6, type: 3}
+  m_Name: WaitForTimeOrEnemiesAliveNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeOrEnemiesAliveNode
+  IsEnabled: 1
+  title: WaitForTimeOrEnemiesAliveNode
+  position: {x: 891, y: 137}
+  skipIndex: 20
+  WaitDuration: 15
+  AliveEnemiesRequired: 0
 --- !u!114 &-5541342289599712522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,7 +77,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.BossNode
   IsEnabled: 1
   title: BossNode
-  position: {x: 562, y: 78}
+  position: {x: 590, y: 183}
   skipIndex: 20
   toSpawn: {fileID: 2745390351675722610, guid: fc86072f3a38af04fa7b9a16c4cb61cb, type: 3}
   bossStartDialogue: {fileID: 0}
@@ -109,6 +127,64 @@ MonoBehaviour:
   - {fileID: -5541342289599712522}
   - {fileID: 7472998715273484378}
   - {fileID: -3707533323642943700}
+  - {fileID: 234403539862038660}
+  - {fileID: -8090872423810295944}
+--- !u!114 &234403539862038660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e5394d13f31365488c5d55ef9ce6c98, type: 3}
+  m_Name: SingleSpawnerNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.SingleSpawnerNode
+  IsEnabled: 1
+  title: SingleSpawnerNode
+  position: {x: 903, y: -463}
+  skipIndex: 20
+  toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
+  storedModifier: {fileID: 0}
+  start: {x: 0.505, y: 1.2299993}
+  target: {x: 0.515, y: 0.788}
+  exit: {x: -0.35, y: 0.75}
+  WaitAfterSpawn: 0
+  ExitDelay: 20
+  ExitDuration: 10
+  SweepOverride: 0
+  SweepDuration: 0
+  SweepLootChance: 255
+  EntryDuration: 0.75
+  attackLoop:
+  - rid: 697206052097622258
+  - rid: 697206052097622263
+  - rid: 697206052097622264
+  attackLoops: 8
+  loopAddedDelay: 0
+  attackStall: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 697206052097622258
+      type: {class: TestGameAttacks2/TestSDOJInbachi, ns: FumoShmup2, asm: Fumoshmup2}
+      data:
+        define: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+        rageOverlap: {fileID: 11400000, guid: 8174b572503b3ce4c8ada9b497f311e4, type: 2}
+        shotSound: {fileID: 0}
+    - rid: 697206052097622263
+      type: {class: TestGameAttacks2/TestSDOJInbachi, ns: FumoShmup2, asm: Fumoshmup2}
+      data:
+        define: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+        rageOverlap: {fileID: 11400000, guid: 8174b572503b3ce4c8ada9b497f311e4, type: 2}
+        shotSound: {fileID: 0}
+    - rid: 697206052097622264
+      type: {class: TestGameAttacks2/TestSDOJInbachi, ns: FumoShmup2, asm: Fumoshmup2}
+      data:
+        define: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+        rageOverlap: {fileID: 11400000, guid: 8174b572503b3ce4c8ada9b497f311e4, type: 2}
+        shotSound: {fileID: 0}
 --- !u!114 &7472998715273484378
 MonoBehaviour:
   m_ObjectHideFlags: 0

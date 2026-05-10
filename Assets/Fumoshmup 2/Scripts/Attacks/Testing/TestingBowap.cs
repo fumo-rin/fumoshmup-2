@@ -1,5 +1,6 @@
 using rinCore;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FumoShmup2
@@ -88,22 +89,42 @@ namespace FumoShmup2
             public ProjectileDefineSO proj;
             protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
             {
-                for (int i = 0; i < 13; i++)
+                var input2 = input.Copy();
+                input.SetMods(new ProjectileModAccelerate(new(0.5f, 0.5f), 3f, 12f), new ProjectileModAccelerate(new(0.5f, 1.5f), 12f, 12f));
+
+                Vector2 a = new Vector2Shmup(0.25f, 0.7f).Vector2Now;
+                Vector2 b = new Vector2Shmup(0.75f, 0.7f).Vector2Now;
+
+                a.LineChop(b, 12, out List<Vector2> line);
+                foreach (var item in line)
                 {
-                    input.addedForward = 0.25f;
-                    input.ReAimWithOptionalTarget(sender.CurrentPosition);
-                    Single(0f, 10f + i.AsFloat(1f)).Spawn(input, proj, out _);
+                    input.SetOrigin(item);
+                    input.ReAimWithOptionalTarget();
+                    input.addedForward = 0.35f;
+                    if (Circle(RNG.FloatRange(-3f, 3f), 15, 10f).Spawn(input, proj, out iterationList))
+                    {
+                        foreach (var projectile in iterationList)
+                        {
 
-                    yield return 0.016f.WaitForSeconds();
-                    if (i % 4 == 0)
-                        continue;
-
-                    Vector2 rng = new Vector2Shmup(RNG.FloatRange(0f, 1f), RNG.FloatRange(0f, 1f)).Vector2Now;
-                    input.SetOrigin(rng);
-                    input.addedForward = 0.65f;
-                    Circle(RNG.SeededRandomFloat01, 16, 6f).Spawn(input, proj, out _);
+                        }
+                    }
                 }
-                yield return 0.2f.WaitForSeconds();
+
+                for (int i = 0; i < 30; i++)
+                {
+                    //input.SetOrigin(sender.CurrentPosition);
+                    /*if (ShmupPlayer.PlayerAs(out ShmupPlayer player))
+                    {
+                        input.SetDirection(player.CurrentPosition - input.Origin);
+                    }*/
+
+                    input.ReAimWithOptionalTarget();
+
+                    Arc(RNG.FloatRange(-3f, 3f), 60f, 3, 12f).Spawn(input, proj, out _);
+                    yield return 0.02f.WaitForSeconds();
+                }
+
+                yield return 0.35f.WaitForSeconds();
             }
         }
         [System.Serializable]

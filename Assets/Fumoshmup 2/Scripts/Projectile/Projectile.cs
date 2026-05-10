@@ -300,9 +300,12 @@ namespace FumoShmup2
                 Direction = Target.CurrentPosition - Origin;
                 return this;
             }
-            public InputSettings ReAimWithOptionalTarget(Vector2 Origin)
+            public InputSettings ReAimWithOptionalTarget(Vector2? Origin = null)
             {
-                SetOrigin(Origin);
+                if (Origin != null)
+                {
+                    SetOrigin(Origin.Value);
+                }
                 if (OptionalTarget != null)
                 {
                     SetDirectionToTarget((ShmupUnit)OptionalTarget);
