@@ -75,7 +75,7 @@ namespace FumoShmup2
             bool playerAlive = ShmupPlayer.PlayerAs(out ShmupPlayer player) && player.IsAlive;
             float maxFocusTime = 1.15f;
             float minDelay = 0.35f;
-            float basePickupRadius = 2.5f;
+            float basePickupRadius = 1.5f;
             if (!ShmupInput.Focus)
             {
                 if (focusWasHeld)

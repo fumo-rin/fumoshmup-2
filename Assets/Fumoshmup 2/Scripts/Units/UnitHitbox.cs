@@ -2,16 +2,6 @@ using UnityEngine;
 
 namespace FumoShmup2
 {
-    public enum ShmupFaction
-    {
-        Default,
-        Player,
-        Hostile
-    }
-    public class UnitHitbox : MonoBehaviour
-    {
-        [SerializeField] ShmupFaction hitboxFaction = ShmupFaction.Hostile;
-    }
     public interface IHit
     {
         public struct HitPacket

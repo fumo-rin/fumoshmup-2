@@ -41,34 +41,6 @@ namespace FumoShmup2
         }
     }
     #endregion
-    #region Stage Queue
-    public partial class ShmupStage
-    {
-        public static Queue<ShmupStage> StageQueue { get; private set; }
-        public static bool TryGetNextStage(out ShmupStage next)
-        {
-            next = null;
-            if (StageQueue == null || StageQueue.Count <= 0)
-            {
-                return false;
-            }
-            next = StageQueue.Dequeue();
-            return true;
-        }
-        public static void SetStageQueue(params ShmupStage[] stages)
-        {
-            if (StageQueue == null)
-            {
-                StageQueue = new Queue<ShmupStage>();
-            }
-            StageQueue.Clear();
-            foreach (var item in stages)
-            {
-                StageQueue.Enqueue(item);
-            }
-        }
-    }
-    #endregion
     public abstract partial class ShmupStage : ScriptableObject
     {
         [System.Serializable]
@@ -81,9 +53,10 @@ namespace FumoShmup2
         [field: SerializeField] public List<SkipValues> SkipEntries = new();
         protected static EnemyUnit enemyIteration;
         protected static Vector2 vec2Iteration;
-        [SerializeField] ScenePairSO stageScene;
+        [field: SerializeField] public ScenePairSO StageScene { get; private set; }
         public static bool RanStageThisFrame { get; private set; }
-        [NYI("Feature")]
+        public delegate void RequestSpawnPlayer(Vector2Shmup position);
+        public static RequestSpawnPlayer WhenSpawnPlayerRequest;
         public void RunStage(int skip)
         {
             IEnumerator CO_FlickRanStage()
@@ -93,7 +66,7 @@ namespace FumoShmup2
             }
             RanStageThisFrame = true;
             Debug.Log("Run Stage : " + skip);
-            //ShmupPracticeModeUI.LoadStageToPracticeMode(this);
+            ShmupPracticeModeUI.LoadStageToPracticeMode(this);
             Dialogue.Stop();
 
             ProjectileRunner.TriggerSweep(0.5f, 0, false, out _);
@@ -103,35 +76,12 @@ namespace FumoShmup2
 
             StopStage();
             GlobalCoroutineRunner.StartRoutine("Stage", StagePayload(skip));
+            WhenSpawnPlayerRequest?.Invoke(new Vector2Shmup(0.5f, 0.2f));
             CO_FlickRanStage().RunRoutine();
         }
         public static void StopStage()
         {
             GlobalCoroutineRunner.StopAllOfKey("Stage");
-        }
-        [NYI("Feature")]
-        protected static void GoNextStageOrMenu()
-        {
-            void RunNext(ShmupStage s)
-            {
-                //ShmupPracticeMode.StageSkipValue = 0;
-                //s.RunStage(ShmupPracticeMode.StageSkipValue - 1);
-            }
-            if (TryGetNextStage(out ShmupStage stage))
-            {
-                if (stage.stageScene != null)
-                {
-                    stage.stageScene.Load(() => RunNext(stage));
-                }
-                else
-                {
-                    RunNext(stage);
-                }
-            }
-            else
-            {
-                //ShmupState.EndGameAndMainMenu();
-            }
         }
         protected abstract IEnumerator StagePayload(int skip);
     }

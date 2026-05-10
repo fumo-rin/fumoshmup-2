@@ -1,1 +1,1 @@
-Fumoshmup 2=1.0.5
+Fumoshmup 2=1.0.6

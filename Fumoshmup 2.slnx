@@ -37,8 +37,8 @@
   <Project Path="Unity.2D.SpriteShape.Editor.csproj" />
   <Project Path="Unity.Services.Authentication.csproj" />
   <Project Path="Unity.VisualStudio.Editor.csproj" />
-  <Project Path="PPv2URPConverters.csproj" />
   <Project Path="Fumoshmup2.csproj" />
+  <Project Path="PPv2URPConverters.csproj" />
   <Project Path="QFSW.QC.csproj" />
   <Project Path="Unity.2D.Animation.Editor.csproj" />
   <Project Path="Unity.Services.Authentication.Editor.csproj" />

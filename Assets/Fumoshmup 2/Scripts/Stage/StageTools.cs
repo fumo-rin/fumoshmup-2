@@ -104,7 +104,6 @@ namespace FumoShmup2
         {
             ProjectileRunner.TriggerSweep(0.5f, loot, false, out _);
         }
-        [NYI("Feature")]
         public static void StartDialogue(DialogueStackSO d, out WaitUntil w, Action whenEndDialogue = null)
         {
             w = null;

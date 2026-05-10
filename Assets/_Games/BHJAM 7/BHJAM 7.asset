@@ -1,0 +1,196 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5786720801244618245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 199d87666a3e9fa4fa1370a01c0e8ce9, type: 3}
+  m_Name: LineSpawnerNode_Copy_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.LineSpawnerNode
+  IsEnabled: 1
+  title: LineSpawnerNode
+  position: {x: 942, y: -128}
+  skipIndex: 20
+  toSpawn: {fileID: 2745390351675722610, guid: fc86072f3a38af04fa7b9a16c4cb61cb, type: 3}
+  storedModifier: {fileID: 0}
+  start: {x: 0.875, y: 1.0919998}
+  startEnd: {x: 0.08250001, y: 1.1579994}
+  target: {x: 0.78499997, y: 0.81200004}
+  targetEnd: {x: 0.19999999, y: 0.832}
+  exit: {x: 0.8275, y: 1.1839998}
+  exitEnd: {x: 0.1825, y: 1.2540002}
+  EnemyCount: 6
+  WaitBetweenEachSpawn: 0.1
+  ExitDelay: 5
+  ExitDuration: 1.25
+  EntryDuration: 0.75
+  runSeperately: 0
+  SweepOverride: 0
+  SweepDuration: 0
+  SweepLootChance: 255
+--- !u!114 &-559303218029376585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 199d87666a3e9fa4fa1370a01c0e8ce9, type: 3}
+  m_Name: LineSpawnerNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.LineSpawnerNode
+  IsEnabled: 0
+  title: LineSpawnerNode
+  position: {x: 527, y: 143}
+  skipIndex: 30
+  toSpawn: {fileID: 2745390351675722610, guid: fc86072f3a38af04fa7b9a16c4cb61cb, type: 3}
+  storedModifier: {fileID: 0}
+  start: {x: 1.25, y: 1.05}
+  startEnd: {x: 0.55, y: 1.3}
+  target: {x: 0.85, y: 0.65}
+  targetEnd: {x: 0.45, y: 0.8}
+  exit: {x: 1.35, y: 0.75}
+  exitEnd: {x: 1.35, y: 0.65}
+  EnemyCount: 6
+  WaitBetweenEachSpawn: 0.1
+  ExitDelay: 5
+  ExitDuration: 1.25
+  EntryDuration: 0.75
+  runSeperately: 0
+  SweepOverride: 0
+  SweepDuration: 0
+  SweepLootChance: 255
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 402a3f0e7ec535749ac36027c36e1a5c, type: 3}
+  m_Name: BHJAM 7
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.ShmupNodeStage
+  SkipEntries:
+  - skipName: Beaf10
+    skipValue: 10
+    enabled: 1
+  - skipName: Beaf20
+    skipValue: 20
+    enabled: 1
+  - skipName: Beaf30
+    skipValue: 30
+    enabled: 0
+  - skipName: Beaf40
+    skipValue: 40
+    enabled: 1
+  - skipName: Beaf50
+    skipValue: 50
+    enabled: 1
+  - skipName: Beaf60
+    skipValue: 60
+    enabled: 1
+  <StageScene>k__BackingField: {fileID: 11400000, guid: 9ac2b125f6a81b04ca14a6031c9663e9, type: 2}
+  currentLinkAttempt: {fileID: 0}
+  selectedSkipIndex: 1
+  StageEndDialogue: {fileID: 0}
+  nodes:
+  - {fileID: 7288961745492241952}
+  - {fileID: -559303218029376585}
+  - {fileID: -5786720801244618245}
+  - {fileID: 484329747172957901}
+  - {fileID: 6298876082405689903}
+--- !u!114 &484329747172957901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 199d87666a3e9fa4fa1370a01c0e8ce9, type: 3}
+  m_Name: LineSpawnerNode_Copy_Copy_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.LineSpawnerNode
+  IsEnabled: 1
+  title: LineSpawnerNode
+  position: {x: 1026, y: 251}
+  skipIndex: 30
+  toSpawn: {fileID: 2745390351675722610, guid: fc86072f3a38af04fa7b9a16c4cb61cb, type: 3}
+  storedModifier: {fileID: 0}
+  start: {x: 0.125, y: 1.0919998}
+  startEnd: {x: 0.9175, y: 1.1579994}
+  target: {x: 0.21500003, y: 0.81200004}
+  targetEnd: {x: 0.8, y: 0.832}
+  exit: {x: 0.17250001, y: 1.1839998}
+  exitEnd: {x: 0.8175, y: 1.2540002}
+  EnemyCount: 6
+  WaitBetweenEachSpawn: 0.1
+  ExitDelay: 5
+  ExitDuration: 1.25
+  EntryDuration: 0.75
+  runSeperately: 0
+  SweepOverride: 0
+  SweepDuration: 0
+  SweepLootChance: 255
+--- !u!114 &6298876082405689903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 592a4d6c6875f064d894de98d13be4cd, type: 3}
+  m_Name: RepeatNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.RepeatNode
+  IsEnabled: 1
+  title: RepeatNode
+  position: {x: 462, y: -40}
+  skipIndex: 20
+  linkedNodes:
+  - {fileID: -5786720801244618245}
+  RepeatCount: 6
+  DelayBetweenRepeats: 0.25
+  SkipDelayForLastRepeat: 1
+--- !u!114 &7288961745492241952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 199d87666a3e9fa4fa1370a01c0e8ce9, type: 3}
+  m_Name: LineSpawnerNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.LineSpawnerNode
+  IsEnabled: 1
+  title: LineSpawnerNode
+  position: {x: 454, y: -166}
+  skipIndex: 30
+  toSpawn: {fileID: 2745390351675722610, guid: fc86072f3a38af04fa7b9a16c4cb61cb, type: 3}
+  storedModifier: {fileID: 0}
+  start: {x: -0.25, y: 1.05}
+  startEnd: {x: 0.45, y: 1.3}
+  target: {x: 0.15, y: 0.65}
+  targetEnd: {x: 0.55, y: 0.8}
+  exit: {x: -0.35, y: 0.75}
+  exitEnd: {x: -0.35, y: 0.65}
+  EnemyCount: 6
+  WaitBetweenEachSpawn: 0.1
+  ExitDelay: 5
+  ExitDuration: 1.25
+  EntryDuration: 0.75
+  runSeperately: 0
+  SweepOverride: 0
+  SweepDuration: 0
+  SweepLootChance: 255

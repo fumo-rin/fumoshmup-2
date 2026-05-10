@@ -14,19 +14,118 @@ namespace FumoShmup2
         }
     }
     #endregion
-    public partial class ShmupSession : rinCore.GameSession
+    #region Game Start
+    public partial class ShmupSession
     {
-        public static bool SkipDialogue;
+        [field: SerializeField] public ShmupGamemode Gamemode { get; private set; }
+        protected override void WhenStartSession()
+        {
+            stageIndex.LoadStagesToQueue();
+            ShmupGamemode.SetCurrent(Gamemode);
+            if (!stageIndex.TryGetNextStage(out ShmupStage next))
+            {
+                Debug.LogError("bwuz");
+            }
+            ShmupStage.WhenSpawnPlayerRequest = ShmupGamemode.SpawnCurrentPlayer; // this is without event tag so it can be = nulled
+            next.StageScene.Load(() => next.RunStage(0));
+        }
+        protected override void WhenEndSession()
+        {
+
+        }
+    }
+    #endregion
+    #region Stage
+    public partial class ShmupSession
+    {
+        [SerializeField] ShmupStageIndex stageIndex = new();
+        public void LoadNextStageOrMenu() => stageIndex.GoNextStageOrMenu();
+
+        [System.Serializable]
+        class ShmupStageIndex
+        {
+            [SerializeField] ScenePairSO mainMenuScene;
+            [SerializeField] List<ShmupStage> gameModeStages = new();
+            Queue<ShmupStage> StageQueue;
+            public void LoadStagesToQueue()
+            {
+                StageQueue = new();
+                foreach (var item in gameModeStages)
+                {
+                    StageQueue.Enqueue(item);
+                }
+            }
+            public bool TryGetNextStage(out ShmupStage next)
+            {
+                next = null;
+                if (StageQueue == null || StageQueue.Count <= 0)
+                {
+                    return false;
+                }
+                next = StageQueue.Dequeue();
+                return true;
+            }
+            public void GoNextStageOrMenu()
+            {
+                void RunNext(ShmupStage s)
+                {
+                    ShmupPracticeMode.StageSkipValue = 0;
+                    s.RunStage(ShmupPracticeMode.StageSkipValue - 1);
+                }
+                if (TryGetNextStage(out ShmupStage stage))
+                {
+                    if (stage.StageScene != null)
+                    {
+                        stage.StageScene.Load(() => RunNext(stage));
+                    }
+                    else
+                    {
+                        RunNext(stage);
+                    }
+                }
+                else
+                {
+                    GameSession.EndSessionSettings end = new()
+                    {
+                        SubmitScore = true
+                    };
+                    SceneLoader.LoadScenePair(mainMenuScene, () => ShmupSession.EndSession(end));
+                }
+            }
+        }
+    }
+    #endregion
+    #region Shmup ECO Keys
+    public partial class ShmupSession
+    {
         public struct keys
         {
+            public static string CurrentLives => "CurrentLives";
+            public static string StartingLives => "StartingLives";
             public static string CurrentBombs => "CurrentBombs";
             public static string StartingBombs => "StartingBombs";
             public static string HitCounter => "Hit";
             public static string CashoutActivation060 => "Cashout";
         }
+    }
+    #endregion
+    [System.Serializable]
+    public partial class ShmupSession : rinCore.GameSession
+    {
+        public string SessionName => cachedSessionName;
+        [SerializeField] private string cachedSessionName = "Game Name";
+        public string SessionDifficulty = "Ultra";
+        public Color32 DifficultyColor = ColorHelper.PastelCyan;
+        public static bool SkipDialogue;
         public class shmupPlayerResources
         {
-            Dictionary<string, int> intTable = new Dictionary<string, int>();
+            Dictionary<string, int> intTable = new Dictionary<string, int>()
+            {
+                { keys.CurrentLives, 2},
+                { keys.StartingLives, 2},
+                { keys.CurrentBombs, 3 },
+                { keys.StartingBombs, 3 },
+            };
             Dictionary<string, float> floatTable = new();
             public shmupPlayerResources SetInt(string key, int newValue)
             {
@@ -84,7 +183,7 @@ namespace FumoShmup2
             }
         }
         [field: SerializeField] public ACWrapper SweepSound { get; private set; }
-        public shmupPlayerResources playerResources;
+        public shmupPlayerResources playerResources = new();
         #region Int
         public int GetInt(string key) => playerResources.GetInt(key);
         public int SetInt(string key, int value, int min, int max) => playerResources.SetInt(key, value.Clamp(min, max)).GetInt(key);
@@ -104,10 +203,7 @@ namespace FumoShmup2
             playerResources.SetFloat(key, current);
             return current;
         }
+
         #endregion
-        public ShmupSession(sessionData data, bool cancelPrevious, shmupPlayerResources playerResources) : base(data, cancelPrevious)
-        {
-            this.playerResources = playerResources;
-        }
     }
 }

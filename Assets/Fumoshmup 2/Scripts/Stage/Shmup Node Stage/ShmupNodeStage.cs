@@ -943,7 +943,10 @@ namespace FumoShmup2
             StartDialogue(StageEndDialogue, out WaitUntil w, null);
             yield return w;
             yield return 1.5f.WaitForSeconds();
-            GoNextStageOrMenu();
+            if (ShmupSession.CurrentAs(out ShmupSession sess))
+            {
+                sess.LoadNextStageOrMenu();
+            }
         }
         private IEnumerator CollectAndRunSkip(int skip)
         {

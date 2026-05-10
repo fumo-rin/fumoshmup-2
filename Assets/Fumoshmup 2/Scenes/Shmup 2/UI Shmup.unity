@@ -798,6 +798,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &189886938
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 189886940}
+  - component: {fileID: 189886939}
+  m_Layer: 0
+  m_Name: Practice Mode
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &189886939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189886938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60b12898f27a6614981830f04a4beb9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.ShmupPracticeModeUI
+  warpDropdown: {fileID: 1353336461}
+  bossWarp: {fileID: 325609680}
+  bossWarpText: {fileID: 1856556173}
+  skipDialogue: {fileID: 614787302}
+  practiceModeNest: {fileID: 1533342686}
+--- !u!4 &189886940
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189886938}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &214079059
 GameObject:
   m_ObjectHideFlags: 0
@@ -1253,7 +1302,7 @@ GameObject:
   - component: {fileID: 325609679}
   - component: {fileID: 325609680}
   m_Layer: 0
-  m_Name: Slider
+  m_Name: Boss Phase Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1326,8 +1375,8 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1471933428}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
-  m_WholeNumbers: 0
+  m_MaxValue: 9
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1965,6 +2014,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 979259864}
+  - {fileID: 2072076934}
   - {fileID: 1533342687}
   m_Father: {fileID: 1733828048}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2022,7 +2072,7 @@ GameObject:
   - component: {fileID: 614787301}
   - component: {fileID: 614787302}
   m_Layer: 0
-  m_Name: Toggle
+  m_Name: Skip Dialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5443,7 +5493,7 @@ GameObject:
   - component: {fileID: 1533342687}
   - component: {fileID: 1533342688}
   m_Layer: 0
-  m_Name: Container
+  m_Name: Practice Mode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5461,16 +5511,15 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2072076934}
   - {fileID: 2011200975}
-  - {fileID: 1141812933}
   - {fileID: 541795890}
+  - {fileID: 1141812933}
   m_Father: {fileID: 601562854}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -46.753296}
-  m_SizeDelta: {x: 120, y: 160}
+  m_AnchoredPosition: {x: 0, y: -59.999996}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1533342688
 MonoBehaviour:
@@ -6594,18 +6643,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2072076933}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1495992092}
-  m_Father: {fileID: 1533342687}
+  m_Father: {fileID: 601562854}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 20}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 112.5, y: -126.75329}
+  m_SizeDelta: {x: 120, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2072076935
 MonoBehaviour:
@@ -6715,6 +6764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: rinCore::rinCore.FumoMenuSceneButton
   sceneToLoad: {fileID: 11400000, guid: ab63050f81166364093125ea0d6540ce, type: 2}
+  EndSession: 1
 --- !u!1 &2072256263
 GameObject:
   m_ObjectHideFlags: 0
@@ -7138,3 +7188,4 @@ SceneRoots:
   - {fileID: 21772947}
   - {fileID: 1401832206}
   - {fileID: 1949127526}
+  - {fileID: 189886940}

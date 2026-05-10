@@ -102,8 +102,8 @@ namespace FumoShmup2
         public NodeActions.BaseAction actionOverride;
         #endregion
 
-        [NYI("Feature")]
         public List<StageNode> LinkedNodes = new();
+        [NYI("Feature")]
         public void ModifyEnemy(EnemyUnit e)
         {
             bool hasPlayer = ShmupPlayer.PlayerAs(out ShmupPlayer p);

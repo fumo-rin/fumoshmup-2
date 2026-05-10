@@ -83,6 +83,30 @@ namespace FumoShmup2
             }
         }
         [System.Serializable]
+        public class ShotRandomFunny : UnitAttack
+        {
+            public ProjectileDefineSO proj;
+            protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
+            {
+                for (int i = 0; i < 13; i++)
+                {
+                    input.addedForward = 0.25f;
+                    input.ReAimWithOptionalTarget(sender.CurrentPosition);
+                    Single(0f, 10f + i.AsFloat(1f)).Spawn(input, proj, out _);
+
+                    yield return 0.016f.WaitForSeconds();
+                    if (i % 4 == 0)
+                        continue;
+
+                    Vector2 rng = new Vector2Shmup(RNG.FloatRange(0f, 1f), RNG.FloatRange(0f, 1f)).Vector2Now;
+                    input.SetOrigin(rng);
+                    input.addedForward = 0.65f;
+                    Circle(RNG.SeededRandomFloat01, 16, 6f).Spawn(input, proj, out _);
+                }
+                yield return 0.2f.WaitForSeconds();
+            }
+        }
+        [System.Serializable]
         public class ShotCircle : UnitAttack
         {
             public ProjectileDefineSO shot;
