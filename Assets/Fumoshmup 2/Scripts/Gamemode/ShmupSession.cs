@@ -27,7 +27,7 @@ namespace FumoShmup2
                 Debug.LogError("bwuz");
             }
             ShmupStage.WhenSpawnPlayerRequest = ShmupGamemode.SpawnCurrentPlayer; // this is without event tag so it can be = nulled
-            next.StageScene.Load(() => next.RunStage(0));
+            SceneLoader.LoadScenePair(next.StageScene, () => next.RunStage(0), 0.25f);
         }
         protected override void WhenEndSession()
         {
@@ -76,7 +76,7 @@ namespace FumoShmup2
                 {
                     if (stage.StageScene != null)
                     {
-                        stage.StageScene.Load(() => RunNext(stage));
+                        SceneLoader.LoadScenePair(stage.StageScene, () => RunNext(stage), 0.25f);
                     }
                     else
                     {

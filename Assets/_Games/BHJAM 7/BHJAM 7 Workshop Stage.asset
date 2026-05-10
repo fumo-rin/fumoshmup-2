@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5786720801244618245
+--- !u!114 &-5541342289599712522
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,30 +9,64 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 199d87666a3e9fa4fa1370a01c0e8ce9, type: 3}
-  m_Name: LineSpawnerNode_Copy_Copy
-  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.LineSpawnerNode
+  m_Script: {fileID: 11500000, guid: 9e5394d13f31365488c5d55ef9ce6c98, type: 3}
+  m_Name: SingleSpawnerNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.SingleSpawnerNode
   IsEnabled: 1
-  title: LineSpawnerNode
-  position: {x: 942, y: -128}
-  skipIndex: 20
-  toSpawn: {fileID: 2745390351675722610, guid: fc86072f3a38af04fa7b9a16c4cb61cb, type: 3}
+  title: SingleSpawnerNode
+  position: {x: 636, y: -4}
+  skipIndex: 10
+  toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
-  start: {x: 0.875, y: 1.0919998}
-  startEnd: {x: 0.08250001, y: 1.1579994}
-  target: {x: 0.78499997, y: 0.81200004}
-  targetEnd: {x: 0.19999999, y: 0.832}
-  exit: {x: 0.8275, y: 1.1839998}
-  exitEnd: {x: 0.1825, y: 1.2540002}
-  EnemyCount: 6
-  WaitBetweenEachSpawn: 0.1
+  start: {x: -0.185, y: 1.2059999}
+  target: {x: 0.48, y: 0.732}
+  exit: {x: -0.35000002, y: 0.75}
+  WaitAfterSpawn: 0.1
   ExitDelay: 5
   ExitDuration: 1.25
-  EntryDuration: 0.75
-  runSeperately: 0
   SweepOverride: 0
   SweepDuration: 0
   SweepLootChance: 255
+  EntryDuration: 0.75
+  attackLoop:
+  - rid: 697206040337580210
+  - rid: 697206040337580212
+  attackLoops: 3
+  loopAddedDelay: 0.15
+  attackStall: 2
+  references:
+    version: 2
+    RefIds:
+    - rid: 697206040337580210
+      type: {class: TestingAttacks/ShotCircle, ns: FumoShmup2, asm: Fumoshmup2}
+      data:
+        shot: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+    - rid: 697206040337580212
+      type: {class: UtilityAttacks/AttackWait, ns: FumoShmup2, asm: Fumoshmup2}
+      data:
+        waitDuration: 1
+--- !u!114 &-3707533323642943700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceede88167d163149949c182aeb4f291, type: 3}
+  m_Name: BossNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.BossNode
+  IsEnabled: 1
+  title: BossNode
+  position: {x: 562, y: 78}
+  skipIndex: 20
+  toSpawn: {fileID: 2745390351675722610, guid: fc86072f3a38af04fa7b9a16c4cb61cb, type: 3}
+  bossStartDialogue: {fileID: 0}
+  bossKillDialogue: {fileID: 0}
+  bossMusic: {fileID: 0}
+  start: {x: 0.5, y: 1.25}
+  end: {x: 0.5, y: 0.7}
 --- !u!114 &-559303218029376585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,6 +100,13 @@ MonoBehaviour:
   SweepOverride: 0
   SweepDuration: 0
   SweepLootChance: 255
+  attackLoop: []
+  attackLoops: 3
+  loopAddedDelay: 0.15
+  attackStall: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,7 +117,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 402a3f0e7ec535749ac36027c36e1a5c, type: 3}
-  m_Name: BHJAM 7
+  m_Name: BHJAM 7 Workshop Stage
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.ShmupNodeStage
   SkipEntries:
   - skipName: Beaf10
@@ -90,23 +131,27 @@ MonoBehaviour:
     enabled: 0
   - skipName: Beaf40
     skipValue: 40
-    enabled: 1
+    enabled: 0
   - skipName: Beaf50
     skipValue: 50
-    enabled: 1
+    enabled: 0
   - skipName: Beaf60
     skipValue: 60
-    enabled: 1
+    enabled: 0
   <StageScene>k__BackingField: {fileID: 11400000, guid: 9ac2b125f6a81b04ca14a6031c9663e9, type: 2}
   currentLinkAttempt: {fileID: 0}
   selectedSkipIndex: 1
   StageEndDialogue: {fileID: 0}
+  enemyTable:
+  - {fileID: 2745390351675722610, guid: fc86072f3a38af04fa7b9a16c4cb61cb, type: 3}
+  - {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   nodes:
   - {fileID: 7288961745492241952}
   - {fileID: -559303218029376585}
-  - {fileID: -5786720801244618245}
   - {fileID: 484329747172957901}
-  - {fileID: 6298876082405689903}
+  - {fileID: -5541342289599712522}
+  - {fileID: 7472998715273484378}
+  - {fileID: -3707533323642943700}
 --- !u!114 &484329747172957901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,27 +185,13 @@ MonoBehaviour:
   SweepOverride: 0
   SweepDuration: 0
   SweepLootChance: 255
---- !u!114 &6298876082405689903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 592a4d6c6875f064d894de98d13be4cd, type: 3}
-  m_Name: RepeatNode
-  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.RepeatNode
-  IsEnabled: 1
-  title: RepeatNode
-  position: {x: 462, y: -40}
-  skipIndex: 20
-  linkedNodes:
-  - {fileID: -5786720801244618245}
-  RepeatCount: 6
-  DelayBetweenRepeats: 0.25
-  SkipDelayForLastRepeat: 1
+  attackLoop: []
+  attackLoops: 3
+  loopAddedDelay: 0.15
+  attackStall: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &7288961745492241952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,3 +225,28 @@ MonoBehaviour:
   SweepOverride: 0
   SweepDuration: 0
   SweepLootChance: 255
+  attackLoop: []
+  attackLoops: 3
+  loopAddedDelay: 0.15
+  attackStall: 2
+  references:
+    version: 2
+    RefIds: []
+--- !u!114 &7472998715273484378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299281ec626e5854db3167f10fb0c2c6, type: 3}
+  m_Name: WaitForTimeOrEnemiesAliveNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeOrEnemiesAliveNode
+  IsEnabled: 1
+  title: WaitForTimeOrEnemiesAliveNode
+  position: {x: 721, y: 426}
+  skipIndex: 10
+  WaitDuration: 10.23
+  AliveEnemiesRequired: 0

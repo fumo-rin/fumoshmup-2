@@ -70,7 +70,15 @@ namespace FumoShmup2
         protected virtual void RunExtrasUpdate(ShmupUnit Sender) { }
     }
     #endregion
-
+    #region Clone
+    public partial class UnitAttack
+    {
+        public UnitAttack Clone()
+        {
+            return (UnitAttack)MemberwiseClone();
+        }
+    }
+    #endregion
     [System.Serializable]
     public abstract partial class UnitAttack
     {

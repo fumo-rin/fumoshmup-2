@@ -732,11 +732,13 @@ namespace FumoShmup2
         #region Context Menu Create Nodes
         private void ContextMenuCreateNodes(GenericMenu menu, Vector2 mousePosition)
         {
-            AddCreateNodeEntries(menu, mousePosition, "Standard", typeof(BossNode), typeof(BossNodeCave), typeof(LineSpawnerNode), typeof(SingleSpawnerNode));
-            AddCreateNodeEntries(menu, mousePosition, "Special", typeof(BossNode), typeof(PrefabRunnerNode));
+            AddCreateNodeEntries(menu, mousePosition, "Stage", typeof(LineSpawnerNode), typeof(SingleSpawnerNode));
+            AddCreateNodeEntries(menu, mousePosition, "Boss", typeof(BossNode));
+            AddCreateNodeEntries(menu, mousePosition, "Special", typeof(PrefabRunnerNode));
             AddCreateNodeEntries(menu, mousePosition, "Wait Instructions", typeof(WaitForTimeOrEnemiesAliveNode), typeof(DialogueAndWaitNode), typeof(WaitForTimeNode));
             AddCreateNodeEntries(menu, mousePosition, "When Section Start", typeof(MusicNode));
             AddCreateNodeEntries(menu, mousePosition, "Modifier Nodes", typeof(RepeatNode), typeof(EnemyModifierNode));
+            AddCreateNodeEntries(menu, mousePosition, "Deprecated", typeof(BossNodeCave));
         }
         #region Special Nodes Helper
         void AddCreateNodeEntries(GenericMenu menu, Vector2 mousePosition, string entryCategory, params Type[] nodeTypes)
@@ -918,6 +920,7 @@ namespace FumoShmup2
         #endregion
         [field: SerializeField] public int selectedSkipIndex = -1;
         [SerializeField] DialogueStackSO StageEndDialogue;
+        public List<EnemyUnit> enemyTable = new();
         [SerializeReference]
         public List<StageNode> nodes = new List<StageNode>();
         public List<MusicWrapper> NodeMusic => nodes == null ? new() :

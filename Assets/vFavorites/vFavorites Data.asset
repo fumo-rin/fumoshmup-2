@@ -60,6 +60,24 @@ MonoBehaviour:
       isAsset: 0
       _id: 1051988921
     - globalId:
+        globalObjectIdString: GlobalObjectId_V1-1-c23c084d46996c9478c6aae77d417794-102900000-0
+      _typeString: UnityEditor.DefaultAsset, UnityEditor.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      _obj: {fileID: 102900000, guid: c23c084d46996c9478c6aae77d417794, type: 3}
+      isSceneGameObject: 0
+      isFolder: 1
+      isAsset: 0
+      _id: 1063645154
+    - globalId:
+        globalObjectIdString: GlobalObjectId_V1-3-53a4ec68fe04c9442ae185744c57e372-11400000-0
+      _typeString: FumoShmup2.ShmupNodeStage, Fumoshmup2, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      _obj: {fileID: 11400000, guid: 53a4ec68fe04c9442ae185744c57e372, type: 2}
+      isSceneGameObject: 0
+      isFolder: 0
+      isAsset: 1
+      _id: 1063750898
+    - globalId:
         globalObjectIdString: GlobalObjectId_V1-3-bb00bf84c7c986841b1bc6edc1b0338d-11400000-0
       _typeString: ScenePackSO, rinCore, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       _obj: {fileID: 11400000, guid: bb00bf84c7c986841b1bc6edc1b0338d, type: 2}

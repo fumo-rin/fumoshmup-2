@@ -33,7 +33,8 @@ namespace FumoShmup2
         {
 #if UNITY_EDITOR
             int index = 0;
-            toSpawn = EF_ObjectField(Helper_BuildFieldRect(rect, ref index), "To Spawn", toSpawn);
+            var listOfEnemies = stage.enemyTable;
+            toSpawn = EF_ListDropdown(Helper_BuildFieldRect(rect, ref index), "Enemy", listOfEnemies, toSpawn, enemy => enemy != null ? enemy.name : "(Missing)");
             if (selected)
             {
                 start = EF_ShmupSpace(start, ColorHelper.PastelGreen, "Start");
@@ -51,6 +52,12 @@ namespace FumoShmup2
         }
         public IEnumerator RunNode()
         {
+            if (toSpawn == null)
+            {
+                Debug.LogError($"[{this.GetType().ToString()}]Missing Enemy for : " + this.name);
+                yield return null;
+                yield break;
+            }
             yield return StageTools.WaitForTimeOrEnemyCountLessThan(1f, 1);
             EnemyUnit.Despawn(EnemyUnit.AliveEnemies.ToList());
             StageTools.SectionSweep(255);

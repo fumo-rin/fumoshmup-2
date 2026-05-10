@@ -342,45 +342,108 @@ namespace FumoShmup2
         }
     }
     #endregion
+    #region Default Attack Component
+    public partial class EnemyUnit
+    {
+        #region Attack Component
+        [System.Serializable]
+        public class AttackComponent
+        {
+            [SerializeField] int Loops = 3;
+            [SerializeField, Range(0f, 6f)] float LoopsDelay = 0f;
+            [SerializeReference] public List<UnitAttack> attacks = new();
+            int attackIndex;
+            public bool DetermineNext(out UnitAttack next)
+            {
+                next = null;
+                if (attacks != null && attacks.Count > 0)
+                {
+                    int selection = attackIndex % attacks.Count;
+                    next = attacks[selection];
+                    attackIndex = attackIndex + 1;
+                }
+                return next != null;
+            }
+            public bool TryStartNext(EnemyUnit e, out Coroutine routine, Action callback)
+            {
+                routine = null;
+                if (DetermineNext(out UnitAttack next))
+                {
+                    routine = next.StartWithSender(e, callback);
+                }
+                return routine != null;
+            }
+            public AttackComponent(int loops, float loopDelay020, params UnitAttack[] attacks)
+            {
+                this.Loops = loops;
+                this.LoopsDelay = loopDelay020;
+                this.attacks = new();
+                foreach (var item in attacks)
+                {
+                    this.attacks.Add(item.Clone());
+                }
+            }
+        }
+        #endregion
+        AttackComponent containedBaseAttack = null;
+        public void SetBaseAttacks(AttackComponent a) => containedBaseAttack = a;
+    }
+    #endregion
     #region Phase Skipping & Utility
     public partial class EnemyUnit
     {
         [Initialize(-9999)]
         private static void ReinitializePhaseStall()
         {
-            phaseStallTimeEnd = -1f;
+
         }
-        Coroutine CurrentRunningBossAttack;
-        public static float phaseStallTimeEnd { get; private set; }
+        Coroutine CurrentRunningAttack;
+        public float AttackStallEndTime { get; private set; }
         public void SkipAndStallPhase(float duration)
         {
-            phaseStallTimeEnd = Time.time + duration;
-            if (CurrentRunningBossAttack != null)
+            AttackStallEndTime = Time.time + duration;
+            if (CurrentRunningAttack != null)
             {
-                StopCoroutine(CurrentRunningBossAttack);
+                StopCoroutine(CurrentRunningAttack);
             }
-            CurrentRunningBossAttack = null;
+            CurrentRunningAttack = null;
         }
-        private void BossAttackStarterLoop()
+        private void AttacksStarterLoop()
         {
-            if (phaseStallTimeEnd < Time.time)
+            if (Time.time < AttackStallEndTime)
+                return;
+
+            if (this.IsRunningActions)
             {
-                if (this.IsRunningActions)
-                {
-                    return;
-                }
-                if (ShmupPlayer.PlayerAs(out ShmupPlayer p) && (!p.IsAlive || p.IframesDurationLeft > 0.75f))
-                {
-                    return;
-                }
-                if (CurrentRunningBossAttack != null)
-                {
-                    return;
-                }
-                if (TryStartNextPhase(out Coroutine next, () => CurrentRunningBossAttack = null))
-                {
-                    CurrentRunningBossAttack = next;
-                }
+                return;
+            }
+            if (ShmupPlayer.PlayerAs(out ShmupPlayer p) && (!p.IsAlive || p.IframesDurationLeft > 0.75f))
+            {
+                return;
+            }
+            switch (IsBoss)
+            {
+                case true:
+                    if (CurrentRunningAttack != null)
+                    {
+                        return;
+                    }
+                    if (TryStartNextPhase(out Coroutine nextBossAttack, () => CurrentRunningAttack = null))
+                    {
+                        CurrentRunningAttack = nextBossAttack;
+                    }
+                    break;
+                case false:
+
+                    if (CurrentRunningAttack != null)
+                    {
+                        return;
+                    }
+                    if (containedBaseAttack.TryStartNext(this, out Coroutine nextBaseAttack, () => CurrentRunningAttack = null))
+                    {
+                        CurrentRunningAttack = nextBaseAttack;
+                    }
+                    break;
             }
         }
     }
@@ -736,25 +799,27 @@ namespace FumoShmup2
         protected override bool CalculateAlive()
         {
             bool isAlive = CurrentHealth > 0f && gameObject != null && gameObject.activeInHierarchy;
-            if (isAlive)
+            if (IsBoss)
             {
-                BossbarUI.AssignUnit(new()
+                if (isAlive)
                 {
-                    target = this,
-                    weight = GetHashCode()
-                });
-            }
-            else
-            {
-                BossbarUI.UnassignUnit(this);
+                    BossbarUI.AssignUnit(new()
+                    {
+                        target = this,
+                        weight = GetHashCode()
+                    });
+                }
+                else
+                {
+                    BossbarUI.UnassignUnit(this);
+                }
             }
             return isAlive;
         }
-
         protected override void WhenUpdate()
         {
             base.WhenUpdate();
-            BossAttackStarterLoop();
+            AttacksStarterLoop();
         }
     }
 }

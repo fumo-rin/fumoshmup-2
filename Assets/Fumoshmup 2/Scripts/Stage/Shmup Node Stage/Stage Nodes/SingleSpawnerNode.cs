@@ -37,10 +37,19 @@ namespace FumoShmup2
         public float SweepDuration = 0f;
         public int SweepLootChance = 255;
         public float EntryDuration = 0.75f;
+
+
+        [SerializeReference] public List<UnitAttack> attackLoop = new();
+        public int attackLoops = 3;
+        public float loopAddedDelay = 0.15f;
+        public float attackStall = 2f;
+
+
         public IEnumerator RunNode()
         {
             if (toSpawn == null)
             {
+                Debug.LogError($"[{this.GetType().ToString()}]Missing Enemy for : " + this.name);
                 yield return null;
                 yield break;
             }
@@ -51,6 +60,11 @@ namespace FumoShmup2
                 Vector2Shmup exitPos = new(exit.x, exit.y);
                 var path = new List<Vector2> { spawnPos, targetPos, exitPos };
                 StageTools.Spawn(toSpawn, out EnemyUnit result, spawnPos, new(path[0], path[1], EntryDuration));
+
+                if (result != null)
+                {
+                    result.SetBaseAttacks(new EnemyUnit.AttackComponent(attackLoops, loopAddedDelay, attackLoop.ToArray()));
+                }
                 if (EnemyMod is EnemyModifierNode mod)
                 {
                     mod.ModifyEnemy(result);
@@ -83,7 +97,10 @@ namespace FumoShmup2
 #if UNITY_EDITOR
             int index = 0;
             RecordUndo("Modify Node Value");
-            toSpawn = EF_ObjectField(Helper_BuildFieldRect(rect, ref index), "To Spawn", toSpawn);
+            //toSpawn = EF_ObjectField(Helper_BuildFieldRect(rect, ref index), "To Spawn", toSpawn);
+
+            var listOfEnemies = stage.enemyTable;
+            toSpawn = EF_ListDropdown(Helper_BuildFieldRect(rect, ref index), "Enemy", listOfEnemies, toSpawn, enemy => enemy != null ? enemy.name : "(Missing)");
             RecordUndo("Modify Node Value");
             WaitAfterSpawn = EF_Slider(Helper_BuildFieldRect(rect, ref index), nameof(WaitAfterSpawn), WaitAfterSpawn, 0f, 5f);
             RecordUndo("Modify Node Value");
@@ -102,11 +119,17 @@ namespace FumoShmup2
                 RecordUndo("Modify Node Value");
                 SweepLootChance = EF_Slider(Helper_BuildFieldRect(rect, ref index), nameof(SweepLootChance), SweepLootChance, 0, 255);
             }
+
             RecordUndo("Modify Node Value");
             if (EF_Button(Helper_BuildFieldRect(rect, ref index), "Flip X"))
             {
                 FlipXPositions();
             }
+            attackLoops = EF_Slider(Helper_BuildFieldRect(rect, ref index), "Attack Loops", attackLoops, 1, 15);
+            attackStall = EF_Slider(Helper_BuildFieldRect(rect, ref index), "Attack Stall time", attackStall, 0.05f, 9f);
+            loopAddedDelay = EF_Slider(Helper_BuildFieldRect(rect, ref index), "Delay Between Loops", loopAddedDelay, 0f, 6f);
+            EF_TypeDropdownList<UnitAttack>(Helper_BuildFieldRect(rect, ref index), "Attack Loop", nameof(attackLoop), unityBackingObject);
+
             if (selected)
             {
                 RecordUndo("Modify Node Value");

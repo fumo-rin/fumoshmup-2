@@ -40,6 +40,10 @@ public abstract partial class ShmupUnit : FumoUnit
             });
         }
     }
+    private void OnDisable()
+    {
+        ForceRemoveAliveEnemy(this);
+    }
     protected override void WhenStart()
     {
 

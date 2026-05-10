@@ -29,8 +29,9 @@ namespace FumoShmup2
         {
 #if UNITY_EDITOR
             int index = 0;
+            var listOfEnemies = stage.enemyTable;
             RecordUndo("Modify Node Value");
-            toSpawn = EF_ObjectField(Helper_BuildFieldRect(rect, ref index), "To Spawn", toSpawn);
+            toSpawn = EF_ListDropdown(Helper_BuildFieldRect(rect, ref index), "Enemy", listOfEnemies, toSpawn, enemy => enemy != null ? enemy.name : "(Missing)");
             RecordUndo("Modify Node Value");
             bossStartDialogue = EF_ObjectField(Helper_BuildFieldRect(rect, ref index), "Dialogue Start", bossStartDialogue);
             RecordUndo("Modify Node Value");

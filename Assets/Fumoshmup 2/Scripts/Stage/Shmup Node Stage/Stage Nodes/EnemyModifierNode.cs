@@ -88,7 +88,6 @@ namespace FumoShmup2
         #region Fields
         public float EnemyHealth = 100f;
         public bool LargeHealthPool = false;
-        public UnitAttack AttackOverride;
         public RevengeAttack RevengeAttackOverride;
         public bool Indicator;
 
