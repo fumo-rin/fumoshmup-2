@@ -1,7 +1,8 @@
-using UnityEngine;
 using rinCore;
-using UnityEngine.Rendering;
 using System.Collections;
+using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 namespace FumoShmup2
 {
     public class SweepFlash : MonoBehaviour
@@ -10,19 +11,21 @@ namespace FumoShmup2
         {
             if (RinHelper.ValidGameObjects(runner) && runner is SweepFlash f)
             {
-                if (f.running != null)
+                if (f.runningVolume != null)
                 {
-                    f.StopCoroutine(f.running);
+                    f.StopCoroutine(f.runningVolume);
                 }
-                f.running = f.StartCoroutine(CO_Run());
+                f.runningVolume = f.StartCoroutine(CO_RunVolume());
+                if (f.sweepAnim != null)
+                    f.sweepAnim.SetTrigger(f.sweepAnimKey);
             }
-            IEnumerator CO_Run()
+            IEnumerator CO_RunVolume()
             {
+                f.sweepSound.Play(ALHandler.Position);
                 if (Vol(out Volume v))
                 {
                     v.weight = 1f;
                     float runningDuration = duration;
-                    f.sweepSound.Play(ALHandler.Position);
                     yield return 0.02f.WaitForSeconds();
                     while (runningDuration > 0)
                     {
@@ -35,12 +38,14 @@ namespace FumoShmup2
                     }
                     v.weight = 0f;
                 }
-                f.running = null;
+                f.runningVolume = null;
             }
         }
-        Coroutine running;
+        Coroutine runningVolume;
         static SweepFlash runner;
         [SerializeField] Volume sweepVolume;
+        [SerializeField] Animator sweepAnim;
+        [SerializeField] string sweepAnimKey = "SWEEP";
         [SerializeField] ACWrapper sweepSound;
         private static bool Vol(out Volume v)
         {
@@ -54,7 +59,8 @@ namespace FumoShmup2
         private void Awake()
         {
             runner = this;
-            sweepVolume.weight = 0;
+            if (sweepVolume != null)
+                sweepVolume.weight = 0;
         }
 
     }

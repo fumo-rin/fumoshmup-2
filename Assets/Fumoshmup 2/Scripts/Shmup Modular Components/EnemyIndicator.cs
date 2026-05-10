@@ -33,7 +33,7 @@ namespace FumoShmup2
                 s.gameObject.SetActive(true);
                 s.maxValue = ShmupWorldspace.WorldSpace.max.x;
                 s.minValue = ShmupWorldspace.WorldSpace.min.x;
-                while (tracked != null)
+                while (tracked != null && tracked.IsAlive)
                 {
                     s.value = tracked.CurrentPosition.x;
                     yield return null;

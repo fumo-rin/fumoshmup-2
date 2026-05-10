@@ -97,35 +97,6 @@ namespace FumoShmup2
             }
             return false;
         }
-        private IEnumerator DEPRECATED_TryAttack(ShmupUnit Sender)
-        {
-            Vector2 origin = Sender.CurrentPosition;
-            if (Sender is EnemyUnit e)
-            {
-                bool foundPlayer = ShmupPlayer.PlayerAs(out ShmupPlayer p);
-                var input = new Projectile.InputSettings(origin, Sender, Vector2.down, new(Sender, 1f, 1f), ProjectileFaction.Enemy);
-
-                if (foundPlayer)
-                {
-                    if (p.IsAlive)
-                    {
-                        input.AimTo(p);
-                    }
-                    input.AssignTarget(p);
-                }
-                //yield return e.AddQueuedAttack(TEMPORARY_Attackpayload(e, input), false);
-            }
-            else if (Sender is ShmupPlayer player)
-            {
-                var input = new Projectile.InputSettings(origin, Sender, Vector2.up, new(Sender, 1f, 1f), ProjectileFaction.Player);
-                //input.Flare = false;
-                if (EnemyUnit.FindEnemyFromDotProduct(player.CurrentPosition, Vector2.up, out EnemyUnit autoTarget, 0.25f))
-                    input.AssignTarget(autoTarget);
-
-                //yield return player.AddQueuedAttack(TEMPORARY_Attackpayload(player, input), false);
-            }
-            yield break;
-        }
         public Coroutine StartWithSender(ShmupUnit Sender, Action callback = null)
         {
             if (Sender == null)

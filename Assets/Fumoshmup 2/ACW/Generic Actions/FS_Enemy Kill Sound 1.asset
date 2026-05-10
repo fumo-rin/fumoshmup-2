@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56a2e8f152cdd254ea1b3f5896d1546e, type: 3}
+  m_Name: FS_Enemy Kill Sound 1
+  m_EditorClassIdentifier: rinCore::RinCore.ACWrapper
+  SoundName: Player Kill Sound
+  soundVolume: 1
+  <soundClips>k__BackingField:
+  - clip: {fileID: 8300000, guid: d5589ef7b15f43c498fa5b46b10b8716, type: 3}
+    PitchVariancePercent: 4.5
+    PitchOrigin: 2.02
+    Volume: 0.361
+    Muted: 0
+  - clip: {fileID: 8300000, guid: 403aed55cd924884b8464c61d94f386c, type: 3}
+    PitchVariancePercent: 4.5
+    PitchOrigin: 1.11
+    Volume: 0.275
+    Muted: 0
+  - clip: {fileID: 8300000, guid: 6b88497d3822fac429fa9ca48326653a, type: 3}
+    PitchVariancePercent: 3.2
+    PitchOrigin: 0.35
+    Volume: 1
+    Muted: 0
+  <singleChannel>k__BackingField: 1
+  <singleRepeatLockoutTime>k__BackingField: 0.001
+  <Is3D>k__BackingField: 1

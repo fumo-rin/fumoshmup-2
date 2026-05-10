@@ -135,10 +135,11 @@ MonoBehaviour:
   moveFlipAnchor: {fileID: 0}
   rb: {fileID: 2153864815207065291}
   CurrentIFramesDamageReductionPercent: 0
-  effects:
-  - ps: {fileID: 6853609063608026678, guid: 7db25320426afcd4cb04b4eca43e2767, type: 3}
+  deathEffects:
+  - deathSound: {fileID: 11400000, guid: d3b21972db970de41b2926fbab50fff0, type: 2}
+    ps: {fileID: 6853609063608026678, guid: 7f91dbfc67867164d9dead306c57bdbf, type: 3}
     delay: 0
-    randomRadiusRange: {x: 0.45, y: 0.65}
+    randomRadiusRange: {x: 0, y: 0}
   phases:
   - phaseAttacks:
     - rid: 697205971041910987
@@ -366,7 +367,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0

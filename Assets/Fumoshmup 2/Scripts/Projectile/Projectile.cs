@@ -700,10 +700,10 @@ namespace FumoShmup2
         {
             void Cancel(Vector2 position, Vector2 direction)
             {
-                //TODO                ProjectileSystem.BulletCancelParticle(position, direction);
+                ProjectileRenderer.BulletCancelParticle(position, direction);
                 if (faction != ProjectileFaction.Player && ShmupPlayer.Player != null && ShmupPlayer.Player.IsAlive && ShmupPlayer.Player.CurrentPosition.SquareDistanceToLessThan(position, 0.75f))
                 {
-                    //TODO PlayerScoring.AddGraze(1);
+                    ShmupGamemode.TriggerGraze(1);
                 }
             }
             p = default;
@@ -715,7 +715,7 @@ namespace FumoShmup2
             {
                 if (ProjectileRunner.SweepLootChance > 0 && RNG.Byte255 < ProjectileRunner.SweepLootChance)
                 {
-                    //TODO ProjectileSystem.SpawnPointItem(position + Random.insideUnitCircle, 1);
+                    PointItemRunner.SpawnPointItem(position + Random.insideUnitCircle);
                     Cancel(position, direction);
                 }
                 return false;

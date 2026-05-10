@@ -949,7 +949,7 @@ namespace FumoShmup2
             yield return StageTools.WaitForTimeOrEnemyCountLessThan(999f, 1);
             StartDialogue(StageEndDialogue, out WaitUntil w, null);
             yield return w;
-            yield return 1.5f.WaitForSeconds();
+            yield return 2.5f.WaitForSeconds();
             if (ShmupSession.CurrentAs(out ShmupSession sess))
             {
                 sess.LoadNextStageOrMenu();

@@ -412,7 +412,7 @@ namespace FumoShmup2
                         case ProjectileFaction.None:
                             break;
                         case ProjectileFaction.Enemy:
-                            if (ShmupPlayer.PlayerAs(out ShmupPlayer player))
+                            if (ShmupPlayer.PlayerAs(out ShmupPlayer player) && player.IsAlive)
                             {
                                 if (p.CollidesWith(player, out hit))
                                     break;
@@ -473,7 +473,7 @@ namespace FumoShmup2
             }
 
             float dt = Time.deltaTime;
-            if (ShmupPlayer.PlayerAs(out ShmupPlayer hitPlayer))
+            if (ShmupPlayer.PlayerAs(out ShmupPlayer hitPlayer) && hitPlayer.IsAlive)
                 WriteUnits(CollisionBitmask.EnemyProjectiles, new ShmupPlayer[1] { hitPlayer });
             WriteUnits(CollisionBitmask.PlayerProjectiles, FumoUnit.AliveEnemies.ToArray());
 
@@ -514,7 +514,7 @@ namespace FumoShmup2
                     shouldRemove = true;
                 }
 
-                if (proj.Faction != ProjectileFaction.Player && ShmupPlayer.PlayerAs(out ShmupPlayer grazePlayer) && !grazedProjectiles.Contains(proj))
+                if (proj.Faction != ProjectileFaction.Player && ShmupPlayer.PlayerAs(out ShmupPlayer grazePlayer) && grazePlayer.IsAlive && !grazedProjectiles.Contains(proj))
                 {//Player Graze
                     if (proj.Position.InBoxDistance(grazePlayer.CurrentPosition, 1f))
                     {

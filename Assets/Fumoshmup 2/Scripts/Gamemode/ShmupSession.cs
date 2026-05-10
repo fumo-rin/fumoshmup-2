@@ -182,7 +182,6 @@ namespace FumoShmup2
                 return false;
             }
         }
-        [field: SerializeField] public ACWrapper SweepSound { get; private set; }
         public shmupPlayerResources playerResources = new();
         #region Int
         public int GetInt(string key) => playerResources.GetInt(key);

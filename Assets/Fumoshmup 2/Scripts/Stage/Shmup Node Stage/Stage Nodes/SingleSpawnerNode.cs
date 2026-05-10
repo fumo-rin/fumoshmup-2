@@ -34,6 +34,8 @@ namespace FumoShmup2
         public float RunDuration => WaitAfterSpawn;
         public bool WasModifiedByModifier { get; set; } = false;
 
+        public bool HasIndicator = false;
+
         public bool Sealing = false;
         public float SealingRadius = 0f;
 
@@ -67,6 +69,8 @@ namespace FumoShmup2
 
                 if (result != null)
                 {
+                    if (HasIndicator) EnemyIndicator.TrackUnit(result);
+                    result.StallAttackLoop(attackStall);
                     result.SetBaseAttacks(new EnemyUnit.AttackComponent(attackLoops, loopAddedDelay, attackLoop.ToArray()));
                 }
                 if (EnemyMod is EnemyModifierNode mod)
@@ -83,7 +87,7 @@ namespace FumoShmup2
             }
             yield return Spawn();
         }
-        protected override Vector2 BuildSize() => new(350f, 260f);
+        protected override Vector2 BuildSize() => new(350f, 320f);
 
         private void FlipXPositions()
         {
@@ -115,6 +119,7 @@ namespace FumoShmup2
             RecordUndo("Modify Node Value");
             EntryDuration = EF_Slider(Helper_BuildFieldRect(rect, ref index), nameof(EntryDuration), EntryDuration, 0.05f, 10f);
 
+            HasIndicator = EF_BoolField(Helper_BuildFieldRect(rect, ref index), nameof(HasIndicator), HasIndicator);
 
             Sealing = EF_BoolField(Helper_BuildFieldRect(rect, ref index), nameof(Sealing), Sealing);
             if (Sealing)

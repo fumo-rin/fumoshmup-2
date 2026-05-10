@@ -65,15 +65,6 @@ namespace FumoShmup2
         {
             public float duration;
             public byte lootChance;
-            public ACWrapper sweepSound
-            {
-                get
-                {
-                    ShmupSession.CurrentAs(out ShmupSession sess);
-                    ACWrapper a = sess != null ? sess.SweepSound : null;
-                    return a;
-                }
-            }
         }
         SweepOverride? sweepOverride = null;
         private bool TryGetSweepOverride(out SweepOverride sweep)
@@ -106,6 +97,7 @@ namespace FumoShmup2
         [System.Serializable]
         class deathEffect
         {
+            [SerializeField] ACWrapper deathSound;
             [SerializeField] ParticleSystem ps;
             [SerializeField] float delay;
             [SerializeField] Vector2 randomRadiusRange = new(0.45f, 0.65f);
@@ -114,18 +106,21 @@ namespace FumoShmup2
                 IEnumerator CO_Play()
                 {
                     yield return delay.WaitForSeconds();
-                    ps.PlayCachedOnce(e.CurrentPosition + (RNG.SeededRandomVector2.normalized * RNG.RandomFloatRange(randomRadiusRange.x, randomRadiusRange.y)));
+                    Vector2 rng = (RNG.SeededRandomVector2.normalized * RNG.RandomFloatRange(randomRadiusRange.x, randomRadiusRange.y));
+                    ps.PlayCachedOnce(e.CurrentPosition + rng);
+                    deathSound.Play(e.CurrentPosition + rng);
                 }
                 CO_Play().RunRoutine();
             }
         }
-        [SerializeField] List<deathEffect> effects = new();
+        [SerializeField] List<deathEffect> deathEffects = new();
         private void PlayDeathEffects()
         {
-            foreach (var effect in effects)
-            {
-                effect.Play(this);
-            }
+            if (ShmupWorldspace.WorldSpace is Rect r && r.Contains(CurrentPosition))
+                foreach (var effect in deathEffects)
+                {
+                    effect.Play(this);
+                }
         }
     }
     #endregion
@@ -309,9 +304,10 @@ namespace FumoShmup2
                 return found;
             }
         }
-        public bool TryStartNextPhase(out Coroutine routine, Action callback)
+        public bool TryStartNextPhase(out UnitPhase nextPhase, out Coroutine routine, Action callback)
         {
             routine = null;
+            nextPhase = null;
             if (CurrentPhase == null)
             {
                 return false;
@@ -320,6 +316,7 @@ namespace FumoShmup2
             {
                 routine = next.StartWithSender(this, callback);
             }
+            nextPhase = CurrentPhase;
             return routine != null;
         }
         [System.Serializable]
@@ -349,14 +346,14 @@ namespace FumoShmup2
         [System.Serializable]
         public class AttackComponent
         {
-            [SerializeField] int Loops = 3;
-            [SerializeField, Range(0f, 6f)] float LoopsDelay = 0f;
+            public int Loops = 3;
+            [SerializeField, Range(0f, 6f)] public float LoopsDelay = 0f;
             [SerializeReference] public List<UnitAttack> attacks = new();
             int attackIndex;
             public bool DetermineNext(out UnitAttack next)
             {
                 next = null;
-                if (attacks != null && attacks.Count > 0)
+                if (attacks != null && attacks.Count > 0 && attackIndex < Loops)
                 {
                     int selection = attackIndex % attacks.Count;
                     next = attacks[selection];
@@ -378,6 +375,7 @@ namespace FumoShmup2
                 this.Loops = loops;
                 this.LoopsDelay = loopDelay020;
                 this.attacks = new();
+                attackIndex = 0;
                 foreach (var item in attacks)
                 {
                     this.attacks.Add(item.Clone());
@@ -392,21 +390,28 @@ namespace FumoShmup2
     #region Phase Skipping & Utility
     public partial class EnemyUnit
     {
-        [Initialize(-9999)]
-        private static void ReinitializePhaseStall()
-        {
-
-        }
         Coroutine CurrentRunningAttack;
         public float AttackStallEndTime { get; private set; }
         public void SkipAndStallPhase(float duration)
         {
-            AttackStallEndTime = Time.time + duration;
+            AttackStallEndTime = AttackStallEndTime.Max(Time.time + duration);
             if (CurrentRunningAttack != null)
             {
                 StopCoroutine(CurrentRunningAttack);
             }
             CurrentRunningAttack = null;
+        }
+        public void StallAttackLoop(float duration, bool stopAttack = true)
+        {
+            AttackStallEndTime = AttackStallEndTime.Max(Time.time + duration);
+            if (stopAttack)
+            {
+                if (CurrentRunningAttack != null)
+                {
+                    StopCoroutine(CurrentRunningAttack);
+                }
+                CurrentRunningAttack = null;
+            }
         }
         private void AttacksStarterLoop()
         {
@@ -428,7 +433,7 @@ namespace FumoShmup2
                     {
                         return;
                     }
-                    if (TryStartNextPhase(out Coroutine nextBossAttack, () => CurrentRunningAttack = null))
+                    if (TryStartNextPhase(out UnitPhase phase, out Coroutine nextBossAttack, () => CurrentRunningAttack = null))
                     {
                         CurrentRunningAttack = nextBossAttack;
                     }
@@ -439,7 +444,7 @@ namespace FumoShmup2
                     {
                         return;
                     }
-                    if (containedBaseAttack.TryStartNext(this, out Coroutine nextBaseAttack, () => CurrentRunningAttack = null))
+                    if (containedBaseAttack.TryStartNext(this, out Coroutine nextBaseAttack, () => SkipAndStallPhase(containedBaseAttack.LoopsDelay)))
                     {
                         CurrentRunningAttack = nextBaseAttack;
                     }
@@ -468,7 +473,7 @@ namespace FumoShmup2
             });
         }
         public void SetSealRadius(float r) => sealRadius = r;
-        int LootCount => !IsBoss ? CurrentMaxHealth.Multiply(0.333f).ToInt() : PhasesTotalHealth.Multiply(0.02f).Clamp(50f, 1000f).ToInt();
+        int LootCount => !IsBoss ? CurrentMaxHealth.Multiply(0.04f).ToInt().Max(4) : PhasesTotalHealth.Multiply(0.02f).Clamp(50f, 1000f).ToInt();
         public void SendHit(IHit.HitPacket packet, out float damageDealt)
         {
             damageDealt = 0f;
@@ -481,37 +486,36 @@ namespace FumoShmup2
                     KillWithLoot();
                     return;
                 }
-                if (!IsOnScreenAndAlive)
+                if (ShmupWorldspace.WorldSpace is Rect r && r.Contains(packet.position))
                 {
-                    return;
-                }
-                if (HasIframes && CurrentIFramesDamageReductionPercent >= 100)
-                {
-                    return;
-                }
-                if (HealthPercent < 15f && CurrentMaxHealth > 200)
-                {
-                    lowHitSound.Play(CurrentPosition);
-                }
-                else
-                {
-                    hitSound.Play(CurrentPosition);
-                }
-                float damage = packet.FinalDamage;
-                if (HasIframes && CurrentIFramesDamageReductionPercent > 0)
-                {
-                    damage *= Mathf.Max(0f, 1f - CurrentIFramesDamageReductionPercent * 0.01f);
-                }
-                damage *= 1f;
-                GameSession.TryAddScoreRaw(damage * 250d, "Enemy Damage");
-                damageDealt = damage.Min(CurrentHealth);
-                double healthPercentDelta = (double)damageDealt / (double)CurrentMaxHealth;
-                StartNewHealth(CurrentHealth - damage, CurrentMaxHealth);
+                    if (HasIframes && CurrentIFramesDamageReductionPercent >= 100)
+                    {
+                        return;
+                    }
+                    if (HealthPercent < 15f && CurrentMaxHealth > 200)
+                    {
+                        lowHitSound.Play(CurrentPosition);
+                    }
+                    else
+                    {
+                        hitSound.Play(CurrentPosition);
+                    }
+                    float damage = packet.FinalDamage;
+                    if (HasIframes && CurrentIFramesDamageReductionPercent > 0)
+                    {
+                        damage *= Mathf.Max(0f, 1f - CurrentIFramesDamageReductionPercent * 0.01f);
+                    }
+                    damage *= 1f;
+                    GameSession.TryAddScoreRaw(damage * 250d, "Enemy Damage");
+                    damageDealt = damage.Min(CurrentHealth);
+                    double healthPercentDelta = (double)damageDealt / (double)CurrentMaxHealth;
+                    StartNewHealth(CurrentHealth - damage, CurrentMaxHealth);
 
-                const double bossScorePercent = 0.05d;
-                GameSession.ReadCurrentRawScore(out double currentScore);
-                double scoreReward = currentScore * healthPercentDelta * bossScorePercent;
-                GameSession.TryAddScoreRaw(scoreReward, "Boss Damage");
+                    const double bossScorePercent = 0.05d;
+                    GameSession.ReadCurrentRawScore(out double currentScore);
+                    double scoreReward = currentScore * healthPercentDelta * bossScorePercent;
+                    GameSession.TryAddScoreRaw(scoreReward, "Boss Damage");
+                }
             }
         }
         public override void ForceKill()
@@ -540,7 +544,7 @@ namespace FumoShmup2
             {
                 if (ShmupPlayer.PlayerAs(out ShmupPlayer p))
                 {
-                    SweepOnKill.SweepData s = new(sweep.duration, sweep.lootChance, p.SweepSound);
+                    SweepOnKill.SweepData s = new(sweep.duration, sweep.lootChance);
                     SweepOnKill.SweepStuff(this, s, false);
                 }
             }
@@ -550,7 +554,7 @@ namespace FumoShmup2
                 {
                     if (ShmupPlayer.PlayerAs(out ShmupPlayer p))
                     {
-                        SweepOnKill.SweepData s = new(0.35f, 255, p.SweepSound);
+                        SweepOnKill.SweepData s = new(0.35f, 255);
                         SweepOnKill.SweepStuff(this, s, false);
                     }
                 }

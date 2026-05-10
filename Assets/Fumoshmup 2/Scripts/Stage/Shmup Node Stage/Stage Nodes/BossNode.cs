@@ -60,6 +60,7 @@ namespace FumoShmup2
             yield return 0.25f.WaitForSeconds();
             if (StageTools.SpawnBoss(toSpawn, out EnemyUnit enemyIteration, out WaitUntil bossWait, start, end))
             {
+                EnemyIndicator.TrackUnit(enemyIteration);
                 yield return bossWait;
             }
             StageTools.StartDialogue(bossKillDialogue, out WaitUntil bdKillWait);

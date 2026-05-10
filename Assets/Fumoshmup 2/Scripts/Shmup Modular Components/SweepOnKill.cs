@@ -10,16 +10,10 @@ namespace FumoShmup2
         {
             public float duration;
             public byte lootWeight;
-            [SerializeField] ACWrapper sweepsound;
-            public void PlaySound(Vector2 pos)
-            {
-                sweepsound.Play(pos);
-            }
-            public SweepData(float duration, byte lootWeight, ACWrapper sweepSound)
+            public SweepData(float duration, byte lootWeight)
             {
                 this.duration = duration;
                 this.lootWeight = lootWeight;
-                this.sweepsound = sweepSound;
             }
         }
         public static void SweepStuff(EnemyUnit owner, SweepData sweep, bool forceKill)
@@ -33,7 +27,6 @@ namespace FumoShmup2
                 SweepFlash.TriggerFlash(0.1f);
             }
             ProjectileRunner.TriggerSweep(sweep.duration, sweep.lootWeight, !forceKill, out _);
-            if (owner != null) sweep.PlaySound(owner.CurrentPosition);
         }
     }
 }
