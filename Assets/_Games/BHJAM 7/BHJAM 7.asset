@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8260514010895758024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab15c5f82e869144a8b0664a90e848eb, type: 3}
+  m_Name: ' : fumo rin'
+  m_EditorClassIdentifier: rinCore::rinCore.CreditsSO
+  Priority: 0
+  Title: 
+  Credit: fumo rin
+  Website: 
+--- !u!114 &-1464701543925002749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab15c5f82e869144a8b0664a90e848eb, type: 3}
+  m_Name: ' : dali'
+  m_EditorClassIdentifier: rinCore::rinCore.CreditsSO
+  Priority: -36
+  Title: 
+  Credit: dali
+  Website: 
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f80e3d0ff36e19945a72aa1eadf3811e, type: 3}
+  m_Name: BHJAM 7
+  m_EditorClassIdentifier: rinCore::rinCore.GameCreditsSO
+  gameName: Fumoshmup 2
+  gameCreator: fumo rin
+  credits:
+  - {fileID: -8260514010895758024}
+  - {fileID: -1464701543925002749}
+  showTitle: 0
+  doubleSpacing: 0
+  spacingOverride: 
