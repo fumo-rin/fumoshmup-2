@@ -17,7 +17,7 @@ namespace FumoShmup2
                 scoringActivated = s.GetFloat(ShmupSession.keys.CashoutActivation060) <= 1f;
                 if (scoringActivated)
                 {
-                    scoreValue += s.GetFloat(ShmupSession.keys.HitCounter) * 0.1f;
+                    scoreValue += s.GetFloat(ShmupSession.keys.HitCounter) * 0.25f;
                 }
                 else
                 {

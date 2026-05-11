@@ -64,6 +64,28 @@ MonoBehaviour:
   skipIndex: 20
   WaitDuration: 15
   AliveEnemiesRequired: 0
+--- !u!114 &-7320112418387840548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceede88167d163149949c182aeb4f291, type: 3}
+  m_Name: BossNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.BossNode
+  IsEnabled: 1
+  title: BossNode
+  position: {x: 600, y: 90}
+  skipIndex: 60
+  toSpawn: {fileID: 2745390351675722610, guid: 6eee8ce8a7e150842ad2e1920ff86f4c, type: 3}
+  bossStartDialogue: {fileID: 11400000, guid: c66b183749ac4814e8e372adba27a27e, type: 2}
+  bossKillDialogue: {fileID: 11400000, guid: ff56bc1b533f08f468470fbd3a24d8c1, type: 2}
+  bossMusic: {fileID: 11400000, guid: d01e3c6d4b06c4b4cbfe7c5801ba0b18, type: 2}
+  start: {x: 0.5, y: 1.25}
+  end: {x: 0.5, y: 0.7}
 --- !u!114 &-5541342289599712522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,7 +108,7 @@ MonoBehaviour:
   target: {x: 0.48, y: 0.732}
   exit: {x: -0.35000002, y: 0.75}
   WaitAfterSpawn: 0.1
-  ExitDelay: 5
+  ExitDelay: 9.3
   ExitDuration: 1.25
   HasIndicator: 0
   Sealing: 0
@@ -96,22 +118,22 @@ MonoBehaviour:
   SweepLootChance: 255
   EntryDuration: 0.75
   attackLoop:
-  - rid: 697206040337580212
+  - rid: 697206069577646176
   - rid: 697206062794932599
   attackLoops: 3
-  loopAddedDelay: 0.15
-  attackStall: 2
+  loopAddedDelay: 1
+  attackStall: 1
   references:
     version: 2
     RefIds:
-    - rid: 697206040337580212
-      type: {class: UtilityAttacks/AttackWait, ns: FumoShmup2, asm: Fumoshmup2}
-      data:
-        waitDuration: 1
     - rid: 697206062794932599
       type: {class: TestingAttacks/ShotRandomFunny, ns: FumoShmup2, asm: Fumoshmup2}
       data:
-        proj: {fileID: 0}
+        proj: {fileID: 11400000, guid: 84a623da29b1d274c8f1e32e4c65acc4, type: 2}
+    - rid: 697206069577646176
+      type: {class: UtilityAttacks/AttackWait, ns: FumoShmup2, asm: Fumoshmup2}
+      data:
+        waitDuration: 0.25
 --- !u!114 &-3707533323642943700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,6 +156,23 @@ MonoBehaviour:
   bossMusic: {fileID: 0}
   start: {x: 0.5, y: 1.25}
   end: {x: 0.5, y: 0.7}
+--- !u!114 &-175885512777121902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 548c74236282c74408af0add52103885, type: 3}
+  m_Name: MusicNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.MusicNode
+  IsEnabled: 1
+  title: MusicNode
+  position: {x: 289, y: -259}
+  skipIndex: 10
+  music: {fileID: 11400000, guid: 040ad734a48bb8d42bd41a56534413cc, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,27 +186,36 @@ MonoBehaviour:
   m_Name: BHJAM 7 Workshop Stage
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.ShmupNodeStage
   SkipEntries:
-  - skipName: Beaf10
+  - skipName: pre mid 1
     skipValue: 10
-    enabled: 0
-  - skipName: Beaf20
+    enabled: 1
+  - skipName: pre mid 2
     skipValue: 20
     enabled: 1
-  - skipName: Beaf30
+  - skipName: mid boss
     skipValue: 30
     enabled: 1
-  - skipName: Beaf40
+  - skipName: post mid 1
     skipValue: 40
     enabled: 0
-  - skipName: Beaf50
+  - skipName: post mid 2
     skipValue: 50
     enabled: 0
-  - skipName: Beaf60
+  - skipName: boss
     skipValue: 60
-    enabled: 0
+    enabled: 1
+  - skipName: boss
+    skipValue: 70
+    enabled: 1
+  - skipName: boss
+    skipValue: 80
+    enabled: 1
+  - skipName: boss
+    skipValue: 90
+    enabled: 1
   <StageScene>k__BackingField: {fileID: 11400000, guid: 9ac2b125f6a81b04ca14a6031c9663e9, type: 2}
   currentLinkAttempt: {fileID: 0}
-  selectedSkipIndex: 0
+  selectedSkipIndex: 1
   StageEndDialogue: {fileID: 0}
   enemyTable:
   - {fileID: 2745390351675722610, guid: fc86072f3a38af04fa7b9a16c4cb61cb, type: 3}
@@ -183,6 +231,8 @@ MonoBehaviour:
   - {fileID: -8108112877877901962}
   - {fileID: 2592826070096661797}
   - {fileID: 7367622136528355182}
+  - {fileID: -175885512777121902}
+  - {fileID: -7320112418387840548}
 --- !u!114 &234403539862038660
 MonoBehaviour:
   m_ObjectHideFlags: 0

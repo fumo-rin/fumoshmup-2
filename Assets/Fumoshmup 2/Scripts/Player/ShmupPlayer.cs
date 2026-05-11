@@ -70,13 +70,40 @@ public partial class ShmupPlayer : IHit
                 manualAliveFlag = false;
                 gameObject.SetActive(false);
                 hitData.DeathSound.Play(CurrentPosition);
+                int lifePool = session.GetInt(ShmupSession.keys.CurrentLives);
+                bool canRespawn = lifePool > 0;
+                if (lifePool > 0)
+                {
+                    lifePool--;
+                    session.SetInt(ShmupSession.keys.CurrentLives, lifePool, 0, 6);
+                }
                 yield return 1f.WaitForSeconds();
+                if (!canRespawn)
+                {
+                    bool continued = false;
+                    void Yes()
+                    {
+                        continued = true;
+                        session.TryContinue();
+                    }
+                    void No()
+                    {
+                        session.ExitToMenu();
+                    }
+                    ContinueButtons.Show(out WaitUntil continueWait, Yes, No);
+                    TimeSlowHandler.AddDurationlessTimescale("Continue Stall", 0f);
+                    yield return continueWait;
+                    TimeSlowHandler.RemoveDurationlessTimescale("Continue Stall");
+                    if (!continued)
+                        yield break;
+                }
                 Vector2 v = new Vector2Shmup(0.5f, 0.2f).Vector2Now;
                 manualAliveFlag = true;
                 transform.position = v;
                 gameObject.SetActive(true);
                 SetCurrentIFrames(hitIframesDuration);
-                session.SetInt(ShmupSession.keys.CurrentBombs, session.GetInt(ShmupSession.keys.StartingBombs), 0, 6);
+                int currentBombs = session.GetInt(ShmupSession.keys.CurrentBombs);
+                session.SetInt(ShmupSession.keys.CurrentBombs, currentBombs.Max(session.GetInt(ShmupSession.keys.StartingBombs)), 0, 6);
             }
             bool cancelable = hasSession && session.GetInt(ShmupSession.keys.CurrentBombs) > 0;
             if (!cancelable)

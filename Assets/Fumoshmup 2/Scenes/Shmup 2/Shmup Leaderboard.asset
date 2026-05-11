@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Shmup Leaderboard
   m_EditorClassIdentifier: rinCore::rinCore.ScenePairSO
   mainScene:
-    sceneAsset: {fileID: 0}
-    scenePath: 
+    sceneAsset: {fileID: 102900000, guid: 612652f8496ffb34d9300f9389afe259, type: 3}
+    scenePath: Assets/Fumoshmup 2/Scenes/Shmup 2/UI Leaderboard.unity
   additiveScenes:
   - sceneAsset: {fileID: 102900000, guid: c6c2c8ae6f331564a8673db61540f340, type: 3}
     scenePath: Assets/Fumoshmup 2/Scenes/Shmup 2/UI Background.unity

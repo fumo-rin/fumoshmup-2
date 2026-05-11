@@ -20,6 +20,7 @@ namespace FumoShmup2
         [field: SerializeField] public ShmupGamemode Gamemode { get; private set; }
         protected override void WhenStartSession()
         {
+            Dialogue.TrySetPlayerCharacter(playerSpeaker);
             stageIndex.LoadStagesToQueue();
             ShmupGamemode.SetCurrent(Gamemode);
             if (!stageIndex.TryGetNextStage(out ShmupStage next))
@@ -40,6 +41,7 @@ namespace FumoShmup2
     {
         [SerializeField] ShmupStageIndex stageIndex = new();
         public void LoadNextStageOrMenu() => stageIndex.GoNextStageOrMenu();
+        public void ExitToMenu() => stageIndex.GoMenu();
 
         [System.Serializable]
         class ShmupStageIndex
@@ -85,13 +87,31 @@ namespace FumoShmup2
                 }
                 else
                 {
-                    GameSession.EndSessionSettings end = new()
-                    {
-                        SubmitScore = true
-                    };
-                    SceneLoader.LoadScenePair(mainMenuScene, () => ShmupSession.EndSession(end));
+                    GoMenu();
                 }
             }
+            public void GoMenu()
+            {
+                Debug.Log("Breakpoint");
+                GameSession.EndSessionSettings end = new()
+                {
+                    SubmitScore = true
+                };
+                SceneLoader.LoadScenePair(mainMenuScene, () => ShmupSession.EndSession(end));
+            }
+        }
+    }
+    #endregion
+    #region Continue
+    public partial class ShmupSession
+    {
+        public void TryContinue()
+        {
+            SetInt(keys.CurrentLives, GetInt(keys.StartingLives), 0, 6);
+            SetInt(keys.CurrentBombs, GetInt(keys.StartingBombs), 0, 6);
+            SetFloat(keys.HitCounter, 0f, 0f, 99999f);
+            SetFloat(keys.CashoutActivation060, 0f, 0f, 60f);
+            scoringData.Continue();
         }
     }
     #endregion
@@ -112,6 +132,7 @@ namespace FumoShmup2
     [System.Serializable]
     public partial class ShmupSession : rinCore.GameSession
     {
+        [SerializeField] DialogueCharacterSO playerSpeaker;
         public string SessionName => cachedSessionName;
         [SerializeField] private string cachedSessionName = "Game Name";
         public string SessionDifficulty = "Ultra";

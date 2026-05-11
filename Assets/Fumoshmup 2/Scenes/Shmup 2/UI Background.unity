@@ -605,7 +605,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4845276930943762971, guid: 2da3dcc22749e7f4280737786d898334, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000030517578
+      value: -0.000061035156
       objectReference: {fileID: 0}
     - target: {fileID: 4845637959249703711, guid: 2da3dcc22749e7f4280737786d898334, type: 3}
       propertyPath: m_AnchorMax.y
@@ -929,6 +929,63 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 29000
   m_TargetDisplay: 0
+--- !u!1001 &807202827
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1681391469213804000, guid: 656cf81fdadee6f4dab08f4de570caa0, type: 3}
+      propertyPath: m_Name
+      value: Music Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1847824548780091066, guid: 656cf81fdadee6f4dab08f4de570caa0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1847824548780091066, guid: 656cf81fdadee6f4dab08f4de570caa0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1847824548780091066, guid: 656cf81fdadee6f4dab08f4de570caa0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1847824548780091066, guid: 656cf81fdadee6f4dab08f4de570caa0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1847824548780091066, guid: 656cf81fdadee6f4dab08f4de570caa0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1847824548780091066, guid: 656cf81fdadee6f4dab08f4de570caa0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1847824548780091066, guid: 656cf81fdadee6f4dab08f4de570caa0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1847824548780091066, guid: 656cf81fdadee6f4dab08f4de570caa0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1847824548780091066, guid: 656cf81fdadee6f4dab08f4de570caa0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1847824548780091066, guid: 656cf81fdadee6f4dab08f4de570caa0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 656cf81fdadee6f4dab08f4de570caa0, type: 3}
 --- !u!1 &1051770436
 GameObject:
   m_ObjectHideFlags: 0
@@ -1414,6 +1471,71 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: -32000
   m_TargetDisplay: 0
+--- !u!1 &1983022071
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1983022074}
+  - component: {fileID: 1983022073}
+  - component: {fileID: 1983022072}
+  m_Layer: 0
+  m_Name: Stage Music
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1983022072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983022071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c6aa3e55b2451344837778acd78ad7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: rinCore::rinCore.VolumeSettingsFetcher
+  musicMixers:
+  - {fileID: 24100000, guid: 5f8d0f335fbb734499fb150c4540d641, type: 2}
+  effectsMixers:
+  - {fileID: 24100000, guid: 2d90163c4095a0a4283cc9766c8294e4, type: 2}
+  - {fileID: 24100000, guid: 2dceb49b28515464b8f65118788082ba, type: 2}
+  dialogueMixers:
+  - {fileID: 24100000, guid: e930f3c98e575b74ba8fef009ffbc228, type: 2}
+--- !u!114 &1983022073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983022071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35ddc5ec895cd8746a20e94dbe03f99c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: rinCore::rinCore.StageMusic
+  music: {fileID: 11400000, guid: 2f3e82c26a3ff1e40bfa78787cb3f5ee, type: 2}
+--- !u!4 &1983022074
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983022071}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &2888696187100303441
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1575,3 +1697,5 @@ SceneRoots:
   - {fileID: 1401832206}
   - {fileID: 466845346}
   - {fileID: 1051770439}
+  - {fileID: 807202827}
+  - {fileID: 1983022074}

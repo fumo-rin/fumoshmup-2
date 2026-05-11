@@ -238,6 +238,7 @@ Transform:
   m_Children:
   - {fileID: 8387382111581630007}
   - {fileID: 3936373688699223761}
+  - {fileID: 1677829663353738579}
   m_Father: {fileID: 6333903949812880131}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1307867543639036374
@@ -5350,7 +5351,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8387382111581630007}
   - component: {fileID: 3025360981764970543}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Global Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5385,7 +5386,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
   m_IsGlobal: 1
-  priority: 999
+  priority: 100
   blendDistance: 0
   weight: 0
   sharedProfile: {fileID: 11400000, guid: d08fd4a82c5a9384aa2430ba0227cf20, type: 2}
@@ -5480,6 +5481,69 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &2616313836424698596
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1677829663353738579}
+  - component: {fileID: 7740244154674972418}
+  - component: {fileID: 8855800061515544952}
+  m_Layer: 3
+  m_Name: Detatched Object RUnner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1677829663353738579
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2616313836424698596}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4800397731281451887}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7740244154674972418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2616313836424698596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 697de2921f9f8514f955ec6ffb2ca3d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.ShmupPlayerObjectDetatcher
+  followObjects:
+  - {fileID: 8387382111581630007}
+  hiddenWhenPlayerHidden: 0
+--- !u!114 &8855800061515544952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2616313836424698596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 697de2921f9f8514f955ec6ffb2ca3d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.ShmupPlayerObjectDetatcher
+  followObjects:
+  - {fileID: 2377102141003886598}
+  hiddenWhenPlayerHidden: 1
 --- !u!1 &4294919355259123922
 GameObject:
   m_ObjectHideFlags: 0

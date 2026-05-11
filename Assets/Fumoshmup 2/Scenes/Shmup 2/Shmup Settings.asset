@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89470abe1f8faed45aee038125f67f9d, type: 3}
+  m_Name: Shmup Settings
+  m_EditorClassIdentifier: rinCore::rinCore.ScenePairSO
+  mainScene:
+    sceneAsset: {fileID: 102900000, guid: 72f0278ec2a544f43a8bb524cc029e50, type: 3}
+    scenePath: Assets/Fumoshmup 2/Scenes/Shmup 2/UI Settings.unity
+  additiveScenes:
+  - sceneAsset: {fileID: 102900000, guid: c6c2c8ae6f331564a8673db61540f340, type: 3}
+    scenePath: Assets/Fumoshmup 2/Scenes/Shmup 2/UI Background.unity

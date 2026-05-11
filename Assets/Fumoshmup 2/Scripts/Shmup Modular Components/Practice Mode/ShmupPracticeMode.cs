@@ -1,3 +1,4 @@
+using Mono.Cecil.Cil;
 using rinCore;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,10 +19,15 @@ namespace FumoShmup2
             }
             return false;
         }
+        static ShmupPracticeMode()
+        {
+            GameSession.WhenInvalidationCheck += () => !IsOn;
+        }
         public static void SetMode(bool state)
         {
             practiceModeToggle = state;
             PersistentJSON.TrySave(state, menuPracticeModeKey);
+
         }
         public static void Toggle() => SetMode(!practiceModeToggle);
     }

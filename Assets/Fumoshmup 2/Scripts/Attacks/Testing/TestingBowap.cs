@@ -87,7 +87,6 @@ namespace FumoShmup2
         public class ShotRandomFunny : UnitAttack
         {
             public ProjectileDefineSO proj;
-            int test = 0;
             protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
             {
                 var input2 = input.Copy();

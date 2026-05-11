@@ -1762,6 +1762,7 @@ MonoBehaviour:
       mainMenuScene: {fileID: 11400000, guid: ab63050f81166364093125ea0d6540ce, type: 2}
       gameModeStages:
       - {fileID: 11400000, guid: 444e79f657a8402429c2b5fb66e68aa6, type: 2}
+    playerSpeaker: {fileID: 11400000, guid: 1771713a7c860cf49bfc2a4bbb2ef7a6, type: 2}
     cachedSessionName: BHJAM7
     SessionDifficulty: Ultra
     DifficultyColor:
@@ -2881,6 +2882,7 @@ MonoBehaviour:
       mainMenuScene: {fileID: 11400000, guid: ab63050f81166364093125ea0d6540ce, type: 2}
       gameModeStages:
       - {fileID: 11400000, guid: 53a4ec68fe04c9442ae185744c57e372, type: 2}
+    playerSpeaker: {fileID: 11400000, guid: 1771713a7c860cf49bfc2a4bbb2ef7a6, type: 2}
     cachedSessionName: BHJAM7
     SessionDifficulty: Ultra
     DifficultyColor:
