@@ -219,6 +219,11 @@ namespace FumoShmup2
             public Vector2 Origin { get; private set; }
             public Vector2 Direction { get; private set; }
             public ShmupUnit OptionalTarget { get; private set; }
+            public InputSettings SetOptionalTarget(ShmupUnit t)
+            {
+                OptionalTarget = t;
+                return this;
+            }
             public ProjectileFaction Faction { get; private set; }
             public float addedForward;
             public List<object> Extras { get; private set; }

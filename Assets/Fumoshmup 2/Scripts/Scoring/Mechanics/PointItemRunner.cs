@@ -12,7 +12,7 @@ namespace FumoShmup2
         {
             bool scoringActivated = false;
             double scoreValue = 1000d;
-            if (ShmupSession.CurrentAs(out ShmupSession s))
+            if (ShmupSession.CurrentAs(out ShmupSession s) && ShmupPlayer.PlayerAs(out ShmupPlayer p) && p.IsAlive)
             {
                 scoringActivated = s.GetFloat(ShmupSession.keys.CashoutActivation060) <= 1f;
                 if (scoringActivated)

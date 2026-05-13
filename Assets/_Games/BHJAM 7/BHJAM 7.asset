@@ -49,6 +49,40 @@ MonoBehaviour:
   credits:
   - {fileID: -8260514010895758024}
   - {fileID: -1464701543925002749}
+  - {fileID: 937215687482611260}
+  - {fileID: 5215590707948513343}
   showTitle: 0
   doubleSpacing: 0
   spacingOverride: 
+--- !u!114 &937215687482611260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab15c5f82e869144a8b0664a90e848eb, type: 3}
+  m_Name: ' : DAMAction'
+  m_EditorClassIdentifier: rinCore::rinCore.CreditsSO
+  Priority: -44
+  Title: 
+  Credit: DAMAction
+  Website: 
+--- !u!114 &5215590707948513343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab15c5f82e869144a8b0664a90e848eb, type: 3}
+  m_Name: ' : Seete'
+  m_EditorClassIdentifier: rinCore::rinCore.CreditsSO
+  Priority: -44
+  Title: 
+  Credit: Seete
+  Website: 

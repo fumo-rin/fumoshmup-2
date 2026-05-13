@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c84717cc8fb2c2e40a3805cc40e46096, type: 3}
+  m_Name: Small Evil Balls
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.ProjectileDefineSO
+  ColliderShape:
+    rid: 697205976453611520
+  Size: 0.75
+  SizeSortingMultiplier: 1
+  Color:
+    serializedVersion: 2
+    rgba: 3430969546
+  animationSpeed: 5
+  animationSpreadPercent: 10
+  spin: 0
+  particleSystemPrefab: {fileID: 3217051552466667707, guid: 2b9e57c3a2faa7e4090fce43084ab311, type: 3}
+  SortingLayer: Projectiles
+  useFlare: 1
+  FlareColor:
+    serializedVersion: 2
+    rgba: 4294923715
+  references:
+    version: 2
+    RefIds:
+    - rid: 697205976453611520
+      type: {class: CircleShape, ns: FumoShmup2, asm: Fumoshmup2}
+      data:
+        Radius: 0.1

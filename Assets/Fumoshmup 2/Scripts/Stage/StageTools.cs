@@ -21,6 +21,7 @@ namespace FumoShmup2
             result = enemy.Spawn2D(position);
             if (result != null && lerpSettings != null)
             {
+                result.SetIframes(lerpSettings?.duration - 0.3f ?? 0.5f, 60f);
                 result.Action_MoveWithLerp(lerpSettings.Value);
             }
             return result != null;
@@ -48,6 +49,7 @@ namespace FumoShmup2
             if (Spawn(e, out result, a, new(a, b, 0.85f)))
             {
                 wait = WaitForKill(result);
+                result.SetIframes(1.25f, 90f);
             }
             return result != null;
         }

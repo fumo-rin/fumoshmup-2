@@ -29,6 +29,7 @@ namespace FumoShmup2
         public Vector2 exit = new(-0.35f, 0.75f), exitEnd = new(-0.35f, 0.65f);
         public int EnemyCount = 6;
         public float WaitBetweenEachSpawn = 0.1f;
+        public float PostWait = 0.15f;
         public float ExitDelay = 5f;
         public float ExitDuration = 1.25f;
         public float EntryDuration = 0.75f;
@@ -84,6 +85,8 @@ namespace FumoShmup2
                     result.Action_ExitAfter(new(ExitDelay, ExitDuration, exitPos));
                     yield return WaitBetweenEachSpawn.WaitForSeconds();
                 }
+                if (!WasModifiedByModifier)
+                    yield return PostWait.WaitForSeconds();
             }
             if (RunSeperately)
             {
@@ -92,7 +95,7 @@ namespace FumoShmup2
             }
             yield return Spawn();
         }
-        protected override Vector2 BuildSize() => new(350f, 360f);
+        protected override Vector2 BuildSize() => new(450f, 360f);
         private void FlipXPositions()
         {
             Vector2 FlipX(Vector2 v) => new(1f - v.x, v.y);
@@ -122,7 +125,8 @@ namespace FumoShmup2
             RecordUndo("Modify Node Value");
             EnemyCount = EF_Slider(Helper_BuildFieldRect(rect, ref index), nameof(EnemyCount), EnemyCount, 1, 25);
             RecordUndo("Modify Node Value");
-            WaitBetweenEachSpawn = EF_Slider(Helper_BuildFieldRect(rect, ref index), nameof(WaitBetweenEachSpawn), WaitBetweenEachSpawn, 0f, 5f);
+            WaitBetweenEachSpawn = EF_Slider(Helper_BuildFieldRect(rect, ref index), nameof(WaitBetweenEachSpawn), WaitBetweenEachSpawn, 0f, 3f);
+            PostWait = EF_Slider(Helper_BuildFieldRect(rect, ref index), nameof(PostWait), PostWait, 0f, 1.5f);
             RecordUndo("Modify Node Value");
             ExitDelay = EF_Slider(Helper_BuildFieldRect(rect, ref index), nameof(ExitDelay), ExitDelay, 0.05f, 20f);
             RecordUndo("Modify Node Value");

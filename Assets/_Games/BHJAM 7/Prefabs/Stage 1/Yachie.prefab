@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5476371956281971778}
   - component: {fileID: 4715295139676659261}
-  - component: {fileID: 6277020384719524205}
   - component: {fileID: 2745390351675722610}
   - component: {fileID: 2153864815207065291}
+  - component: {fileID: 7004032104597841035}
   m_Layer: 8
-  m_Name: Joel (Rabies)
+  m_Name: Yachie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 1727377721, guid: ed78ab6a5be9f054ebae9779c9195524, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 560ea9b7e68180c47a6065ac2f02f6b8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,28 +96,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!95 &6277020384719524205
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 33536133156218559}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 501acc585606ca546886cd39ba310066, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &2745390351675722610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,8 +121,16 @@ MonoBehaviour:
   phases:
   - phaseAttacks:
     - rid: 697205971041910987
-    - rid: 697206015994364311
+    - rid: 697206069577646637
     phaseHealth: 1500
+    blockDash: 0
+  - phaseAttacks:
+    - rid: 697205971041910987
+    - rid: 697206069577646786
+    - rid: 697206069577646785
+    - rid: 697206069577646787
+    phaseHealth: 3700
+    blockDash: 0
   startingHealth: 350
   hitSound: {fileID: 0}
   lowHitSound: {fileID: 0}
@@ -158,12 +144,28 @@ MonoBehaviour:
       type: {class: UtilityAttacks/AttackWait, ns: FumoShmup2, asm: Fumoshmup2}
       data:
         waitDuration: 0.65
-    - rid: 697206015994364311
-      type: {class: TestingAttacks/FutariS2BossRings, ns: FumoShmup2, asm: Fumoshmup2}
+    - rid: 697206069577646637
+      type: {class: TestGameAttacks2/DoremyTestAttack, ns: FumoShmup2, asm: Fumoshmup2}
       data:
-        duration: 20
-        ringProjectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
-        spamProjectile: {fileID: 11400000, guid: 8174b572503b3ce4c8ada9b497f311e4, type: 2}
+        pellet: {fileID: 11400000, guid: 8174b572503b3ce4c8ada9b497f311e4, type: 2}
+        ball: {fileID: 11400000, guid: ec5127393eed65d4bb8c76934cdf796a, type: 2}
+    - rid: 697206069577646785
+      type: {class: TestGameAttacks2/TestLarsaSpam, ns: FumoShmup2, asm: Fumoshmup2}
+      data:
+        define: {fileID: 11400000, guid: 8174b572503b3ce4c8ada9b497f311e4, type: 2}
+        shotSound: {fileID: 0}
+        durationInSeconds: 8
+        delayBetweenShots: 0.06
+        switchRngEverySeconds: 0.5
+    - rid: 697206069577646786
+      type: {class: TestGameAttacks2/MushiS4Lines, ns: FumoShmup2, asm: Fumoshmup2}
+      data:
+        define: {fileID: 11400000, guid: 84a623da29b1d274c8f1e32e4c65acc4, type: 2}
+        secondaryProjectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+    - rid: 697206069577646787
+      type: {class: UtilityAttacks/AttackWait, ns: FumoShmup2, asm: Fumoshmup2}
+      data:
+        waitDuration: 1.5
 --- !u!50 &2153864815207065291
 Rigidbody2D:
   serializedVersion: 5
@@ -191,6 +193,42 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &7004032104597841035
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33536133156218559}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.32}
+  m_Radius: 0.34
 --- !u!1 &3350077655527584326
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,7 +239,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7957158619952670179}
   - component: {fileID: 7198210881725584208}
-  - component: {fileID: 4465877999693663808}
   m_Layer: 8
   m_Name: joel sheet_0 (1)
   m_TagString: Untagged
@@ -273,8 +310,8 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 1727377721, guid: ed78ab6a5be9f054ebae9779c9195524, type: 3}
-  m_Color: {r: 1, g: 0.84796506, b: 0.6933962, a: 0.33333334}
+  m_Sprite: {fileID: 21300000, guid: 560ea9b7e68180c47a6065ac2f02f6b8, type: 3}
+  m_Color: {r: 0.8490566, g: 0.8490566, b: 0.8490566, a: 0.3882353}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -283,28 +320,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!95 &4465877999693663808
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3350077655527584326}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 501acc585606ca546886cd39ba310066, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8044541887325584078
 GameObject:
   m_ObjectHideFlags: 0

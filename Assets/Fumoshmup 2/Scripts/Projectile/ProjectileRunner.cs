@@ -83,11 +83,15 @@ namespace FumoShmup2
                 if (item.Position.SquareDistanceToLessThan(position, radius))
                 {
                     removed.Add(item);
-
                 }
             }
             foreach (var item in removed)
             {
+                ProjectileRenderer.BulletCancelParticle(item.Position, item.VelocityNotZero, 0.4f);
+                if (RNG.Byte255 < lootChance)
+                {
+                    PointItemRunner.SpawnPointItem(item.Position);
+                }
                 Projectile.Wipe(item);
             }
         }
@@ -283,6 +287,7 @@ namespace FumoShmup2
         }
     }
     #endregion
+    [DefaultExecutionOrder(123)]
     public partial class ProjectileRunner : MonoBehaviour
     {
         public static void Bind(Projectile p)
@@ -481,7 +486,7 @@ namespace FumoShmup2
             {
                 Projectile proj = projectiles[i];
 
-                if (proj == null || proj.data == null)
+                if (proj == null || proj.data == null || !proj.IsActive)
                 {
                     RemoveAndWipe(i);
                     i--;

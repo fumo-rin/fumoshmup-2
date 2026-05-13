@@ -138,28 +138,28 @@ namespace FumoShmup2
                     {
                         input.addedForward = (i % 8 * 0.3f) + 0.3f;
                         input.SetOrigin(sender.CurrentPosition + Vector2.right.Rotate2D(120f));
-                        Circle(i.AsFloat(2f), 8, 7f).Spawn(input, ball, out iterationList);
+                        Circle(i.AsFloat(0.75f), 8, 8f).Spawn(input, ball, out iterationList);
                         input.SetOrigin(sender.CurrentPosition + Vector2.right.Rotate2D(240f));
-                        Circle(-i.AsFloat(2f), 8, 6f).Spawn(input, ball, out iterationList);
+                        Circle(-i.AsFloat(-0.75f), 8, 6f).Spawn(input, ball, out iterationList);
                         input.SetOrigin(sender.CurrentPosition + Vector2.right);
-                        Circle(i.AsFloat(2f), 8, 5f).Spawn(input, ball, out iterationList);
+                        Circle(i.AsFloat(0.75f), 8, 5f).Spawn(input, ball, out iterationList);
                     }
                     if (i % 36 == 0)
                     {
 
-                        input2.addedForward = 1f;
+                        input2.addedForward = 0.5f;
                         Circle(flip.AsFloat(-angle, angle) * 3f, 11, 2f).Spawn(input2, ball, out iterationList);
-                        input2.addedForward = 1.5f;
+                        input2.addedForward = 1f;
                         Circle(flip.AsFloat(-angle, angle) * 5f, 19, 3f).Spawn(input2, ball, out iterationList);
-                        input2.addedForward = 2f;
+                        input2.addedForward = 1.25f;
                         Circle(flip.AsFloat(-angle, angle) * 8f, 30, 4f).Spawn(input2, ball, out iterationList);
-                        input2.addedForward = 2.5f;
+                        input2.addedForward = 1.5f;
                         Circle(flip.AsFloat(-angle, angle) * 11f, 49, 5f).Spawn(input2, ball, out iterationList);
                         if (i > 0)
                         {
                             input.mods = null;
                             flip = !flip;
-                            yield return 0.12f.WaitForSeconds();
+                            yield return 0.25f.WaitForSeconds();
                         }
                     }
                     yield return 0.03f.WaitForSeconds();
@@ -528,13 +528,21 @@ namespace FumoShmup2
                 }
 
                 yield return 0.25f.WaitForSeconds();
+                TimeSlowHandler.AddSlow("Funny", 0.65f, 0.35f, 0.1f);
+                for (int i = 0; i < 7; i++)
+                {
+                    input.ReAimWithOptionalTarget(sender.CurrentPosition);
+                    Arc(0f, 20f, 2, 15f).Spawn(input, define, out _);
+                    yield return 0.03f.WaitForSeconds();
+                }
+                yield return 0.55f.WaitForSeconds();
                 for (int i = 0; i < 17; i++)
                 {
                     input.ReAimWithOptionalTarget(sender.CurrentPosition);
                     ArcShot((80f - i.AsFloat(3f)).Max(40f) * 1.65f, 18f, 3, 0.2f);
                     yield return 0.03f.WaitForSeconds();
                 }
-                yield return 0.6f.WaitForSeconds();
+                yield return 0.35f.WaitForSeconds();
                 for (int i = 0; i < 48; i++)
                 {
                     input.ReAimWithOptionalTarget(sender.CurrentPosition);
@@ -542,10 +550,10 @@ namespace FumoShmup2
                     yield return 0.03f.WaitForSeconds();
                 }
                 yield return 0.6f.WaitForSeconds();
-                for (int i = 0; i < 76; i++)
+                for (int i = 0; i < 66; i++)
                 {
                     input.ReAimWithOptionalTarget(sender.CurrentPosition);
-                    ArcShot((50f - i.AsFloat(0.5f)).Max(12f) * 3f, 12f, 7, 0.4f);
+                    ArcShot((50f - i.AsFloat(0.5f)).Max(14f) * 3f, 12f, 7, 0.4f);
                     yield return 0.03f.WaitForSeconds();
                 }
                 yield return 0.75f.WaitForSeconds();

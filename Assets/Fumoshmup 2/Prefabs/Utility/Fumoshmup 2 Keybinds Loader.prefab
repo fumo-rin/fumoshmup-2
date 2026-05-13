@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8160778291324852913}
   - component: {fileID: 8313702296115216198}
-  - component: {fileID: 5511998510170253698}
   m_Layer: 0
   m_Name: Fumoshmup 2 Keybinds Loader
   m_TagString: Untagged
@@ -52,22 +51,3 @@ MonoBehaviour:
   - {fileID: -1145331697551703494, guid: 34edc816a52e4fc4ab2d77bcdba58669, type: 3}
   - {fileID: 7771889369536338279, guid: 34edc816a52e4fc4ab2d77bcdba58669, type: 3}
   - {fileID: 6565373169737290267, guid: 34edc816a52e4fc4ab2d77bcdba58669, type: 3}
---- !u!114 &5511998510170253698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7694970040826099159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c6aa3e55b2451344837778acd78ad7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: rinCore::rinCore.VolumeSettingsFetcher
-  musicMixers:
-  - {fileID: 24100000, guid: 5f8d0f335fbb734499fb150c4540d641, type: 2}
-  effectsMixers:
-  - {fileID: 24100000, guid: 5f8d0f335fbb734499fb150c4540d641, type: 2}
-  - {fileID: 24100000, guid: 2d90163c4095a0a4283cc9766c8294e4, type: 2}
-  dialogueMixers:
-  - {fileID: 24100000, guid: e930f3c98e575b74ba8fef009ffbc228, type: 2}

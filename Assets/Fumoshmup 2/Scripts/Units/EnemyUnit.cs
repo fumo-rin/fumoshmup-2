@@ -249,7 +249,7 @@ namespace FumoShmup2
             bool currentPhase = true;
             if (currentPhase)
             {
-                Action_BossRecenter(0.65f);
+                Action_BossRecenter(0.7f);
             }
             currentPhase = false;
         }
@@ -275,43 +275,50 @@ namespace FumoShmup2
         float phaseTrackedDamage;
         [SerializeField] List<UnitPhase> phases = new();
         HashSet<UnitPhase> spentPhases = new();
+        UnitPhase LastKnownPhase;
         public bool HasPhases => phases != null && phases.Count > 0;
-        public UnitPhase CurrentPhase
+        public UnitPhase CurrentPhase { get; private set; }
+        public bool TryGetNextPhase(out UnitPhase nextPhase)
         {
-            get
-            {
-                UnitPhase found = null;
-                bool overkill = phaseTrackedDamage >= PhasesTotalHealth;
-                if (overkill)
-                {
-                    return null;
-                }
-                float remaining = phaseTrackedDamage;
-                foreach (var item in phases)
-                {
-                    if (remaining < item.phaseHealth)
-                    {
-                        found = item;
-                        break;
-                    }
-                    remaining -= item.phaseHealth;
-                }
-                if (found != null && !spentPhases.TryGetValue(found, out _))
-                {
-                    spentPhases.Add(found);
-                    StartNewHealth(found.phaseHealth, found.phaseHealth);
-                }
-                return found;
-            }
-        }
-        public bool TryStartNextPhase(out UnitPhase nextPhase, out Coroutine routine, Action callback)
-        {
-            routine = null;
             nextPhase = null;
-            if (CurrentPhase == null)
+            UnitPhase found = null;
+            bool overkill = phaseTrackedDamage >= PhasesTotalHealth;
+            if (overkill)
             {
                 return false;
             }
+            float remaining = phaseTrackedDamage;
+
+            foreach (var item in phases)
+            {
+                if (remaining < item.phaseHealth)
+                {
+                    found = item;
+                    break;
+                }
+                remaining -= item.phaseHealth;
+            }
+
+            if (found != null && !spentPhases.TryGetValue(found, out _))
+            {
+                if ((LastKnownPhase != null && LastKnownPhase != found) || LastKnownPhase == null)
+                {
+                    ProjectileRunner.TriggerSweep(0.85f, 255, false, out _);
+                    Action_BossRecenter(0.85f);
+                    StallAttackLoop(0.5f);
+                    SetIframes(1.25f, 90f);
+                    CurrentPhase = found;
+                }
+                LastKnownPhase = found;
+                spentPhases.Add(found);
+                return true;
+            }
+            return false;
+        }
+        public bool StartPhaseAttack(UnitPhase nextPhase, out Coroutine routine, Action callback)
+        {
+            routine = null;
+            CurrentPhase = nextPhase;
             if (CurrentPhase.DetermineNext(out UnitAttack next))
             {
                 routine = next.StartWithSender(this, callback);
@@ -324,6 +331,7 @@ namespace FumoShmup2
         {
             [SerializeReference] public List<UnitAttack> phaseAttacks = new();
             public float phaseHealth = 2000f;
+            public bool blockDash;
             int phaseIndex;
             public bool DetermineNext(out UnitAttack next)
             {
@@ -409,6 +417,7 @@ namespace FumoShmup2
                 if (CurrentRunningAttack != null)
                 {
                     StopCoroutine(CurrentRunningAttack);
+                    CurrentRunningAttack = null;
                 }
                 CurrentRunningAttack = null;
             }
@@ -417,11 +426,20 @@ namespace FumoShmup2
         {
             if (Time.time < AttackStallEndTime)
                 return;
+            if (!IsOnScreenAndAlive)
+            {
+                AttackStallEndTime = AttackStallEndTime.Max(Time.time + 0.1f);
+            }
 
             if (this.IsRunningActions)
             {
                 return;
             }
+            if (TryGetNextPhase(out UnitPhase phase))
+            {
+
+            }
+
             if (ShmupPlayer.PlayerAs(out ShmupPlayer p) && (!p.IsAlive || p.IframesDurationLeft > 0.75f))
             {
                 return;
@@ -433,8 +451,9 @@ namespace FumoShmup2
                     {
                         return;
                     }
-                    if (TryStartNextPhase(out UnitPhase phase, out Coroutine nextBossAttack, () => CurrentRunningAttack = null))
+                    if (CurrentPhase != null)
                     {
+                        StartPhaseAttack(CurrentPhase, out Coroutine nextBossAttack, () => CurrentRunningAttack = null);
                         CurrentRunningAttack = nextBossAttack;
                     }
                     break;
@@ -508,6 +527,7 @@ namespace FumoShmup2
                     damage *= 1f;
                     GameSession.TryAddScoreRaw(damage * 250d, "Enemy Damage");
                     damageDealt = damage.Min(CurrentHealth);
+                    phaseTrackedDamage += damageDealt;
                     double healthPercentDelta = (double)damageDealt / (double)CurrentMaxHealth;
                     StartNewHealth(CurrentHealth - damage, CurrentMaxHealth);
 
@@ -537,7 +557,10 @@ namespace FumoShmup2
         }
         public void KillWithLoot()
         {
-            if (sealRadius > 0.1f) ProjectileRunner.SealBullets(CurrentPosition, this, sealRadius, 255, out _);
+            if (sealRadius > 0.1f)
+            {
+                ProjectileRunner.SealBullets(CurrentPosition, this, sealRadius, 255, out _);
+            }
             CreateLootItem(LootCount, 2.5f);
             TriggerRevengeOverride();
             if (TryGetSweepOverride(out SweepOverride sweep))
@@ -662,19 +685,20 @@ namespace FumoShmup2
         }
         private IEnumerator CO_Leash(EnemyUnit e, float leashRadius, float speed)
         {
+            Vector2 leash = leashPosition;
             while (e != null && e.IsAlive)
             {
                 if (!IsRunningActions)
                 {
                     if (leashPosition.SquareDistanceToGreaterThan(CurrentPosition, 50f))
                     {
-                        leashPosition = CurrentPosition;
+                        leash = CurrentPosition;
                     }
                     if (leashPosition.SquareDistanceToLessThan(e.CurrentPosition, 0.01f))
                     {
-                        leashPosition = e.CurrentPosition + RNG.SeededRandomVector2;
+                        leash = e.CurrentPosition + RNG.SeededRandomVector2;
                     }
-                    RB.VelocityTowards((leashPosition - CurrentPosition) * speed, 1.25f);
+                    RB.VelocityTowards((leash - CurrentPosition) * speed, 1.25f);
                 }
                 yield return null;
             }
@@ -741,8 +765,8 @@ namespace FumoShmup2
             if (!hasPhases) StartNewHealth(startingHealth, startingHealth);
             else
             {
-                StartNewHealth(99999f, 99999f);
-                SetIframes(2f, 90f);
+                StartNewHealth(PhasesTotalHealth, PhasesTotalHealth);
+                SetIframes(1.25f, 90f);
             }
         }
         public static void Despawn(in List<FumoUnit> enemies)
@@ -781,6 +805,13 @@ namespace FumoShmup2
         private void LateUpdate()
         {
             Think();
+        }
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.transform.CompareTag(TagHandle.GetExistingTag(string.Intern("Player"))) && collision.TryGetComponent(out IHit hit))
+            {
+                hit.SendHit(new IHit.HitPacket(collision.ClosestPoint(collision.transform.position), new(this, 100f, 1f)), out float damage);
+            }
         }
         private void Think()
         {

@@ -15,10 +15,10 @@ MonoBehaviour:
   SoundName: Player Kill Sound
   soundVolume: 1
   <soundClips>k__BackingField:
-  - clip: {fileID: 8300000, guid: d5589ef7b15f43c498fa5b46b10b8716, type: 3}
+  - clip: {fileID: 8300000, guid: f0c15e0960496eb40a4e0471753ed820, type: 3}
     PitchVariancePercent: 4.5
-    PitchOrigin: 2.02
-    Volume: 0.361
+    PitchOrigin: 1
+    Volume: 0.792
     Muted: 0
   - clip: {fileID: 8300000, guid: 403aed55cd924884b8464c61d94f386c, type: 3}
     PitchVariancePercent: 4.5
@@ -29,6 +29,11 @@ MonoBehaviour:
     PitchVariancePercent: 3.2
     PitchOrigin: 0.35
     Volume: 1
+    Muted: 0
+  - clip: {fileID: 8300000, guid: d5589ef7b15f43c498fa5b46b10b8716, type: 3}
+    PitchVariancePercent: 3.2
+    PitchOrigin: 1.71
+    Volume: 0.088
     Muted: 0
   <singleChannel>k__BackingField: 1
   <singleRepeatLockoutTime>k__BackingField: 0.001

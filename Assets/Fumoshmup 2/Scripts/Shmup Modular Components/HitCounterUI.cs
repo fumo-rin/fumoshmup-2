@@ -40,11 +40,12 @@ namespace FumoShmup2
                     {
                         current = current.Max(2f);
                         current = current.MoveTowards(65f, Time.deltaTime * (current < 20f ? 200f : 40f));
-                        decayStallEnd = Time.time + 0.15f;
+                        decayStallEnd = Time.time;
                     }
                     else if (Time.time >= decayStallEnd)
                     {
-                        current = current.MoveTowards(-10, Time.deltaTime * (ShmupInput.ShootReleasedLongerThan(0.35f) ? 120f : 15f));
+                        float decayMod = (decayStallEnd - Time.time).Absolute().MapTo01(0f, 0.35f, true);
+                        current = current.MoveTowards(-10, decayMod * Time.deltaTime * (ShmupInput.ShootReleasedLongerThan(0.35f) ? 120f : 15f));
                     }
                 }
                 else

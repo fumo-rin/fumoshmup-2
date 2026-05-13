@@ -1,8 +1,7 @@
-using FumoShmup2;
 using rinCore;
 using UnityEngine;
 
-namespace FumoShmup
+namespace FumoShmup2
 {
     public class ShmupGameStarter : rinCore.FumoStartGameButton, IHierarchyComponentColor
     {

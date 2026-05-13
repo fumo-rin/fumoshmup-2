@@ -47,7 +47,7 @@ MonoBehaviour:
     - rid: 1810569341176643677
       type: {class: bestAttack/LingeringLine, ns: FumoShmup2, asm: Fumoshmup2}
       data:
-        projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+        projectile: {fileID: 11400000, guid: ec5127393eed65d4bb8c76934cdf796a, type: 2}
 --- !u!114 &-6598816956251899611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,7 +90,7 @@ MonoBehaviour:
     - rid: 1810569348142071899
       type: {class: bestAttack/LingeringCircle, ns: FumoShmup2, asm: Fumoshmup2}
       data:
-        projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+        projectile: {fileID: 11400000, guid: ec5127393eed65d4bb8c76934cdf796a, type: 2}
 --- !u!114 &-5786720801244618245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,7 +138,7 @@ MonoBehaviour:
     - rid: 1810569348142071903
       type: {class: bestAttack/Rain, ns: FumoShmup2, asm: Fumoshmup2}
       data:
-        projectile: {fileID: 11400000, guid: 8174b572503b3ce4c8ada9b497f311e4, type: 2}
+        projectile: {fileID: 11400000, guid: ec5127393eed65d4bb8c76934cdf796a, type: 2}
 --- !u!114 &-5232145835624776548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,7 +217,7 @@ MonoBehaviour:
     - rid: 1810569348142071898
       type: {class: bestAttack/LingeringCircle, ns: FumoShmup2, asm: Fumoshmup2}
       data:
-        projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+        projectile: {fileID: 11400000, guid: ec5127393eed65d4bb8c76934cdf796a, type: 2}
 --- !u!114 &-559303218029376585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,7 +312,7 @@ MonoBehaviour:
     enabled: 0
   <StageScene>k__BackingField: {fileID: 11400000, guid: 9ac2b125f6a81b04ca14a6031c9663e9, type: 2}
   currentLinkAttempt: {fileID: 0}
-  selectedSkipIndex: 1
+  selectedSkipIndex: 2
   StageEndDialogue: {fileID: 0}
   enemyTable:
   - {fileID: 2745390351675722610, guid: fc86072f3a38af04fa7b9a16c4cb61cb, type: 3}
@@ -446,7 +446,7 @@ MonoBehaviour:
     - rid: 1810569348142071902
       type: {class: bestAttack/LingeringLine, ns: FumoShmup2, asm: Fumoshmup2}
       data:
-        projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+        projectile: {fileID: 11400000, guid: ec5127393eed65d4bb8c76934cdf796a, type: 2}
 --- !u!114 &2285592853775864176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -530,7 +530,7 @@ MonoBehaviour:
     - rid: 1810569348142071900
       type: {class: bestAttack/LingeringLine, ns: FumoShmup2, asm: Fumoshmup2}
       data:
-        projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+        projectile: {fileID: 11400000, guid: ec5127393eed65d4bb8c76934cdf796a, type: 2}
 --- !u!114 &3899987915564314009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -573,7 +573,7 @@ MonoBehaviour:
     - rid: 1810569348142071901
       type: {class: bestAttack/LingeringCircle, ns: FumoShmup2, asm: Fumoshmup2}
       data:
-        projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+        projectile: {fileID: 11400000, guid: ec5127393eed65d4bb8c76934cdf796a, type: 2}
 --- !u!114 &5305014895966014673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -621,7 +621,7 @@ MonoBehaviour:
     - rid: 1810569341176643679
       type: {class: bestAttack/LingeringLine, ns: FumoShmup2, asm: Fumoshmup2}
       data:
-        projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+        projectile: {fileID: 11400000, guid: ec5127393eed65d4bb8c76934cdf796a, type: 2}
 --- !u!114 &6298876082405689903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -657,7 +657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.LineSpawnerNode
   IsEnabled: 1
   title: LineSpawnerNode
-  position: {x: 454, y: -166}
+  position: {x: 484, y: -275}
   skipIndex: 30
   toSpawn: {fileID: 2745390351675722610, guid: fc86072f3a38af04fa7b9a16c4cb61cb, type: 3}
   storedModifier: {fileID: 0}

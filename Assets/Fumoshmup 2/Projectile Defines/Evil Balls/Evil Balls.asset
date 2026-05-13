@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.ProjectileDefineSO
   ColliderShape:
     rid: 697205976453611520
-  Size: 0.7
+  Size: 0.9
   SizeSortingMultiplier: 1
   Color:
     serializedVersion: 2
@@ -34,4 +34,4 @@ MonoBehaviour:
     - rid: 697205976453611520
       type: {class: CircleShape, ns: FumoShmup2, asm: Fumoshmup2}
       data:
-        Radius: 0.3
+        Radius: 0.15

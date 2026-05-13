@@ -418,6 +418,7 @@ namespace FumoShmup2
             foreach (var list in particlesByDefine.Values)
                 list.Clear();
 
+            projectiles.RemoveAll((Projectile p) => !p.IsActive);
             foreach (var projectile in projectiles)
             {
                 var define = projectile.data;

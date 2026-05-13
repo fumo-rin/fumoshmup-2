@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5476371956281971778}
   - component: {fileID: 4715295139676659261}
-  - component: {fileID: 6277020384719524205}
   - component: {fileID: 2745390351675722610}
   - component: {fileID: 2153864815207065291}
+  - component: {fileID: 6116763745554148486}
   m_Layer: 8
   m_Name: Joel Elite
   m_TagString: Untagged
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7957158619952670179}
@@ -86,8 +86,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 1727377721, guid: ed78ab6a5be9f054ebae9779c9195524, type: 3}
-  m_Color: {r: 1, g: 0.5852105, b: 0.3160377, a: 1}
+  m_Sprite: {fileID: 21300000, guid: de5e5787828eccc4086221d59bf2518e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -96,28 +96,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!95 &6277020384719524205
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 33536133156218559}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 501acc585606ca546886cd39ba310066, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &2745390351675722610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,7 +123,7 @@ MonoBehaviour:
     delay: 0
     randomRadiusRange: {x: 0, y: 0}
   phases: []
-  startingHealth: 500
+  startingHealth: 800
   hitSound: {fileID: 0}
   lowHitSound: {fileID: 0}
   enemyRenderer: {fileID: 0}
@@ -181,6 +159,42 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &6116763745554148486
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33536133156218559}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.32}
+  m_Radius: 0.38
 --- !u!1 &3350077655527584326
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,7 +205,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7957158619952670179}
   - component: {fileID: 7198210881725584208}
-  - component: {fileID: 4465877999693663808}
   m_Layer: 8
   m_Name: joel sheet_0 (1)
   m_TagString: Untagged
@@ -263,7 +276,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 1727377721, guid: ed78ab6a5be9f054ebae9779c9195524, type: 3}
+  m_Sprite: {fileID: 21300000, guid: de5e5787828eccc4086221d59bf2518e, type: 3}
   m_Color: {r: 1, g: 0.84796506, b: 0.6933962, a: 0.33333334}
   m_FlipX: 0
   m_FlipY: 0
@@ -273,28 +286,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!95 &4465877999693663808
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3350077655527584326}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 501acc585606ca546886cd39ba310066, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8044541887325584078
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,5 +362,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.755099, y: 0.56746715}
+  m_Size: {x: 1.8441086, y: 0.56746715}
   m_EdgeRadius: 0

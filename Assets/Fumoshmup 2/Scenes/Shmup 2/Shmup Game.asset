@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Shmup Game
   m_EditorClassIdentifier: rinCore::rinCore.ScenePairSO
   mainScene:
-    sceneAsset: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
-    scenePath: Assets/Fumoshmup 2/Scenes/Shmup 2/Shmup 2D.unity
-  additiveScenes:
-  - sceneAsset: {fileID: 102900000, guid: a02bae1deaaffe045818397b538367f3, type: 3}
+    sceneAsset: {fileID: 102900000, guid: a02bae1deaaffe045818397b538367f3, type: 3}
     scenePath: Assets/Fumoshmup 2/Scenes/Shmup 2/3D Test.unity
+  additiveScenes:
+  - sceneAsset: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
+    scenePath: Assets/Fumoshmup 2/Scenes/Shmup 2/Shmup 2D.unity
   - sceneAsset: {fileID: 102900000, guid: c6c2c8ae6f331564a8673db61540f340, type: 3}
     scenePath: Assets/Fumoshmup 2/Scenes/Shmup 2/UI Background.unity
   - sceneAsset: {fileID: 102900000, guid: 9a3c78f426bb7ff48888de9eb5b06d77, type: 3}
