@@ -155,6 +155,7 @@ namespace FumoShmup2
                 {
                     for (int i = 0; i < repeats; i++)
                     {
+                        input.ReAimWithOptionalTarget(sender.CurrentPosition);
                         Circle(RNG.FloatRange(0f, 360f), shotCount, 11f).Spawn(input, shot, out _);
                         yield return 0.016f.WaitForSeconds();
                     }

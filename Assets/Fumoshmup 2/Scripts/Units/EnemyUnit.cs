@@ -528,13 +528,16 @@ namespace FumoShmup2
                     GameSession.TryAddScoreRaw(damage * 250d, "Enemy Damage");
                     damageDealt = damage.Min(CurrentHealth);
                     phaseTrackedDamage += damageDealt;
-                    double healthPercentDelta = (double)damageDealt / (double)CurrentMaxHealth;
+                    double healthPercentDelta = CurrentMaxHealth == 0d ? 0d : (double)damageDealt / (double)CurrentMaxHealth;
                     StartNewHealth(CurrentHealth - damage, CurrentMaxHealth);
 
-                    const double bossScorePercent = 0.05d;
-                    GameSession.ReadCurrentRawScore(out double currentScore);
-                    double scoreReward = currentScore * healthPercentDelta * bossScorePercent;
-                    GameSession.TryAddScoreRaw(scoreReward, "Boss Damage");
+                    if (IsBoss)
+                    {
+                        const double bossScorePercent = 0.05d;
+                        GameSession.ReadCurrentRawScore(out double currentScore);
+                        double scoreReward = currentScore * healthPercentDelta * bossScorePercent;
+                        GameSession.TryAddScoreRaw(scoreReward, "Boss Damage");
+                    }
                 }
             }
         }

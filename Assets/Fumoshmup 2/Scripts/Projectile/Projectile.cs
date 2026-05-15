@@ -728,6 +728,10 @@ namespace FumoShmup2
             if (faction != ProjectileFaction.Player && ShmupPlayer.PlayerAs(out ShmupPlayer foundPlayer))
             {
                 bool cancelCondition = ShmupPlayer.BlockProjectileSpawning || !foundPlayer.IsAlive;
+                if (sender is EnemyUnit e)
+                {
+                    cancelCondition = !e.IsOnScreenAndAlive;
+                }
                 if (cancelCondition)
                 {
                     Cancel(position, direction);
