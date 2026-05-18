@@ -27,7 +27,7 @@ namespace FumoShmup2
             float overloadEnd = requiredProjectiles * 4f;
             int halfRequired = (requiredProjectiles * 0.5f).ToInt();
 
-            int bulletCount = BulletCount;
+            int bulletCount = BulletCount + PointItemRunner.ItemCount;
 
             if (bulletCount <= halfRequired)
             {

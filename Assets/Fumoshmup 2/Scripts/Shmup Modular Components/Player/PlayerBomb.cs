@@ -27,7 +27,7 @@ namespace FumoShmup2
         {
             if (IsValidAndActive && CanBomb && active is PlayerBomb b)
             {
-                StageRoutines.StartRoutine("Player Bomb", b.BombPayload(Owner), false);
+                GlobalCoroutineRunner.StartRoutine("Player Bomb", b.BombPayload(Owner), false);
                 return true;
             }
             return false;

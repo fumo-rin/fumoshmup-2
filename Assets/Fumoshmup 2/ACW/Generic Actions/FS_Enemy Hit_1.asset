@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: FS_Enemy Hit_1
   m_EditorClassIdentifier: rinCore::RinCore.ACWrapper
   SoundName: Enemy Hit
-  soundVolume: 0.647
-  audioMixerOverride: {fileID: -1549346045928506887, guid: 2d90163c4095a0a4283cc9766c8294e4, type: 2}
+  soundVolume: 0.465
   <soundClips>k__BackingField:
-  - clip: {fileID: 8300000, guid: b03ffc14b8113bb4c921dd6fb487d140, type: 3}
+  - clip: {fileID: 8300000, guid: ff92b72d7ee2acb479878a2d3aaff346, type: 3}
     PitchVariancePercent: 15.4
     PitchOrigin: 4.07
     Volume: 0.754
     Muted: 0
   <singleChannel>k__BackingField: 1
-  <singleRepeatLockoutTime>k__BackingField: 0.001
+  <singleRepeatLockoutTime>k__BackingField: 0.008333334
   <Is3D>k__BackingField: 1

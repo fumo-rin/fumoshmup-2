@@ -114,7 +114,19 @@ MonoBehaviour:
       _id: 1054124698
     name: Page 1
     _id: 1064118458
-  - items: []
+  - items:
+    - globalId:
+        globalObjectIdString: GlobalObjectId_V1-1-d7dac78d018b7be4ca57306ea26d94fe-11981177322015356926-0
+      _typeString: UnityEngine.Shader, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      _obj: {fileID: -6465566751694194690, guid: d7dac78d018b7be4ca57306ea26d94fe, type: 3}
+      isSceneGameObject: 0
+      isFolder: 0
+      isAsset: 1
+      _id: 1040694601
     name: Page 2
+    _id: 1059572019
+  - items: []
+    name: Page 3
     _id: 0
   rowScale: 1

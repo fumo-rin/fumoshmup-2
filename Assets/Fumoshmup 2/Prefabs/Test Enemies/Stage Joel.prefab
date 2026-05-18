@@ -120,8 +120,8 @@ MonoBehaviour:
     randomRadiusRange: {x: 0, y: 0}
   phases: []
   startingHealth: 130
-  hitSound: {fileID: 0}
-  lowHitSound: {fileID: 0}
+  hitSound: {fileID: 11400000, guid: 9d9984bb7f8437c47b2358c6a9068c05, type: 2}
+  lowHitSound: {fileID: 11400000, guid: 055d1c28c688d0543977be8c200be4af, type: 2}
   enemyRenderer: {fileID: 0}
   shotHitboxes:
   - {fileID: 7581495947133790535}

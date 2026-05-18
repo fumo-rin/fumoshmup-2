@@ -17,10 +17,7 @@ namespace FumoShmup2
         readonly List<EnemyUnit> LockOn = new(4);
         IEnumerator CO_Supershot()
         {
-            if (laserLerp > 0f || ShmupInput.ShootReleasedLongerThan(0.65f))
-            {
-                laserLerp = 0f;
-            }
+            laserLerp = 0f;
             float nextProjectileShotTime = Time.time + 0.15f;
             float damageTime = Time.time;
             a.BuildInput(Owner, out Projectile.InputSettings input);

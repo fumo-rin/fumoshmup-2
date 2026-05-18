@@ -90,7 +90,7 @@ namespace FumoShmup2
             }
             if (RunSeperately)
             {
-                StageRoutines.StartRoutine("Seperate Line Spawner Call", Spawn(), false);
+                GlobalCoroutineRunner.StartRoutine("Stage Extras", Spawn(), false);
                 yield break;
             }
             yield return Spawn();
@@ -162,7 +162,6 @@ namespace FumoShmup2
             attackStall = EF_Slider(Helper_BuildFieldRect(rect, ref index), "Attack Stall time", attackStall, 0.05f, 9f);
             loopAddedDelay = EF_Slider(Helper_BuildFieldRect(rect, ref index), "Delay Between Loops", loopAddedDelay, 0f, 6f);
             EF_TypeDropdownList<UnitAttack>(Helper_BuildFieldRect(rect, ref index), "Attack Loop", nameof(attackLoop), unityBackingObject);
-
 
             if (selected)
             {

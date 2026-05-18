@@ -524,7 +524,7 @@ namespace FumoShmup2
                             Single(0f, 9f).Spawn(input, secondaryProjectile, out Projectile p);
                         }
                     }
-                    StageRoutines.StartRoutine("s4 mushi runner", CO_Run(input), false);
+                    GlobalCoroutineRunner.StartRoutine("s4 mushi runner", CO_Run(input), false);
                 }
 
                 yield return 0.25f.WaitForSeconds();

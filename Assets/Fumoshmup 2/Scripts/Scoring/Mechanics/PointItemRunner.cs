@@ -30,6 +30,7 @@ namespace FumoShmup2
             PointItemRunner.Create(position, scoringActivated, scoreValue);
         }
         internal static readonly List<PointItem> items = new();
+        public static int ItemCount => items == null ? 0 : items.Count;
         [SerializeField] ParticleSystem itemParticle, cashInRenderer;
         internal static readonly List<Vector2> pointItemPositions = new(50000);
         internal static readonly List<Vector2> cashInItemPositions = new(50000);
@@ -122,7 +123,7 @@ namespace FumoShmup2
             cashInRenderer.RenderAnimatedPoints(ChargedPointItems, 0.3f, false);
             focusWasHeld = ShmupInput.Focus;
         }
-        public static void Create(Vector2 worldPosition, bool scoringCashIn, double scoreValue)
+        private static void Create(Vector2 worldPosition, bool scoringCashIn, double scoreValue)
         {
             items.Add(new(worldPosition)
             {
@@ -148,7 +149,8 @@ namespace FumoShmup2
         public PointItem(Vector2 position)
         {
             this.Position = position;
-            this.Velocity = new Vector2(10f.RandomPositiveNegativeRange(), 3.5f.Spread(45f));
+            this.Velocity = new Vector2(10f.RandomPositiveNegativeRange(), 2.5f.Spread(45f));
+            this.Velocity = new(0.3f * Velocity.x, Velocity.y);
             this.scoringCashIn = false;
             this.scoreValue = 1000d;
             this.minimumPickupTime = Time.time + 0.35f.Spread(20f);

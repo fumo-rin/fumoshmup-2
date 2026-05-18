@@ -57,7 +57,7 @@ namespace FumoShmup2
                 {
                     float delay = i == 0 && !wasModified ? 0f : DelayBetweenRepeats * i;
                     delay += runable.RunDuration * i;
-                    StageRoutines.StartRoutine($"Delayed Modified Routine", RoutineDelay(delay, runable.RunNode()), false);
+                    GlobalCoroutineRunner.StartRoutine($"Stage Extras", RoutineDelay(delay, runable.RunNode()), false);
                 }
                 else
                 {

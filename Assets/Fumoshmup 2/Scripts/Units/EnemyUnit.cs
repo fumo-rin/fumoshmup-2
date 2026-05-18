@@ -572,6 +572,9 @@ namespace FumoShmup2
                 {
                     SweepOnKill.SweepData s = new(sweep.duration, sweep.lootChance);
                     SweepOnKill.SweepStuff(this, s, false);
+
+                    ShmupWorldspace.MapWorldspaceToNormalized(CurrentPosition, out Vector2 deathPos01, false);
+                    ShockwaveEffect.Trigger(deathPos01, 3.5f);
                 }
             }
             else
@@ -583,6 +586,9 @@ namespace FumoShmup2
                         SweepOnKill.SweepData s = new(0.35f, 255);
                         SweepOnKill.SweepStuff(this, s, false);
                     }
+
+                    ShmupWorldspace.MapWorldspaceToNormalized(CurrentPosition, out Vector2 deathPos01, false);
+                    ShockwaveEffect.Trigger(deathPos01, 3.5f);
                 }
             }
             PlayDeathEffects();

@@ -81,7 +81,7 @@ namespace FumoShmup2
         }
         public static void StopStage()
         {
-            GlobalCoroutineRunner.StopAllOfKey("Stage");
+            GlobalCoroutineRunner.StopAllOfKey("Stage", "Stage Extras");
         }
         protected abstract IEnumerator StagePayload(int skip);
     }

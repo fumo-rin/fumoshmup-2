@@ -22,19 +22,18 @@ namespace FumoShmup2
                 }
                 result = IShmupMover.MoveSuccess.Default;
 
-                bool deadzoneSuccess = GenericInput.ProcessWithDeadzone(input, out Vector2 processed);
-                processed = processed.QuantizeToStepSize(45f);
+                input = input.QuantizeToStepSize(45f);
 
                 result = IShmupMover.MoveSuccess.Success;
 
-                if (deadzoneSuccess && processed.magnitude < 0.05f)
+                if (input.magnitude < 0.05f)
                 {
                     result = IShmupMover.MoveSuccess.Default;
                     owner.RB.linearVelocity = Vector2.zero;
                     return;
                 }
 
-                owner.RB.linearVelocity = processed.ScaleToMagnitude(maxSpeed);
+                owner.RB.linearVelocity = input.ScaleToMagnitude(maxSpeed);
             }
         }
     }
