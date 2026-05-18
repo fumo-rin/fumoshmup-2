@@ -5,7 +5,6 @@ using System.Collections;
 using System.Linq;
 using UnityEditor;
 using System;
-using UnityEngine.Rendering;
 
 namespace FumoShmup2
 {
@@ -398,17 +397,16 @@ namespace FumoShmup2
     #region Phase Skipping & Utility
     public partial class EnemyUnit
     {
+        private static float BossPhaseStallEnd;
+        public static bool BossPhaseStall => Time.time < BossPhaseStallEnd + 0.15f;
+        [Initialize(-123)]
+        static void ReinitializeBossPhaseStall()
+        {
+            BossPhaseStallEnd = -1f;
+        }
+
         Coroutine CurrentRunningAttack;
         public float AttackStallEndTime { get; private set; }
-        public void SkipAndStallPhase(float duration)
-        {
-            AttackStallEndTime = AttackStallEndTime.Max(Time.time + duration);
-            if (CurrentRunningAttack != null)
-            {
-                StopCoroutine(CurrentRunningAttack);
-            }
-            CurrentRunningAttack = null;
-        }
         public void StallAttackLoop(float duration, bool stopAttack = true)
         {
             AttackStallEndTime = AttackStallEndTime.Max(Time.time + duration);
@@ -420,6 +418,10 @@ namespace FumoShmup2
                     CurrentRunningAttack = null;
                 }
                 CurrentRunningAttack = null;
+                if (IsBoss)
+                {
+                    BossPhaseStallEnd = Time.time + duration;
+                }
             }
         }
         private void AttacksStarterLoop()
@@ -463,13 +465,23 @@ namespace FumoShmup2
                     {
                         return;
                     }
-                    if (containedBaseAttack.TryStartNext(this, out Coroutine nextBaseAttack, () => SkipAndStallPhase(containedBaseAttack.LoopsDelay)))
+                    if (containedBaseAttack.TryStartNext(this, out Coroutine nextBaseAttack, () => StallAttackLoop(containedBaseAttack.LoopsDelay)))
                     {
                         CurrentRunningAttack = nextBaseAttack;
                     }
                     break;
             }
         }
+    }
+    #endregion
+    #region Damage Events
+    public partial class EnemyUnit
+    {
+        public delegate void OnKilledEvent(EnemyUnit e);
+        public static event OnKilledEvent WhenEnemyKilled;
+
+        public delegate void OnAnyDamagedEvent(float damage);
+        public static event OnAnyDamagedEvent WhenAnyEnemyDamaged;
     }
     #endregion
     #region Hit Interface
@@ -501,7 +513,6 @@ namespace FumoShmup2
                 if (packet.FinalDamage >= CurrentHealth)
                 {
                     CurrentHealth = 0f;
-                    ClearPhase();
                     KillWithLoot();
                     return;
                 }
@@ -528,6 +539,7 @@ namespace FumoShmup2
                     GameSession.TryAddScoreRaw(damage * 250d, "Enemy Damage");
                     damageDealt = damage.Min(CurrentHealth);
                     phaseTrackedDamage += damageDealt;
+                    WhenAnyEnemyDamaged?.Invoke(damageDealt);
                     double healthPercentDelta = CurrentMaxHealth == 0d ? 0d : (double)damageDealt / (double)CurrentMaxHealth;
                     StartNewHealth(CurrentHealth - damage, CurrentMaxHealth);
 
@@ -553,7 +565,6 @@ namespace FumoShmup2
                 //Spellcard.EndSpell();
             }
             CurrentHealth = 0f;
-            //TriggerKillEvent(true);
             PlayDeathEffects();
             CalculateAlive();
             gameObject.SetActive(false);
@@ -566,6 +577,8 @@ namespace FumoShmup2
             }
             CreateLootItem(LootCount, 2.5f);
             TriggerRevengeOverride();
+
+            #region Sweeping
             if (TryGetSweepOverride(out SweepOverride sweep))
             {
                 if (ShmupPlayer.PlayerAs(out ShmupPlayer p))
@@ -591,9 +604,12 @@ namespace FumoShmup2
                     ShockwaveEffect.Trigger(deathPos01, 3.5f);
                 }
             }
+            #endregion
+
             PlayDeathEffects();
             gameObject.SetActive(false);
             CalculateAlive();
+            WhenEnemyKilled?.Invoke(this);
         }
         private void CreateLootItem(int lootCount, float areaSize = 1f)
         {
@@ -801,6 +817,10 @@ namespace FumoShmup2
         protected override void WhenStart()
         {
             base.WhenStart();
+            if (IsBoss)
+            {
+                BossPhaseStallEnd = Time.time + 5f;
+            }
         }
         private void OnDisable()
         {

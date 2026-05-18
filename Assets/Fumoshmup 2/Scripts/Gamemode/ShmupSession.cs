@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace FumoShmup2
 {
-    #region Game Actions
+    #region Shmup Scoring
     public partial class ShmupSession
     {
-        public delegate void GameAction();
-        public static event GameAction WhenContinue;
-        public static void TriggerContinue()
+        public virtual float BasePointItemValue(float multiplier)
         {
-            WhenContinue?.Invoke();
+            float hitValue = 0;
+            if (ShmupSession.CurrentAs(out ShmupSession sess))
+            {
+                hitValue = sess.GetFloat(ShmupSession.keys.HitCount).Multiply(0.1f).Clamp(0f, 99999f);
+            }
+            return (hitValue + 1000f) * multiplier;
         }
     }
     #endregion
@@ -29,10 +32,11 @@ namespace FumoShmup2
             }
             ShmupStage.WhenSpawnPlayerRequest = ShmupGamemode.SpawnCurrentPlayer; // this is without event tag so it can be = nulled
             SceneLoader.LoadScenePair(next.StageScene, () => next.RunStage(0), 0.25f);
+            PointItemRunner.WhenPointItemValue = BasePointItemValue;
         }
         protected override void WhenEndSession()
         {
-
+            PointItemRunner.WhenPointItemValue -= BasePointItemValue;
         }
     }
     #endregion
@@ -105,13 +109,15 @@ namespace FumoShmup2
     #region Continue
     public partial class ShmupSession
     {
+        public delegate void GameAction();
+        public static event GameAction WhenContinue;
         public void TryContinue()
         {
             SetInt(keys.CurrentLives, GetInt(keys.StartingLives), 0, 6);
             SetInt(keys.CurrentBombs, GetInt(keys.StartingBombs), 0, 6);
-            SetFloat(keys.HitCounter, 0f, 0f, 99999f);
-            SetFloat(keys.CashoutActivation060, 0f, 0f, 60f);
+            SetFloat(keys.HitCount, 0f, 0f, 99999f);
             scoringData.Continue();
+            WhenContinue?.Invoke();
         }
     }
     #endregion
@@ -120,12 +126,11 @@ namespace FumoShmup2
     {
         public struct keys
         {
-            public static string CurrentLives => "CurrentLives";
-            public static string StartingLives => "StartingLives";
-            public static string CurrentBombs => "CurrentBombs";
-            public static string StartingBombs => "StartingBombs";
-            public static string HitCounter => "Hit";
-            public static string CashoutActivation060 => "Cashout";
+            public static readonly string CurrentLives = "CurrentLives";
+            public static readonly string StartingLives = "StartingLives";
+            public static readonly string CurrentBombs = "CurrentBombs";
+            public static readonly string StartingBombs = "StartingBombs";
+            public static readonly string HitCount = "Hit";
         }
     }
     #endregion
@@ -196,6 +201,7 @@ namespace FumoShmup2
                 if (Time.timeScale <= 0f) return true;
                 if (GeneralManager.IsPaused) return true;
                 if (Dialogue.IsRunning) return true;
+
                 if (base.GameLogicStalled)
                 {
                     return true;

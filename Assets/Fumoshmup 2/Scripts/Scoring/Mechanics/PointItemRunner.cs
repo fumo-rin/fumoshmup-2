@@ -8,26 +8,25 @@ namespace FumoShmup2
 {
     public class PointItemRunner : MonoBehaviour
     {
+        public delegate float PickupValue(float multiplier);
+        public static PickupValue WhenPointItemValue;
+
+        public delegate float PickupComboMultiplier();
+        public static PickupComboMultiplier WhenGetComboValue;
         public static void SpawnPointItem(Vector2 position)
         {
-            bool scoringActivated = false;
-            double scoreValue = 1000d;
+            bool cashOut = false;
             if (ShmupSession.CurrentAs(out ShmupSession s) && ShmupPlayer.PlayerAs(out ShmupPlayer p) && p.IsAlive)
             {
-                scoringActivated = s.GetFloat(ShmupSession.keys.CashoutActivation060) <= 1f;
-                if (scoringActivated)
-                {
-                    scoreValue += s.GetFloat(ShmupSession.keys.HitCounter) * 0.25f;
-                }
-                else
-                {
-                    if (ShmupInput.FocusReleasedLongerThan(0.15f))
-                    {
-                        s.ChangeFloat(ShmupSession.keys.CashoutActivation060, 1, 0, 60);
-                    }
-                }
+                float multi = WhenGetComboValue?.Invoke() ?? 1f;
+                float scoreValue = (WhenPointItemValue?.Invoke(cashOut ? 5f : 1f) ?? 1000f) * multi;
+                Debug.Log($"Point Item : {scoreValue} with Multiplier: {multi}x");
+                PointItemRunner.Create(position, cashOut, scoreValue);
             }
-            PointItemRunner.Create(position, scoringActivated, scoreValue);
+            else
+            {
+
+            }
         }
         internal static readonly List<PointItem> items = new();
         public static int ItemCount => items == null ? 0 : items.Count;
@@ -67,7 +66,7 @@ namespace FumoShmup2
             GameSession.TryAddScoreRaw(item.scoreValue, "Score Pickup");
             if (ShmupSession.CurrentAs(out ShmupSession s))
             {
-                s.ChangeFloat(ShmupSession.keys.HitCounter, item.scoringCashIn ? -50f : 10f, 0f, 99999f);
+                s.ChangeFloat(ShmupSession.keys.HitCount, item.scoringCashIn ? -50f : 10f, 0f, 99999f);
             }
             ProjectileRenderer.SpawnCosmeticLootParticle(item.Position);
         }
