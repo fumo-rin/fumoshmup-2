@@ -29,7 +29,3 @@ MonoBehaviour:
     - ContainedMessage: Good luck!
       CharacterName: Okuu
       Command: 
-    - ContainedMessage: Exceptionally long piece of dialogue! very cool and epic...
-        your mom
-      CharacterName: Okuu
-      Command: 

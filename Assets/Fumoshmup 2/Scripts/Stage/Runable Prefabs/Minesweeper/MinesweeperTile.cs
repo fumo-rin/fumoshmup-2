@@ -64,6 +64,8 @@ namespace FumoShmup2
                     _text.color = MinesweeperExtensions.MinesweeperDigitColor(NearbyBombs);
                     _text.text = NearbyBombs.ToString();
                     _tileSprite.color = ColorHelper.Gray4;
+                    if (!MinesweeperStagePrefab.GameLost)
+                        PointItemRunner.SpawnPointItem(transform.position);
                     break;
                 case State.CorrectFlag:
                     _tileSprite.color = ColorHelper.PastelYellow;
@@ -75,6 +77,11 @@ namespace FumoShmup2
                     _tileSprite.color = ColorHelper.Gray7;
                     break;
                 case State.BombTriggered:
+                    GeneralManager.FunnyExplosion(new() { is3d = false, position = transform.position, playSound = true, scale = 3f });
+                    if (ShmupPlayer.PlayerAs(out ShmupPlayer p))
+                    {
+                        p.SendHit(new(transform.position, new(null, 1f, 1f)), out _);
+                    }
                     _tileSprite.color = ColorHelper.PastelRed;
                     break;
                 case State.BombVisible:

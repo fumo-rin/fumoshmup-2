@@ -2863,7 +2863,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup.ShmupGameStarter
   session:
     scoringData:
-      <ScoreStorageKey>k__BackingField: BHJAM7
+      <ScoreStorageKey>k__BackingField: Testing
       RawScore: 0
       RawExtrasScore: 0
       HighScore: 0
@@ -2883,7 +2883,7 @@ MonoBehaviour:
       gameModeStages:
       - {fileID: 11400000, guid: 53a4ec68fe04c9442ae185744c57e372, type: 2}
     playerSpeaker: {fileID: 11400000, guid: 1771713a7c860cf49bfc2a4bbb2ef7a6, type: 2}
-    cachedSessionName: BHJAM7
+    cachedSessionName: Testing
     SessionDifficulty: Ultra
     DifficultyColor:
       serializedVersion: 2

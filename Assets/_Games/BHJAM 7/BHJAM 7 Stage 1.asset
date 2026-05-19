@@ -620,6 +620,7 @@ MonoBehaviour:
   - {fileID: -3525028640292555020}
   - {fileID: -3689181264008091035}
   - {fileID: 1011325165538966211}
+  - {fileID: 3212676093961340577}
 --- !u!114 &234403539862038660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -908,6 +909,24 @@ MonoBehaviour:
   skipIndex: 10
   WaitDuration: 6
   AliveEnemiesRequired: 1
+--- !u!114 &3212676093961340577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7e925b5b69df74b86a31e44f326c72, type: 3}
+  m_Name: PrefabRunnerNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.PrefabRunnerNode
+  IsEnabled: 1
+  title: PrefabRunnerNode
+  position: {x: 1242, y: -732}
+  skipIndex: 10
+  prefab: {fileID: 994256398805869732, guid: 43daeb666e7618c4c9b2674675c7882b, type: 3}
+  CachedRunSeperately: 0
 --- !u!114 &4045626325182533155
 MonoBehaviour:
   m_ObjectHideFlags: 0

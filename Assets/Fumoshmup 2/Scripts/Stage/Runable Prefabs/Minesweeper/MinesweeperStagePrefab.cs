@@ -233,6 +233,7 @@ namespace FumoShmup2
         }
         private void RevealEntireBoardWithBomb(MinesweeperTile bombedTile)
         {
+            GameLost = true;
             foreach (var kvp in playBoard)
             {
                 var tile = kvp.Value;
@@ -247,7 +248,6 @@ namespace FumoShmup2
                 }
                 bombedTile.UpdateState(MinesweeperTile.State.BombTriggered);
             }
-            GameLost = true;
         }
         private void TryMoveBombFromTileToRandomTile(MinesweeperTile tile)
         {
@@ -298,7 +298,7 @@ namespace FumoShmup2
                     float size = TileSize.x;
                     Vector2 pos = center + new Vector2(-4f + size * i, -4f + size * j);
                     MinesweeperTile tile = Instantiate(tilePrefab, pos, Quaternion.identity);
-                    tile.transform.parent = transform;
+                    tile.transform.SetParent(transform);
                     tile.UpdateState(MinesweeperTile.State.Brick);
                     tile.gameObject.SetActive(true);
                     tile.tileXY = new(i, j);

@@ -61,7 +61,7 @@ public partial class ShmupPlayer : IHit
         }
         if (HasIframes)
             return false;
-        currentHit = GlobalCoroutineRunner.StartRoutine("Player Hit", CO_Hit(), true);
+        currentHit = GlobalCoroutineRunner.StartRoutine("Player Hit", CO_Hit(), false);
         IEnumerator CO_Hit()
         {
             bool hasSession = GameSession.CurrentAs(out ShmupSession session);

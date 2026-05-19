@@ -23,7 +23,7 @@ namespace FumoShmup2
         {
             if (ShmupSession.CurrentAs(out ShmupSession s))
             {
-                s.ChangeFloat(ShmupSession.keys.HitCount, 1, 0f, 99999f);
+                s.ChangeFloat(ShmupSession.keys.HitCount, 3, 0f, 99999f);
             }
         }
         private float DetermineCombo()
@@ -48,6 +48,10 @@ namespace FumoShmup2
         private void WhenEnemiesDamaged(float damage)
         {
             lowComboDecayStall = Time.time + 0.3f;
+            if (ShmupSession.CurrentAs(out ShmupSession s))
+            {
+                s.ChangeFloat(ShmupSession.keys.HitCount, damage * 0.2f, 0, 99999f);
+            }
         }
         private void OnEnable()
         {
@@ -55,6 +59,7 @@ namespace FumoShmup2
             PointItemRunner.WhenGetComboValue += DetermineCombo;
             EnemyUnit.WhenEnemyKilled += WhenEnemyKilled;
             EnemyUnit.WhenAnyEnemyDamaged += WhenEnemiesDamaged;
+            ShmupSession.WhenContinue += WhenContinue;
         }
         private void OnDisable()
         {
@@ -62,6 +67,7 @@ namespace FumoShmup2
             PointItemRunner.WhenGetComboValue -= DetermineCombo;
             EnemyUnit.WhenEnemyKilled -= WhenEnemyKilled;
             EnemyUnit.WhenAnyEnemyDamaged -= WhenEnemiesDamaged;
+            ShmupSession.WhenContinue -= WhenContinue;
         }
         private void Update()
         {
