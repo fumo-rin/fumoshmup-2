@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2153864815207065291}
   - component: {fileID: 9205044897231247259}
   m_Layer: 8
-  m_Name: Stage Joel
+  m_Name: Lightweight Joel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.65, y: 0.65, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7957158619952670179}
@@ -119,7 +119,7 @@ MonoBehaviour:
     delay: 0
     randomRadiusRange: {x: 0, y: 0}
   phases: []
-  startingHealth: 120
+  startingHealth: 25
   hitSound: {fileID: 11400000, guid: 9d9984bb7f8437c47b2358c6a9068c05, type: 2}
   lowHitSound: {fileID: 11400000, guid: 055d1c28c688d0543977be8c200be4af, type: 2}
   enemyRenderer: {fileID: 0}

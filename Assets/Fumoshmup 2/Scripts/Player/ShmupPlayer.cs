@@ -80,22 +80,31 @@ public partial class ShmupPlayer : IHit
                 yield return 1f.WaitForSeconds();
                 if (!canRespawn)
                 {
-                    bool continued = false;
-                    void Yes()
+                    if (session.CanContinue)
                     {
-                        continued = true;
-                        session.TryContinue();
+                        bool continued = false;
+                        void Yes()
+                        {
+                            continued = true;
+                            session.TryContinue();
+                        }
+                        void No()
+                        {
+                            session.ExitToMenu();
+                        }
+                        ContinueButtons.Show(out WaitUntil continueWait, Yes, No);
+                        TimeSlowHandler.AddDurationlessTimescale("Continue Stall", 0f);
+                        yield return continueWait;
+                        TimeSlowHandler.RemoveDurationlessTimescale("Continue Stall");
+                        if (!continued)
+                            yield break;
                     }
-                    void No()
+                    else
                     {
+                        yield return 1.5f.WaitForSeconds();
                         session.ExitToMenu();
-                    }
-                    ContinueButtons.Show(out WaitUntil continueWait, Yes, No);
-                    TimeSlowHandler.AddDurationlessTimescale("Continue Stall", 0f);
-                    yield return continueWait;
-                    TimeSlowHandler.RemoveDurationlessTimescale("Continue Stall");
-                    if (!continued)
                         yield break;
+                    }
                 }
                 Vector2 v = new Vector2Shmup(0.5f, 0.2f).Vector2Now;
                 manualAliveFlag = true;

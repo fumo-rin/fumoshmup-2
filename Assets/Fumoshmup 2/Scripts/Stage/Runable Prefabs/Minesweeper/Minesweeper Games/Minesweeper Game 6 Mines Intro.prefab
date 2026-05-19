@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 712825979064980223}
   - component: {fileID: 994256398805869732}
   m_Layer: 0
-  m_Name: Minesweeper Game
+  m_Name: Minesweeper Game 6 Mines Intro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -228,6 +228,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: FumoShmup::FumoShmup.MinesweeperStagePrefab
   minesweeperStartDialogue: {fileID: 11400000, guid: ff56bc1b533f08f468470fbd3a24d8c1, type: 2}
   tilePrefab: {fileID: 4041740063931279599}
+  optionalMusic: {fileID: 11400000, guid: 4ee5fb9559ccdb845b3f7bc91be739a5, type: 2}
+  MinesCount: 6
 --- !u!1 &6921502075603860195
 GameObject:
   m_ObjectHideFlags: 0

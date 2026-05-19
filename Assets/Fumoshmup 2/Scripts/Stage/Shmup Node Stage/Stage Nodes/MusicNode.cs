@@ -32,7 +32,7 @@ namespace FumoShmup2
         }
         protected override Vector2 BuildSize()
         {
-            return new(350f, 60f);
+            return new(500f, 60f);
         }
     }
 }

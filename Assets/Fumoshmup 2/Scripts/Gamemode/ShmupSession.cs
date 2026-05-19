@@ -86,6 +86,7 @@ namespace FumoShmup2
                     }
                     else
                     {
+                        Debug.LogError($"Missing Stage on: {stage.name}");
                         RunNext(stage);
                     }
                 }
@@ -121,8 +122,8 @@ namespace FumoShmup2
         }
     }
     #endregion
-    #region Shmup ECO Keys
-    public partial class ShmupSession
+    #region Shmup ECO Key
+    public partial class ShmupSession // Keys
     {
         public struct keys
         {
@@ -137,6 +138,7 @@ namespace FumoShmup2
     [System.Serializable]
     public partial class ShmupSession : rinCore.GameSession
     {
+        public bool CanContinue = true;
         [SerializeField] DialogueCharacterSO playerSpeaker;
         public string SessionName => cachedSessionName;
         [SerializeField] private string cachedSessionName = "Game Name";

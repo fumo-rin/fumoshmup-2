@@ -1,0 +1,359 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8170122806349803714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7e925b5b69df74b86a31e44f326c72, type: 3}
+  m_Name: PrefabRunnerNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.PrefabRunnerNode
+  IsEnabled: 1
+  title: PrefabRunnerNode
+  position: {x: 577, y: 113}
+  skipIndex: 10
+  prefab: {fileID: 994256398805869732, guid: 43daeb666e7618c4c9b2674675c7882b, type: 3}
+  CachedRunSeperately: 0
+--- !u!114 &-7611865960361441135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75e966954de8b714ca0eb2f2f4c8c76f, type: 3}
+  m_Name: WaitForTimeNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeNode
+  IsEnabled: 1
+  title: WaitForTimeNode
+  position: {x: 908, y: -1}
+  skipIndex: 70
+  WaitTime: 1
+--- !u!114 &-7116554780849861994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 548c74236282c74408af0add52103885, type: 3}
+  m_Name: MusicNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.MusicNode
+  IsEnabled: 1
+  title: MusicNode
+  position: {x: 505, y: -155}
+  skipIndex: 10
+  music: {fileID: 11400000, guid: 3ba7d20476c022c42ab9771926c4db6e, type: 2}
+--- !u!114 &-3925833860690111234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75e966954de8b714ca0eb2f2f4c8c76f, type: 3}
+  m_Name: WaitForTimeNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeNode
+  IsEnabled: 1
+  title: WaitForTimeNode
+  position: {x: 908, y: -1}
+  skipIndex: 40
+  WaitTime: 1
+--- !u!114 &-2975540756580648201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75e966954de8b714ca0eb2f2f4c8c76f, type: 3}
+  m_Name: WaitForTimeNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeNode
+  IsEnabled: 1
+  title: WaitForTimeNode
+  position: {x: 578, y: -31}
+  skipIndex: 10
+  WaitTime: 1
+--- !u!114 &-2379475710916316002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7e925b5b69df74b86a31e44f326c72, type: 3}
+  m_Name: PrefabRunnerNode_Copy_Copy_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.PrefabRunnerNode
+  IsEnabled: 1
+  title: PrefabRunnerNode
+  position: {x: 838, y: 319}
+  skipIndex: 40
+  prefab: {fileID: 994256398805869732, guid: 43996355b87de084fb2b51d9ccb0d4e7, type: 3}
+  CachedRunSeperately: 0
+--- !u!114 &-1743122319722731169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7e925b5b69df74b86a31e44f326c72, type: 3}
+  m_Name: PrefabRunnerNode_Copy_Copy_Copy_Copy_Copy_Copy_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.PrefabRunnerNode
+  IsEnabled: 1
+  title: PrefabRunnerNode
+  position: {x: 2158, y: 439}
+  skipIndex: 80
+  prefab: {fileID: 994256398805869732, guid: 6d866da2859d6444689d2f481de10672, type: 3}
+  CachedRunSeperately: 0
+--- !u!114 &-963072735389897753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75e966954de8b714ca0eb2f2f4c8c76f, type: 3}
+  m_Name: WaitForTimeNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeNode
+  IsEnabled: 1
+  title: WaitForTimeNode
+  position: {x: 908, y: -1}
+  skipIndex: 60
+  WaitTime: 1
+--- !u!114 &-444669348030392550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7e925b5b69df74b86a31e44f326c72, type: 3}
+  m_Name: PrefabRunnerNode_Copy_Copy_Copy_Copy_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.PrefabRunnerNode
+  IsEnabled: 1
+  title: PrefabRunnerNode
+  position: {x: 1498, y: 379}
+  skipIndex: 60
+  prefab: {fileID: 994256398805869732, guid: afe147831e0103f428202bff8b0818e9, type: 3}
+  CachedRunSeperately: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 402a3f0e7ec535749ac36027c36e1a5c, type: 3}
+  m_Name: Minesweeper Stage
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.ShmupNodeStage
+  SkipEntries:
+  - skipName: 6 Mines
+    skipValue: 10
+    enabled: 1
+  - skipName: 7 Mines
+    skipValue: 20
+    enabled: 1
+  - skipName: 10 Mines
+    skipValue: 30
+    enabled: 1
+  - skipName: 12 Mines
+    skipValue: 40
+    enabled: 1
+  - skipName: 15 Mines
+    skipValue: 50
+    enabled: 1
+  - skipName: 20 Mines
+    skipValue: 60
+    enabled: 1
+  - skipName: 25 Mines
+    skipValue: 70
+    enabled: 1
+  - skipName: 32 Mines
+    skipValue: 80
+    enabled: 1
+  <StageScene>k__BackingField: {fileID: 11400000, guid: 9ac2b125f6a81b04ca14a6031c9663e9, type: 2}
+  currentLinkAttempt: {fileID: 0}
+  selectedSkipIndex: 7
+  StageEndDialogue: {fileID: 0}
+  enemyTable: []
+  nodes:
+  - {fileID: -7116554780849861994}
+  - {fileID: -8170122806349803714}
+  - {fileID: -2975540756580648201}
+  - {fileID: 2943820237325240095}
+  - {fileID: 7041188301551002177}
+  - {fileID: -3925833860690111234}
+  - {fileID: 3219482979082998253}
+  - {fileID: -963072735389897753}
+  - {fileID: -7611865960361441135}
+  - {fileID: 2041207975074733787}
+  - {fileID: 5752016475412456601}
+  - {fileID: 4913601305979851652}
+  - {fileID: -2379475710916316002}
+  - {fileID: 8302702749760462600}
+  - {fileID: -444669348030392550}
+  - {fileID: 2280504587045757378}
+  - {fileID: -1743122319722731169}
+--- !u!114 &2041207975074733787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75e966954de8b714ca0eb2f2f4c8c76f, type: 3}
+  m_Name: WaitForTimeNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeNode
+  IsEnabled: 1
+  title: WaitForTimeNode
+  position: {x: 908, y: -1}
+  skipIndex: 80
+  WaitTime: 1
+--- !u!114 &2280504587045757378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7e925b5b69df74b86a31e44f326c72, type: 3}
+  m_Name: PrefabRunnerNode_Copy_Copy_Copy_Copy_Copy_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.PrefabRunnerNode
+  IsEnabled: 1
+  title: PrefabRunnerNode
+  position: {x: 1828, y: 409}
+  skipIndex: 70
+  prefab: {fileID: 994256398805869732, guid: b4e83fc4a40021a43a82fb77188c192a, type: 3}
+  CachedRunSeperately: 0
+--- !u!114 &2943820237325240095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75e966954de8b714ca0eb2f2f4c8c76f, type: 3}
+  m_Name: WaitForTimeNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeNode
+  IsEnabled: 1
+  title: WaitForTimeNode
+  position: {x: 966, y: -24}
+  skipIndex: 20
+  WaitTime: 1
+--- !u!114 &3219482979082998253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75e966954de8b714ca0eb2f2f4c8c76f, type: 3}
+  m_Name: WaitForTimeNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeNode
+  IsEnabled: 1
+  title: WaitForTimeNode
+  position: {x: 908, y: -1}
+  skipIndex: 50
+  WaitTime: 1
+--- !u!114 &4913601305979851652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7e925b5b69df74b86a31e44f326c72, type: 3}
+  m_Name: PrefabRunnerNode_Copy_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.PrefabRunnerNode
+  IsEnabled: 1
+  title: PrefabRunnerNode
+  position: {x: 508, y: 289}
+  skipIndex: 30
+  prefab: {fileID: 994256398805869732, guid: 490587ed557ee2341997889d1ebdf61f, type: 3}
+  CachedRunSeperately: 0
+--- !u!114 &5752016475412456601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7e925b5b69df74b86a31e44f326c72, type: 3}
+  m_Name: PrefabRunnerNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.PrefabRunnerNode
+  IsEnabled: 1
+  title: PrefabRunnerNode
+  position: {x: 907, y: 142}
+  skipIndex: 20
+  prefab: {fileID: 994256398805869732, guid: 66ac44902d191c04988b72295289b8c5, type: 3}
+  CachedRunSeperately: 0
+--- !u!114 &7041188301551002177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75e966954de8b714ca0eb2f2f4c8c76f, type: 3}
+  m_Name: WaitForTimeNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeNode
+  IsEnabled: 1
+  title: WaitForTimeNode
+  position: {x: 908, y: -1}
+  skipIndex: 30
+  WaitTime: 1
+--- !u!114 &8302702749760462600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7e925b5b69df74b86a31e44f326c72, type: 3}
+  m_Name: PrefabRunnerNode_Copy_Copy_Copy_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.PrefabRunnerNode
+  IsEnabled: 1
+  title: PrefabRunnerNode
+  position: {x: 1168, y: 349}
+  skipIndex: 50
+  prefab: {fileID: 994256398805869732, guid: 68eefee83055a9d4bbd6b68df563bcc5, type: 3}
+  CachedRunSeperately: 0

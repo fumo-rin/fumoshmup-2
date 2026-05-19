@@ -99,9 +99,13 @@ namespace FumoShmup2
                 return;
             }
 
-            if (MovesCount == 0 && tile.IsBomb)
+            if (MovesCount == 0)
             {
-                TryMoveBombFromTileToRandomTile(tile);
+                int freeTiles = (BoardSize.Item1 * BoardSize.Item2) - BombCount;
+                int clearCount = freeTiles.MultiplyAndFloor(0.08f).Min(BoardSize.Item1.Min(BoardSize.Item2));
+                TryMoveBombFromTileToRandomTile(tile, clearCount);
+                MovesCount++;
+                return;
             }
 
             if (tile.state.HasFlag(MinesweeperTile.State.CorrectFlag) || tile.state.HasFlag(MinesweeperTile.State.FalseFlag))
@@ -237,6 +241,10 @@ namespace FumoShmup2
             foreach (var kvp in playBoard)
             {
                 var tile = kvp.Value;
+                if (tile.state == MinesweeperTile.State.FalseFlag)
+                {
+                    tile.UpdateState(MinesweeperTile.State.Brick);
+                }
 
                 if (tile.IsBomb)
                 {
@@ -249,32 +257,109 @@ namespace FumoShmup2
                 bombedTile.UpdateState(MinesweeperTile.State.BombTriggered);
             }
         }
-        private void TryMoveBombFromTileToRandomTile(MinesweeperTile tile)
+
+        private void TryMoveBombFromTileToRandomTile(MinesweeperTile startTile, int tilesToClear = 8)
         {
-            if (!tile.IsBomb)
-                return;
+            if (startTile == null) return;
 
-            tile.UpdateState(MinesweeperTile.State.Brick);
+            HashSet<(int, int)> visited = new();
+            Queue<MinesweeperTile> frontier = new();
 
-            int attempts = 50000;
-            while (attempts > 0)
+            frontier.Enqueue(startTile);
+            visited.Add(startTile.tileXY);
+
+            while (frontier.Count > 0 && visited.Count < tilesToClear)
             {
-                attempts--;
+                MinesweeperTile current = frontier.Dequeue();
+                int x = current.tileXY.Item1;
+                int y = current.tileXY.Item2;
 
-                if (!MinesweeperUtils.TryGetRandomTile(playBoard, BoardSize.Item1, BoardSize.Item2, out MinesweeperTile randomTile))
-                    continue;
+                List<MinesweeperTile> neighbors = new();
 
-                if (randomTile.IsBomb || randomTile == tile)
-                    continue;
+                for (int i = (x - 1).Clamp(0, BoardSize.Item1 - 1); i <= (x + 1).Clamp(0, BoardSize.Item1 - 1); i++)
+                {
+                    for (int j = (y - 1).Clamp(0, BoardSize.Item2 - 1); j <= (y + 1).Clamp(0, BoardSize.Item2 - 1); j++)
+                    {
+                        if ((i, j) == current.tileXY) continue;
 
-                randomTile.PlaceBomb();
-                break;
+                        if (playBoard.TryGetValue((i, j), out MinesweeperTile neighbor) &&
+                            !visited.Contains(neighbor.tileXY))
+                        {
+                            neighbors.Add(neighbor);
+                        }
+                    }
+                }
+
+                for (int i = 0; i < neighbors.Count; i++)
+                {
+                    int swapIndex = UnityEngine.Random.Range(i, neighbors.Count);
+                    MinesweeperTile temp = neighbors[i];
+                    neighbors[i] = neighbors[swapIndex];
+                    neighbors[swapIndex] = temp;
+                }
+
+                int expansionCount = Mathf.Min(UnityEngine.Random.Range(1, 4), neighbors.Count);
+
+                for (int i = 0; i < expansionCount; i++)
+                {
+                    MinesweeperTile neighbor = neighbors[i];
+
+                    if (visited.Add(neighbor.tileXY))
+                        frontier.Enqueue(neighbor);
+                }
             }
-            if (attempts <= 0)
+
+            List<MinesweeperTile> bombsToMove = new();
+
+            foreach ((int, int) pos in visited)
             {
-                Debug.LogWarning("Failed to move bomb to a random tile after 5000 attempts.");
+                if (playBoard.TryGetValue(pos, out MinesweeperTile tile) && tile.IsBomb)
+                    bombsToMove.Add(tile);
+            }
+
+            foreach (MinesweeperTile bombTile in bombsToMove)
+                bombTile.UpdateState(MinesweeperTile.State.Brick);
+
+            foreach (MinesweeperTile bombTile in bombsToMove)
+            {
+                int attempts = 50000;
+
+                while (attempts > 0)
+                {
+                    attempts--;
+
+                    if (!MinesweeperUtils.TryGetRandomTile(playBoard, BoardSize.Item1, BoardSize.Item2, out MinesweeperTile randomTile))
+                        continue;
+
+                    if (randomTile.IsBomb)
+                        continue;
+
+                    if (visited.Contains(randomTile.tileXY))
+                        continue;
+
+                    randomTile.PlaceBomb();
+                    break;
+                }
+
+                if (attempts <= 0)
+                    Debug.LogWarning("Failed to relocate bomb.");
+            }
+
+            foreach ((int, int) pos in visited)
+            {
+                if (playBoard.TryGetValue(pos, out MinesweeperTile tile))
+                {
+                    if (!tile.IsBomb && tile.state.HasFlag(MinesweeperTile.State.Brick))
+                    {
+                        tile.UpdateState(MinesweeperTile.State.Cleared);
+
+                        if (tile.NearbyBombs == 0)
+                            RevealNeighbors(tile);
+                    }
+                }
             }
         }
+
     }
     #endregion
     public partial class MinesweeperStagePrefab
@@ -390,6 +475,8 @@ namespace FumoShmup2
 
         [SerializeField] DialogueStackSO minesweeperStartDialogue;
         [SerializeField] MinesweeperTile tilePrefab;
+        [SerializeField] MusicWrapper optionalMusic;
+        [SerializeField] int MinesCount = 10;
         protected override IEnumerator RunablePayload()
         {
             if (minesweeperStartDialogue != null)
@@ -397,7 +484,8 @@ namespace FumoShmup2
                 minesweeperStartDialogue.StartDialogue(out WaitUntil wait, null);
                 yield return wait;
             }
-            BuildBoard(10, 10, out WaitUntil w);
+            optionalMusic.Play();
+            BuildBoard(10, MinesCount, out WaitUntil w);
             if (w == null)
             {
                 yield break;

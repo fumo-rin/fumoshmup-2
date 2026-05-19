@@ -20,7 +20,14 @@ MonoBehaviour:
   <dialogueTextFile>k__BackingField: {fileID: 4900000, guid: 60f52bb7faf617a46b2f17bb25267de3, type: 3}
   containedDialogue:
     parts:
-    - ContainedMessage: I've placed 10 BOMBS! on the map.
+    - ContainedMessage: I've placed 6 BOMBS! on the map.
+      CharacterName: Okuu
+      Command: 
+    - ContainedMessage: After the first round, you must FIGHT 7, 10, 12, 15, 20,
+        25 and 32 bombs consecutively!
+      CharacterName: Okuu
+      Command: 
+    - ContainedMessage: Send in your strongest warrior to defuse the bombs!
       CharacterName: Okuu
       Command: 
     - ContainedMessage: Mewo mewo!

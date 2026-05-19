@@ -1901,7 +1901,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1083662113}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.859375
+  m_Size: 0.8593751
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4141,6 +4141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f387ce5babdd75e4586e1c367aaa15f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.StandardShmupResourcesUI
+  difficultyText: {fileID: 2012115141}
   playerLivesSlider: {fileID: 954893263}
   playerBombsSlider: {fileID: 1030438755}
   maxLives: 6
@@ -6081,7 +6082,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000009536743}
+  m_AnchoredPosition: {x: 0, y: -0.000009536743}
   m_SizeDelta: {x: 0, y: 18}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &1353336459
@@ -8688,7 +8689,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Ultra
+  m_text: Difficulty
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 03257285d91a15644bbde245679893a5, type: 2}
   m_sharedMaterial: {fileID: -5168588728303864837, guid: 03257285d91a15644bbde245679893a5, type: 2}
@@ -8697,8 +8698,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294948201
-  m_fontColor: {r: 0.41037738, g: 0.70926315, b: 1, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

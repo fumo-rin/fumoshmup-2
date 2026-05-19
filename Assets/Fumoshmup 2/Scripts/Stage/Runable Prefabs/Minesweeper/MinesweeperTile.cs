@@ -39,7 +39,7 @@ namespace FumoShmup2
             bool rightClick = ShmupInput.FocusJustPressed;
             if (leftClick || rightClick)
             {
-                if (ShmupPlayer.PlayerAs(out ShmupPlayer p))
+                if (ShmupPlayer.PlayerAs(out ShmupPlayer p) && p.IsAlive)
                 {
                     if (_collider.bounds.Contains(p.CurrentPosition))
                     {
