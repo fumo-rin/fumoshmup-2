@@ -18,6 +18,10 @@ namespace FumoShmup2
             {
                 return 1.25f;
             }
+            if (player.IframesDurationLeft > 0.8f)
+            {
+                return 1f;
+            }
 
             float slowdownIdeal = 0.666f;
             float slowdownMax = 0.45f;
@@ -300,9 +304,7 @@ namespace FumoShmup2
 
         private void LateUpdate()
         {
-            float timescale;
-            timescale = GetTargetSlowdown(250);
-            TimeSlowHandler.SetSimulatedSlowdownTarget(timescale);
+            TimeSlowHandler.SetSimulatedSlowdownTarget(GetTargetSlowdown(250));
         }
 
         private HashSet<Projectile> grazedProjectiles = new();
@@ -336,7 +338,6 @@ namespace FumoShmup2
             Hit,
             Iframes
         }
-
         public static void TriggerSweep(float sweepDuration, byte lootChance, bool slowdown, out List<Vector2> sweeps)
         {
             sweeps = new();

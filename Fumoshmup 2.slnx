@@ -115,7 +115,9 @@
   <Project Path="Unity.VisualScripting.DocCodeExamples.csproj" />
   <Project Path="TaskList.csproj" />
   <Project Path="DrawingPackageToolsEditor.csproj" />
+  <Project Path="CaravanJam.csproj" />
   <Project Path="Unity.PlasticSCM.Editor.Entities.csproj" />
   <Project Path="Unity.Services.Core.Environments.csproj" />
   <Project Path="Unity.Collections.Editor.csproj" />
+  <Project Path="MushihimesamaLike.csproj" />
 </Solution>

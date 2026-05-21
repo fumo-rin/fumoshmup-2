@@ -302,7 +302,7 @@ namespace FumoShmup2
                 {
                     return this;
                 }
-                Direction = Target.CurrentPosition - Origin;
+                Direction = (Target.CurrentPosition) - Origin;
                 return this;
             }
             public InputSettings ReAimWithOptionalTarget(Vector2? Origin = null)

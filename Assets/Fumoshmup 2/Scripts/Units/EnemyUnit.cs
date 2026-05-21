@@ -32,7 +32,7 @@ namespace FumoShmup2
                     yield break;
                 }
                 yield return null;
-                yield return packet.delay.WaitForSeconds(false);
+                yield return packet.delay.WaitForSeconds();
                 MoveLerpEndTime = lerpEndTime;
                 float start = Time.time;
                 SetAction("Exit", new MoveLerpAction(this, packet.duration, new()
@@ -41,7 +41,7 @@ namespace FumoShmup2
                     UnMappedEnd = new(packet.x, packet.y),
                     duration = packet.duration
                 }));
-                yield return packet.duration.WaitForSeconds(false);
+                yield return packet.duration.WaitForSeconds();
                 this.ForceKill();
             }
             StartCoroutine(CO_ExitAfter());
@@ -302,7 +302,7 @@ namespace FumoShmup2
             {
                 if ((LastKnownPhase != null && LastKnownPhase != found) || LastKnownPhase == null)
                 {
-                    ProjectileRunner.TriggerSweep(0.85f, 255, false, out _);
+                    ProjectileRunner.TriggerSweep(0f, 255, false, out _);
                     Action_BossRecenter(0.85f);
                     StallAttackLoop(0.5f);
                     SetIframes(1.25f, 90f);
@@ -437,6 +437,8 @@ namespace FumoShmup2
             {
                 return;
             }
+            if (ProjectileRunner.IsSweeping)
+                return;
             if (TryGetNextPhase(out UnitPhase phase))
             {
 
@@ -622,7 +624,6 @@ namespace FumoShmup2
                 PointItemRunner.SpawnPointItem(position + (RNG.SeededRandomVector2.normalized * 0.75f.Spread(50f) * areaSize));
             }
         }
-
     }
     #endregion
     #region Find Enemies

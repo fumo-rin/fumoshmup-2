@@ -15,10 +15,10 @@ MonoBehaviour:
   ColliderShape:
     rid: 697205976453611520
   Size: 0.75
-  SizeSortingMultiplier: 1
+  SizeSortingMultiplier: 0.48
   Color:
     serializedVersion: 2
-    rgba: 3430969546
+    rgba: 4177481586
   animationSpeed: 5
   animationSpreadPercent: 10
   spin: 0
@@ -27,7 +27,7 @@ MonoBehaviour:
   useFlare: 1
   FlareColor:
     serializedVersion: 2
-    rgba: 4294923715
+    rgba: 4294922097
   references:
     version: 2
     RefIds:

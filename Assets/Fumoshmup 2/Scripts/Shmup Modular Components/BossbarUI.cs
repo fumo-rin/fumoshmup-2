@@ -63,7 +63,7 @@ namespace FumoShmup2
                 BossHealthbar.SetValues(0f, 1f, 0f);
                 return false;
             }
-            string bossName = unit.transform.GetCleanName().PrettyName(new StringExtensions.PrettyNameSettings
+            string bossName = unit.transform.GetCleanName().RemoveAfter("#").PrettyName(new StringExtensions.PrettyNameSettings
             {
                 PreserveBrackets = true,
                 PostNaturalCapitals = true,

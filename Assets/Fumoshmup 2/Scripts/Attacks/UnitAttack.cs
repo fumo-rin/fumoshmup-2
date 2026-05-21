@@ -88,6 +88,7 @@ namespace FumoShmup2
     public abstract partial class UnitAttack
     {
         protected static List<Projectile> iterationList;
+        protected const float TICK = 0.015f;
         protected bool PlayerAutoAim(ShmupPlayer player, out EnemyUnit autoTarget)
         {
             autoTarget = null;

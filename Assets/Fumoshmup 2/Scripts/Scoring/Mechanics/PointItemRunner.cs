@@ -20,7 +20,6 @@ namespace FumoShmup2
             {
                 float multi = WhenGetComboValue?.Invoke() ?? 1f;
                 float scoreValue = (WhenPointItemValue?.Invoke(cashOut ? 5f : 1f) ?? 1000f) * multi;
-                Debug.Log($"Point Item : {scoreValue} with Multiplier: {multi}x");
                 PointItemRunner.Create(position, cashOut, scoreValue);
             }
             else

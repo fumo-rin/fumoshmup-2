@@ -17,9 +17,9 @@ MonoBehaviour:
   <soundClips>k__BackingField:
   - clip: {fileID: 8300000, guid: ff92b72d7ee2acb479878a2d3aaff346, type: 3}
     PitchVariancePercent: 15.4
-    PitchOrigin: 2.83
+    PitchOrigin: 2.16
     Volume: 0.754
     Muted: 0
-  <singleChannel>k__BackingField: 1
+  <soundMode>k__BackingField: 0
   <singleRepeatLockoutTime>k__BackingField: 0.008333334
   <Is3D>k__BackingField: 1
