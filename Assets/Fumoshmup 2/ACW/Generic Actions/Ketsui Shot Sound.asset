@@ -24,17 +24,22 @@ MonoBehaviour:
     PitchVariancePercent: 12.6
     PitchOrigin: 4.95
     Volume: 0.167
-    Muted: 0
+    Muted: 1
   - clip: {fileID: 8300000, guid: a1711363b2eacd347a4b71c14df019b7, type: 3}
     PitchVariancePercent: 3.8
     PitchOrigin: 3.73
     Volume: 0.139
-    Muted: 0
+    Muted: 1
   - clip: {fileID: 8300000, guid: 628fa712df742bb43b270947a24e0c39, type: 3}
     PitchVariancePercent: 7.2
-    PitchOrigin: 3.35
-    Volume: 0.318
+    PitchOrigin: 1.53
+    Volume: 0.179
+    Muted: 1
+  - clip: {fileID: 8300000, guid: 37c519efd1c432a4ea81121231fe26ad, type: 3}
+    PitchVariancePercent: 7.2
+    PitchOrigin: 2.01
+    Volume: 1
     Muted: 0
-  <singleChannel>k__BackingField: 1
-  <singleRepeatLockoutTime>k__BackingField: 0.16
+  <soundMode>k__BackingField: 0
+  <singleRepeatLockoutTime>k__BackingField: 0.05
   <Is3D>k__BackingField: 1

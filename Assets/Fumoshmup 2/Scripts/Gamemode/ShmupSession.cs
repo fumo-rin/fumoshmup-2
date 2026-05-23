@@ -6,12 +6,12 @@ namespace FumoShmup2
     #region Shmup Scoring
     public partial class ShmupSession
     {
-        public virtual float BasePointItemValue(float multiplier)
+        public virtual float PickupValue(float multiplier)
         {
             float hitValue = 0;
             if (ShmupSession.CurrentAs(out ShmupSession sess))
             {
-                hitValue = sess.GetFloat(ShmupSession.keys.HitCount).Multiply(0.1f).Clamp(0f, 99999f);
+                hitValue = 0.1f * sess.GetFloat(ShmupSession.keys.HitCount).Clamp(0f, 99999f);
             }
             return (hitValue + 1000f) * multiplier;
         }
@@ -32,11 +32,11 @@ namespace FumoShmup2
             }
             ShmupStage.WhenSpawnPlayerRequest = ShmupGamemode.SpawnCurrentPlayer; // this is without event tag so it can be = nulled
             SceneLoader.LoadScenePair(next.StageScene, () => next.RunStage(0), 0.25f);
-            PointItemRunner.WhenPointItemValue = BasePointItemValue;
+            PointItemRunner.WhenPointItemValue = PickupValue;
         }
         protected override void WhenEndSession()
         {
-            PointItemRunner.WhenPointItemValue -= BasePointItemValue;
+            PointItemRunner.WhenPointItemValue -= PickupValue;
         }
     }
     #endregion

@@ -354,13 +354,14 @@ namespace FumoShmup2
         public class AttackComponent
         {
             public int Loops = 3;
+            private int Steps => attacks == null ? 0 : Loops * attacks.Count;
             [SerializeField, Range(0f, 6f)] public float LoopsDelay = 0f;
             [SerializeReference] public List<UnitAttack> attacks = new();
             int attackIndex;
             public bool DetermineNext(out UnitAttack next)
             {
                 next = null;
-                if (attacks != null && attacks.Count > 0 && attackIndex < Loops)
+                if (attacks != null && attacks.Count > 0 && attackIndex < Steps)
                 {
                     int selection = attackIndex % attacks.Count;
                     next = attacks[selection];
@@ -385,6 +386,8 @@ namespace FumoShmup2
                 attackIndex = 0;
                 foreach (var item in attacks)
                 {
+                    if (item == null)
+                        continue;
                     this.attacks.Add(item.Clone());
                 }
             }
@@ -467,7 +470,7 @@ namespace FumoShmup2
                     {
                         return;
                     }
-                    if (containedBaseAttack.TryStartNext(this, out Coroutine nextBaseAttack, () => StallAttackLoop(containedBaseAttack.LoopsDelay)))
+                    if (containedBaseAttack != null && containedBaseAttack.TryStartNext(this, out Coroutine nextBaseAttack, () => StallAttackLoop(containedBaseAttack.LoopsDelay)))
                     {
                         CurrentRunningAttack = nextBaseAttack;
                     }
@@ -577,7 +580,6 @@ namespace FumoShmup2
             {
                 ProjectileRunner.SealBullets(CurrentPosition, this, sealRadius, 255, out _);
             }
-            CreateLootItem(LootCount, 2.5f);
             TriggerRevengeOverride();
 
             #region Sweeping
@@ -608,6 +610,7 @@ namespace FumoShmup2
             }
             #endregion
 
+            CreateLootItem(LootCount, 2.5f);
             PlayDeathEffects();
             gameObject.SetActive(false);
             CalculateAlive();

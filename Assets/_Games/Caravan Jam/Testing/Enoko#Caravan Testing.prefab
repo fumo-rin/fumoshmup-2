@@ -120,6 +120,10 @@ MonoBehaviour:
     randomRadiusRange: {x: 0, y: 0}
   phases:
   - phaseAttacks:
+    - rid: 697206350510817377
+    phaseHealth: 1500
+    blockDash: 0
+  - phaseAttacks:
     - rid: 697205971041910987
     - rid: 697206274659975375
     - rid: 697206274659975394
@@ -145,7 +149,6 @@ MonoBehaviour:
       data:
         wallsProj: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
         ArcsProj: {fileID: 11400000, guid: 8174b572503b3ce4c8ada9b497f311e4, type: 2}
-        rainProj: {fileID: 11400000, guid: eb3aa3b0dc1e11e4e839143750100dcc, type: 2}
         duration: 7
     - rid: 697206274659975394
       type: {class: MushiLike/Stage4/Elites/BugFillScreen, ns: MushilLike, asm: MushihimesamaLike}
@@ -164,6 +167,11 @@ MonoBehaviour:
       type: {class: UtilityAttacks/AttackWait, ns: FumoShmup2, asm: Fumoshmup2}
       data:
         waitDuration: 0.15
+    - rid: 697206350510817377
+      type: {class: CaravanAtatcks/Stage2/Midboss/ProGearBossLines, ns: Caravan, asm: CaravanJam}
+      data:
+        lineProjectile: {fileID: 11400000, guid: ec5127393eed65d4bb8c76934cdf796a, type: 2}
+        loops: 22
 --- !u!50 &2153864815207065291
 Rigidbody2D:
   serializedVersion: 5

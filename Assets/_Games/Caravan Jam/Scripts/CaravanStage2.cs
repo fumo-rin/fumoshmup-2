@@ -12,6 +12,144 @@ namespace Caravan
     {
         public class Stage2
         {
+            public class Fodder
+            {
+                [System.Serializable]
+                public class DoubleShot : UnitAttack
+                {
+                    public ProjectileDefineSO projectile;
+                    public float ammoSeconds = 2.4f;
+                    protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
+                    {
+                        float elapsed = 0f;
+                        input.addedForward = 0.35f;
+                        while (elapsed < ammoSeconds)
+                        {
+                            input.ReAimWithOptionalTarget(sender.CurrentPosition);
+                            for (int i = 0; i < 2; i++)
+                            {
+                                Single(0f, 4f).Spawn(input, projectile, out _);
+                                Arc(0f, 60f, 3, 10f).Spawn(input, projectile, out _);
+                            }
+                            elapsed += TICK * 12;
+                            yield return TICK.WaitForSeconds(12);
+                        }
+                    }
+                }
+            }
+            public class Elite
+            {
+                [System.Serializable]
+                public class LobsterFork : UnitAttack
+                {
+                    public ProjectileDefineSO projectile, entryProjectile;
+                    bool firstShot;
+                    protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
+                    {
+                        if (!firstShot)
+                        {
+                            firstShot = true;
+                            Circle(0f, 24, 9.5f).Spawn(input, entryProjectile, out _);
+                            Circle(360f / 48f, 24, 7.5f).Spawn(input, entryProjectile, out _);
+                            yield return TICK.WaitForSeconds(8);
+                        }
+                        input.addedForward = 0.35f;
+                        void Shot(Projectile.InputSettings input)
+                        {
+                            input.SetMods(new ProjectileModAccelerate(new(1f, 0f), 7f, 3f));
+                            for (int i = 0; i < 12; i++)
+                            {
+                                Arc(0f, 60f, 5, 7f + i.AsFloat(0.2f)).Spawn(input, projectile, out _);
+                            }
+                        }
+                        input.SetOrigin(sender.CurrentPosition);
+                        input.SetDirection(Vector2.down);
+                        Shot(input);
+                        input.ReAimWithOptionalTarget(sender.CurrentPosition + new Vector2(-1.35f, -0.45f));
+                        Shot(input);
+                        input.ReAimWithOptionalTarget(sender.CurrentPosition + new Vector2(1.35f, -0.45f));
+                        Shot(input);
+                        yield return TICK.WaitForSeconds(36);
+                    }
+                }
+            }
+            public class General
+            {
+                [System.Serializable]
+                public class ExplosiveRailGun : UnitAttack
+                {
+                    public ProjectileDefineSO edgeProjectile, railgun;
+                    public float postShotDelay = 1f;
+                    public int repeats = 2;
+                    private void EdgeExplosion(Projectile p, Vector2 normal)
+                    {
+                        if (p != null && p.IsActive)
+                        {
+                            var input = new Projectile.InputSettings(p.Position, p.Sender, normal, new Projectile.ProjectileDamage(p.Sender, 1f, 1f), p.Faction);
+                            for (int i = 0; i < 8; i++)
+                            {
+                                Circle(i == 0 ? 0f : (360f / 48) * i.AsFloat(1f), 24, 3f + i.AsFloat(0.25f)).Spawn(input, edgeProjectile, out _);
+                            }
+                            Projectile.Wipe(p);
+                        }
+                    }
+                    protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
+                    {
+                        for (int i = 0; i < repeats; i++)
+                        {
+                            input.ReAimWithOptionalTarget();
+                            if (Single(0f, 12f).Spawn(input, railgun, out Projectile p))
+                            {
+                                p.WhenOffscreen += EdgeExplosion;
+                            }
+                            yield return postShotDelay.WaitForSeconds();
+                        }
+                    }
+                }
+            }
+            public class Midboss
+            {
+                [System.Serializable]
+                public class ProGearBossLines : UnitAttack
+                {
+                    public ProjectileDefineSO lineProjectile;
+                    bool flipped = false;
+                    public int loops = 8;
+                    protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
+                    {
+                        for (int i = 0; i < loops; i++)
+                        {
+                            bool flip = flipped;
+                            flipped = !flipped;
+                            input.ReAimWithOptionalTarget(sender.CurrentPosition);
+                            if (Single(0f, 9f).Spawn(input, lineProjectile, out Projectile p))
+                            {
+                                int number = 1;
+                                yield return TICK.WaitForSeconds(4);
+                                Vector2 position = sender.CurrentPosition + (flipped ? new Vector2(-number.AsFloat(0.2f), 0f) : new Vector2(number.AsFloat(0.2f), 0f));
+                                while (ShmupWorldspace.WorldSpace.Contains(position))
+                                {
+                                    if (p != null && p.IsActive)
+                                    {
+                                        position = sender.CurrentPosition + (flipped ? new Vector2(-number.AsFloat(0.2f), 0f) : new Vector2(number.AsFloat(0.2f), 0f));
+                                        input.SetOrigin(position);
+                                        input.SetDirection(p.Position - position);
+                                        Arc(0f, 120f, 7, 9f).Spawn(input, lineProjectile, out _);
+                                        yield return TICK.WaitForSeconds();
+                                        number++;
+                                    }
+                                    else
+                                    {
+                                        yield return TICK.WaitForSeconds(15);
+                                        yield break;
+                                    }
+                                }
+                                yield return TICK.WaitForSeconds(5);
+                            }
+                        }
+                    }
+                }
+            }
             public class Boss
             {
                 [Serializable]

@@ -91,6 +91,15 @@ namespace FumoShmup2
     #endregion
     public partial class ShmupStageEditor : EditorWindow
     {
+        #region Destroy Node
+        private void DestroyNode(StageNode hoveredNode)
+        {
+            activeStage.nodes.Remove(hoveredNode);
+            CleanUp(hoveredNode);
+            DestroyImmediate(hoveredNode);
+            EditorUtility.SetDirty(activeStage);
+        }
+        #endregion
         #region Skip Panel
         public bool ShowWithSkipIndex(StageNode node)
         {
@@ -270,10 +279,7 @@ namespace FumoShmup2
             {
                 menu.AddItem(new GUIContent($"Delete \"{hoveredNode.title}\""), false, () =>
                 {
-                    activeStage.nodes.Remove(hoveredNode);
-                    CleanUp(hoveredNode);
-                    DestroyImmediate(hoveredNode);
-                    EditorUtility.SetDirty(activeStage);
+                    DestroyNode(hoveredNode);
                     Repaint();
                 });
                 menu.AddItem(new GUIContent($"{(hoveredNode.IsEnabled ? "Disable" : "Enable")} {hoveredNode.title}"), false, () =>
@@ -534,6 +540,22 @@ namespace FumoShmup2
                                 Repaint();
                             });
 
+                        menu.AddItem(
+                            new GUIContent($"Destroy Nodes"),
+                            false, () =>
+                            {
+                                var skipCopy = skip;
+                                int sourceSkipValue = skipCopy.skipValue;
+
+                                IEnumerable<StageNode> collection = activeStage.nodes.Where(x => x != null && x.skipIndex == sourceSkipValue).ToList();
+                                foreach (var item in collection)
+                                {
+
+                                    DestroyNode(item);
+                                }
+                                EditorUtility.SetDirty(activeStage);
+                                Repaint();
+                            });
                         menu.ShowAsContext();
                         e.Use();
                     }
@@ -871,7 +893,7 @@ namespace FumoShmup2
     }
 #endif
 
-    [CreateAssetMenu(menuName = "FumoShmup2/Fumo Node Stage")]
+    [CreateAssetMenu(menuName = "FumoShmup2/Stages/Fumo Node Stage")]
     public class ShmupNodeStage : ShmupStage
     {
         #region Linking
@@ -923,7 +945,7 @@ namespace FumoShmup2
 #endif
         #endregion
         [field: SerializeField] public int selectedSkipIndex = -1;
-        [SerializeField] DialogueStackSO StageEndDialogue;
+        [SerializeField] protected DialogueStackSO StageEndDialogue;
         public List<EnemyUnit> enemyTable = new();
         [SerializeReference]
         public List<StageNode> nodes = new List<StageNode>();
@@ -955,7 +977,7 @@ namespace FumoShmup2
                 sess.LoadNextStageOrMenu();
             }
         }
-        private IEnumerator CollectAndRunSkip(int skip)
+        protected IEnumerator CollectAndRunSkip(int skip)
         {
             var orderedNodes = nodes.Where(n => n != null && n.skipIndex == skip && n.IsEnabled)
                 .OrderByDescending(n => n is IStageNodeRunWhenStart)
