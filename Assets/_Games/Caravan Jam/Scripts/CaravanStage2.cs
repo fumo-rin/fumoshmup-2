@@ -8,6 +8,246 @@ using UnityEngine;
 
 namespace Caravan
 {
+    [System.Serializable]
+    public partial class FumoSharpParsedAttack : UnitAttack
+    {
+        #region Parser
+        public class FumoSharpParser
+        {
+            #region Wait
+            public class WaitCommand : IFumoSharpCommand
+            {
+                int ticks;
+
+                public WaitCommand(int ticks)
+                {
+                    this.ticks = ticks;
+                }
+
+                public IEnumerator Execute(FumoSharpRuntime runtime)
+                {
+                    yield return TICK.WaitForSeconds(ticks);
+                }
+            }
+            #endregion
+            #region Forward
+            public class ForwardCommand : IFumoSharpCommand
+            {
+                float amount;
+
+                public ForwardCommand(float amount)
+                {
+                    this.amount = amount;
+                }
+
+                public IEnumerator Execute(FumoSharpRuntime runtime)
+                {
+                    runtime.input.addedForward = amount;
+                    yield break;
+                }
+            }
+            #endregion
+            #region ReAim
+            public class ReAimCommand : IFumoSharpCommand
+            {
+                public IEnumerator Execute(FumoSharpRuntime runtime)
+                {
+                    runtime.input.ReAimWithOptionalTarget(
+                        runtime.sender.CurrentPosition);
+
+                    yield break;
+                }
+            }
+            #endregion
+            #region Single
+            public class SingleCommand : IFumoSharpCommand
+            {
+                float angle;
+                float speed;
+                string projectileName;
+
+                public SingleCommand(
+                    float angle,
+                    float speed,
+                    string projectileName)
+                {
+                    this.angle = angle;
+                    this.speed = speed;
+                    this.projectileName = projectileName;
+                }
+
+                public IEnumerator Execute(FumoSharpRuntime runtime)
+                {
+                    ProjectileDefineSO projectile = runtime.projectiles[projectileName];
+
+                    new Projectile.SingleSettings(angle, speed).Spawn(runtime.input, projectile, out _);
+
+                    yield break;
+                }
+            }
+            #endregion
+            #region Arc
+            public class ArcCommand : IFumoSharpCommand
+            {
+                float offset;
+                float arcSize;
+                int count;
+                float speed;
+                string projectileName;
+
+                public ArcCommand(
+                    float offset,
+                    float arcSize,
+                    int count,
+                    float speed,
+                    string projectileName)
+                {
+                    this.offset = offset;
+                    this.arcSize = arcSize;
+                    this.count = count;
+                    this.speed = speed;
+                    this.projectileName = projectileName;
+                }
+
+                public IEnumerator Execute(FumoSharpRuntime runtime)
+                {
+                    ProjectileDefineSO projectile =
+                        runtime.projectiles[projectileName];
+
+                    ProjectileFactory.Arc(offset, arcSize, count, speed).Spawn(runtime.input, projectile, out _);
+
+                    yield break;
+                }
+            }
+            #endregion
+            #region Circle
+            public class CircleCommand : IFumoSharpCommand
+            {
+                float offset;
+                int count;
+                float speed;
+                string projectileName;
+
+                public CircleCommand(
+                    float offset,
+                    int count,
+                    float speed,
+                    string projectileName)
+                {
+                    this.offset = offset;
+                    this.count = count;
+                    this.speed = speed;
+                    this.projectileName = projectileName;
+                }
+
+                public IEnumerator Execute(FumoSharpRuntime runtime)
+                {
+                    ProjectileDefineSO projectile = runtime.projectiles[projectileName];
+
+                    ProjectileFactory.Circle(offset, count, speed).Spawn(runtime.input, projectile, out _);
+
+                    yield break;
+                }
+            }
+            #endregion
+            public static List<IFumoSharpCommand> Parse(string text)
+            {
+                List<IFumoSharpCommand> commands = new();
+
+                string[] lines = text.Split('\n');
+
+                foreach (string raw in lines)
+                {
+                    string line = raw.Trim();
+
+                    if (string.IsNullOrWhiteSpace(line))
+                        continue;
+
+                    if (line.StartsWith("#"))
+                        continue;
+
+                    string[] parts = line.Split(' ');
+
+                    switch (parts[0].ToLower())
+                    {
+                        case "wait":
+                            commands.Add(new WaitCommand(
+                                int.Parse(parts[1])));
+                            break;
+
+                        case "forward":
+                            commands.Add(new ForwardCommand(
+                                float.Parse(parts[1])));
+                            break;
+
+                        case "single":
+                            commands.Add(new SingleCommand(
+                                float.Parse(parts[1]),
+                                float.Parse(parts[2]),
+                                parts[3]));
+                            break;
+
+                        case "arc":
+                            commands.Add(new ArcCommand(
+                                float.Parse(parts[1]),
+                                float.Parse(parts[2]),
+                                int.Parse(parts[3]),
+                                float.Parse(parts[4]),
+                                parts[5]));
+                            break;
+
+                        case "circle":
+                            commands.Add(new CircleCommand(
+                                float.Parse(parts[1]),
+                                int.Parse(parts[2]),
+                                float.Parse(parts[3]),
+                                parts[4]));
+                            break;
+
+                        case "reaim":
+                            commands.Add(new ReAimCommand());
+                            break;
+                    }
+                }
+
+                return commands;
+            }
+        }
+        #endregion
+        public class FumoSharpRuntime
+        {
+            public ShmupUnit sender;
+            public Projectile.InputSettings input;
+
+            public Dictionary<string, ProjectileDefineSO> projectiles = new();
+
+            public FumoSharpRuntime(
+                ShmupUnit sender,
+                Projectile.InputSettings input)
+            {
+                this.sender = sender;
+                this.input = input;
+            }
+        }
+        public interface IFumoSharpCommand
+        {
+            IEnumerator Execute(FumoSharpRuntime runtime);
+        }
+        public ProjectileDefineSO projectile1, projectile2, projectile3;
+        [TextArea(10, 40)] public string textAttack;
+        protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
+        {
+            List<IFumoSharpCommand> commands = FumoSharpParser.Parse(textAttack);
+            FumoSharpRuntime runtime = new(sender, input.Copy());
+            runtime.projectiles["p1"] = projectile1;
+            runtime.projectiles["p2"] = projectile2;
+            runtime.projectiles["p3"] = projectile3;
+            foreach (var cmd in commands)
+            {
+                yield return cmd.Execute(runtime);
+            }
+        }
+    }
     public partial class CaravanAtatcks
     {
         public class Stage2

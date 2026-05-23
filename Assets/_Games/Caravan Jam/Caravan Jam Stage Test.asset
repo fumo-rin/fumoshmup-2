@@ -692,7 +692,7 @@ MonoBehaviour:
     enabled: 1
   <StageScene>k__BackingField: {fileID: 11400000, guid: 9ac2b125f6a81b04ca14a6031c9663e9, type: 2}
   currentLinkAttempt: {fileID: 0}
-  selectedSkipIndex: 1
+  selectedSkipIndex: 0
   StageEndDialogue: {fileID: 0}
   enemyTable:
   - {fileID: 2745390351675722610, guid: df43bc81f13947848881cceacf20cbb1, type: 3}
