@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9376c3e930513a47b7f77626dbe3390, type: 3}
-  m_Name: Fumoshmup 2 MusicWrapper_t76
+  m_Name: Not Ultrakill MusicWrapper_touhou 83 test
   m_EditorClassIdentifier: rinCore::rinCore.MusicWrapper
-  bpm: 163
-  TrackName: t76
-  musicClip: {fileID: 8300000, guid: 6c66c122a61d4f0498fa09777ed159b1, type: 3}
+  bpm: 120
+  TrackName: touhou 83 test
+  musicClip: {fileID: 8300000, guid: 7a7467ae897d62340ba8fbcdb2fe8b50, type: 3}
   clipVolume: 1
   <dontReplaceSelf>k__BackingField: 1

@@ -66,18 +66,27 @@ namespace FumoShmup2
 #if UNITY_EDITOR
         [System.NonSerialized]
         public UnityEngine.Object unityBackingObject;
+        public bool IsCompacted;
 #endif
         internal void DrawFromEditor(ShmupNodeStage stage, Rect rect, in bool selected)
         {
 #if UNITY_EDITOR
             EditorGUI.BeginChangeCheck();
-            DrawNodeContents(stage, rect, selected);
+            if (IsCompacted)
+            {
+                DrawCompactedContents(stage, rect, selected);
+            }
+            else
+            {
+                DrawNodeContents(stage, rect, selected);
+            }
             if (EditorGUI.EndChangeCheck())
             {
                 stage.Dirty();
             }
 #endif
         }
+        protected virtual void DrawCompactedContents(ShmupNodeStage stage, Rect rect, in bool selected) { }
         protected abstract void DrawNodeContents(ShmupNodeStage stage, Rect rect, in bool selected);
 
 #if UNITY_EDITOR

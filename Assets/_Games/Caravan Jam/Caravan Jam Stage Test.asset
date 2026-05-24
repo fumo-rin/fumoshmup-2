@@ -595,23 +595,6 @@ MonoBehaviour:
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
         entryProjectile: {fileID: 11400000, guid: eb3aa3b0dc1e11e4e839143750100dcc, type: 2}
---- !u!114 &-175885512777121902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 548c74236282c74408af0add52103885, type: 3}
-  m_Name: MusicNode
-  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.MusicNode
-  IsEnabled: 1
-  title: MusicNode
-  position: {x: 55, y: -277}
-  skipIndex: 10
-  music: {fileID: 11400000, guid: 040ad734a48bb8d42bd41a56534413cc, type: 2}
 --- !u!114 &-96671275262749770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -703,7 +686,6 @@ MonoBehaviour:
   nodes:
   - {fileID: 7472998715273484378}
   - {fileID: -3707533323642943700}
-  - {fileID: -175885512777121902}
   - {fileID: -7320112418387840548}
   - {fileID: -5923801040860991818}
   - {fileID: -3525028640292555020}
@@ -735,6 +717,7 @@ MonoBehaviour:
   - {fileID: -8557641367662265550}
   - {fileID: -7942890760676200294}
   - {fileID: 7586307974925024349}
+  - {fileID: 2933179478682107815}
 --- !u!114 &1011325165538966211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1008,6 +991,23 @@ MonoBehaviour:
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
         entryProjectile: {fileID: 11400000, guid: eb3aa3b0dc1e11e4e839143750100dcc, type: 2}
+--- !u!114 &2933179478682107815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 548c74236282c74408af0add52103885, type: 3}
+  m_Name: MusicNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.MusicNode
+  IsEnabled: 1
+  title: MusicNode
+  position: {x: 715, y: -635}
+  skipIndex: 10
+  music: {fileID: 11400000, guid: d65686781837f874a8ba5cb52c6c2fc4, type: 2}
 --- !u!114 &3357292462509147757
 MonoBehaviour:
   m_ObjectHideFlags: 0

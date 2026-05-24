@@ -250,7 +250,7 @@ namespace FumoShmup2
             {
                 if (node.skipIndex != CurrentSkipValue)
                     continue;
-                Rect rect = new Rect(node.position + viewOffset, node.Size);
+                Rect rect = new Rect(node.position + viewOffset, node.IsCompacted ? CompactNodeSize : node.Size);
                 if (rect.Contains(mousePosition))
                 {
                     hoveredNode = node;
@@ -268,7 +268,7 @@ namespace FumoShmup2
             {
                 if (node.skipIndex != CurrentSkipValue)
                     continue;
-                Rect rect = new Rect(node.position + viewOffset, node.Size);
+                Rect rect = new Rect(node.position + viewOffset, node.IsCompacted ? CompactNodeSize : node.Size);
                 if (rect.Contains(mousePosition))
                 {
                     hoveredNode = node;
@@ -579,6 +579,8 @@ namespace FumoShmup2
             Vector2[] points = GetClosestEdgePoint(fromRect, toRect);
             DrawArrow(points[0], points[1]);
         }
+
+        private static readonly Vector2 CompactNodeSize = new Vector2(150, 60);
         private void DrawNodes()
         {
             void RefreshLinks()
@@ -604,48 +606,56 @@ namespace FumoShmup2
                     Debug.LogWarning("Bad Nodes for : " + activeStage.name);
                     continue;
                 }
+
                 node.unityBackingObject = node;
+
                 if (!ShowWithSkipIndex(node))
                     continue;
 
-                Rect rect = new Rect(node.position + viewOffset, node.Size);
+                Vector2 drawSize = node.IsCompacted ? CompactNodeSize : node.Size;
+                Rect rect = new Rect(node.position + viewOffset, drawSize);
                 Color prevColor = GUI.color;
-
+                Color prevBackground = GUI.backgroundColor;
                 #region Draw Links
+
                 if (node is IStageNodeModifier mod)
                 {
                     mod.RevalidateNodes();
+
                     foreach (var item in mod.LinkedNodes)
                         DrawNodeConnection(mod as StageNode, item);
                 }
+
                 if (node is EnemyModifierNode enemyModLink)
                 {
                     enemyModLink.RevalidateNodes();
+
                     foreach (var item in enemyModLink.LinkedNodes)
                         DrawNodeConnection(enemyModLink, item);
                 }
+
                 #endregion
-                if (activeNode != node &&
-                    (rect.xMax < -1000 || rect.yMax < -1000 ||
-                     rect.xMin > position.width + 1000 ||
-                     rect.yMin > position.height + 1000))
+                if (activeNode != node && (rect.xMax < -1000 || rect.yMax < -1000 || rect.xMin > position.width + 1000 || rect.yMin > position.height + 1000))
                     continue;
 
                 bool isActive = node == activeNode;
                 if (!node.IsEnabled)
-                    GUI.color = ColorHelper.Gray3;
+                    GUI.backgroundColor = ColorHelper.Gray3;
                 else
-                    GUI.color = isActive ? new Color(0.5f, 0.7f, 1f, 1f) : Color.white;
+                    GUI.backgroundColor = isActive ? new Color(0.5f, 0.7f, 1f, 1f) : Color.white;
 
                 string extraText = "";
                 if (activeStage.IsLinking && ((node is IStageNodeRunable linkable && linkable.IsLinkable) || node is EnemyModifierNode))
                 {
                     GUI.color = ColorHelper.PastelYellow;
-                    extraText += "(Linkable)";
+                    extraText += "(Linkable) ";
                 }
-                GUI.Box(rect, extraText + node.title.SpaceByCapitals());
+                GUI.Box(rect, node.IsCompacted ? "▸ " + extraText + node.title.SpaceByCapitals() : extraText + node.title.SpaceByCapitals());
+                GUI.backgroundColor = prevBackground;
                 GUI.color = prevColor;
+
                 node.DrawFromEditor(activeStage, rect, isActive);
+
                 EditorGUIUtility.AddCursorRect(rect, MouseCursor.MoveArrow);
             }
             GUI.color = Color.white;
@@ -668,14 +678,22 @@ namespace FumoShmup2
                 }
             }
         }
+        static (double, StageNode) doubleClick;
         private void HandleEvents(Event e)
         {
+
             switch (e.type)
             {
                 case EventType.MouseDown:
                     if (e.button == 0)
                     {
                         StageNode clickedNode = GetHoveredNode(e.mousePosition);
+                        if (doubleClick != default && doubleClick.Item2 is StageNode dClick && clickedNode == dClick && doubleClick.Item1 + 0.3d > EditorApplication.timeSinceStartup)
+                        {
+                            doubleClick = default;
+                            clickedNode.IsCompacted = !clickedNode.IsCompacted;
+                        }
+                        doubleClick = (EditorApplication.timeSinceStartup, clickedNode);
                         if (clickedNode != null)
                         {
                             activeNode = clickedNode;

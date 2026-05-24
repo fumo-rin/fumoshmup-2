@@ -1017,7 +1017,7 @@ GameObject:
   - component: {fileID: 480275319}
   - component: {fileID: 480275323}
   m_Layer: 0
-  m_Name: 360p
+  m_Name: 320p
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1152,7 +1152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: rinCore::rinCore.RenderTextureDetailButtonV2
   itemText: {fileID: 36542828}
   width: 240
-  height: 360
+  height: 320
 --- !u!1 &626994189
 GameObject:
   m_ObjectHideFlags: 0

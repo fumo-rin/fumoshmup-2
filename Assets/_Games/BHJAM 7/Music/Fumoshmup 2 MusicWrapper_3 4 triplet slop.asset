@@ -15,5 +15,5 @@ MonoBehaviour:
   bpm: 163
   TrackName: 3 4 triplet slop
   musicClip: {fileID: 8300000, guid: 74d08606e717e4c4b8dbdb8eecdbf71d, type: 3}
-  clipVolume: 0.7
+  clipVolume: 1
   <dontReplaceSelf>k__BackingField: 1

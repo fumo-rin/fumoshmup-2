@@ -15,5 +15,5 @@ MonoBehaviour:
   bpm: 163
   TrackName: hypercharge beaf 2
   musicClip: {fileID: 8300000, guid: 2eaa9eefa8e912a46be4bf4d6d910e4c, type: 3}
-  clipVolume: 0.7
+  clipVolume: 1
   <dontReplaceSelf>k__BackingField: 1

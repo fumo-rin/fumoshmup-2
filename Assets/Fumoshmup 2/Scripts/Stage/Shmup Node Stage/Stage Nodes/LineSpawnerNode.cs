@@ -111,6 +111,25 @@ namespace FumoShmup2
             EditorUtility.SetDirty(this);
 #endif
         }
+        protected override void DrawCompactedContents(ShmupNodeStage stage, Rect rect, in bool selected)
+        {
+            base.DrawCompactedContents(stage, rect, selected);
+            if (selected)
+            {
+                RecordUndo("Modify Node Value");
+                EF_ShmupSpace(start, ColorHelper.PastelGreen, nameof(start));
+                RecordUndo("Modify Node Value");
+                EF_ShmupSpace(startEnd, ColorHelper.PastelGreen, nameof(startEnd));
+                RecordUndo("Modify Node Value");
+                EF_ShmupSpace(target, ColorHelper.PastelCyan, nameof(target));
+                RecordUndo("Modify Node Value");
+                EF_ShmupSpace(targetEnd, ColorHelper.PastelCyan, nameof(targetEnd));
+                RecordUndo("Modify Node Value");
+                EF_ShmupSpace(exit, ColorHelper.PastelRed, nameof(exit));
+                RecordUndo("Modify Node Value");
+                EF_ShmupSpace(exitEnd, ColorHelper.PastelRed, nameof(exitEnd));
+            }
+        }
         protected override void DrawNodeContents(ShmupNodeStage stage, Rect rect, in bool selected)
         {
 #if UNITY_EDITOR

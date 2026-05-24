@@ -15,5 +15,5 @@ MonoBehaviour:
   bpm: 163
   TrackName: th77 5
   musicClip: {fileID: 8300000, guid: af6f17471827333478e9f0baedb048f3, type: 3}
-  clipVolume: 0.7
+  clipVolume: 1
   <dontReplaceSelf>k__BackingField: 1
