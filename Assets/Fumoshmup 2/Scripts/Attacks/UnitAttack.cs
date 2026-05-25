@@ -99,6 +99,7 @@ namespace FumoShmup2
         }
         public Coroutine StartWithSender(ShmupUnit Sender, Action callback = null)
         {
+            Debug.Log("Starting attack : " + this.GetType());
             if (Sender == null)
                 return null;
 
@@ -116,7 +117,7 @@ namespace FumoShmup2
                     }
                     input.AssignTarget(p);
                 }
-                return Sender.StartCoroutineWithCallback(CO_AttackPayload(e, input), callback);
+                return Sender.StartCoroutineExtras(CO_AttackPayload(e, input), e.WaitForAttackStall, callback);
             }
             else if (Sender is ShmupPlayer player)
             {
@@ -125,7 +126,7 @@ namespace FumoShmup2
                 if (EnemyUnit.FindEnemyFromDotProduct(player.CurrentPosition, Vector2.up, out EnemyUnit autoTarget, 0.25f))
                     input.AssignTarget(autoTarget);
 
-                return Sender.StartCoroutineWithCallback(CO_AttackPayload(player, input), callback);
+                return Sender.StartCoroutineExtras(CO_AttackPayload(player, input), null, callback);
             }
             return null;
         }

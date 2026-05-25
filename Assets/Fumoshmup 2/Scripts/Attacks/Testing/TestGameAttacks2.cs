@@ -481,13 +481,13 @@ namespace FumoShmup2
                 for (int i = 0; i < 10; i++)
                 {
                     Circle(iteration, 18, 4f + i.AsFloat(0.35f)).Spawn(input, projectile, out iterationList);
-                    iteration += RNG.RandomFloatRange(-3f, 3f) + 4f;
+                    iteration += RNG.FloatRange(-3f, 3f) + 4f;
                 }
                 yield return new RevengeAttack.WaitForSweepOrTime(0.35f);
                 for (int i = 0; i < 10; i++)
                 {
                     Circle(iteration, 18, 6f + i.AsFloat(0.65f)).Spawn(input, projectile, out iterationList);
-                    iteration += RNG.RandomFloatRange(-3f, 3f) - 4f;
+                    iteration += RNG.FloatRange(-3f, 3f) - 4f;
                 }
             }
         }
@@ -607,7 +607,7 @@ namespace FumoShmup2
             public ACWrapper shotSound;
             protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
             {
-                float random = RNG.RandomFloatRange(0f, 360f).ReverseQuantize(60f);
+                float random = RNG.FloatRange(0f, 360f).ReverseQuantize(60f);
                 int flip = RNG.RandomSign;
                 IEnumerator CO_Sidechain(Projectile.InputSettings input)
                 {

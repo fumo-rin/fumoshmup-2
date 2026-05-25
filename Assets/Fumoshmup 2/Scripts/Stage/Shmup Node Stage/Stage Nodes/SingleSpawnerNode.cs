@@ -103,6 +103,7 @@ namespace FumoShmup2
         }
         protected override void DrawCompactedContents(ShmupNodeStage stage, Rect rect, in bool selected)
         {
+#if UNITY_EDITOR
             base.DrawCompactedContents(stage, rect, selected);
             if (selected)
             {
@@ -113,6 +114,7 @@ namespace FumoShmup2
                 RecordUndo("Modify Node Value");
                 EF_ShmupSpace(exit, ColorHelper.PastelRed, nameof(exit));
             }
+#endif
         }
         protected override void DrawNodeContents(ShmupNodeStage stage, Rect rect, in bool selected)
         {

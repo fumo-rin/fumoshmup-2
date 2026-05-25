@@ -105,7 +105,7 @@ namespace FumoShmup2
                 IEnumerator CO_Play()
                 {
                     yield return delay.WaitForSeconds();
-                    Vector2 rng = (RNG.SeededRandomVector2.normalized * RNG.RandomFloatRange(randomRadiusRange.x, randomRadiusRange.y));
+                    Vector2 rng = (RNG.SeededRandomVector2.normalized * RNG.FloatRange(randomRadiusRange.x, randomRadiusRange.y));
                     ps.PlayCachedOnce(e.CurrentPosition + rng);
                     deathSound.Play(e.CurrentPosition + rng);
                 }
@@ -304,7 +304,7 @@ namespace FumoShmup2
                 {
                     ProjectileRunner.TriggerSweep(0f, 255, false, out _);
                     Action_BossRecenter(0.85f);
-                    StallAttackLoop(0.5f);
+                    StallAttackLoop(0.9f);
                     SetIframes(1.25f, 90f);
                     CurrentPhase = found;
                 }
@@ -410,6 +410,7 @@ namespace FumoShmup2
 
         Coroutine CurrentRunningAttack;
         public float AttackStallEndTime { get; private set; }
+        public WaitUntil WaitForAttackStall => new WaitUntil(() => Time.time > AttackStallEndTime);
         public void StallAttackLoop(float duration, bool stopAttack = true)
         {
             AttackStallEndTime = AttackStallEndTime.Max(Time.time + duration);
@@ -708,6 +709,13 @@ namespace FumoShmup2
                 leashRoutine = StartCoroutine(CO_Leash(this, radius, maxSpeed));
             }
         }
+        internal void StopLeash()
+        {
+            if (leashRoutine != null)
+            {
+                StopCoroutine(leashRoutine);
+            }
+        }
         public void SetLeashPosition(Vector2 position)
         {
             leashPosition = position;
@@ -855,7 +863,7 @@ namespace FumoShmup2
             {
 
             }
-            if (!IsRunningActions)
+            if (!IsRunningActions && !IsMovingWithAttack)
             {
                 if (leashRoutine == null)
                 {

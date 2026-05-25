@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace FumoShmup2
 {
+    [DefaultExecutionOrder(-999)]
     public class MoveLerpAction : UnitAction
     {
         float startTime;

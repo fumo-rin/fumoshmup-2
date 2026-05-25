@@ -15388,7 +15388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5590827939635ee42bec7911153abbd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.ShmupCamera
-  weight: 5
+  weight: 7
   cameraMoveAcceleration: 0
 --- !u!4 &1134518439
 Transform:

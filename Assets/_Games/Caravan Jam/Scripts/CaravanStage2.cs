@@ -250,6 +250,21 @@ namespace Caravan
     }
     public partial class CaravanAtatcks
     {
+        public partial class Testing
+        {
+            [System.Serializable]
+            public class MovementTest : UnitAttack
+            {
+                public ProjectileDefineSO shot;
+                protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
+                {
+                    sender.StartMovement(ShmupUnit.Testing.CO_TestDash(sender), out WaitUntil w);
+                    yield return w;
+                    input.ReAimWithOptionalTarget(sender.CurrentPosition);
+                    Arc(0f, 40f, 3, 7f).Spawn(input, shot, out _);
+                }
+            }
+        }
         public class Stage2
         {
             public class Fodder
