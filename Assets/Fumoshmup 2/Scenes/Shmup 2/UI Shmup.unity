@@ -6411,7 +6411,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000009536743}
+  m_AnchoredPosition: {x: 0, y: -0.000005722046}
   m_SizeDelta: {x: 0, y: 18}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &1353336459
@@ -10520,6 +10520,7 @@ GameObject:
   m_Component:
   - component: {fileID: 857372998078431813}
   - component: {fileID: 358514833178475413}
+  - component: {fileID: 5156003203701588001}
   - component: {fileID: 5156003203701588000}
   m_Layer: 5
   m_Name: Instructions Text
@@ -10888,12 +10889,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 6
+  m_fontSize: 5
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 2
-  m_fontSizeMax: 6
+  m_fontSizeMax: 5
   m_fontStyle: 0
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 1024
@@ -10933,6 +10934,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5156003203701588001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2436220188060526731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d94e777aaf30bc43aa3644b94528978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: rinCore::rinCore.RebindTextDisplay
+  replaceWithKeybind: '##'
+  text: Press or hold ## to continue.
+  keybind: {fileID: 3905318100412472835, guid: 34edc816a52e4fc4ab2d77bcdba58669, type: 3}
 --- !u!114 &5444772075124870777
 MonoBehaviour:
   m_ObjectHideFlags: 0
