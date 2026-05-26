@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: aa678a03279d0ad40a2bf43079e68241
+timeCreated: 1480314764
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 77516
+  packageName: Tsuyu
+  packageVersion: 3.2
+  assetPath: Assets/Suriyun/Tsuyu/Materials/Tsuyu/Base_character/Tsuyu_face.mat
+  uploadId: 834538

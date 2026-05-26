@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: bc88b8f0229e44dc0be28ee9e1296d08
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 74642
+  packageName: Low Poly Rocks
+  packageVersion: 7.0
+  assetPath: Assets/POLYBOX/polyquest_v1_cliffs/shaders/Editor/PolyboxShaderGUI.cs
+  uploadId: 922802

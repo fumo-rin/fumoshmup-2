@@ -881,7 +881,7 @@ PlayerSettings:
   webWasm2023: 0
   webEnableSubmoduleStrippingCompatibility: 0
   scriptingDefineSymbols:
-    Standalone: PWB_URP
+    Standalone: PWB_URP;UNITY_PIPELINE_URP
     WebGL: PWB_URP
   additionalCompilerArguments: {}
   platformArchitecture: {}

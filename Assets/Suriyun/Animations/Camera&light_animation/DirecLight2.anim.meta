@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: aad7e025e037b1c4e825bc021cf3dfa8
+timeCreated: 1484541012
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 77516
+  packageName: Tsuyu
+  packageVersion: 3.2
+  assetPath: Assets/Suriyun/Animations/Camera&light_animation/DirecLight2.anim
+  uploadId: 834538

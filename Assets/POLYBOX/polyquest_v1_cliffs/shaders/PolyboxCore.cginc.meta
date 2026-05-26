@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 01687da6db72147638c95fe966c4553d
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 74642
+  packageName: Low Poly Rocks
+  packageVersion: 7.0
+  assetPath: Assets/POLYBOX/polyquest_v1_cliffs/shaders/PolyboxCore.cginc
+  uploadId: 922802

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0f001af75ebae88428240e8680d0f09f
+timeCreated: 1466985208
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 74642
+  packageName: Low Poly Rocks
+  packageVersion: 7.0
+  assetPath: Assets/POLYBOX/polyquest_v1_cliffs/materials/dummy/dummy_ocean.mat
+  uploadId: 922802
