@@ -537,6 +537,65 @@ namespace Caravan
                         AttackRoutine(CO_Explode(input2, explodes.ToList()), sender);
                     }
                 }
+                [System.Serializable]
+                public class SpikesDoubleFan : UnitAttack
+                {
+                    [SerializeField] ProjectileDefineSO spikeProj, spikeProj2;
+                    protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
+                    {
+                        int iteration = -1;
+                        input.addedForward = 0.45f;
+                        input.SetMods(new ProjectileModAccelerate(new(2f, 0f), 4f, 8f));
+                        bool alternate = false;
+                        foreach (var prime in 72.Primes(30))
+                        {
+                            iteration++;
+                            if (iteration % 24 == 0)
+                            {
+                                sender.StartMovement(ShmupUnit.Testing.CO_TestDash(sender), out WaitUntil w);
+                                yield return w;
+                                alternate = !alternate;
+                            }
+                            if (iteration % 24 > 4)
+                            {
+                                input.ReAimWithOptionalTarget(sender.CurrentPosition);
+                                float speed = 2 + iteration.AsFloat(0.05f);
+                                var arc = Arc(iteration.AsFloat(3.5f) * alternate.AsFloat(-1f, 1f), 360 + prime, 3 + iteration.Min(18), iteration % 12 + speed.Min(4f));
+                                if (alternate)
+                                {
+                                    arc = arc.Reverse();
+                                }
+                                arc.Spawn(input, spikeProj, out _);
+                            }
+                            yield return TICK.WaitForSeconds(2);
+                        }
+
+                        iteration = -1;
+                        foreach (var prime in 288.Primes(30))
+                        {
+                            iteration++;
+                            if (iteration % 12 == 0)
+                            {
+                                sender.StartMovement(ShmupUnit.Testing.CO_TestDash(sender), out WaitUntil w2);
+                                yield return w2;
+                                alternate = !alternate;
+                            }
+                            if (iteration % 12 > 2)
+                            {
+                                input.ReAimWithOptionalTarget(sender.CurrentPosition);
+                                float speed = 2 + iteration.AsFloat(0.05f);
+                                var arc = Arc(iteration.AsFloat(-5.2f) * alternate.AsFloat(-1f, 1f), 360 + prime, 3 + iteration.Min(26), iteration % 12 + speed.Min(6f));
+                                if (alternate)
+                                {
+                                    arc = arc.Reverse();
+                                }
+                                arc.Spawn(input, spikeProj2, out _);
+                            }
+                            yield return TICK.WaitForSeconds(3);
+                        }
+                        yield return TICK.WaitForSeconds(40);
+                    }
+                }
             }
         }
     }

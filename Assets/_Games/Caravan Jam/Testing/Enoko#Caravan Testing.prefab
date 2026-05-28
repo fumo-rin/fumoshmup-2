@@ -120,8 +120,7 @@ MonoBehaviour:
     randomRadiusRange: {x: 0, y: 0}
   phases:
   - phaseAttacks:
-    - rid: 697206404899930352
-    - rid: 697206404899930394
+    - rid: 697206432279822432
     phaseHealth: 1000
     blockDash: 0
   - phaseAttacks:
@@ -177,14 +176,11 @@ MonoBehaviour:
       data:
         lineProjectile: {fileID: 11400000, guid: ec5127393eed65d4bb8c76934cdf796a, type: 2}
         loops: 22
-    - rid: 697206404899930352
-      type: {class: CaravanAtatcks/Testing/MovementTest, ns: Caravan, asm: CaravanJam}
+    - rid: 697206432279822432
+      type: {class: CaravanAtatcks/Stage2/Boss/SpikesDoubleFan, ns: Caravan, asm: CaravanJam}
       data:
-        shot: {fileID: 11400000, guid: 8174b572503b3ce4c8ada9b497f311e4, type: 2}
-    - rid: 697206404899930394
-      type: {class: UtilityAttacks/AttackWait, ns: FumoShmup2, asm: Fumoshmup2}
-      data:
-        waitDuration: 0.2
+        spikeProj: {fileID: 11400000, guid: 000459453896acd479c74a2d32fa78ba, type: 2}
+        spikeProj2: {fileID: 11400000, guid: d5e4cf0f85f13bb49b6ebcdfb76464d6, type: 2}
 --- !u!50 &2153864815207065291
 Rigidbody2D:
   serializedVersion: 5
