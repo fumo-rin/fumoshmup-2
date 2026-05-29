@@ -80,7 +80,6 @@
   <Project Path="Unity.AI.Navigation.csproj" />
   <Project Path="Unity.Collections.CodeGen.csproj" />
   <Project Path="Unity.Services.Core.Telemetry.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Unity.2D.Tilemap.Extras.csproj" />
   <Project Path="Unity.Addressables.csproj" />
   <Project Path="Unity.2D.Animation.Runtime.csproj" />
@@ -111,6 +110,7 @@
   <Project Path="QFSW.QC.Editor.Tools.csproj" />
   <Project Path="Unity.Services.Core.Registration.csproj" />
   <Project Path="Unity.2D.PixelPerfect.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Unity.Services.Leaderboards.Editor.csproj" />
   <Project Path="Unity.InputSystem.DocCodeSamples.csproj" />
   <Project Path="DrawingEditor.csproj" />
