@@ -119,7 +119,7 @@ namespace FumoShmup2
                 yield return a[i].LerpUnclamped(b[i], lerp01);
             }
         }
-        bool Shooting => shootingAction.IsPressedRaw();
+        bool Shooting => !shootingAction.ReleasedLongerThan(0.175f);
         bool CanSuperShot => focusAction.PressedLongerThan(0.175f);
         float cachedFocusLerp = 0f;
         Coroutine currentShot;

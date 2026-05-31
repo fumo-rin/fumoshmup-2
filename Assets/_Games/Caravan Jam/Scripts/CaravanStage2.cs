@@ -415,10 +415,14 @@ namespace Caravan
                                     else
                                     {
                                         yield return TICK.WaitForSeconds(15);
-                                        yield break;
+                                        break;
                                     }
                                 }
                                 yield return TICK.WaitForSeconds(5);
+                            }
+                            else
+                            {
+                                yield return TICK.WaitForSeconds(30);
                             }
                         }
                     }

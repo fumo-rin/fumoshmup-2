@@ -243,12 +243,12 @@ namespace FumoShmup2
     public partial class EnemyUnit
     {
         public bool IsBoss => HasPhases;
-        public void StopActionsForBoss()
+        public void StopActionsForBoss(Stall stall = null)
         {
             StopMovement();
             Action_BossRecenter(0.85f);
             SetIframes(1.25f, 90f);
-            StallAttackLoop(0.9f);
+            StallAttackLoop(0.9f, stall);
         }
         float PhasesTotalHealth
         {
@@ -494,21 +494,41 @@ namespace FumoShmup2
                 return 0f;
             }
         }
-        public void StallAttackLoop(float duration, bool stopAttack = true)
+        public interface Stall { }
+        public class DelayedStall : Stall
         {
-            AttackStallEndTime = AttackStallEndTime.Max(Time.time + duration);
-            if (stopAttack)
+            public float delay;
+            public DelayedStall(float delay)
             {
+                this.delay = delay;
+            }
+        }
+        public class InstantStall : Stall
+        {
+
+        }
+        public void StallAttackLoop(float duration, Stall stall = null)
+        {
+            float endTime = AttackStallEndTime.Max(Time.time + duration);
+            IEnumerator CO_Stop(Stall stall)
+            {
+                float delay = 0f;
+                if (stall is DelayedStall s)
+                    delay = s.delay;
+                yield return delay.WaitForSeconds();
+
+                AttackStallEndTime = endTime;
                 if (CurrentRunningAttack != null)
                 {
                     StopCoroutine(CurrentRunningAttack);
-                    CurrentRunningAttack = null;
                 }
                 CurrentRunningAttack = null;
-                if (IsBoss)
-                {
-                    BossPhaseStallEnd = Time.time + duration;
-                }
+            }
+            stall = stall ?? new InstantStall();
+            StartCoroutine(CO_Stop(stall));
+            if (IsBoss)
+            {
+                BossPhaseStallEnd = Time.time + duration;
             }
         }
         private bool ShouldExpireBossPhase()
@@ -700,8 +720,8 @@ namespace FumoShmup2
                     damageDealt = damage.Min(CurrentHealth);
                     if (WillChangePhase(damageDealt))
                     {
-                        DoSweep();
-                        StopActionsForBoss();
+                        DoSweep(0.35f);
+                        StopActionsForBoss(new DelayedStall(0.3f));
                     }
                     phaseTrackedDamage += damageDealt;
                     WhenAnyEnemyDamaged?.Invoke(damageDealt);
@@ -738,7 +758,7 @@ namespace FumoShmup2
             CalculateAlive();
             gameObject.SetActive(false);
         }
-        void DoSweep()
+        void DoSweep(float fallbackDuration = 0.65f)
         {
             if (TryGetSweepOverride(out SweepOverride sweep))
             {
@@ -757,7 +777,7 @@ namespace FumoShmup2
                 {
                     if (ShmupPlayer.PlayerAs(out ShmupPlayer p))
                     {
-                        SweepOnKill.SweepData s = new(0.35f, 255);
+                        SweepOnKill.SweepData s = new(fallbackDuration, 255);
                         SweepOnKill.SweepStuff(this, s, false);
                     }
 
