@@ -88,7 +88,7 @@ namespace FumoShmup2
                     item.SendHit(new IHit.HitPacket(item.CurrentPosition - new Vector2(0.25f.RandomPositiveNegativeRange(), -0.5f), new(Owner, damage, 1f)), out _);
                 }
                 remainingBombDamage -= damage;
-                yield return (0.025f).WaitForSeconds();
+                yield return (0.015f).WaitForSeconds();
             }
         }
     }

@@ -34,4 +34,4 @@ MonoBehaviour:
     - rid: 697205976453611520
       type: {class: CircleShape, ns: FumoShmup2, asm: Fumoshmup2}
       data:
-        Radius: 0.15
+        Radius: 0.1

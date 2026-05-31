@@ -16,6 +16,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 1563, y: -121}
   skipIndex: 20
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 1.2850001, y: 1.064}
@@ -66,6 +67,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 558, y: 291}
   skipIndex: 20
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: -0.1899997, y: 0.9859995}
@@ -116,6 +118,7 @@ MonoBehaviour:
   title: SingleSpawnerNode
   position: {x: 1100, y: -1117}
   skipIndex: 20
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 6e966d668ddfb5a4a961dcb6aca7a0fb, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.2125, y: 1.1500006}
@@ -181,6 +184,7 @@ MonoBehaviour:
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 1558, y: -530}
   skipIndex: 20
+  IsCompacted: 0
   WaitDuration: 2.75
   AliveEnemiesRequired: 0
 --- !u!114 &-7780283770716667716
@@ -199,6 +203,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 2492, y: -73}
   skipIndex: 20
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 1.2850001, y: 1.064}
@@ -249,12 +254,133 @@ MonoBehaviour:
   title: BossNode
   position: {x: 600, y: 90}
   skipIndex: 60
-  toSpawn: {fileID: 2745390351675722610, guid: f3aa879dbaa93524196152e60fd9cde6, type: 3}
+  IsCompacted: 0
+  toSpawn: {fileID: 2745390351675722610, guid: 5880617408959dd489d13d07cea4e9d3, type: 3}
   bossStartDialogue: {fileID: 11400000, guid: b2d53c9a7e7894f4a89082ebe1dd3c3f, type: 2}
   bossKillDialogue: {fileID: 0}
   bossMusic: {fileID: 11400000, guid: d01e3c6d4b06c4b4cbfe7c5801ba0b18, type: 2}
   start: {x: 0.5, y: 1.25}
   end: {x: 0.5, y: 0.7}
+--- !u!114 &-7278305265860221916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 548c74236282c74408af0add52103885, type: 3}
+  m_Name: MusicNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.MusicNode
+  IsEnabled: 1
+  title: MusicNode
+  position: {x: 41, y: -585}
+  skipIndex: 5
+  IsCompacted: 0
+  music: {fileID: 11400000, guid: d65686781837f874a8ba5cb52c6c2fc4, type: 2}
+--- !u!114 &-6241233833773795437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 199d87666a3e9fa4fa1370a01c0e8ce9, type: 3}
+  m_Name: LineSpawnerNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.LineSpawnerNode
+  IsEnabled: 1
+  title: LineSpawnerNode
+  position: {x: 725, y: -788}
+  skipIndex: 5
+  IsCompacted: 1
+  toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
+  storedModifier: {fileID: 0}
+  start: {x: 1.25, y: 1.05}
+  startEnd: {x: 0.55, y: 1.3}
+  target: {x: 0.85, y: 0.65}
+  targetEnd: {x: 0.45, y: 0.8}
+  exit: {x: 1.35, y: 0.75}
+  exitEnd: {x: 1.35, y: 0.65}
+  EnemyCount: 6
+  WaitBetweenEachSpawn: 0.1
+  PostWait: 0
+  ExitDelay: 3
+  ExitDuration: 1.25
+  EntryDuration: 0.75
+  runSeperately: 1
+  HasIndicator: 0
+  Sealing: 0
+  SealingRadius: 0
+  SweepOverride: 0
+  SweepDuration: 0
+  SweepLootChance: 255
+  attackLoop:
+  - rid: 697206512732864638
+  attackLoops: 2
+  loopAddedDelay: 1.25
+  attackStall: 0.75
+  references:
+    version: 2
+    RefIds:
+    - rid: 697206512732864638
+      type: {class: CaravanAtatcks/Stage2/Fodder/DoubleShot, ns: Caravan, asm: CaravanJam}
+      data:
+        projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+        ammoSeconds: 0.6
+--- !u!114 &-5950316487948779974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 199d87666a3e9fa4fa1370a01c0e8ce9, type: 3}
+  m_Name: LineSpawnerNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.LineSpawnerNode
+  IsEnabled: 1
+  title: LineSpawnerNode
+  position: {x: 1188, y: -113}
+  skipIndex: 5
+  IsCompacted: 1
+  toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
+  storedModifier: {fileID: 0}
+  start: {x: 1.25, y: 1.05}
+  startEnd: {x: 0.55, y: 1.3}
+  target: {x: 0.35250002, y: 0.678}
+  targetEnd: {x: 0.7275, y: 0.59000003}
+  exit: {x: 1.1175001, y: 0.55}
+  exitEnd: {x: 1.2, y: 0.356}
+  EnemyCount: 6
+  WaitBetweenEachSpawn: 0.1
+  PostWait: 0.6
+  ExitDelay: 3
+  ExitDuration: 1.25
+  EntryDuration: 0.75
+  runSeperately: 0
+  HasIndicator: 0
+  Sealing: 0
+  SealingRadius: 0
+  SweepOverride: 0
+  SweepDuration: 0
+  SweepLootChance: 255
+  attackLoop:
+  - rid: 697206512732864639
+  attackLoops: 2
+  loopAddedDelay: 1.25
+  attackStall: 0.75
+  references:
+    version: 2
+    RefIds:
+    - rid: 697206512732864639
+      type: {class: CaravanAtatcks/Stage2/Fodder/DoubleShot, ns: Caravan, asm: CaravanJam}
+      data:
+        projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+        ammoSeconds: 0.6
 --- !u!114 &-5923801040860991818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,6 +397,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 825.0625, y: -124.75653}
   skipIndex: 40
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.05000016, y: 1.2559997}
@@ -320,8 +447,60 @@ MonoBehaviour:
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 1802, y: 657}
   skipIndex: 10
+  IsCompacted: 0
   WaitDuration: 1.5
   AliveEnemiesRequired: 1
+--- !u!114 &-5107880642564846739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 199d87666a3e9fa4fa1370a01c0e8ce9, type: 3}
+  m_Name: LineSpawnerNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.LineSpawnerNode
+  IsEnabled: 1
+  title: LineSpawnerNode
+  position: {x: 336, y: -826}
+  skipIndex: 5
+  IsCompacted: 1
+  toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
+  storedModifier: {fileID: 0}
+  start: {x: 1.25, y: 1.05}
+  startEnd: {x: 0.55, y: 1.3}
+  target: {x: 0.85, y: 0.65}
+  targetEnd: {x: 0.45, y: 0.8}
+  exit: {x: 1.35, y: 0.75}
+  exitEnd: {x: 1.35, y: 0.65}
+  EnemyCount: 6
+  WaitBetweenEachSpawn: 0.1
+  PostWait: 0.15
+  ExitDelay: 3
+  ExitDuration: 1.25
+  EntryDuration: 0.75
+  runSeperately: 0
+  HasIndicator: 0
+  Sealing: 0
+  SealingRadius: 0
+  SweepOverride: 0
+  SweepDuration: 0
+  SweepLootChance: 255
+  attackLoop:
+  - rid: 697206512732864636
+  attackLoops: 2
+  loopAddedDelay: 1.25
+  attackStall: 0.75
+  references:
+    version: 2
+    RefIds:
+    - rid: 697206512732864636
+      type: {class: CaravanAtatcks/Stage2/Fodder/DoubleShot, ns: Caravan, asm: CaravanJam}
+      data:
+        projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+        ammoSeconds: 0.6
 --- !u!114 &-4055235318180003536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,6 +517,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 550, y: -286}
   skipIndex: 20
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: -0.12999994, y: 0.7879995}
@@ -388,6 +568,7 @@ MonoBehaviour:
   title: BossNode
   position: {x: 620, y: 173}
   skipIndex: 30
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: df43bc81f13947848881cceacf20cbb1, type: 3}
   bossStartDialogue: {fileID: 0}
   bossKillDialogue: {fileID: 0}
@@ -410,6 +591,7 @@ MonoBehaviour:
   title: RepeatNode
   position: {x: 1038.0625, y: -365.75653}
   skipIndex: 40
+  IsCompacted: 0
   linkedNodes:
   - {fileID: -5923801040860991818}
   - {fileID: -3525028640292555020}
@@ -432,6 +614,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 1658.0625, y: 25.24347}
   skipIndex: 40
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.9499998, y: 1.2559997}
@@ -481,6 +664,7 @@ MonoBehaviour:
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 1018, y: -259}
   skipIndex: 20
+  IsCompacted: 0
   WaitDuration: 3
   AliveEnemiesRequired: 1
 --- !u!114 &-2407314095526227737
@@ -499,6 +683,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 2035, y: -93}
   skipIndex: 20
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   storedModifier: {fileID: 0}
   start: {x: -0.2850001, y: 1.064}
@@ -549,6 +734,7 @@ MonoBehaviour:
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 2616, y: -109}
   skipIndex: 10
+  IsCompacted: 0
   WaitDuration: 1.5
   AliveEnemiesRequired: 2
 --- !u!114 &-1482029189183244856
@@ -567,6 +753,7 @@ MonoBehaviour:
   title: SingleSpawnerNode
   position: {x: 1034, y: 624}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.0975, y: 1.1919998}
@@ -611,6 +798,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 1039, y: 338}
   skipIndex: 20
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 1.2850001, y: 1.064}
@@ -658,6 +846,9 @@ MonoBehaviour:
   m_Name: Caravan Jam Stage Test
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.ShmupNodeStage
   SkipEntries:
+  - skipName: testing 1
+    skipValue: 5
+    enabled: 1
   - skipName: pre mid 1
     skipValue: 10
     enabled: 1
@@ -675,7 +866,7 @@ MonoBehaviour:
     enabled: 1
   <StageScene>k__BackingField: {fileID: 11400000, guid: 9ac2b125f6a81b04ca14a6031c9663e9, type: 2}
   currentLinkAttempt: {fileID: 0}
-  selectedSkipIndex: 0
+  selectedSkipIndex: 5
   StageEndDialogue: {fileID: 0}
   enemyTable:
   - {fileID: 2745390351675722610, guid: df43bc81f13947848881cceacf20cbb1, type: 3}
@@ -683,6 +874,7 @@ MonoBehaviour:
   - {fileID: 2745390351675722610, guid: 6e966d668ddfb5a4a961dcb6aca7a0fb, type: 3}
   - {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   - {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
+  - {fileID: 2745390351675722610, guid: c4bda3598de51724dac21de53dd545fc, type: 3}
   nodes:
   - {fileID: 7472998715273484378}
   - {fileID: -3707533323642943700}
@@ -718,6 +910,15 @@ MonoBehaviour:
   - {fileID: -7942890760676200294}
   - {fileID: 7586307974925024349}
   - {fileID: 2933179478682107815}
+  - {fileID: 8372824485595593443}
+  - {fileID: 3712953942190829779}
+  - {fileID: -5107880642564846739}
+  - {fileID: 6667908978271352750}
+  - {fileID: -6241233833773795437}
+  - {fileID: -5950316487948779974}
+  - {fileID: 7191632652139444547}
+  - {fileID: 5632986173688845907}
+  - {fileID: -7278305265860221916}
 --- !u!114 &1011325165538966211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -734,6 +935,7 @@ MonoBehaviour:
   title: WaitForTimeNode
   position: {x: 1308, y: -89}
   skipIndex: 40
+  IsCompacted: 0
   WaitTime: 1
 --- !u!114 &1062048250994051499
 MonoBehaviour:
@@ -751,6 +953,7 @@ MonoBehaviour:
   title: SingleSpawnerNode
   position: {x: 1854, y: -324}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.0975, y: 1.1919998}
@@ -795,6 +998,7 @@ MonoBehaviour:
   title: SingleSpawnerNode
   position: {x: 1424, y: 647}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.90250003, y: 1.1919998}
@@ -839,6 +1043,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 1306, y: 133}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.3025, y: 1.0779998}
@@ -889,6 +1094,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 774, y: -399}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   storedModifier: {fileID: 0}
   start: {x: -0.28500003, y: 1.064}
@@ -939,6 +1145,7 @@ MonoBehaviour:
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 2035, y: 680}
   skipIndex: 20
+  IsCompacted: 0
   WaitDuration: 7
   AliveEnemiesRequired: 0
 --- !u!114 &2852971647050890168
@@ -957,6 +1164,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 1021, y: -168}
   skipIndex: 20
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 1.1899997, y: 0.9859995}
@@ -1007,6 +1215,7 @@ MonoBehaviour:
   title: MusicNode
   position: {x: 715, y: -635}
   skipIndex: 10
+  IsCompacted: 0
   music: {fileID: 11400000, guid: d65686781837f874a8ba5cb52c6c2fc4, type: 2}
 --- !u!114 &3357292462509147757
 MonoBehaviour:
@@ -1024,6 +1233,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 1285, y: -369}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.6975, y: 1.0779998}
@@ -1058,6 +1268,25 @@ MonoBehaviour:
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
         ammoSeconds: 2.4
+--- !u!114 &3712953942190829779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299281ec626e5854db3167f10fb0c2c6, type: 3}
+  m_Name: WaitForTimeOrEnemiesAliveNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeOrEnemiesAliveNode
+  IsEnabled: 1
+  title: WaitForTimeOrEnemiesAliveNode
+  position: {x: 929, y: 169}
+  skipIndex: 5
+  IsCompacted: 0
+  WaitDuration: 9
+  AliveEnemiesRequired: 0
 --- !u!114 &3758302108423940454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1074,6 +1303,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 2332, y: 794}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 1.2850001, y: 1.064}
@@ -1124,6 +1354,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 1832, y: 769}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   storedModifier: {fileID: 0}
   start: {x: -0.28500003, y: 1.064}
@@ -1158,6 +1389,159 @@ MonoBehaviour:
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
         ammoSeconds: 2.4
+--- !u!114 &5632986173688845907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 199d87666a3e9fa4fa1370a01c0e8ce9, type: 3}
+  m_Name: LineSpawnerNode_Copy_Copy_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.LineSpawnerNode
+  IsEnabled: 1
+  title: LineSpawnerNode
+  position: {x: 973, y: -156}
+  skipIndex: 5
+  IsCompacted: 1
+  toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
+  storedModifier: {fileID: 0}
+  start: {x: -0.25, y: 1.05}
+  startEnd: {x: 0.45, y: 1.3}
+  target: {x: 0.8875, y: 0.722}
+  targetEnd: {x: 0.635, y: 0.758}
+  exit: {x: 1.1175001, y: 0.856}
+  exitEnd: {x: 1.1800001, y: 0.582}
+  EnemyCount: 6
+  WaitBetweenEachSpawn: 0.1
+  PostWait: 0.6
+  ExitDelay: 3
+  ExitDuration: 1.25
+  EntryDuration: 0.75
+  runSeperately: 0
+  HasIndicator: 0
+  Sealing: 0
+  SealingRadius: 0
+  SweepOverride: 0
+  SweepDuration: 0
+  SweepLootChance: 255
+  attackLoop:
+  - rid: 697206512732864689
+  attackLoops: 2
+  loopAddedDelay: 1.25
+  attackStall: 0.75
+  references:
+    version: 2
+    RefIds:
+    - rid: 697206512732864689
+      type: {class: CaravanAtatcks/Stage2/Fodder/DoubleShot, ns: Caravan, asm: CaravanJam}
+      data:
+        projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+        ammoSeconds: 0.6
+--- !u!114 &6667908978271352750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 199d87666a3e9fa4fa1370a01c0e8ce9, type: 3}
+  m_Name: LineSpawnerNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.LineSpawnerNode
+  IsEnabled: 1
+  title: LineSpawnerNode
+  position: {x: 542, y: -805}
+  skipIndex: 5
+  IsCompacted: 1
+  toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
+  storedModifier: {fileID: 0}
+  start: {x: -0.25, y: 1.05}
+  startEnd: {x: 0.45, y: 1.3}
+  target: {x: 0.14999998, y: 0.65}
+  targetEnd: {x: 0.55, y: 0.8}
+  exit: {x: -0.35000002, y: 0.75}
+  exitEnd: {x: -0.35000002, y: 0.65}
+  EnemyCount: 6
+  WaitBetweenEachSpawn: 0.1
+  PostWait: 0.15
+  ExitDelay: 3
+  ExitDuration: 1.25
+  EntryDuration: 0.75
+  runSeperately: 0
+  HasIndicator: 0
+  Sealing: 0
+  SealingRadius: 0
+  SweepOverride: 0
+  SweepDuration: 0
+  SweepLootChance: 255
+  attackLoop:
+  - rid: 697206512732864637
+  attackLoops: 2
+  loopAddedDelay: 1.25
+  attackStall: 0.75
+  references:
+    version: 2
+    RefIds:
+    - rid: 697206512732864637
+      type: {class: CaravanAtatcks/Stage2/Fodder/DoubleShot, ns: Caravan, asm: CaravanJam}
+      data:
+        projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+        ammoSeconds: 0.6
+--- !u!114 &7191632652139444547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 199d87666a3e9fa4fa1370a01c0e8ce9, type: 3}
+  m_Name: LineSpawnerNode_Copy_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.LineSpawnerNode
+  IsEnabled: 0
+  title: LineSpawnerNode
+  position: {x: 781, y: -168}
+  skipIndex: 5
+  IsCompacted: 1
+  toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
+  storedModifier: {fileID: 0}
+  start: {x: -0.25, y: 1.05}
+  startEnd: {x: 0.45, y: 1.3}
+  target: {x: 0.065, y: 0.5880003}
+  targetEnd: {x: 0.475, y: 0.67000014}
+  exit: {x: -0.35000002, y: 0.75}
+  exitEnd: {x: -0.35000002, y: 0.65}
+  EnemyCount: 6
+  WaitBetweenEachSpawn: 0.1
+  PostWait: 0.6
+  ExitDelay: 3
+  ExitDuration: 1.25
+  EntryDuration: 0.75
+  runSeperately: 0
+  HasIndicator: 0
+  Sealing: 0
+  SealingRadius: 0
+  SweepOverride: 0
+  SweepDuration: 0
+  SweepLootChance: 255
+  attackLoop:
+  - rid: 697206512732864640
+  attackLoops: 3
+  loopAddedDelay: 1.25
+  attackStall: 0.75
+  references:
+    version: 2
+    RefIds:
+    - rid: 697206512732864640
+      type: {class: CaravanAtatcks/Stage2/Fodder/DoubleShot, ns: Caravan, asm: CaravanJam}
+      data:
+        projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+        ammoSeconds: 0.6
 --- !u!114 &7414695062727412370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1174,6 +1558,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 1792, y: 148}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 1.2825, y: 1.1719995}
@@ -1224,6 +1609,7 @@ MonoBehaviour:
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 479, y: 1053}
   skipIndex: 10
+  IsCompacted: 0
   WaitDuration: 10.23
   AliveEnemiesRequired: 0
 --- !u!114 &7586307974925024349
@@ -1242,6 +1628,7 @@ MonoBehaviour:
   title: WaitForTimeNode
   position: {x: 1567, y: -673}
   skipIndex: 20
+  IsCompacted: 0
   WaitTime: 4
 --- !u!114 &8151391612019717299
 MonoBehaviour:
@@ -1259,6 +1646,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 797, y: 117}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 1.2850001, y: 1.064}
@@ -1293,6 +1681,51 @@ MonoBehaviour:
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
         ammoSeconds: 2.4
+--- !u!114 &8372824485595593443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e5394d13f31365488c5d55ef9ce6c98, type: 3}
+  m_Name: SingleSpawnerNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.SingleSpawnerNode
+  IsEnabled: 1
+  title: SingleSpawnerNode
+  position: {x: 1014, y: -601}
+  skipIndex: 5
+  IsCompacted: 0
+  toSpawn: {fileID: 2745390351675722610, guid: c4bda3598de51724dac21de53dd545fc, type: 3}
+  storedModifier: {fileID: 0}
+  start: {x: 0.72, y: 1.2240005}
+  target: {x: 0.7325, y: 0.66600025}
+  exit: {x: 0.9175, y: -0.16199994}
+  WaitAfterSpawn: 2.35
+  ExitDelay: 0.35
+  ExitDuration: 6
+  HasIndicator: 1
+  Sealing: 0
+  SealingRadius: 0
+  SweepOverride: 1
+  SweepDuration: 0.85
+  SweepLootChance: 255
+  EntryDuration: 0.25
+  attackLoop:
+  - rid: 697206512732864707
+  attackLoops: 1
+  loopAddedDelay: 0.3
+  attackStall: 0.3
+  references:
+    version: 2
+    RefIds:
+    - rid: 697206512732864707
+      type: {class: CaravanAtatcks/Stage2/General/MushiTowerRingEntry, ns: Caravan, asm: CaravanJam}
+      data:
+        ringProjectile: {fileID: 11400000, guid: 84a623da29b1d274c8f1e32e4c65acc4, type: 2}
+        frontalProjectile: {fileID: 11400000, guid: ec5127393eed65d4bb8c76934cdf796a, type: 2}
 --- !u!114 &8655699208282815343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1309,6 +1742,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 2287, y: 164}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   storedModifier: {fileID: 0}
   start: {x: -0.28250003, y: 1.1719995}
@@ -1359,6 +1793,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 1512, y: 353}
   skipIndex: 20
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 1.2850001, y: 1.064}

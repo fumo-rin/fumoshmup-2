@@ -162,6 +162,7 @@ public partial class ShmupPlayer : IHit
 #endregion
 public partial class ShmupPlayer : ShmupUnit
 {
+    [field: SerializeField] public Collider2D PlayerUnitCollider { get; private set; }
     [field: SerializeField] public ACWrapper SweepSound { get; private set; }
     [SerializeField] List<Collider2D> playerHitboxes = new List<Collider2D>();
     public override IEnumerable<Collider2D> Hitboxes

@@ -42,6 +42,14 @@ namespace FumoShmup2
             runningAttackMovement = StartCoroutine(Wrap(Co));
             wait = new WaitUntil(() => !IsMovingWithAttack);
         }
+        public void StopMovement()
+        {
+            if (runningAttackMovement != null)
+            {
+                StopCoroutine(runningAttackMovement);
+            }
+            runningAttackMovement = null;
+        }
         public class Testing
         {
             public static IEnumerator CO_TestDash(ShmupUnit sender)

@@ -99,7 +99,6 @@ namespace FumoShmup2
         }
         public Coroutine StartWithSender(ShmupUnit Sender, Action callback = null)
         {
-            Debug.Log("Starting attack : " + this.GetType());
             if (Sender == null)
                 return null;
 

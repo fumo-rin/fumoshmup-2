@@ -97,7 +97,6 @@ namespace FumoShmup2
             }
             public void GoMenu()
             {
-                Debug.Log("Breakpoint");
                 GameSession.EndSessionSettings end = new()
                 {
                     SubmitScore = true

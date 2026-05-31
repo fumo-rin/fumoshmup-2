@@ -16,7 +16,7 @@ namespace FumoShmup2
                 return 1f;
             if (!player.IsAlive)
             {
-                return 1.25f;
+                return 1f;
             }
             if (player.IframesDurationLeft > 0.8f)
             {
@@ -328,7 +328,6 @@ namespace FumoShmup2
         private void Awake()
         {
             instance = this;
-            Application.targetFrameRate = 120;
         }
 
         public enum ProjectileHit

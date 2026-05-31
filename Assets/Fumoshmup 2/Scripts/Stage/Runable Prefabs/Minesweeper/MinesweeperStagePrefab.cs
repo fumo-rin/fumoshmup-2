@@ -101,11 +101,8 @@ namespace FumoShmup2
 
             if (MovesCount == 0)
             {
-                int freeTiles = (BoardSize.Item1 * BoardSize.Item2) - BombCount;
-                int clearCount = freeTiles.MultiplyAndFloor(0.08f).Min(BoardSize.Item1.Min(BoardSize.Item2));
-                TryMoveBombFromTileToRandomTile(tile, clearCount);
-                MovesCount++;
-                return;
+                //TryMoveBombFromTileToRandomTile(tile, 1);
+                ForceSafeArea(tile, 9);
             }
 
             if (tile.state.HasFlag(MinesweeperTile.State.CorrectFlag) || tile.state.HasFlag(MinesweeperTile.State.FalseFlag))
@@ -141,7 +138,7 @@ namespace FumoShmup2
         }
         private void OnRightClick(MinesweeperTile tile)
         {
-            if (!IsPlaying)
+            if (!IsPlaying || !GameStarted)
                 return;
             if (tile.state.HasFlag(MinesweeperTile.State.Cleared))
                 return;
@@ -189,6 +186,74 @@ namespace FumoShmup2
                                 RevealNeighbors(neighbor);
                         }
                     }
+                }
+            }
+        }
+        private void ForceSafeArea(MinesweeperTile startTile, int desiredTileClears)
+        {
+            HashSet<(int, int)> safeRegion = new();
+            Queue<MinesweeperTile> frontier = new();
+
+            frontier.Enqueue(startTile);
+            safeRegion.Add(startTile.tileXY);
+
+            while (frontier.Count > 0 &&
+                   safeRegion.Count < desiredTileClears)
+            {
+                var current = frontier.Dequeue();
+
+                int x = current.tileXY.Item1;
+                int y = current.tileXY.Item2;
+
+                for (int i = (x - 1).Clamp(0, BoardSize.Item1 - 1); i <= (x + 1).Clamp(0, BoardSize.Item1 - 1); i++)
+                {
+                    for (int j = (y - 1).Clamp(0, BoardSize.Item2 - 1); j <= (y + 1).Clamp(0, BoardSize.Item2 - 1); j++)
+                    {
+                        if (!playBoard.TryGetValue((i, j), out var neighbor))
+                            continue;
+
+                        if (safeRegion.Add(neighbor.tileXY))
+                        {
+                            frontier.Enqueue(neighbor);
+
+                            if (safeRegion.Count >= desiredTileClears)
+                                break;
+                        }
+                    }
+                }
+            }
+
+            List<MinesweeperTile> bombsToMove = new();
+
+            foreach (var pos in safeRegion)
+            {
+                if (playBoard.TryGetValue(pos, out var tile) && tile.IsBomb)
+                {
+                    bombsToMove.Add(tile);
+                }
+            }
+
+            foreach (var bomb in bombsToMove)
+            {
+                bomb.UpdateState(MinesweeperTile.State.Brick);
+            }
+
+            foreach (var bomb in bombsToMove)
+            {
+                while (MinesweeperUtils.TryGetRandomTile(
+                    playBoard,
+                    BoardSize.Item1,
+                    BoardSize.Item2,
+                    out var target))
+                {
+                    if (target.IsBomb)
+                        continue;
+
+                    if (safeRegion.Contains(target.tileXY))
+                        continue;
+
+                    target.PlaceBomb();
+                    break;
                 }
             }
         }

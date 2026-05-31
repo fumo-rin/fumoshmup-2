@@ -527,7 +527,7 @@ namespace FumoShmup2
                     GlobalCoroutineRunner.StartRoutine("s4 mushi runner", CO_Run(input), false);
                 }
 
-                yield return 0.25f.WaitForSeconds();
+                yield return TICK.WaitForSeconds(15);
                 TimeSlowHandler.AddSlow("Funny", 0.65f, 0.35f, 0.1f);
                 for (int i = 0; i < 7; i++)
                 {
@@ -535,21 +535,21 @@ namespace FumoShmup2
                     Arc(0f, 20f, 2, 15f).Spawn(input, define, out _);
                     yield return 0.03f.WaitForSeconds();
                 }
-                yield return 0.55f.WaitForSeconds();
+                yield return TICK.WaitForSeconds(40);
                 for (int i = 0; i < 17; i++)
                 {
                     input.ReAimWithOptionalTarget(sender.CurrentPosition);
                     ArcShot((80f - i.AsFloat(3f)).Max(40f) * 1.65f, 18f, 3, 0.2f);
                     yield return 0.03f.WaitForSeconds();
                 }
-                yield return 0.35f.WaitForSeconds();
+                yield return TICK.WaitForSeconds(25);
                 for (int i = 0; i < 48; i++)
                 {
                     input.ReAimWithOptionalTarget(sender.CurrentPosition);
                     ArcShot((65f - i.AsFloat(2f)).Max(25f) * 1.65f, 15f, 5, 0.35f);
                     yield return 0.03f.WaitForSeconds();
                 }
-                yield return 0.6f.WaitForSeconds();
+                yield return TICK.WaitForSeconds(40);
                 for (int i = 0; i < 66; i++)
                 {
                     input.ReAimWithOptionalTarget(sender.CurrentPosition);

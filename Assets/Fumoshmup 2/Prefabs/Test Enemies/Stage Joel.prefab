@@ -122,6 +122,7 @@ MonoBehaviour:
   startingHealth: 120
   hitSound: {fileID: 11400000, guid: 9d9984bb7f8437c47b2358c6a9068c05, type: 2}
   lowHitSound: {fileID: 11400000, guid: 055d1c28c688d0543977be8c200be4af, type: 2}
+  unitCollision: {fileID: 0}
   enemyRenderer: {fileID: 0}
   shotHitboxes:
   - {fileID: 7581495947133790535}
@@ -151,9 +152,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!58 &9205044897231247259
 CircleCollider2D:

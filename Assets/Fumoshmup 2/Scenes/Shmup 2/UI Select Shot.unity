@@ -3085,9 +3085,9 @@ MonoBehaviour:
         PlayerEcoOverrides: []
         PlayerObject: {fileID: 6582323571233060469, guid: 5b4b62c008d74b8499280bc211d27ca2, type: 3}
         UnfocusMover:
-          maxSpeed: 11
+          maxSpeed: 8
         FocusMover:
-          maxSpeed: 6
+          maxSpeed: 4.5
     stageIndex:
       mainMenuScene: {fileID: 11400000, guid: ab63050f81166364093125ea0d6540ce, type: 2}
       gameModeStages:

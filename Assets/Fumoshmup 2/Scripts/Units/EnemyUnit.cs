@@ -102,14 +102,14 @@ namespace FumoShmup2
             [SerializeField] Vector2 randomRadiusRange = new(0.45f, 0.65f);
             public void Play(EnemyUnit e)
             {
-                IEnumerator CO_Play()
+                IEnumerator CO_Play(Vector2 position)
                 {
                     yield return delay.WaitForSeconds();
                     Vector2 rng = (RNG.SeededRandomVector2.normalized * RNG.FloatRange(randomRadiusRange.x, randomRadiusRange.y));
-                    ps.PlayCachedOnce(e.CurrentPosition + rng);
-                    deathSound.Play(e.CurrentPosition + rng);
+                    ps.PlayCachedOnce(position + rng);
+                    deathSound.Play(position + rng);
                 }
-                CO_Play().RunRoutine();
+                CO_Play(e.CurrentPosition).RunRoutine();
             }
         }
         [SerializeField] List<deathEffect> deathEffects = new();
@@ -243,21 +243,12 @@ namespace FumoShmup2
     public partial class EnemyUnit
     {
         public bool IsBoss => HasPhases;
-        public void ClearPhase()
+        public void StopActionsForBoss()
         {
-            bool currentPhase = true;
-            if (currentPhase)
-            {
-                Action_BossRecenter(0.7f);
-            }
-            currentPhase = false;
-        }
-        public void ForceNextPhaseSet()
-        {
-            {
-                ProjectileRunner.TriggerSweep(0f, 0, false, out _);
-                ForceKill();
-            }
+            StopMovement();
+            Action_BossRecenter(0.85f);
+            SetIframes(1.25f, 90f);
+            StallAttackLoop(0.9f);
         }
         float PhasesTotalHealth
         {
@@ -302,11 +293,8 @@ namespace FumoShmup2
             {
                 if ((LastKnownPhase != null && LastKnownPhase != found) || LastKnownPhase == null)
                 {
-                    ProjectileRunner.TriggerSweep(0f, 255, false, out _);
-                    Action_BossRecenter(0.85f);
-                    StallAttackLoop(0.9f);
-                    SetIframes(1.25f, 90f);
                     CurrentPhase = found;
+                    CurrentPhase.PhaseIndex = 0;
                 }
                 LastKnownPhase = found;
                 spentPhases.Add(found);
@@ -325,23 +313,60 @@ namespace FumoShmup2
             nextPhase = CurrentPhase;
             return routine != null;
         }
+        private void ValidatePhaseLoops()
+        {
+            bool changed = false;
+            foreach (var item in phases)
+            {
+                if (item != null)
+                {
+                    if (item.Loops < 1)
+                    {
+                        item.Loops = 1;
+                        changed = true;
+                        this.Dirty();
+                    }
+                }
+            }
+            if (changed)
+            {
+                this.SetDirtyAndSave();
+            }
+        }
         [System.Serializable]
         public class UnitPhase
         {
             [SerializeReference] public List<UnitAttack> phaseAttacks = new();
             public float phaseHealth = 2000f;
             public bool blockDash;
-            int phaseIndex;
+            [Min(1)] public int Loops = 1;
+            public int PhaseIndex;
             public bool DetermineNext(out UnitAttack next)
             {
                 next = null;
                 if (phaseAttacks != null && phaseAttacks.Count > 0)
                 {
-                    int selection = phaseIndex % phaseAttacks.Count;
+                    int selection = PhaseIndex % phaseAttacks.Count;
                     next = phaseAttacks[selection];
-                    phaseIndex = phaseIndex + 1;
+                    PhaseIndex = PhaseIndex + 1;
                 }
                 return next != null;
+            }
+            public bool HasAmmo
+            {
+                get
+                {
+                    if (phaseAttacks == null || phaseAttacks.Count <= 0)
+                    {
+                        return false;
+                    }
+                    int cap = phaseAttacks.Count * (Loops.Max(1));
+                    if (cap > PhaseIndex)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
             }
         }
     }
@@ -400,6 +425,28 @@ namespace FumoShmup2
     #region Phase Skipping & Utility
     public partial class EnemyUnit
     {
+        public bool WillChangePhase(float incomingDamage)
+        {
+            if (!HasPhases)
+                return false;
+
+            float before = phaseTrackedDamage;
+            float after = phaseTrackedDamage + incomingDamage;
+            float accumulated = 0f;
+            foreach (var phase in phases)
+            {
+                accumulated += phase.phaseHealth;
+
+                bool beforeReached = before >= accumulated;
+                bool afterReached = after >= accumulated;
+
+                if (!beforeReached && afterReached)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         private static float BossPhaseStallEnd;
         public static bool BossPhaseStall => Time.time < BossPhaseStallEnd + 0.15f;
         [Initialize(-123)]
@@ -407,10 +454,46 @@ namespace FumoShmup2
         {
             BossPhaseStallEnd = -1f;
         }
-
         Coroutine CurrentRunningAttack;
         public float AttackStallEndTime { get; private set; }
         public WaitUntil WaitForAttackStall => new WaitUntil(() => Time.time > AttackStallEndTime);
+        public IEnumerable<float> RemainingPhaseNotches01
+        {
+            get
+            {
+                float totalPhaseHealth = PhasesTotalHealth;
+                if (totalPhaseHealth <= 0f)
+                    yield break;
+
+                float cumulativeDamage = 0f;
+                foreach (var phase in phases)
+                {
+                    cumulativeDamage += phase.phaseHealth;
+                    if (cumulativeDamage <= phaseTrackedDamage)
+                        continue;
+                    if (cumulativeDamage >= totalPhaseHealth)
+                        continue;
+                    yield return (1f - cumulativeDamage / totalPhaseHealth).Clamp(0f, 1f);
+                }
+            }
+        }
+        public float NextPhaseHealth
+        {
+            get
+            {
+                float totalHealth = PhasesTotalHealth;
+                float cumulative = 0f;
+                foreach (var phase in phases)
+                {
+                    cumulative += phase.phaseHealth;
+                    if (phaseTrackedDamage < cumulative)
+                    {
+                        return totalHealth - cumulative;
+                    }
+                }
+                return 0f;
+            }
+        }
         public void StallAttackLoop(float duration, bool stopAttack = true)
         {
             AttackStallEndTime = AttackStallEndTime.Max(Time.time + duration);
@@ -428,25 +511,58 @@ namespace FumoShmup2
                 }
             }
         }
+        private bool ShouldExpireBossPhase()
+        {
+            if (!IsBoss)
+                return false;
+            if (CurrentRunningAttack != null)
+                return false;
+            if (CurrentPhase == null)
+                return false;
+            if (CurrentPhase is UnitPhase p)
+            {
+                return !p.HasAmmo;
+            }
+            return true;
+        }
         private void AttacksStarterLoop()
         {
             if (Time.time < AttackStallEndTime)
                 return;
+
             if (!IsOnScreenAndAlive)
             {
                 AttackStallEndTime = AttackStallEndTime.Max(Time.time + 0.1f);
             }
+            if (TryGetNextPhase(out UnitPhase phase))
+            {
 
+            }
+            if (ShouldExpireBossPhase())
+            {
+                StartNewHealth(NextPhaseHealth - 0.01f, PhasesTotalHealth);
+                phaseTrackedDamage = PhasesTotalHealth - CurrentHealth.Add(0.01f);
+                if (CurrentHealth <= 0f)
+                {
+                    ForceKill();
+                    return;
+                }
+                if (TryGetNextPhase(out UnitPhase postExpirePhase))
+                {
+                    StopActionsForBoss();
+                }
+                else
+                {
+                    ForceKill();
+                    return;
+                }
+            }
             if (this.IsRunningActions)
             {
                 return;
             }
             if (ProjectileRunner.IsSweeping)
                 return;
-            if (TryGetNextPhase(out UnitPhase phase))
-            {
-
-            }
 
             if (ShmupPlayer.PlayerAs(out ShmupPlayer p) && (!p.IsAlive || p.IframesDurationLeft > 0.75f))
             {
@@ -486,20 +602,46 @@ namespace FumoShmup2
         public delegate void OnKilledEvent(EnemyUnit e);
         public static event OnKilledEvent WhenEnemyKilled;
 
-        public delegate void OnAnyDamagedEvent(float damage);
+        public delegate void OnAnyDamagedEvent(float finalDamage);
         public static event OnAnyDamagedEvent WhenAnyEnemyDamaged;
+
+        public delegate void OnDamaged(float finalDamage, IHit.HitPacket packet);
+        public event OnDamaged WhenDamaged;
     }
     #endregion
     #region Hit Interface
     public partial class EnemyUnit : IHit
     {
-        public bool IsPlayer => false;
         float sealRadius;
         public float CurrentHealth { get; private set; } = 1000f;
+        public string HealthString => $"{CurrentHealth.Clamp(1f, CurrentMaxHealth).ToString("F0")}/{CurrentMaxHealth.ToString("F0")}";
         [SerializeField] float startingHealth = 350f;
         [SerializeField] ACWrapper hitSound, lowHitSound;
+        RollingFloatTracker damageCap;
+        public struct RecentDamage
+        {
+            public float WindowTotal;
+            public float PerSecond;
+            public float EMA_PerSecond;
+            public float WindowDuration;
+            public RecentDamage(RollingFloatTracker tracker)
+            {
+                if (tracker == null)
+                {
+                    WindowDuration = 0f;
+                    WindowTotal = 0f;
+                    EMA_PerSecond = 0f;
+                    PerSecond = 0f;
+                }
+                WindowDuration = tracker.interval;
+                WindowTotal = tracker.Total;
+                EMA_PerSecond = tracker.EMA_PerSecond;
+                PerSecond = tracker.PerSecond;
+            }
+        }
+        public RecentDamage RecentDamageTaken => new(damageCap);
         public float CurrentMaxHealth { get; private set; }
-        public float HealthPercent => CurrentHealth.Clamp(0, CurrentMaxHealth) / CurrentMaxHealth.Clamp(1, 99999999f) * 100f;
+        public float HealthPercent100 => CurrentHealth.Clamp(0, CurrentMaxHealth) / CurrentMaxHealth.Clamp(1, 99999999f) * 100f;
         public void StartNewHealth(float newHealth, float maxHealth)
         {
             CurrentMaxHealth = maxHealth;
@@ -508,6 +650,8 @@ namespace FumoShmup2
             {
 
             });
+            if (IsBoss)
+                Debug.Log("New Health : " + CurrentHealth + " of " + CurrentMaxHealth);
         }
         public void SetSealRadius(float r) => sealRadius = r;
         int LootCount => !IsBoss ? CurrentMaxHealth.Multiply(0.04f).ToInt().Max(4) : PhasesTotalHealth.Multiply(0.02f).Clamp(50f, 1000f).ToInt();
@@ -528,7 +672,7 @@ namespace FumoShmup2
                     {
                         return;
                     }
-                    if (HealthPercent < 15f && CurrentMaxHealth > 200)
+                    if (HealthPercent100 < 15f && CurrentMaxHealth > 200)
                     {
                         lowHitSound.Play(CurrentPosition);
                     }
@@ -541,11 +685,31 @@ namespace FumoShmup2
                     {
                         damage *= Mathf.Max(0f, 1f - CurrentIFramesDamageReductionPercent * 0.01f);
                     }
-                    damage *= 1f;
+                    if (IsBoss)
+                    {
+                        float halfPercent = CurrentMaxHealth * 0.005f;
+                        for (int i = 0; i < 40; i++)
+                        {
+                            if (damageCap.PerSecond > i.AsFloat(halfPercent))
+                            {
+                                damage *= 0.95f;
+                            }
+                        }
+                    }
                     GameSession.TryAddScoreRaw(damage * 250d, "Enemy Damage");
                     damageDealt = damage.Min(CurrentHealth);
+                    if (WillChangePhase(damageDealt))
+                    {
+                        DoSweep();
+                        StopActionsForBoss();
+                    }
                     phaseTrackedDamage += damageDealt;
                     WhenAnyEnemyDamaged?.Invoke(damageDealt);
+                    WhenDamaged?.Invoke(damageDealt, packet);
+                    if (damageCap != null)
+                    {
+                        damageCap += damageDealt;
+                    }
                     double healthPercentDelta = CurrentMaxHealth == 0d ? 0d : (double)damageDealt / (double)CurrentMaxHealth;
                     StartNewHealth(CurrentHealth - damage, CurrentMaxHealth);
 
@@ -567,23 +731,15 @@ namespace FumoShmup2
             }
             if (IsBoss)
             {
-                //Spellcard.FailSpell();
-                //Spellcard.EndSpell();
+                ProjectileRunner.TriggerSweep(0f, 0, false, out _);
             }
             CurrentHealth = 0f;
             PlayDeathEffects();
             CalculateAlive();
             gameObject.SetActive(false);
         }
-        public void KillWithLoot()
+        void DoSweep()
         {
-            if (sealRadius > 0.1f)
-            {
-                ProjectileRunner.SealBullets(CurrentPosition, this, sealRadius, 255, out _);
-            }
-            TriggerRevengeOverride();
-
-            #region Sweeping
             if (TryGetSweepOverride(out SweepOverride sweep))
             {
                 if (ShmupPlayer.PlayerAs(out ShmupPlayer p))
@@ -609,13 +765,23 @@ namespace FumoShmup2
                     ShockwaveEffect.Trigger(deathPos01, 3.5f);
                 }
             }
-            #endregion
+        }
+        public void KillWithLoot()
+        {
+            if (sealRadius > 0.1f)
+            {
+                ProjectileRunner.SealBullets(CurrentPosition, this, sealRadius, 255, out _);
+            }
+            TriggerRevengeOverride();
+
+            DoSweep();
 
             CreateLootItem(LootCount, 2.5f);
             PlayDeathEffects();
             gameObject.SetActive(false);
             CalculateAlive();
             WhenEnemyKilled?.Invoke(this);
+            Destroy(gameObject);
         }
         private void CreateLootItem(int lootCount, float areaSize = 1f)
         {
@@ -758,6 +924,23 @@ namespace FumoShmup2
     #endregion
     public partial class EnemyUnit : ShmupUnit
     {
+        [SerializeField] Collider2D unitCollision;
+        public Collider2D UnitCollider
+        {
+            get
+            {
+                Collider2D item = unitCollision;
+                if (item == null)
+                {
+                    item = transform.GetComponent<Collider2D>();
+                    if (item != null)
+                    {
+                        unitCollision = item;
+                    }
+                }
+                return item;
+            }
+        }
         public bool IsOnScreenAndAlive => IsAliveInsideRect(ShmupWorldspace.WorldSpace);
         public bool IsAliveInsideRect(in Rect r) => IsAlive && r.Contains(CurrentPosition);
         [SerializeField] SpriteRenderer enemyRenderer;
@@ -792,6 +975,7 @@ namespace FumoShmup2
         private float IframesEndTime = 0f;
         public void SetIframes(float duration, float iFramesDamageReduction100)
         {
+            Debug.Log("Set Iframes: " + iFramesDamageReduction100 + "%");
             CurrentIFramesDamageReductionPercent = iFramesDamageReduction100.Clamp(0f, 100f);
             IframesEndTime = duration + Time.time;
         }
@@ -803,7 +987,6 @@ namespace FumoShmup2
             else
             {
                 StartNewHealth(PhasesTotalHealth, PhasesTotalHealth);
-                SetIframes(1.25f, 90f);
             }
         }
         public static void Despawn(in List<FumoUnit> enemies)
@@ -832,6 +1015,7 @@ namespace FumoShmup2
             if (IsBoss)
             {
                 BossPhaseStallEnd = Time.time + 5f;
+                damageCap = new(4f, 1f / 20f);
             }
         }
         private void OnDisable()
@@ -847,21 +1031,30 @@ namespace FumoShmup2
         {
             Think();
         }
-        private void OnTriggerEnter2D(Collider2D collision)
+        /*private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.transform.CompareTag(TagHandle.GetExistingTag(string.Intern("Player"))) && collision.TryGetComponent(out IHit hit))
             {
                 hit.SendHit(new IHit.HitPacket(collision.ClosestPoint(collision.transform.position), new(this, 100f, 1f)), out float damage);
             }
-        }
+        }*/
         private void Think()
         {
             if (SceneLoader.IsLoading)
                 return;
-            ShmupPlayer.PlayerAs(out ShmupPlayer p);
+            bool hasPlayer = ShmupPlayer.PlayerAs(out ShmupPlayer p);
             if (IsOnScreenAndAlive)
             {
 
+            }
+            if (hasPlayer && IsAlive)
+            {
+                if (UnitCollider != null && p.PlayerUnitCollider != null &&
+                    UnitCollider.IsTouching(p.PlayerUnitCollider) && p is IHit hit)
+                {
+                    Vector2 closest = UnitCollider.ClosestPoint(p.PlayerUnitCollider.bounds.center);
+                    hit.SendHit(new IHit.HitPacket(closest, new(this, 100f, 1f)), out float damage);
+                }
             }
             if (!IsRunningActions && !IsMovingWithAttack)
             {
@@ -894,8 +1087,16 @@ namespace FumoShmup2
         }
         protected override void WhenUpdate()
         {
+            if (damageCap != null)
+            {
+                damageCap.TickEMA();
+            }
             base.WhenUpdate();
             AttacksStarterLoop();
+        }
+        private void OnValidate()
+        {
+            ValidatePhaseLoops();
         }
     }
 }

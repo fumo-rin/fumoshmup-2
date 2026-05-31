@@ -146,9 +146,11 @@ MonoBehaviour:
     - rid: 697205971041910987
     - rid: 697206062794932590
     phaseHealth: 1500
+    blockDash: 0
   startingHealth: 350
   hitSound: {fileID: 0}
   lowHitSound: {fileID: 0}
+  unitCollision: {fileID: 0}
   enemyRenderer: {fileID: 0}
   shotHitboxes:
   - {fileID: 7581495947133790535}
@@ -187,9 +189,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!58 &7041830619928727792
 CircleCollider2D:

@@ -16,24 +16,32 @@ namespace FumoShmup2
         }
         static List<trackTarget> targets = new();
         [SerializeField] Slider BossHealthbar;
-        [SerializeField] TMP_Text BossNameText;
-        [SerializeField] RectTransform notchObject;
+        [SerializeField] TMP_Text BossNameText, BossHealthText;
         [SerializeField] RectTransform containerScaler;
+        [SerializeField] RectTransform notchItem;
+        [SerializeField] CanvasGroup opacityNest;
+        List<RectTransform> notches = new();
+
         float anchoredSizeY;
         float currentSize;
+
         void FadeIn()
         {
             currentSize = currentSize.LerpEaseInOut(anchoredSizeY, Time.deltaTime * 18f);
+            opacityNest.alpha = currentSize.MapTo01(0f, anchoredSizeY * 0.1f, true);
             containerScaler.SetHeight(currentSize);
         }
         void FadeOut()
         {
             currentSize = currentSize.LerpEaseInOut(0f, Time.deltaTime * 20f);
+            float fade = Mathf.InverseLerp(0f, anchoredSizeY * 12f, currentSize);
+            opacityNest.alpha = fade;
             containerScaler.SetHeight(currentSize);
         }
         private void Awake()
         {
             anchoredSizeY = containerScaler.sizeDelta.y;
+            notchItem.gameObject.SetActive(false);
         }
         public static void AssignUnit(trackTarget target)
         {
@@ -61,6 +69,7 @@ namespace FumoShmup2
             {
                 BossNameText.text = "";
                 BossHealthbar.SetValues(0f, 1f, 0f);
+                BossHealthText.text = "";
                 return false;
             }
             string bossName = unit.transform.GetCleanName().RemoveAfter("#").PrettyName(new StringExtensions.PrettyNameSettings
@@ -73,7 +82,51 @@ namespace FumoShmup2
             BossNameText.text = bossName;
             if (unit is EnemyUnit e)
             {
-                BossHealthbar.SetValues(e.HealthPercent, 100f, 0f);
+                BossHealthbar.SetValues(e.HealthPercent100, 100f, 0f);
+                SetupNotches(e);
+                DamageText(e);
+                void DamageText(EnemyUnit e)
+                {
+                    EnemyUnit.RecentDamage damageTaken = e.RecentDamageTaken;
+                    string text = e.HealthString;
+                    if (damageTaken.WindowTotal >= 1f)
+                    {
+                        text += $" -{damageTaken.EMA_PerSecond.Clamp(1f, 9999f).ToString("F0")}/s".Color(ColorHelper.PastelOrange);
+                    }
+                    BossHealthText.text = text;
+                }
+                void SetupNotches(EnemyUnit e)
+                {
+                    foreach (var item in notches)
+                    {
+                        GameObject g = item.gameObject;
+                        if (g != null)
+                        {
+                            g.SetActive(false);
+                        }
+                    }
+                    int index = 0;
+                    foreach (var item in e.RemainingPhaseNotches01)
+                    {
+                        RectTransform iteration = null;
+                        if (notches.Count > index)
+                        {
+                            iteration = notches[index];
+                        }
+                        if (iteration == null)
+                        {
+                            RectTransform pushed = Instantiate(notchItem, notchItem.parent);
+                            iteration = pushed;
+                            notches.Add(pushed);
+                        }
+                        if (iteration != null)
+                        {
+                            BossHealthbar.SetXPositionOfRect(notches[index], containerScaler, item);
+                            notches[index].gameObject.SetActive(true);
+                            index++;
+                        }
+                    }
+                }
             }
             return true;
         }

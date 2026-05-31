@@ -36,16 +36,16 @@ TagManager:
   - 
   - 
   - 
-  - UI 3D
+  - World UI
   m_SortingLayers:
-  - name: Player
-    uniqueID: 467262385
-    locked: 0
   - name: Loot
     uniqueID: 3164713073
     locked: 0
   - name: Player Projectiles
     uniqueID: 2895793171
+    locked: 0
+  - name: Player
+    uniqueID: 467262385
     locked: 0
   - name: Default
     uniqueID: 0

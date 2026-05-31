@@ -477,7 +477,7 @@ namespace FumoShmup2
 
                 var particle = new ParticleSystem.Particle
                 {
-                    position = new Vector3(projectile.Position.x, projectile.Position.y, 0),
+                    position = new Vector3(projectile.Position.x, projectile.Position.y, -5),
                     startColor = projectile.Faction == ProjectileFaction.Player && FumoSettingsTags.HasBoolTag(FumoSettingsTags.KeysShmup.PlayerShotVisibilityReduction) ? define.Color.Opacity((((float)define.Color.a) * 0.2f).ToByte()) : define.Color,
                     startSize = define.Size * (projectile.Faction != ProjectileFaction.Enemy ? 1f : scaleFactor),
                     startLifetime = animationDuration,

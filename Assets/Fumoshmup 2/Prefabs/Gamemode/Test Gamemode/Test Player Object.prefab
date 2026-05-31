@@ -306,6 +306,7 @@ MonoBehaviour:
     HitSound: {fileID: 11400000, guid: e31e953852c3d1b42968b59ed65302e3, type: 2}
     DeathSound: {fileID: 11400000, guid: 5caf95d22aad54b44ab39ba549e3597b, type: 2}
   hitIframesDuration: 2.25
+  <PlayerUnitCollider>k__BackingField: {fileID: 2739170497235917864}
   <SweepSound>k__BackingField: {fileID: 11400000, guid: d3b21972db970de41b2926fbab50fff0, type: 2}
   playerHitboxes:
   - {fileID: 3515506440374234703}
@@ -5917,8 +5918,8 @@ MonoBehaviour:
   shootingAction: {fileID: 1864257387097275648, guid: 34edc816a52e4fc4ab2d77bcdba58669, type: 3}
   focusAction: {fileID: -1145331697551703494, guid: 34edc816a52e4fc4ab2d77bcdba58669, type: 3}
   Owner: {fileID: 6582323571233060469}
-  unfocusShot: {fileID: 11400000, guid: 230d745ec589b0a4093d4bc3710ca120, type: 2}
-  optionShot: {fileID: 11400000, guid: c22a5d3daa5c87f43bb6f8aa94641e17, type: 2}
+  unfocusShot: {fileID: 11400000, guid: 645aaccd5b9ad8c4d8bca44d5664cee9, type: 2}
+  optionShot: {fileID: 11400000, guid: 1c229417e58976947acc847a02f452bd, type: 2}
   superShot: {fileID: 11400000, guid: 645aaccd5b9ad8c4d8bca44d5664cee9, type: 2}
   unfocusShotSound: {fileID: 11400000, guid: dc5879a9afc24fc48b28c28a33271566, type: 2}
   shotOptionNests4:

@@ -361,6 +361,25 @@ namespace Caravan
                         }
                     }
                 }
+                [System.Serializable]
+                public class MushiTowerRingEntry : UnitAttack
+                {
+                    public ProjectileDefineSO ringProjectile, frontalProjectile;
+                    protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
+                    {
+                        for (int i = 0; i < 8; i++)
+                        {
+                            float angle = (360f / 48) * i.AsFloat(1f);
+                            Circle(angle, 16, 6f + i.AsFloat(0.75f)).Spawn(input, ringProjectile, out _);
+                        }
+                        yield return TICK.WaitForSeconds(25);
+                        input.ReAimWithOptionalTarget(sender.CurrentPosition);
+                        for (int i = 0; i < 15; i++)
+                        {
+                            Arc(RNG.FloatRange(-1f, 1f), (i + 5).AsFloat(2.5f), i, 12f - i.AsFloat(0.55f)).Spawn(input, frontalProjectile, out _);
+                        }
+                    }
+                }
             }
             public class Midboss
             {
@@ -453,12 +472,12 @@ namespace Caravan
                             {
                                 input.addedForward = 0.15f;
                                 input.SetOrigin(sender.CurrentPosition + new Vector2(4f, 1f));
-                                Arc(iteration * 2f, 80f, 3, 5f).Spawn(input, ArcsProj, out _);
-                                Arc(180f + iteration * 2f, 80f, 3, 7f).Spawn(input, ArcsProj, out _);
+                                Arc(iteration * 4f, 80f, 3, 5f).Spawn(input, ArcsProj, out _);
+                                Arc(180f + iteration * 4f, 80f, 3, 7f).Spawn(input, ArcsProj, out _);
 
                                 input.SetOrigin(sender.CurrentPosition + new Vector2(-4f, 1f));
-                                Arc(iteration * -2f, 80f, 3, 5f).Spawn(input, ArcsProj, out _);
-                                Arc(180f + iteration * -2f, 80f, 3, 7f).Spawn(input, ArcsProj, out _);
+                                Arc(iteration * -4f, 80f, 3, 5f).Spawn(input, ArcsProj, out _);
+                                Arc(180f + iteration * -4f, 80f, 3, 7f).Spawn(input, ArcsProj, out _);
                             }
                             /*if (iteration % 12 == 0)
                             {
