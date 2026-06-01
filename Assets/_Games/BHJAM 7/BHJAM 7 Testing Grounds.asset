@@ -16,6 +16,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 1297, y: -559}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.52047086, y: 1.152041}
@@ -26,6 +27,7 @@ MonoBehaviour:
   exitEnd: {x: 0.7181236, y: -0.06526542}
   EnemyCount: 6
   WaitBetweenEachSpawn: 0.2
+  PostWait: 0.15
   ExitDelay: 4.1
   ExitDuration: 1.25
   EntryDuration: 0.75
@@ -64,6 +66,7 @@ MonoBehaviour:
   title: SingleSpawnerNode
   position: {x: 955.5585, y: 631.46387}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 6e966d668ddfb5a4a961dcb6aca7a0fb, type: 3}
   storedModifier: {fileID: 0}
   start: {x: -0.25, y: 1.05}
@@ -107,6 +110,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 994.125, y: -206.51306}
   skipIndex: 20
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.875, y: 1.0919998}
@@ -117,6 +121,7 @@ MonoBehaviour:
   exitEnd: {x: 0.1825, y: 1.2540002}
   EnemyCount: 6
   WaitBetweenEachSpawn: 0.1
+  PostWait: 0.15
   ExitDelay: 5
   ExitDuration: 1.25
   EntryDuration: 0.75
@@ -155,6 +160,7 @@ MonoBehaviour:
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 1326.2972, y: 693.1294}
   skipIndex: 10
+  IsCompacted: 0
   WaitDuration: 1.03
   AliveEnemiesRequired: 0
 --- !u!114 &-2391214014383898821
@@ -173,6 +179,7 @@ MonoBehaviour:
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 1387.5293, y: 1262.8666}
   skipIndex: 10
+  IsCompacted: 0
   WaitDuration: 1.03
   AliveEnemiesRequired: 0
 --- !u!114 &-909014707565791282
@@ -191,6 +198,7 @@ MonoBehaviour:
   title: SingleSpawnerNode
   position: {x: 1411.0525, y: 175.36615}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 6e966d668ddfb5a4a961dcb6aca7a0fb, type: 3}
   storedModifier: {fileID: 0}
   start: {x: -0.25, y: 1.05}
@@ -234,6 +242,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 527, y: 143}
   skipIndex: 30
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: fc86072f3a38af04fa7b9a16c4cb61cb, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 1.25, y: 1.05}
@@ -244,6 +253,7 @@ MonoBehaviour:
   exitEnd: {x: 1.35, y: 0.65}
   EnemyCount: 6
   WaitBetweenEachSpawn: 0.1
+  PostWait: 0.15
   ExitDelay: 5
   ExitDuration: 1.25
   EntryDuration: 0.75
@@ -277,6 +287,7 @@ MonoBehaviour:
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 1293.9047, y: 3.411316}
   skipIndex: 10
+  IsCompacted: 0
   WaitDuration: 15
   AliveEnemiesRequired: 0
 --- !u!114 &11400000
@@ -354,6 +365,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 1026, y: 251}
   skipIndex: 30
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: fc86072f3a38af04fa7b9a16c4cb61cb, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.125, y: 1.0919998}
@@ -364,6 +376,7 @@ MonoBehaviour:
   exitEnd: {x: 0.8175, y: 1.2540002}
   EnemyCount: 6
   WaitBetweenEachSpawn: 0.1
+  PostWait: 0.15
   ExitDelay: 5
   ExitDuration: 1.25
   EntryDuration: 0.75
@@ -397,6 +410,7 @@ MonoBehaviour:
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 993.2662, y: 1099.4324}
   skipIndex: 10
+  IsCompacted: 0
   WaitDuration: 15
   AliveEnemiesRequired: 0
 --- !u!114 &1672500286672064727
@@ -415,6 +429,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 1642.4358, y: 1354.0306}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.48541993, y: 1.1410357}
@@ -425,6 +440,7 @@ MonoBehaviour:
   exitEnd: {x: 0.13059342, y: -0.030490637}
   EnemyCount: 6
   WaitBetweenEachSpawn: 0.2
+  PostWait: 0.15
   ExitDelay: 4.1
   ExitDuration: 1.25
   EntryDuration: 0.75
@@ -463,6 +479,7 @@ MonoBehaviour:
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 1170.6848, y: 1676.4187}
   skipIndex: 10
+  IsCompacted: 0
   WaitDuration: 15
   AliveEnemiesRequired: 0
 --- !u!114 &2645339244706186839
@@ -481,6 +498,7 @@ MonoBehaviour:
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 895.98206, y: 393.0526}
   skipIndex: 10
+  IsCompacted: 0
   WaitDuration: 15
   AliveEnemiesRequired: 0
 --- !u!114 &3090325071229651405
@@ -499,6 +517,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 1489.5782, y: 774.8659}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.5145801, y: 1.1410357}
@@ -509,6 +528,7 @@ MonoBehaviour:
   exitEnd: {x: 0.8694066, y: -0.030490637}
   EnemyCount: 6
   WaitBetweenEachSpawn: 0.2
+  PostWait: 0.15
   ExitDelay: 4.1
   ExitDuration: 1.25
   EntryDuration: 0.75
@@ -547,6 +567,7 @@ MonoBehaviour:
   title: SingleSpawnerNode
   position: {x: 1036.5281, y: 1194.9122}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 6e966d668ddfb5a4a961dcb6aca7a0fb, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 1.25, y: 1.05}
@@ -590,6 +611,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 911.67194, y: -243.61246}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.48541993, y: 1.1410357}
@@ -600,6 +622,7 @@ MonoBehaviour:
   exitEnd: {x: 0.13059342, y: -0.030490637}
   EnemyCount: 6
   WaitBetweenEachSpawn: 0.2
+  PostWait: 0.15
   ExitDelay: 4.1
   ExitDuration: 1.25
   EntryDuration: 0.75
@@ -638,6 +661,7 @@ MonoBehaviour:
   title: RepeatNode
   position: {x: 582.2924, y: -23.461395}
   skipIndex: 20
+  IsCompacted: 0
   linkedNodes:
   - {fileID: -5786720801244618245}
   RepeatCount: 6
@@ -659,6 +683,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 484, y: -275}
   skipIndex: 30
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: fc86072f3a38af04fa7b9a16c4cb61cb, type: 3}
   storedModifier: {fileID: 0}
   start: {x: -0.25, y: 1.05}
@@ -669,6 +694,7 @@ MonoBehaviour:
   exitEnd: {x: -0.35, y: 0.65}
   EnemyCount: 6
   WaitBetweenEachSpawn: 0.1
+  PostWait: 0.15
   ExitDelay: 5
   ExitDuration: 1.25
   EntryDuration: 0.75
@@ -702,5 +728,6 @@ MonoBehaviour:
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 750, y: -396}
   skipIndex: 10
+  IsCompacted: 0
   WaitDuration: 15
   AliveEnemiesRequired: 0

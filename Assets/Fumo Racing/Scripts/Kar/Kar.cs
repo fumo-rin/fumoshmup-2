@@ -16,6 +16,7 @@ public class Kar : MonoBehaviour
 
     private void Update()
     {
+        TimeSlowHandler.Reload();
         RunCar();
     }
     void RunCar()
@@ -39,14 +40,14 @@ public class Kar : MonoBehaviour
         bool hasInput = input.sqrMagnitude > 0.0001f;
         bool isBraking = brakeAction.IsPressedRaw();
 
-        float cameraTarget = 80f;
+        float cameraTarget = 70f;
 
         float alignment = speed > 0.1f ? Vector3.Dot(velocity / speed, inputDir) : 0f;
         float aligned = Mathf.InverseLerp(0.3f, 0.7f, alignment);
 
         if (hasInput && speed > 2f)
         {
-            cameraTarget = Mathf.Lerp(80f, (speed * 2.5f + 80f).Clamp(70f, 105f), aligned);
+            cameraTarget = Mathf.Lerp(70f, (speed * 2.5f + 70f).Clamp(60f, 105f), aligned);
         }
 
         _cam.Lens.FieldOfView =

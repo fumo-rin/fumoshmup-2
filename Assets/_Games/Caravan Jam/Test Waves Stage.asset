@@ -16,6 +16,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 603, y: -86}
   skipIndex: 100
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   storedModifier: {fileID: 0}
   start: {x: -0.25, y: 1.05}
@@ -60,6 +61,7 @@ MonoBehaviour:
   title: BossNode
   position: {x: 755, y: 123}
   skipIndex: 10100
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 5880617408959dd489d13d07cea4e9d3, type: 3}
   bossStartDialogue: {fileID: 0}
   bossKillDialogue: {fileID: 0}
@@ -82,6 +84,7 @@ MonoBehaviour:
   title: SingleSpawnerNode
   position: {x: 965, y: 77}
   skipIndex: 400
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 6e966d668ddfb5a4a961dcb6aca7a0fb, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 1.25, y: 1.05}
@@ -120,6 +123,7 @@ MonoBehaviour:
   title: SingleSpawnerNode
   position: {x: 596, y: 56}
   skipIndex: 300
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 6e966d668ddfb5a4a961dcb6aca7a0fb, type: 3}
   storedModifier: {fileID: 0}
   start: {x: -0.25, y: 1.05}
@@ -158,6 +162,7 @@ MonoBehaviour:
   title: SingleSpawnerNode
   position: {x: 1295, y: 107}
   skipIndex: 500
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 6e966d668ddfb5a4a961dcb6aca7a0fb, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.4975, y: 1.1659998}
@@ -250,6 +255,7 @@ MonoBehaviour:
   title: BossNode
   position: {x: 671, y: -11}
   skipIndex: 10000
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: df43bc81f13947848881cceacf20cbb1, type: 3}
   bossStartDialogue: {fileID: 0}
   bossKillDialogue: {fileID: 0}
@@ -272,6 +278,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 1078, y: -76}
   skipIndex: 200
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 1.25, y: 1.05}

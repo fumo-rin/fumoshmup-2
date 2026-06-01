@@ -16,6 +16,7 @@ MonoBehaviour:
   title: SingleSpawnerNode
   position: {x: 1280, y: -565}
   skipIndex: 20
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 6e966d668ddfb5a4a961dcb6aca7a0fb, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.90250003, y: 1.2119994}
@@ -62,6 +63,7 @@ MonoBehaviour:
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 1044, y: 372}
   skipIndex: 20
+  IsCompacted: 0
   WaitDuration: 15
   AliveEnemiesRequired: 0
 --- !u!114 &-7727990906152054987
@@ -80,6 +82,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 1736, y: 259}
   skipIndex: 20
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: -0.25, y: 1.05}
@@ -129,6 +132,7 @@ MonoBehaviour:
   title: BossNode
   position: {x: 600, y: 90}
   skipIndex: 60
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: f3aa879dbaa93524196152e60fd9cde6, type: 3}
   bossStartDialogue: {fileID: 11400000, guid: b2d53c9a7e7894f4a89082ebe1dd3c3f, type: 2}
   bossKillDialogue: {fileID: 0}
@@ -151,6 +155,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 616, y: -407}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: -0.25, y: 1.05}
@@ -200,6 +205,7 @@ MonoBehaviour:
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 1195, y: 115.5}
   skipIndex: 20
+  IsCompacted: 0
   WaitDuration: 3
   AliveEnemiesRequired: 4
 --- !u!114 &-5923801040860991818
@@ -218,6 +224,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 825.0625, y: -124.75653}
   skipIndex: 40
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.05000016, y: 1.2559997}
@@ -267,6 +274,7 @@ MonoBehaviour:
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 1991, y: 118}
   skipIndex: 10
+  IsCompacted: 0
   WaitDuration: 4.68
   AliveEnemiesRequired: 1
 --- !u!114 &-3969893634529169883
@@ -285,6 +293,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 1026, y: 517}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 1.25, y: 1.05}
@@ -334,6 +343,7 @@ MonoBehaviour:
   title: BossNode
   position: {x: 620, y: 173}
   skipIndex: 30
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 5ef0fb12c3baa1c4fbcd7ea8279d554a, type: 3}
   bossStartDialogue: {fileID: 0}
   bossKillDialogue: {fileID: 0}
@@ -356,6 +366,7 @@ MonoBehaviour:
   title: RepeatNode
   position: {x: 1038.0625, y: -365.75653}
   skipIndex: 40
+  IsCompacted: 0
   linkedNodes:
   - {fileID: -5923801040860991818}
   - {fileID: -3525028640292555020}
@@ -378,6 +389,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 1658.0625, y: 25.24347}
   skipIndex: 40
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.9499998, y: 1.2559997}
@@ -427,6 +439,7 @@ MonoBehaviour:
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 1231, y: -66.5}
   skipIndex: 20
+  IsCompacted: 0
   WaitDuration: 3
   AliveEnemiesRequired: 2
 --- !u!114 &-2207715632302847647
@@ -445,6 +458,7 @@ MonoBehaviour:
   title: SingleSpawnerNode
   position: {x: 1612, y: 668}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.4025, y: 1.1019996}
@@ -488,6 +502,7 @@ MonoBehaviour:
   title: SingleSpawnerNode
   position: {x: 2362, y: 208}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.815, y: 1.0679998}
@@ -531,6 +546,7 @@ MonoBehaviour:
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 1498, y: 563}
   skipIndex: 10
+  IsCompacted: 0
   WaitDuration: 3.84
   AliveEnemiesRequired: 1
 --- !u!114 &-175885512777121902
@@ -549,6 +565,7 @@ MonoBehaviour:
   title: MusicNode
   position: {x: 228, y: -260}
   skipIndex: 10
+  IsCompacted: 0
   music: {fileID: 11400000, guid: 040ad734a48bb8d42bd41a56534413cc, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
@@ -636,6 +653,7 @@ MonoBehaviour:
   title: SingleSpawnerNode
   position: {x: 391, y: -922}
   skipIndex: 20
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 6e966d668ddfb5a4a961dcb6aca7a0fb, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 1.2725, y: 1.2099993}
@@ -682,6 +700,7 @@ MonoBehaviour:
   title: SingleSpawnerNode
   position: {x: 2012, y: 719}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.4025, y: 1.1019996}
@@ -725,6 +744,7 @@ MonoBehaviour:
   title: WaitForTimeNode
   position: {x: 1308, y: -89}
   skipIndex: 40
+  IsCompacted: 0
   WaitTime: 1
 --- !u!114 &1152232079814675342
 MonoBehaviour:
@@ -742,6 +762,7 @@ MonoBehaviour:
   title: WaitForTimeNode
   position: {x: 1015, y: -521}
   skipIndex: 10
+  IsCompacted: 0
   WaitTime: 1.25
 --- !u!114 &1391741894681701241
 MonoBehaviour:
@@ -759,6 +780,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 1525, y: 99}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: -0.25, y: 1.05}
@@ -808,6 +830,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 1059, y: 34}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 1.25, y: 1.05}
@@ -857,6 +880,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 780, y: -859}
   skipIndex: 20
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: -0.25, y: 1.05}
@@ -906,6 +930,7 @@ MonoBehaviour:
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 1111, y: -225}
   skipIndex: 10
+  IsCompacted: 0
   WaitDuration: 6
   AliveEnemiesRequired: 1
 --- !u!114 &4045626325182533155
@@ -924,6 +949,7 @@ MonoBehaviour:
   title: SingleSpawnerNode
   position: {x: 1714, y: -322}
   skipIndex: 10
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: -0.25, y: 1.05}
@@ -967,6 +993,7 @@ MonoBehaviour:
   title: SingleSpawnerNode
   position: {x: 2116, y: -640}
   skipIndex: 20
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 0.97749984, y: 1.0859991}
@@ -1010,6 +1037,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 2262, y: -136}
   skipIndex: 20
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 1.25, y: 1.05}
@@ -1059,6 +1087,7 @@ MonoBehaviour:
   title: SingleSpawnerNode
   position: {x: 1703, y: -662}
   skipIndex: 20
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: 1.2624999, y: 0.947999}
@@ -1102,6 +1131,7 @@ MonoBehaviour:
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 1185, y: -726}
   skipIndex: 20
+  IsCompacted: 0
   WaitDuration: 5.82
   AliveEnemiesRequired: 1
 --- !u!114 &7468450290430118007
@@ -1120,6 +1150,7 @@ MonoBehaviour:
   title: LineSpawnerNode
   position: {x: 1718, y: -223}
   skipIndex: 20
+  IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
   storedModifier: {fileID: 0}
   start: {x: -0.25, y: 1.05}
@@ -1169,5 +1200,6 @@ MonoBehaviour:
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 548, y: 935}
   skipIndex: 10
+  IsCompacted: 0
   WaitDuration: 10.23
   AliveEnemiesRequired: 0

@@ -31,25 +31,27 @@
             "956856a04d5ae924483a43cea9a09ce2",
             "b5dcc7d7f2bfe284f8e23b576869610f",
             "8c4802b8cefbc2349b876bbab6375dd2",
-            "61446967f900d2a4fb9012ba50a60e07"
+            "61446967f900d2a4fb9012ba50a60e07",
+            "dc79cc6be2683484f9a178335b5ac0c9"
         ],
         "_values": [
-            370,
-            404,
-            369,
-            341,
-            414,
-            310,
-            139
+            376,
+            411,
+            373,
+            347,
+            417,
+            315,
+            194,
+            31
         ]
     },
     "_paletteManager": {
-        "_selectedBrushIdx": -1,
+        "_selectedBrushIdx": 8,
         "_showBrushName": false,
         "_viewList": false,
         "_showTabsInMultipleRows": false,
         "_iconSize": 132,
-        "_selectedPaletteId": -8584212766613767789
+        "_selectedPaletteId": -8584212771228877892
     },
     "_floorManager": {
         "_profileKeys": [
@@ -1119,7 +1121,7 @@
             "_paintOnMeshesWithoutCollider": false,
             "_ignoreScenetColliders": false,
             "_paintOnSelectedOnly": false,
-            "_paintOnPalettePrefabs": false,
+            "_paintOnPalettePrefabs": true,
             "_mode": 1,
             "_paralellToTheSurface": true,
             "_repeat": false,
@@ -15652,7 +15654,7 @@
             },
             "_origin": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": -0.7141571044921875,
                 "z": -49.644744873046878
             },
             "_rotation": {
