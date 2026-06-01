@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 #if UNITY_2021_2_OR_NEWER
 using UnityEngine;
 using UnityEditor.Overlays;
@@ -84,9 +85,10 @@ namespace PluginMaster
     [UnityEditor.Overlays.Overlay(typeof(UnityEditor.SceneView), "PWB/Selection", true)]
     public class PWBSelectionToolbarOverlay : UnityEditor.Overlays.ToolbarOverlay
     {
-        private static bool _isDisplayed = false;
+        private static PWBSelectionToolbarOverlay _instance = null;
         PWBSelectionToolbarOverlay() : base(SelectionToggle.ID, CircleSelectToggle.ID, ExtrudeToggle.ID, MirrorToggle.ID)
         {
+            _instance = this;
             this.displayedChanged += OndisplayedChanged;
 #if UNITY_2022_2_OR_NEWER
             collapsedIcon = Resources.Load<Texture2D>(ToggleManager.iconPath + "Selection");
@@ -95,11 +97,12 @@ namespace PluginMaster
 
         private void OndisplayedChanged(bool value)
         {
-            _isDisplayed = value;
             ToolbarOverlayManager.OnToolbarDisplayedChanged();
         }
-
-        public static bool IsDisplayed => _isDisplayed;
+        public static bool hasInstance => _instance != null;
+        public static bool isDisplayed => _instance != null && _instance.displayed;
+        public static void SetDisplayed(bool value) { if (_instance != null) _instance.displayed = value; }
     }
 }
 #endif
+#pragma warning restore UDR0001

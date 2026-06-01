@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 namespace PluginMaster
 {
@@ -19,8 +20,10 @@ namespace PluginMaster
         public const string UNDO_CMD = "Edit Thumbnail";
         [SerializeField] private PaletteManager _paletteManager = null;
 
+        private static ThumbnailEditorWindow _instance = null;
         protected static BrushSettings _brush = null;
         public static int _settingsIdx = 0;
+
 
         protected Texture2D _thumbnail = null;
         [SerializeField] protected ThumbnailSettings _settings = null;
@@ -28,7 +31,7 @@ namespace PluginMaster
         private GUIStyle _nextBtnStyle = null;
         private GUIStyle _prevBtnStyle = null;
 
-        private static ThumbnailEditorWindow _instance = null;
+        
         public static void ShowWindow(BrushSettings brush, int brushIdx)
         {
             _brush = brush;
@@ -53,6 +56,7 @@ namespace PluginMaster
 
         protected abstract void InitializePreview();
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0004:Domain Reload Analyzer")]
         protected virtual void OnEnable()
         {
             if (_brush == null) return;
@@ -60,6 +64,7 @@ namespace PluginMaster
             _thumbnail = new Texture2D(ThumbnailUtils.SIZE, ThumbnailUtils.SIZE);
             _settings = new ThumbnailSettings(_brush.thumbnailSettings);
             Initialize(_brush);
+            UnityEditor.Undo.undoRedoPerformed -= OnUndoPerformed;
             UnityEditor.Undo.undoRedoPerformed += OnUndoPerformed;
             _nextBtnStyle = new GUIStyle();
             _nextBtnStyle.normal.background = Resources.Load<Texture2D>("Sprites/Next");
@@ -445,3 +450,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

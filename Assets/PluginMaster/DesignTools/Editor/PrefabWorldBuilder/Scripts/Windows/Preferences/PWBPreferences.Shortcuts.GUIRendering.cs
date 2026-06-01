@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -72,6 +73,7 @@ namespace PluginMaster
 
                     if (GUILayout.Toggle(_floorCategory, "Floor", categoryButton)) SelectCategory(ref _floorCategory);
                     if (GUILayout.Toggle(_wallCategory, "Wall", categoryButton)) SelectCategory(ref _wallCategory);
+                    if (GUILayout.Toggle(_blockCategory, "Block", categoryButton)) SelectCategory(ref _blockCategory);
 
                     if (GUILayout.Toggle(_selectionCategory, "Selection", categoryButton))
                         SelectCategory(ref _selectionCategory);
@@ -81,6 +83,9 @@ namespace PluginMaster
                     if (GUILayout.Toggle(_gridCategory, "Grid", categoryButton)) SelectCategory(ref _gridCategory);
                     if (GUILayout.Toggle(_snapCategory, "Snap", categoryButton)) SelectCategory(ref _snapCategory);
                     if (GUILayout.Toggle(_paletteCategory, "Palette", categoryButton)) SelectCategory(ref _paletteCategory);
+                    if (GUILayout.Toggle(_uiCategory, "UI", categoryButton)) SelectCategory(ref _uiCategory);
+                    if (GUILayout.Toggle(_toolModesCategory, "Tool Modes", categoryButton))
+                        SelectCategory(ref _toolModesCategory);
 
                     using (new UnityEditor.EditorGUI.DisabledGroupScope(true))
                         GUILayout.Box(new GUIContent(), new GUIStyle(categoryButton) { fixedHeight = 427 });
@@ -144,7 +149,9 @@ namespace PluginMaster
                         cellRect = _multiColumnHeader.GetCellRect(1, columnRect);
                         var cellW = cellRect.width;
                         var shortcutText = shortcutString(shortcut);
-                        if (shortcut is PWBTwoStepKeyShortcut)
+                        if ((shortcut is PWBTwoStepKeyShortcut && (shortcut.group & PWBShortcut.Group.GRID) == 0) 
+                            || (shortcut is PWBTwoStepKeyShortcut && (shortcut.group & PWBShortcut.Group.GRID) != 0
+                            && !PWBSettings.shortcuts.gridEnableShortcuts.combination.isDissabled()))
                         {
                             cellRect.x += minX;
                             cellRect.width = 20;
@@ -234,6 +241,8 @@ namespace PluginMaster
                                 conflictGroup = "Floor - ";
                             else if ((conflictedShortcut.group & PWBShortcut.Group.WALL) != 0)
                                 conflictGroup = "Wall - ";
+                            else if ((conflictedShortcut.group & PWBShortcut.Group.BLOCK) != 0)
+                                conflictGroup = "Block - ";
                         }
                         var conflictText = $"Conflict with {conflictGroup}{conflictedShortcut.name}";
                         UnityEditor.EditorGUI.LabelField(cellRect, new GUIContent(warningTexture, conflictText));
@@ -492,6 +501,16 @@ namespace PluginMaster
                     {
                         ShortcutRow(PWBSettings.shortcuts.wallHalfTurn);
                     }
+                    else if (_blockCategory)
+                    {
+                        ShortcutRow(PWBSettings.shortcuts.blockPreviewRotate90YCW);
+                        ShortcutRow(PWBSettings.shortcuts.blockRotate90YCW);
+                        ShortcutRow(PWBSettings.shortcuts.blockRotate90YCCW);
+                        ShortcutRow(PWBSettings.shortcuts.blockRotate90XCW);
+                        ShortcutRow(PWBSettings.shortcuts.blockRotate90XCCW);
+                        ShortcutRow(PWBSettings.shortcuts.blockRotate90ZCW);
+                        ShortcutRow(PWBSettings.shortcuts.blockRotate90ZCCW);
+                    }
                     else if (_circleSelectCategory)
                     {
                         MouseShortcutRow(PWBSettings.shortcuts.brushRadius);
@@ -530,6 +549,15 @@ namespace PluginMaster
                         MouseShortcutRow(PWBSettings.shortcuts.paletteNextBrushScroll, true);
                         MouseShortcutRow(PWBSettings.shortcuts.paletteNextPaletteScroll, true);
                     }
+                    else if (_uiCategory)
+                    {
+                        ShortcutRow(PWBSettings.shortcuts.closeAllWindows);
+                        ShortcutRow(PWBSettings.shortcuts.toggleOverlays);
+                    }
+                    else if (_toolModesCategory)
+                    {
+                        ShortcutRow(PWBSettings.shortcuts.toolModesMoveSymmetryOriginToMousePos);
+                    }
                     GUILayout.Space((row + 2) * columnHeight);
                     if (_gridCategory && !PWBSettings.shortcuts.gridEnableShortcuts.combination.isDissabled())
                     {
@@ -552,3 +580,4 @@ namespace PluginMaster
                 "Create Conflict", "Cancel");
     }
 }
+#pragma warning restore UDR0001

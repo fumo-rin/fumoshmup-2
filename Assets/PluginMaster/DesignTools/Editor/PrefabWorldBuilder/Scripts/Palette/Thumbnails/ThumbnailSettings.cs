@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -37,6 +38,7 @@ namespace PluginMaster
         public bool useCustomImage { get => _useCustomImage; set => _useCustomImage = value; }
         public ThumbnailSettings() { }
 
+        
         private static ThumbnailSettings _defaultTAsset2DThumbnailSettings = null;
         public static ThumbnailSettings GetDefaultTAsset2DThumbnailSettings()
         {
@@ -97,3 +99,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

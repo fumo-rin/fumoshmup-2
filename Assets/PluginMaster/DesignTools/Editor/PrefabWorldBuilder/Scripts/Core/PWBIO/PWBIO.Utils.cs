@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -18,19 +19,10 @@ namespace PluginMaster
 {
     public static partial class PWBIO
     {
-        #region PWB WINDOWS
-        public static void CloseAllWindows(bool closeToolbar = true)
-        {
-            BrushProperties.CloseWindow();
-            ToolProperties.CloseWindow();
-            PrefabPalette.CloseWindow();
-            if (closeToolbar) PWBToolbar.CloseWindow();
-        }
-        #endregion
-
         #region SELECTION
         public static void UpdateSelection()
         {
+            RepaintInspectorIfNeededAfterPaint();
             if (SelectionManager.topLevelSelection.Length == 0)
             {
                 if (tool == ToolController.Tool.EXTRUDE)
@@ -62,6 +54,24 @@ namespace PluginMaster
                 _selectionBounds = BoundsUtils.GetSelectionBounds(SelectionManager.topLevelSelection, rotation);
                 _selectionRotation = rotation;
             }
+        }
+
+        private static bool _repaintInspectorAfterPaint = false;
+
+        private static void RepaintInspectorAfterScenePaint()
+        {
+            GUIUtility.hotControl = 0;
+            GUIUtility.keyboardControl = 0;
+            _repaintInspectorAfterPaint = true;
+            UnityEditor.EditorApplication.delayCall -= RepaintInspectorIfNeededAfterPaint;
+            UnityEditor.EditorApplication.delayCall += RepaintInspectorIfNeededAfterPaint;
+        }
+
+        private static void RepaintInspectorIfNeededAfterPaint()
+        {
+            if (!_repaintInspectorAfterPaint) return;
+            _repaintInspectorAfterPaint = false;
+            UnityEditorInternal.InternalEditorUtility.RepaintAllViews();
         }
         #endregion
 
@@ -124,10 +134,12 @@ namespace PluginMaster
             }
             else
             {
-#if UNITY_2022_2_OR_NEWER
-                allColliders = GameObject.FindObjectsByType<Collider>(FindObjectsSortMode.None);
+#if UNITY_6000_4_OR_NEWER
+                allColliders = Object.FindObjectsByType<Collider>();
+#elif UNITY_2022_2_OR_NEWER
+                allColliders = Object.FindObjectsByType<Collider>(FindObjectsSortMode.None);
 #else
-                allColliders = GameObject.FindObjectsOfType<Collider>();
+                allColliders = Object.FindObjectsOfType<Collider>();
 #endif
             }
             _sceneColliders.Clear();
@@ -137,53 +149,6 @@ namespace PluginMaster
             foreach (var c in allColliders) _sceneColliders.Add(c.GetInstanceID());
 #endif
         }
-#endregion
-
-        #region HANDLES
-        private static float _blinkingDelta = 0.05f;
-        private static float _blinkingValue = 1f;
-        private static void DrawDotHandleCap(Vector3 point, float alpha = 1f,
-            float scale = 1f, bool selected = false, bool isPivot = false)
-        {
-            UnityEditor.Handles.color = new Color(0f, 0f, 0f, 0.7f * alpha);
-            var handleSize = UnityEditor.HandleUtility.GetHandleSize(point);
-            var sizeDelta = handleSize * 0.0125f;
-            UnityEditor.Handles.DotHandleCap(0, point, Quaternion.identity,
-                handleSize * 0.0325f * scale * PWBCore.staticData.controPointSize, EventType.Repaint);
-            var fillColor = selected ? PWBCore.staticData.selectedContolPointColor
-                : (isPivot ? Color.green : UnityEditor.Handles.preselectionColor);
-            fillColor.a *= alpha;
-            if (selected && PWBCore.staticData.selectedControlPointBlink)
-            {
-                fillColor.a *= _blinkingValue;
-                if (_blinkingValue >= 1) _blinkingDelta = -Mathf.Abs(_blinkingDelta);
-                else if (_blinkingValue <= 0) _blinkingDelta = Mathf.Abs(_blinkingDelta);
-                _blinkingValue += _blinkingDelta;
-            }
-            UnityEditor.Handles.color = fillColor;
-            UnityEditor.Handles.DotHandleCap(0, point, Quaternion.identity,
-                (handleSize * 0.0325f * scale - sizeDelta) * PWBCore.staticData.controPointSize, EventType.Repaint);
-        }
-
-        private static bool _updateHandlePosition = false;
-        private static Vector3 _handlePosition;
-        public static void UpdateHandlePosition()
-        {
-            _updateHandlePosition = true;
-            if (tool == ToolController.Tool.TILING && tilingData != null) ApplyTilingHandlePosition(tilingData);
-            BrushstrokeManager.UpdateBrushstroke(false);
-
-        }
-        public static Vector3 handlePosition { get => _handlePosition; set => _handlePosition = value; }
-
-        private static bool _updateHandleRotation = false;
-        private static Quaternion _handleRotation;
-        public static void UpdateHandleRotation()
-        {
-            _updateHandleRotation = true;
-            BrushstrokeManager.UpdateBrushstroke(false);
-        }
-        public static Quaternion handleRotation { get => _handleRotation; set => _handleRotation = value; }
         #endregion
 
         #region DRAG AND DROP
@@ -294,8 +259,9 @@ namespace PluginMaster
 
         private static void OnPrefabStageChanged(UnityEditor.SceneManagement.PrefabStage stage)
         {
+            ClearPreviewState();
             if (ToolController.current == ToolController.Tool.NONE) return;
-            UpdateOctree();
+            SetOctreeDirty();
         }
 #else
         public static bool isInPrefabMode => false;
@@ -307,7 +273,13 @@ namespace PluginMaster
         }
         public static PrefabStage prefabStage => null;
 #endif
-#endregion
+        private static void OnSceneOpened(UnityEngine.SceneManagement.Scene scene,
+            UnityEditor.SceneManagement.OpenSceneMode mode)
+        {
+            ClearPreviewState();
+            SetOctreeDirty();
+        }
+        #endregion
 
         #region BRUSHTROKE
         private static void BrushstrokeMouseEvents(BrushToolBase settings)
@@ -405,5 +377,7 @@ namespace PluginMaster
         private static Vector3 TangentSpaceToWorld(Vector3 tangent, Vector3 bitangent, Vector2 tangentSpacePos)
             => (tangent * tangentSpacePos.x + bitangent * tangentSpacePos.y);
         #endregion
+
     }
 }
+#pragma warning restore UDR0001

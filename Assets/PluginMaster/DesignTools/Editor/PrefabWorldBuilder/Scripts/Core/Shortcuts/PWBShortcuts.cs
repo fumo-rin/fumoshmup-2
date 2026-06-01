@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -138,6 +139,15 @@ namespace PluginMaster
             _floorRotate90YCW.Copy(other._floorRotate90YCW);
             /*/// WALL ///*/
             _wallHalfTurn.Copy(other._wallHalfTurn);
+            /*/// BLOCK ///*/
+            _blockPreviewRotate90YCW.Copy(other._blockPreviewRotate90YCW);
+            _blockRotate90XCW.Copy(other._blockRotate90XCW);
+            _blockRotate90YCW.Copy(other._blockRotate90YCW);
+            _blockRotate90ZCW.Copy(other._blockRotate90ZCW);
+            _blockRotate90XCCW.Copy(other._blockRotate90XCCW);
+            _blockRotate90YCCW.Copy(other._blockRotate90YCCW);
+            _blockRotate90ZCCW.Copy(other._blockRotate90ZCCW);
+            _toolModesMoveSymmetryOriginToMousePos.Copy(other._toolModesMoveSymmetryOriginToMousePos);
 
             //Mouse shortcuts
             /*/// PIN ///*/
@@ -331,6 +341,15 @@ namespace PluginMaster
                 //WALL
                 d0.wallHalfTurn.combination.Set(KeyCode.S);
 
+                //BLOCK
+                d0.blockPreviewRotate90YCW.combination.Set(KeyCode.S);
+                d0.blockRotate90XCW.combination.Set(KeyCode.G);
+                d0.blockRotate90YCW.combination.Set(KeyCode.A);
+                d0.blockRotate90ZCW.combination.Set(KeyCode.B);
+                d0.blockRotate90XCCW.combination.Set(KeyCode.G, EventModifiers.Shift);
+                d0.blockRotate90YCCW.combination.Set(KeyCode.A, EventModifiers.Shift);
+                d0.blockRotate90ZCCW.combination.Set(KeyCode.B, EventModifiers.Shift);
+
                 return d0;
             }
             return null;
@@ -382,3 +401,4 @@ namespace PluginMaster
         #endregion
     }
 }
+#pragma warning restore UDR0001

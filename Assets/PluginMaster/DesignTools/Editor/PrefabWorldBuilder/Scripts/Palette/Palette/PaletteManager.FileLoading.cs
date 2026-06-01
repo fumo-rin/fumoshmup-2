@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ namespace PluginMaster
 {
     public partial class PaletteManager : ISerializationCallbackReceiver
     {
+
         private static bool _loadPaletteFilesPending = false;
         static System.DateTime _lastLoadTime = System.DateTime.MinValue;
 
@@ -36,7 +38,9 @@ namespace PluginMaster
                 return;
             _lastLoadTime = now;
             _loadPaletteFilesPending = false;
-            var txtPaths = System.IO.Directory.GetFiles(PWBData.palettesDirectory, "*.txt");
+            var palDir = PWBData.palettesDirectory;
+            if (!System.IO.Directory.Exists(palDir)) return;
+            var txtPaths = System.IO.Directory.GetFiles(palDir, "*.txt");
             if (txtPaths.Length == 0)
             {
                 if (_nonPinnedPaletteDataList.Count == 0) CreateEmptyPalette();
@@ -84,6 +88,11 @@ namespace PluginMaster
                     loadedIds.Add(loadedId);
                     paletteData.filePath = path;
                     AddPalette(paletteData, save: false);
+                    if (paletteData.RepairItemParentIds())
+                    {
+                        Debug.Log($"[PWB] Repaired corrupted parent references in palette: '{paletteData.name}'");
+                        paletteData.Save();
+                    }
                 }
                 catch
                 {
@@ -96,3 +105,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

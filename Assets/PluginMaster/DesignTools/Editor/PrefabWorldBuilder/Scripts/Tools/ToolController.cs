@@ -11,8 +11,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-using System;
-
+#pragma warning disable UDR0001
+using UnityEngine;
 namespace PluginMaster
 {
     [UnityEditor.InitializeOnLoad]
@@ -42,13 +42,25 @@ namespace PluginMaster
         public enum ToolState { NONE, PREVIEW, EDIT, PERSISTENT }
 
         private static bool _editMode = false;
-        public static Action<Tool> OnToolChange;
-        public static Action OnToolModeChanged;
+        public static System.Action<Tool> OnToolChange;
+        public static System.Action OnToolModeChanged;
         public static bool _triggerToolChangeEvent = true;
+        private static bool _editorInitialized = false;
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0004:Domain Reload Analyzer")]
         static ToolController()
         {
+            UnityEditor.EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
             UnityEditor.EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+
+            UnityEditor.SceneManagement.EditorSceneManager.sceneClosing -= OnSceneClosing;
+            UnityEditor.SceneManagement.EditorSceneManager.sceneClosing += OnSceneClosing;
+
+            PaletteManager.OnBrushSelectionChanged -= TilingManager.settings.UpdateCellSize;
             PaletteManager.OnBrushSelectionChanged += TilingManager.settings.UpdateCellSize;
+
+            UnityEditor.EditorApplication.update -= OnFirstUpdate;
+            UnityEditor.EditorApplication.update += OnFirstUpdate;
         }
 
         public static bool editMode
@@ -131,13 +143,12 @@ namespace PluginMaster
                         PWBIO.OnWallEnabled();
                         break;
                     case Tool.BLOCK:
-#if PWB_BLOCK
                         PWBIO.OnBlockEnabled();
-#endif
                         break;
                     case Tool.NONE:
                         PWBIO.ResetUnityCurrentTool();
                         PWBIO.ResetReplacer();
+                        PWBIO.BeginInspectorRecovery();
                         PWBCore.DestroyTempColliders();
                         ApplicationEventHandler.hierarchyChangedWhileUsingTools = false;
                         break;
@@ -149,6 +160,7 @@ namespace PluginMaster
                     PWBIO.SaveUnityCurrentTool();
                     if (PWBCore.staticData.openToolPropertiesWhenAToolIsSelected) ToolProperties.ShowWindow();
                     PaletteManager.pickingBrushes = false;
+                    ToolModes.RepainWindow();
                 }
 
                 if (_current == Tool.BRUSH || _current == Tool.PIN || _current == Tool.GRAVITY
@@ -171,8 +183,8 @@ namespace PluginMaster
 
                 ToolProperties.RepainWindow();
                 if (BrushProperties.instance != null) BrushProperties.instance.Repaint();
-                if (UnityEditor.SceneView.sceneViews.Count > 0) ((UnityEditor.SceneView)
-                        UnityEditor.SceneView.sceneViews[0]).Focus();
+                if (_current != Tool.NONE && UnityEditor.SceneView.sceneViews.Count > 0)
+                    ((UnityEditor.SceneView)UnityEditor.SceneView.sceneViews[0]).Focus();
             }
         }
 
@@ -184,15 +196,21 @@ namespace PluginMaster
             PWBIO.ResetUnityCurrentTool();
             PWBToolbar.RepaintWindow();
         }
-
+        private static void OnFirstUpdate()
+        {
+            _editorInitialized = true;
+            UnityEditor.EditorApplication.update -= OnFirstUpdate;
+        }
         private static void OnSceneClosing(UnityEngine.SceneManagement.Scene scene, bool removingScene)
         {
+            if (!_editorInitialized) return;
             PWBCore.staticData.SaveAndUpdateVersion();
             DeselectTool();
         }
 
         private static void OnPlayModeStateChanged(UnityEditor.PlayModeStateChange state)
         {
+            if (!_editorInitialized) return;
             DeselectTool();
             PWBCore.DestroyTempColliders();
         }
@@ -219,9 +237,7 @@ namespace PluginMaster
             if (settings is MirrorSettings) return Tool.MIRROR;
             if (settings is FloorSettings) return Tool.FLOOR;
             if (settings is WallSettings) return Tool.WALL;
-#if PWB_BLOCK
             if (settings is BlockSettings) return Tool.BLOCK;
-#endif
             return Tool.NONE;
         }
         public static Tool GetToolFromSettings(IPaintToolSettings settings)
@@ -240,9 +256,7 @@ namespace PluginMaster
             if (settings is MirrorSettings) return Tool.MIRROR;
             if (settings is FloorSettings) return Tool.FLOOR;
             if (settings is WallSettings) return Tool.WALL;
-#if PWB_BLOCK
             if (settings is BlockSettings) return Tool.BLOCK;
-#endif
             return Tool.NONE;
         }
 
@@ -264,9 +278,7 @@ namespace PluginMaster
                 case Tool.MIRROR: return MirrorManager.settings;
                 case Tool.FLOOR: return FloorManager.settings;
                 case Tool.WALL: return WallManager.settings;
-#if PWB_BLOCK
                 case Tool.BLOCK: return BlockManager.settings;
-#endif
                 default: return null;
             }
         }
@@ -293,3 +305,4 @@ namespace PluginMaster
             => current == Tool.LINE || current == Tool.SHAPE || current == Tool.TILING;
     }
 }
+#pragma warning restore UDR0001

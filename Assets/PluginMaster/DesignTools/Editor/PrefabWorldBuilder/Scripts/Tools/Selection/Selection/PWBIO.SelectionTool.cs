@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -18,6 +19,7 @@ namespace PluginMaster
     public static partial class PWBIO
     {
         #region SELECTION STATE & DATA
+
         private static int _selectedBoxPointIdx = -1;
         private static Quaternion _selectionRotation = Quaternion.identity;
         private static Vector3 _selectionScale = Vector3.one;
@@ -127,7 +129,10 @@ namespace PluginMaster
                 }
             }
             if (UnityEditor.Tools.current != UnityEditor.Tool.View && UnityEditor.Tools.current != UnityEditor.Tool.None)
+            {
+                _unityCurrentTool = UnityEditor.Tools.current;
                 UnityEditor.Tools.current = UnityEditor.Tool.None;
+            }
             if (SelectionManager.topLevelSelection.Length == 0) return;
 
             var points = SelectionPoints(sceneView.camera);
@@ -196,7 +201,7 @@ namespace PluginMaster
                 if (_editingSelectionHandlePosition)
                 {
                     var delta = points[_selectedBoxPointIdx];
-                    points[_selectedBoxPointIdx] = UnityEditor.Handles.PositionHandle(points[_selectedBoxPointIdx], rotation);
+                    points[_selectedBoxPointIdx] = PWBPositionHandle(TOOL_HANDLE_ID, points[_selectedBoxPointIdx], rotation);
                     delta = points[_selectedBoxPointIdx] - delta;
                     _tempSelectionHandle += delta;
                 }
@@ -335,7 +340,8 @@ namespace PluginMaster
                     if ((layerMask & (1 << obj.layer)) == 0) continue;
                 }
 
-                if (SelectionToolController.settings.tagFilter != null && SelectionToolController.settings.tagFilter.Count > 0)
+                if (SelectionToolController.settings.tagFilter != null
+                    && SelectionToolController.settings.tagFilter.Count > 0)
                 {
                     bool tagFound = false;
                     for (int t = 0; t < SelectionToolController.settings.tagFilter.Count; ++t)
@@ -357,3 +363,4 @@ namespace PluginMaster
         #endregion
     }
 }
+#pragma warning restore UDR0001

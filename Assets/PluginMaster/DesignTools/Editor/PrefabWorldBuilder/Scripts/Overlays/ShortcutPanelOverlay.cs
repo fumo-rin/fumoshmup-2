@@ -11,7 +11,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 #if UNITY_2022_2_OR_NEWER
+using UnityEngine;
 namespace PluginMaster
 {
     [UnityEditor.Overlays.Overlay(typeof(UnityEditor.SceneView), displayName: "PWB/Shortcuts",
@@ -19,15 +21,21 @@ namespace PluginMaster
 
     public class PWBShortcutPanel : UnityEditor.Overlays.Overlay
     {
+        private static PWBShortcutPanel _instance = null;
         private System.Collections.Generic.List<(string Command, string Shortcut)> _shortcutTable
             = new System.Collections.Generic.List<(string Command, string Shortcut)>();
         UnityEngine.UIElements.MultiColumnListView _multiColumnListView = null;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0004:Domain Reload Analyzer")]
         public PWBShortcutPanel()
         {
+            _instance = this;
+            PWBSettings.OnShrotcutProfileChanged -= UpdatePanel;
             PWBSettings.OnShrotcutProfileChanged += UpdatePanel;
+            collapsedIcon = Resources.Load<Texture2D>($"{ToggleManager.iconPath}Shortcuts");
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0004:Domain Reload Analyzer")]
         public override UnityEngine.UIElements.VisualElement CreatePanelContent()
         {
             _multiColumnListView = new UnityEngine.UIElements.MultiColumnListView
@@ -56,7 +64,9 @@ namespace PluginMaster
                     (element as UnityEngine.UIElements.Label).text = _shortcutTable[index].Command
             });
             _multiColumnListView.itemsSource = _shortcutTable;
+            UnityEditor.SceneView.duringSceneGui -= DuringSceneGUI;
             UnityEditor.SceneView.duringSceneGui += DuringSceneGUI;
+            ToolController.OnToolChange -= OnToolChange;
             ToolController.OnToolChange += OnToolChange;
             return _multiColumnListView;
         }
@@ -98,6 +108,21 @@ namespace PluginMaster
         {
             if (_shortcutTable.Count == 0) OnToolChange(ToolController.Tool.NONE);
         }
+        public static bool hasInstance  => _instance != null;
+        public static bool isDisplayed => _instance != null && _instance.displayed;
+
+        public static void SetDisplayed(bool value)
+        {
+            if (_instance != null)
+                _instance.displayed = value;
+        }
+
+        public static void ShowWindow()
+        {
+            if (_instance != null)
+                _instance.displayed = true;
+        }
     }
 }
 #endif
+#pragma warning restore UDR0001

@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 #if UNITY_2021_2_OR_NEWER
 using UnityEngine;
 using UnityEditor.Overlays;
@@ -72,9 +73,12 @@ namespace PluginMaster
     public abstract class GridBarToggle : EditorToolbarDropdownToggle
     {
         protected string _iconName = string.Empty;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0004:Domain Reload Analyzer")]
         public GridBarToggle()
         {
+            GridManager.settings.OnDataChanged -= UpdateValue;
             GridManager.settings.OnDataChanged += UpdateValue;
+            UnityEditor.SceneView.duringSceneGui -= UpdateValue;
             UnityEditor.SceneView.duringSceneGui += UpdateValue;
         }
         protected abstract void UpdateValue();
@@ -198,11 +202,14 @@ namespace PluginMaster
     public class LockGridToggle : PWBToolbarToggle
     {
         public const string ID = "PWB/LockGridToggle";
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0004:Domain Reload Analyzer")]
         public LockGridToggle()
         {
             UpdteIcon();
             this.RegisterValueChangedCallback(OnValueChange);
+            GridManager.settings.OnDataChanged -= UpdateValue;
             GridManager.settings.OnDataChanged += UpdateValue;
+            UnityEditor.SceneView.duringSceneGui -= UpdateValue;
             UnityEditor.SceneView.duringSceneGui += UpdateValue;
         }
         protected void UpdateValue() => value = GridManager.settings.lockedGrid;
@@ -227,11 +234,13 @@ namespace PluginMaster
     public class BoundsSnappingToggle : PWBToolbarToggle
     {
         public const string ID = "PWB/BoundsSnappingToggle";
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0004:Domain Reload Analyzer")]
         public BoundsSnappingToggle()
         {
             UpdteIcon();
             this.RegisterValueChangedCallback(OnValueChange);
             GridManager.settings.OnDataChanged += UpdateValue;
+            UnityEditor.SceneView.duringSceneGui -= UpdateValue;
             UnityEditor.SceneView.duringSceneGui += UpdateValue;
         }
         protected void UpdateValue() => value = GridManager.settings.boundsSnapping;
@@ -254,10 +263,11 @@ namespace PluginMaster
     [UnityEditor.Overlays.Overlay(typeof(UnityEditor.SceneView), "PWB/Grid", true)]
     public class PWBGridToolbarOverlay : UnityEditor.Overlays.ToolbarOverlay
     {
-        private static bool _isDisplayed = false;
+        private static PWBGridToolbarOverlay _instance = null;
         PWBGridToolbarOverlay() : base(GridTypeToggle.ID, SnapToggle.ID,
             GridToggle.ID, LockGridToggle.ID, BoundsSnappingToggle.ID)
         {
+            _instance = this;
             this.displayedChanged += OndisplayedChanged;
 #if UNITY_2022_2_OR_NEWER
             collapsedIcon = Resources.Load<Texture2D>(ToggleManager.iconPath + "Grid");
@@ -266,11 +276,13 @@ namespace PluginMaster
 
         private void OndisplayedChanged(bool value)
         {
-            _isDisplayed = value;
             ToolbarOverlayManager.OnToolbarDisplayedChanged();
         }
+        public static bool hasInstance => _instance != null;
+        public static bool isDisplayed => _instance != null && _instance.displayed;
+        public static void SetDisplayed(bool value) { if (_instance != null) _instance.displayed = value; }
 
-        public static bool IsDisplayed => _isDisplayed;
     }
 }
 #endif
+#pragma warning restore UDR0001

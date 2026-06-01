@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -322,6 +323,7 @@ namespace PluginMaster
         public LineData((GameObject, int)[] objects, long initialBrushId, LineData lineData)
             : base(objects, initialBrushId, lineData) { }
 
+        
         private static LineData _instance = null;
         public static LineData instance
         {
@@ -533,13 +535,16 @@ namespace PluginMaster
     }
 
     [System.Serializable]
-    public class LineManager : PersistentToolControllerBase<LineToolName, LineSettings, LinePoint, LineData, LineSceneData>
+    public class LineManager : PersistentToolControllerBase<LineToolName, LineSettings,
+        LinePoint, LineData, LineSceneData, LineManager>
     {
         public enum EditModeType
         {
             NODES,
             LINE_POSE
         }
+
+        
         public static EditModeType editModeType { get; set; }
         public static void ToggleEditModeType()
         {
@@ -549,3 +554,4 @@ namespace PluginMaster
     }
     #endregion
 }
+#pragma warning restore UDR0001

@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -259,7 +260,9 @@ namespace PluginMaster
         {
             var parent = obj.transform.parent;
 #if UNITY_6000_3_OR_NEWER
-            return parent != null && parent.gameObject.GetEntityId() == PWBCore.parentColliderId;
+            if (parent == null) return false;
+            var parentId = parent.gameObject.GetEntityId();
+            return parentId != EntityId.None && parentId == PWBCore.parentColliderId;
 #else
             return parent != null && parent.gameObject.GetInstanceID() == PWBCore.parentColliderId;
 #endif
@@ -497,3 +500,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

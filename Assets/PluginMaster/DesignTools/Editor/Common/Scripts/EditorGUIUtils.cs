@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -45,13 +46,13 @@ namespace PluginMaster
 
         #region CUSTOM FIELDS
         #region AXIS FIELD
-        private static Vector3[] directions =
+        private static readonly Vector3[] directions =
         {
             Vector3.right, Vector3.left,
             Vector3.up, Vector3.down,
             Vector3.forward, Vector3.back
         };
-        private static string[] directionNames =
+        private static readonly string[] directionNames =
         {
             "+X", "-X",
             "+Y", "-Y",
@@ -260,3 +261,4 @@ namespace PluginMaster
         #endregion
     }
 }
+#pragma warning restore UDR0001

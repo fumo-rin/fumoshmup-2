@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -108,7 +109,7 @@ namespace PluginMaster
         public BrushstrokeItem(Vector3 tangentPosition)
         {
             this.tangentPosition = tangentPosition;
-            
+
             this.settings = null;
             this.additionalAngle = Vector3.zero;
             this.scaleMultiplier = Vector3.one;
@@ -157,11 +158,15 @@ namespace PluginMaster
     #endregion
     public static partial class BrushstrokeManager
     {
+
         private static System.Collections.Generic.List<BrushstrokeItem> _brushstroke
             = new System.Collections.Generic.List<BrushstrokeItem>();
+
+
         public static BrushstrokeItem[] brushstroke => _brushstroke.ToArray();
         public static int itemCount => _brushstroke.Count;
-
+        private static int _triangleCount = 0;
+        public static int triangleCount => _triangleCount;
         public static void ClearBrushstroke() => _brushstroke.Clear();
 
         public static BrushstrokeItem[] brushstrokeClone
@@ -194,9 +199,12 @@ namespace PluginMaster
             var flipX = brushSettings.GetFlipX();
             var flipY = brushSettings.GetFlipY();
             var surfaceDistance = brushSettings.GetSurfaceDistance();
+            var brushItem = PaletteManager.selectedBrush.items[index];
             var strokeItem = new BrushstrokeItem(index, tokenIndex,
-                PaletteManager.selectedBrush.items[index], tangentPosition, additonalAngle,
+                brushItem, tangentPosition, additonalAngle,
                 scale, flipX, flipY, surfaceDistance);
+            if (_brushstroke.Count == 0) _triangleCount = 0;
+            _triangleCount += brushItem.trianglesCount;
             if (_brushstroke.Count > 0)
             {
                 var last = _brushstroke.Last();
@@ -204,6 +212,7 @@ namespace PluginMaster
                 _brushstroke[_brushstroke.Count - 1] = last;
             }
             _brushstroke.Add(strokeItem);
+            ToolProperties.RepainWindow();
         }
 
         private static Vector3 ScaleMultiplier(int itemIdx, IPaintToolSettings settings)
@@ -230,12 +239,15 @@ namespace PluginMaster
             _brushstroke.Clear();
             if (PaletteManager.selectedBrush == null) return;
             if (ToolController.current == ToolController.Tool.BRUSH) UpdateBrushBaseStroke(BrushManager.settings);
-            else if (ToolController.current == ToolController.Tool.GRAVITY) UpdateBrushBaseStroke(GravityToolController.settings);
+            else if (ToolController.current == ToolController.Tool.GRAVITY)
+                UpdateBrushBaseStroke(GravityToolController.settings);
             else if (ToolController.current == ToolController.Tool.PIN) UpdateSingleBrushstroke(PinManager.settings);
             else if (ToolController.current == ToolController.Tool.REPLACER) _brushstroke.Clear();
             else if (ToolController.current == ToolController.Tool.FLOOR) UpdateFloorBrushstroke(setNextIdx: false);
             else if (ToolController.current == ToolController.Tool.WALL)
                 UpdateWallBrushstroke(WallManager.wallLenghtAxis, cellsCount: 1, setNextIdx: false, deleteMode: false);
         }
+
     }
 }
+#pragma warning restore UDR0001

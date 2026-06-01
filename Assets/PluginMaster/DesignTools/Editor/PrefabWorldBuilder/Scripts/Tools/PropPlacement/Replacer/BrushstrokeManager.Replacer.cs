@@ -11,16 +11,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
 {
     public static partial class BrushstrokeManager
     {
+
         private static System.Collections.Generic.Dictionary<Transform, BrushstrokeItem> _replacerDictionary
             = new System.Collections.Generic.Dictionary<Transform, BrushstrokeItem>();
         private static System.Collections.Generic.Dictionary<BrushstrokeItem, Transform> _replacerDictionary2
            = new System.Collections.Generic.Dictionary<BrushstrokeItem, Transform>();
+
         public static void UpdateReplacerBrushstroke(bool clearDictionary,
             System.Collections.Generic.IEnumerable<GameObject> targets)
         {
@@ -145,3 +148,4 @@ namespace PluginMaster
         public static Transform GetReplacerTargetFromStrokeItem(BrushstrokeItem item) => _replacerDictionary2[item];
     }
 }
+#pragma warning restore UDR0001

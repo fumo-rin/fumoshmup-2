@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 namespace PluginMaster
 {
@@ -73,8 +74,9 @@ namespace PluginMaster
     }
 
     [System.Serializable]
-    public class GravityToolController : ToolControllerBase<GravityToolSettings>
+    public class GravityToolController : ToolControllerBase<GravityToolSettings, GravityToolController>
     {
+
         private static float _surfaceDistanceSensitivityStatic = 1.0f;
         [SerializeField] private float _surfaceDistanceSensitivity = _surfaceDistanceSensitivityStatic;
         public static float surfaceDistanceSensitivity
@@ -102,3 +104,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

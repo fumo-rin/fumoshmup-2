@@ -11,12 +11,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
 {
     public static partial class PWBIO
     {
+
         private static bool _pinned = false;
         private static Vector3 _pinMouse = Vector3.zero;
         private static RaycastHit _pinHit = new RaycastHit();
@@ -29,6 +31,7 @@ namespace PluginMaster
         private static float _pinDistanceFromSurface = 0f;
         private static Vector3 _pinProjectionDirection = Vector3.down;
         private static bool _pinFlipX = false;
+
         private static void PinDuringSceneGUI(UnityEditor.SceneView sceneView)
         {
             PinInput(sceneView);
@@ -97,6 +100,7 @@ namespace PluginMaster
                     if (PinManager.settings.flattenTerrain) FlatenTerrain();
                     Paint(PinManager.settings);
                     _pinned = false;
+                    RepaintInspectorAfterScenePaint();
                     Event.current.Use();
                 }
                 if (Event.current.type == EventType.KeyDown)
@@ -279,3 +283,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

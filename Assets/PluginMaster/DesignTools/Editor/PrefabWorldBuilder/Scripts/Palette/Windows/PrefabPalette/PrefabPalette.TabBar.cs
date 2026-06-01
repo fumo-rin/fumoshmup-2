@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -65,6 +66,7 @@ namespace PluginMaster
                 window._delayFrames = 0;
             }
 
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0004:Domain Reload Analyzer")]
             private void OnGUI()
             {
                 _delayFrames++;
@@ -410,3 +412,4 @@ namespace PluginMaster
         #endregion
     }
 }
+#pragma warning restore UDR0001

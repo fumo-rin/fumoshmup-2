@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -68,14 +69,12 @@ namespace PluginMaster
                 if (floorSettings.swapXZ) ++quarterTurns;
                 forwardAxis = Quaternion.AngleAxis(-90 * quarterTurns, settings.upwardAxis) * forwardAxis;
             }
-#if PWB_BLOCK
             else if (settings is BlockSettings)
             {
                 var blockSettings = (BlockSettings)settings;
                 var quarterTurns = BlockManager.quarterTurns;
                 forwardAxis = Quaternion.AngleAxis(-90 * quarterTurns, settings.upwardAxis) * forwardAxis;
             }
-#endif
             else if (settings is WallSettings && WallManager.halfTurn)
                 forwardAxis = Quaternion.AngleAxis(180, settings.upwardAxis) * forwardAxis;
 
@@ -103,3 +102,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

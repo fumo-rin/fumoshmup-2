@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -151,8 +152,18 @@ namespace PluginMaster
                         Quaternion.identity, 0f);
                     UnityEditor.HandleUtility.AddControl(controlId, distFromMouse);
 
+                    var handleSize = UnityEditor.HandleUtility.GetHandleSize(lineData.GetPoint(i));
+                    var guiPoint = UnityEditor.HandleUtility.WorldToGUIPoint(lineData.GetPoint(i));
+                    var edgeWorld = lineData.GetPoint(i)
+                        + UnityEngine.Camera.current.transform.right
+                        * handleSize * 0.0325f * PWBCore.staticData.controPointSize;
+                    var guiEdge = UnityEditor.HandleUtility.WorldToGUIPoint(edgeWorld);
+                    float radiusPx = Vector2.Distance(guiPoint, guiEdge);
+                    float clickRadiusPx = Mathf.Max(radiusPx, 8f);
+                    bool mouseNearPoint = Vector2.Distance(guiPoint, Event.current.mousePosition) <= clickRadiusPx;
+
                     if (!clickOnPoint && showHandles && leftMouseDown
-                    && UnityEditor.HandleUtility.nearestControl == controlId)
+                    && UnityEditor.HandleUtility.nearestControl == controlId && mouseNearPoint)
                     {
                         if (!Event.current.control)
                         {
@@ -184,7 +195,7 @@ namespace PluginMaster
                     }
                     if (Event.current.button == 1 && Event.current.type == EventType.MouseDown
                         && !Event.current.control && !Event.current.shift && !Event.current.alt
-                            && UnityEditor.HandleUtility.nearestControl == controlId)
+                            && UnityEditor.HandleUtility.nearestControl == controlId && mouseNearPoint)
                     {
                         ShowLineContextMenu(lineData, isPersistent,
                             UnityEditor.EditorGUIUtility.GUIToScreenPoint(Event.current.mousePosition), pointIdx: i);
@@ -232,7 +243,7 @@ namespace PluginMaster
                 }
                 var prevPosition = lineData.selectedPoint;
                 lineData.SetPoint(lineData.selectedPointIdx,
-                    UnityEditor.Handles.PositionHandle(selectedPoint, Quaternion.identity),
+                    PWBPositionHandle(CONTROL_POINT_HANDLE_ID, selectedPoint, Quaternion.identity),
                     registerUndo: true, selectAll);
                 var point = SnapToBounds(lineData.selectedPoint);
                 point = _snapToVertex ? LinePointSnapping(point)
@@ -391,3 +402,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

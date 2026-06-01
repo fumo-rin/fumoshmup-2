@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -33,6 +34,7 @@ namespace PluginMaster
     [System.Serializable]
     public partial class PaletteManager : ISerializationCallbackReceiver
     {
+
         #region SINGLETON
         private static PaletteManager _instance = null;
         private PaletteManager() { }
@@ -65,9 +67,9 @@ namespace PluginMaster
         #endregion
 
         #region EVENTS
-        public static System.Action OnBrushSelectionChanged;
-        public static System.Action OnSelectionChanged;
-        public static System.Action OnPaletteChanged;
+        public static System.Action OnBrushSelectionChanged = null;
+        public static System.Action OnSelectionChanged = null;
+        public static System.Action OnPaletteChanged = null;
         #endregion
 
         #region CLEAR & RESET
@@ -218,6 +220,10 @@ namespace PluginMaster
         public static void Cleanup()
         {
             foreach (var palette in allPalettes.ToArray()) palette.Cleanup();
+        }
+        public static void RepairItemParentIds()
+        {
+            foreach (var palette in allPalettes.ToArray()) palette.RepairItemParentIds();
         }
         #endregion
 
@@ -384,6 +390,9 @@ namespace PluginMaster
         public static Trit clipboardOverwriteThumbnailSettings
         { get => _clipboardOverwriteThumbnailSettings; set => _clipboardOverwriteThumbnailSettings = value; }
         #endregion
+
+
     }
     #endregion
 }
+#pragma warning restore UDR0001

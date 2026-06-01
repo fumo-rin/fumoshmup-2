@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -405,8 +406,9 @@ namespace PluginMaster
     }
 
     [System.Serializable]
-    public class PinManager : ToolControllerBase<PinSettings>
+    public class PinManager : ToolControllerBase<PinSettings, PinManager>
     {
+
         private static float _rotationSnapValueStatic = 5f;
         [SerializeField] private float _rotationSnapValue = _rotationSnapValueStatic;
 
@@ -421,6 +423,7 @@ namespace PluginMaster
             }
         }
 
+
         public override void OnBeforeSerialize()
         {
             base.OnBeforeSerialize();
@@ -434,3 +437,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

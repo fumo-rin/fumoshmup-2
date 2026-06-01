@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -19,8 +20,6 @@ namespace PluginMaster
     [System.Serializable]
     public class BrushToolSettings : BrushToolBase, IPaintOnSurfaceToolSettings, ISerializationCallbackReceiver
     {
-
-
         [SerializeField] private float _maxHeightFromCenter = 2f;
         public enum HeightType { CUSTOM, RADIUS }
         [SerializeField] private HeightType _heightType = HeightType.RADIUS;
@@ -34,11 +33,13 @@ namespace PluginMaster
             WITH_ALL_OBJECTS
         }
         [SerializeField] private AvoidOverlappingType _avoidOverlapping = AvoidOverlappingType.WITH_ALL_OBJECTS;
+        [SerializeField] private float _overlapPadding = 0f;
 
         [SerializeField] private LayerMask _layerFilter = -1;
         [SerializeField] private System.Collections.Generic.List<string> _tagFilter = null;
         [SerializeField] private RandomUtils.Range _slopeFilter = new RandomUtils.Range(0, 60);
         [SerializeField] private string[] _terrainLayerIds = null;
+
         [SerializeField] private bool _showPreview = false;
         private TerrainLayer[] _terrainLayerFilter = null;
         private bool _updateTerrainFilter = false;
@@ -113,6 +114,17 @@ namespace PluginMaster
             }
         }
 
+        public float overlapPadding
+        {
+            get => _overlapPadding;
+            set
+            {
+                value = Mathf.Max(0, value);
+                if (_overlapPadding == value) return;
+                _overlapPadding = value;
+                DataChanged();
+            }
+        }
         public virtual LayerMask layerFilter
         {
             get => _layerFilter;
@@ -227,5 +239,6 @@ namespace PluginMaster
     }
 
     [System.Serializable]
-    public class BrushManager : ToolControllerBase<BrushToolSettings> { }
+    public class BrushManager : ToolControllerBase<BrushToolSettings, BrushManager> { }
 }
+#pragma warning restore UDR0001

@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 #if UNITY_2021_2_OR_NEWER
 using UnityEngine;
 using UnityEditor.Overlays;
@@ -47,7 +48,6 @@ namespace PluginMaster
             tooltip = ToggleManager.GetTooltip("Floors", PWBSettings.shortcuts.toolbarFloorToggle.combination.ToString());
         }
     }
-#if PWB_BLOCK
     [UnityEditor.Toolbars.EditorToolbarElement(ID, typeof(UnityEditor.SceneView))]
     public class BlockToggle : ToolToggleBase<BlockToggle>
     {
@@ -62,17 +62,14 @@ namespace PluginMaster
             tooltip = ToggleManager.GetTooltip("Blocks", PWBSettings.shortcuts.toolbarBlockToggle.combination.ToString());
         }
     }
-#endif
     [UnityEditor.Overlays.Overlay(typeof(UnityEditor.SceneView), "PWB/Modular", true)]
     public class ModularEnvironmentsToolbarOverlay : UnityEditor.Overlays.ToolbarOverlay
     {
-        private static bool _isDisplayed = false;
-        ModularEnvironmentsToolbarOverlay() : base(FloorsToggle.ID, WallsToggle.ID
-#if PWB_BLOCK
-            ,BlockToggle.ID
-#endif
+        private static ModularEnvironmentsToolbarOverlay _instance = null;
+        ModularEnvironmentsToolbarOverlay() : base(FloorsToggle.ID, WallsToggle.ID, BlockToggle.ID
             )
         {
+            _instance = this;
             displayedChanged += OndisplayedChanged;
 #if UNITY_2022_2_OR_NEWER
             collapsedIcon = Resources.Load<Texture2D>(ToggleManager.iconPath + "Floors");
@@ -81,11 +78,13 @@ namespace PluginMaster
 
         private void OndisplayedChanged(bool value)
         {
-            _isDisplayed = value;
             ToolbarOverlayManager.OnToolbarDisplayedChanged();
         }
-
-        public static bool IsDisplayed => _isDisplayed;
+        public static bool hasInstance => _instance != null;
+        public static bool isDisplayed 
+            => _instance != null && _instance.displayed;
+        public static void SetDisplayed(bool value) { if (_instance != null) _instance.displayed = value; }
     }
 }
 #endif
+#pragma warning restore UDR0001

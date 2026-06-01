@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -22,6 +23,7 @@ namespace PluginMaster
         private GUIStyle _btnStyle = null;
         private bool _wasDocked = false;
 
+        
         private static PWBToolbar _instance = null;
         public static PWBToolbar instance => _instance;
 
@@ -55,6 +57,7 @@ namespace PluginMaster
             if (_instance != null) _instance.Close();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0004:Domain Reload Analyzer")]
         private void OnEnable()
         {
             _instance = this;
@@ -79,10 +82,12 @@ namespace PluginMaster
 
             minSize = new Vector2(MIN_SIZE, MIN_SIZE);
             _wasDocked = !isDocked;
-            PWBIO.controlId = GUIUtility.GetControlID(GetHashCode(), FocusType.Passive);
             PWBIO.UpdateOctree();
 
+            ToolController.OnToolChange -= OnToolChange;
             ToolController.OnToolChange += OnToolChange;
+
+            GridManager.settings.OnDataChanged -= Repaint;
             GridManager.settings.OnDataChanged += Repaint;
         }
 
@@ -175,6 +180,7 @@ namespace PluginMaster
             }
             UpdateTooltipShortcut(_floorIcon, "Floor", PWBSettings.shortcuts.toolbarFloorToggle.combination.ToString());
             UpdateTooltipShortcut(_wallIcon, "Wall", PWBSettings.shortcuts.toolbarWallToggle.combination.ToString());
+            UpdateTooltipShortcut(_blockIcon, "Block", PWBSettings.shortcuts.toolbarBlockToggle.combination.ToString());
             UpdateTooltipShortcut(_pinIcon, "Pin", PWBSettings.shortcuts.toolbarPinToggle.combination.ToString());
             UpdateTooltipShortcut(_brushIcon, "Brush", PWBSettings.shortcuts.toolbarBrushToggle.combination.ToString());
             UpdateTooltipShortcut(_eraserIcon, "Eraser", PWBSettings.shortcuts.toolbarEraserToggle.combination.ToString());
@@ -200,7 +206,7 @@ namespace PluginMaster
         #region TOOLS
         private GUIContent _floorIcon = null;
         private GUIContent _wallIcon = null;
-
+        private GUIContent _blockIcon = null;
         private GUIContent _pinIcon = null;
         private GUIContent _brushIcon = null;
         private GUIContent _eraserIcon = null;
@@ -227,6 +233,7 @@ namespace PluginMaster
         {
             _floorIcon = new GUIContent(Resources.Load<Texture2D>("Sprites/Floors"), "Floor");
             _wallIcon = new GUIContent(Resources.Load<Texture2D>("Sprites/Walls"), "Wall");
+            _blockIcon = new GUIContent(Resources.Load<Texture2D>("Sprites/Blocks"), "Block");
 
             _pinIcon = new GUIContent(Resources.Load<Texture2D>("Sprites/Pin"), "Pin");
             _brushIcon = new GUIContent(Resources.Load<Texture2D>("Sprites/Brush"), "Brush");
@@ -257,6 +264,9 @@ namespace PluginMaster
                 var wallSelected = newtool == ToolController.Tool.WALL;
                 newtool = (GUILayout.Toggle(wallSelected, _wallIcon, _btnStyle)
                 ? ToolController.Tool.WALL : (wallSelected ? ToolController.Tool.NONE : newtool));
+                var blockSelected = newtool == ToolController.Tool.BLOCK;
+                newtool = (GUILayout.Toggle(blockSelected, _blockIcon, _btnStyle)
+                ? ToolController.Tool.BLOCK : (blockSelected ? ToolController.Tool.NONE : newtool));
 
                 GUILayout.Space(5);
 
@@ -291,7 +301,7 @@ namespace PluginMaster
                 var eraserSelected = newtool == ToolController.Tool.ERASER;
                 newtool = (GUILayout.Toggle(eraserSelected, _eraserIcon, _btnStyle)
                 ? ToolController.Tool.ERASER : (eraserSelected ? ToolController.Tool.NONE : newtool));
-                
+
                 GUILayout.Space(5);
                 if (GUILayout.Button(_propertiesIcon, _btnStyle)) ToolProperties.ShowWindow();
                 GUILayout.Space(5);
@@ -495,3 +505,4 @@ namespace PluginMaster
         #endregion
     }
 }
+#pragma warning restore UDR0001

@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -49,6 +50,7 @@ namespace PluginMaster
         private int _selectedPointIdx = -1;
         protected System.Collections.Generic.List<int> _selection = new System.Collections.Generic.List<int>();
         protected Vector3[] _pointPositions = null;
+        
         private static string _commandName = null;
         public const string RESET_COMMAND_NAME = "Reset persistent pose";
         public static string COMMAND_NAME
@@ -233,3 +235,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

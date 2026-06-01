@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -18,6 +19,8 @@ namespace PluginMaster
     public class SnapSettingsWindow : UnityEditor.EditorWindow
     {
         private static readonly string[] _gridTypeOptions = { "Rectangular", "Radial" };
+
+        
         private static SnapSettingsWindow _instance = null;
         [UnityEditor.MenuItem("Tools/Plugin Master/Prefab World Builder/Grid and Snapping Settings...", false, 1150)]
         public static void ShowWindow() => _instance = GetWindow<SnapSettingsWindow>("Grid and Snapping Settings");
@@ -221,3 +224,4 @@ namespace PluginMaster
         private void OnSelectionChange() => _activeGameObject = UnityEditor.Selection.activeGameObject;
     }
 }
+#pragma warning restore UDR0001

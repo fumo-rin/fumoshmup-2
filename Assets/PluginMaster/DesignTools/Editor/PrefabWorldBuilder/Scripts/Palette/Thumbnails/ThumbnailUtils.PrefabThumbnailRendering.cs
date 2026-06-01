@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 
 using UnityEngine;
 
@@ -18,9 +19,11 @@ namespace PluginMaster
 {
     public partial class ThumbnailUtils
     {
+
         private static Material _bgMaterial = null;
         private static Cubemap _defaultCubemap = null;
         private static ThumbnailEditor _thumbnailEditor = null;
+
         public static void UpdateThumbnail(ThumbnailSettings settings,
             Texture2D thumbnailTexture, GameObject prefab, string thumbnailPath, bool savePng)
         {
@@ -41,7 +44,9 @@ namespace PluginMaster
                 thumbnailTexture.Apply();
                 return;
             }
-#if UNITY_2022_2_OR_NEWER
+#if UNITY_6000_4_OR_NEWER
+            var foundLights = Object.FindObjectsByType<Light>();
+#elif UNITY_2022_2_OR_NEWER
             var foundLights = Object.FindObjectsByType<Light>(FindObjectsSortMode.None);
 #else
             var foundLights = Object.FindObjectsOfType<Light>();
@@ -288,7 +293,9 @@ namespace PluginMaster
 
 
 #if PWB_HDRP || PWB_URP
-#if UNITY_2022_2_OR_NEWER
+#if UNITY_6000_4_OR_NEWER
+            var foundVolumes = Object.FindObjectsByType<UnityEngine.Rendering.Volume>();
+#elif UNITY_2022_2_OR_NEWER
             var foundVolumes = Object.FindObjectsByType<UnityEngine.Rendering.Volume>(FindObjectsSortMode.None);
 #else
             var foundVolumes = Object.FindObjectsOfType<UnityEngine.Rendering.Volume>();    
@@ -419,3 +426,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

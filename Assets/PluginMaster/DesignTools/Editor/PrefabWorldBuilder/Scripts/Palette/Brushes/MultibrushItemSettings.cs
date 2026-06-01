@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -36,6 +37,7 @@ namespace PluginMaster
         private float _bottomMagnitude = 0;
         private float _height = 1f;
         private Vector3 _size = Vector3.zero;
+        private int _trianglesCount = 0;
         private GameObject _prefab = null;
 
         private System.Collections.Generic.Dictionary<Vector3, (Vector3[] vertices, float magnitude)>
@@ -73,6 +75,29 @@ namespace PluginMaster
             if (parentSettings == null) return;
             parentSettings.SavePalette();
         }
+
+        public static int GetTrianglesCount(Transform transform)
+        {
+            var meshFilters = transform.GetComponentsInChildren<MeshFilter>(includeInactive: false);
+            var result = 0;
+            foreach (var filter in meshFilters)
+            {
+                if (filter.sharedMesh == null) continue;
+                var mesh = filter.sharedMesh;
+                for (int i = 0; i < mesh.subMeshCount; i++)
+                    result += (int)(mesh.GetIndexCount(i) / 3);
+            }
+            var skinnedMeshRenderers = transform.GetComponentsInChildren<SkinnedMeshRenderer>(includeInactive: false);
+            foreach (var renderer in skinnedMeshRenderers)
+            {
+                if (renderer.sharedMesh == null) continue;
+                var mesh = renderer.sharedMesh;
+                for (int i = 0; i < mesh.subMeshCount; i++)
+                    result += (int)(mesh.GetIndexCount(i) / 3);
+            }
+            result = Mathf.Max(result, 2);
+            return result;
+        }
         public MultibrushItemSettings(GameObject prefab, MultibrushSettings parentSettings) : base()
         {
             SetId();
@@ -84,6 +109,7 @@ namespace PluginMaster
             if (_prefab == null) return;
             _prefabPath = UnityEditor.AssetDatabase.GetAssetPath(_prefab);
             _bottomVertices = BoundsUtils.GetBottomVertices(prefab.transform);
+            _trianglesCount = GetTrianglesCount(prefab.transform);
             _height = BoundsUtils.GetBoundsRecursive(prefab.transform, prefab.transform.rotation).size.y;
             _size = BoundsUtils.GetBoundsRecursive(prefab.transform).size;
             _bottomMagnitude = BoundsUtils.GetBottomMagnitude(prefab.transform);
@@ -102,6 +128,20 @@ namespace PluginMaster
             _parentSettings = parentSettings;
             _paletteName = parentSettings.palette?.name ?? string.Empty;
             this.parentSettings.UpdateTotalFrequency();
+        }
+
+        public bool RepairParentId(MultibrushSettings correctParent)
+        {
+            if (correctParent == null) return false;
+            if (_parentId == correctParent.id)
+            {
+                _parentSettings = correctParent;
+                return false;
+            }
+            _parentId = correctParent.id;
+            _parentSettings = correctParent;
+            _paletteName = correctParent.palette?.name ?? string.Empty;
+            return true;
         }
 
         public override string thumbnailPath
@@ -396,6 +436,16 @@ namespace PluginMaster
             return vertices;
         }
 
+        public int trianglesCount
+        {
+            get
+            {
+                if(_trianglesCount > 2) return _trianglesCount; 
+                if (prefab == null) return 0;
+                _trianglesCount = GetTrianglesCount(prefab.transform);
+                return _trianglesCount;
+            }
+        }
         public override int GetHashCode()
         {
             var hashCode = base.GetHashCode();
@@ -412,3 +462,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

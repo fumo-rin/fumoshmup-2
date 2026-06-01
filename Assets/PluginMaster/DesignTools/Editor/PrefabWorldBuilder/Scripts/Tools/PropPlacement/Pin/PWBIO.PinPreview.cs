@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -18,7 +19,10 @@ namespace PluginMaster
 {
     public static partial class PWBIO
     {
+
         private static Vector3 _prevPinHitNormal = Vector3.zero;
+        private static bool snapPinRotationToGrid = false;
+
         private static void DrawPin(UnityEditor.SceneView sceneView, RaycastHit hit,
             bool snapToGrid)
         {
@@ -32,11 +36,11 @@ namespace PluginMaster
                    paintOnTheGrid: PinManager.settings.mode == PaintOnSurfaceToolSettingsBase.PaintMode.ON_SHAPE,
                    -hit.normal);
                 _pinHit = hit;
+                if(PinManager.settings.flattenTerrain) _pinHit.normal = Vector3.up;
             }
             PinPreview(sceneView.camera);
         }
-
-        private static bool snapPinRotationToGrid = false;
+        
         private static Vector3 GetPinAngleSnappedToGrid(Vector3 position, Quaternion rotation)
         {
             var gridRotation = Quaternion.identity;
@@ -166,7 +170,7 @@ namespace PluginMaster
 
                 if (brushSettings.embedAtPivotHeight)
                 {
-                    var embedOffset = _pinBoundPoints[_pinBoundLayerIdx][0] - _pinOffset;
+                    var embedOffset = _pinBoundPoints[pinBoundLayerIdx][0] - _pinOffset;
                     embedOffset = Vector3.Project(embedOffset, _pinProjectionDirection);
                     itemPosition += embedOffset;
                 }
@@ -184,6 +188,10 @@ namespace PluginMaster
                         out Transform surfaceTransform, prefab,
                         createTemColliders: false);
                     itemPosition += _pinProjectionDirection * distanceTosurface;
+                    if (PinManager.settings.flattenTerrain)
+                    {
+                        itemPosition.y = _pinHit.point.y;
+                    }
                 }
             }
 
@@ -265,7 +273,7 @@ namespace PluginMaster
             UnityEditor.Handles.zTest = UnityEngine.Rendering.CompareFunction.Always;
             if (_pinBoundPoints.Count == 0) ResetPinValues();
             var flatteningPoints = new System.Collections.Generic.List<Vector3>();
-            var layerIdx = Mathf.Clamp(_pinBoundLayerIdx, 0, _pinBoundPoints.Count - 1);
+            var layerIdx = Mathf.Clamp(pinBoundLayerIdx, 0, _pinBoundPoints.Count - 1);
             var pivotPos = Vector3.zero;
             for (int i = 0; i < _pinBoundPoints[layerIdx].Count; ++i)
             {
@@ -284,7 +292,7 @@ namespace PluginMaster
                 }
                 flatteningPoints.Add(pos);
                 if (i == 0) pivotPos = pos;
-                if (_pinBoundPointIdx == i) continue;
+                if (pinBoundPointIdx == i) continue;
                 handlePoints.Add(pos);
             }
             UnityEditor.Handles.color = new Color(0f, 0f, 0f, 0.7f);
@@ -318,33 +326,13 @@ namespace PluginMaster
             }
 
             foreach (var handlePoint in handlePoints)
-            {
-                UnityEditor.Handles.color = new Color(0f, 0f, 0f, 0.7f);
-                UnityEditor.Handles.DotHandleCap(795, handlePoint, Quaternion.identity,
-                    UnityEditor.HandleUtility.GetHandleSize(pos) * 0.0325f * PWBCore.staticData.controPointSize,
-                    EventType.Repaint);
-                UnityEditor.Handles.color = UnityEditor.Handles.preselectionColor;
-                UnityEditor.Handles.DotHandleCap(795, handlePoint, Quaternion.identity,
-                    UnityEditor.HandleUtility.GetHandleSize(pos) * 0.02f * PWBCore.staticData.controPointSize,
-                    EventType.Repaint);
-            }
+                DrawDotHandleCap(handlePoint);
 
             var pinHitPoint = _pinHit.point;
-            UnityEditor.Handles.color = new Color(0f, 0f, 0f, 0.7f);
-            UnityEditor.Handles.DotHandleCap(418, pinHitPoint, Quaternion.identity,
-                UnityEditor.HandleUtility.GetHandleSize(pinHitPoint) * 0.0425f * PWBCore.staticData.controPointSize,
-                EventType.Repaint);
-            if (pinHitPoint != pivotPos)
-            {
-                UnityEditor.Handles.color = UnityEditor.Handles.selectedColor;
-                UnityEditor.Handles.DotHandleCap(418, pinHitPoint, Quaternion.identity,
-                    UnityEditor.HandleUtility.GetHandleSize(pinHitPoint) * 0.03f * PWBCore.staticData.controPointSize,
-                    EventType.Repaint);
-            }
-            UnityEditor.Handles.color = Color.green;
-            UnityEditor.Handles.DotHandleCap(418, pivotPos, Quaternion.identity,
-                UnityEditor.HandleUtility.GetHandleSize(pivotPos) * (pinHitPoint == pivotPos ? 0.03f : 0.02f)
-                * PWBCore.staticData.controPointSize, EventType.Repaint);
+            var isHitSameAsPivot = pinHitPoint == pivotPos;
+            DrawDotHandleCap(pinHitPoint, selected: !isHitSameAsPivot, scale: isHitSameAsPivot ? 1f : 1.3f);
+            DrawDotHandleCap(pivotPos, isPivot: true, scale: isHitSameAsPivot ? 1f : 0.615f);
         }
     }
 }
+#pragma warning restore UDR0001

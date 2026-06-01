@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -193,7 +194,16 @@ namespace PluginMaster
         private void AddItemAt(object obj)
         {
             _newItemIdx = (int)obj;
-            _currentPickerId = UnityEditor.EditorGUIUtility.GetControlID(FocusType.Passive) + 100;
+            _openObjectPicker = true;
+        }
+
+        private bool _openObjectPicker = false;
+
+        private void OpenObjectPickerIfRequested()
+        {
+            if (!_openObjectPicker) return;
+            _openObjectPicker = false;
+            _currentPickerId = GUIUtility.GetControlID(FocusType.Passive) + 100;
             UnityEditor.EditorGUIUtility.ShowObjectPicker<GameObject>(null, false, "t:Prefab", _currentPickerId);
         }
         private void CreateItemsFromEachPrefabInFolder(object obj)
@@ -492,3 +502,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

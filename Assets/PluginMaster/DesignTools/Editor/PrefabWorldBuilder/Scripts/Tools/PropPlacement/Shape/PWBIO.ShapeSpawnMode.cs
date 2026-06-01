@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -108,63 +109,90 @@ namespace PluginMaster
         }
         private static void ShapeStateEdit(UnityEditor.SceneView sceneView)
         {
+            var evt = Event.current;
             var isCircle = ShapeManager.settings.shapeType == ShapeSettings.ShapeType.CIRCLE;
             var isPolygon = ShapeManager.settings.shapeType == ShapeSettings.ShapeType.POLYGON;
             var forceUpdate = updateStroke;
+
             if (updateStroke)
             {
                 updateStroke = false;
                 BrushstrokeManager.UpdateShapeBrushstroke();
             }
+
             ShapeStrokePreview(sceneView, ShapeData.nextHexId, forceUpdate, _shapeData);
 
             DrawShapeLines(_shapeData);
             DrawDotHandleCap(_shapeData.center);
+
             if (isPolygon)
                 foreach (var vertex in _shapeData.vertices) DrawDotHandleCap(vertex);
             else DrawDotHandleCap(_shapeData.radiusPoint);
+
             if (_shapeData.selectedPointIdx >= 0 && _shapeData.selectedPointIdx < _shapeData.pointsCount)
                 DrawDotHandleCap(_shapeData.selectedPoint, 1f, 1.2f);
+
             DrawDotHandleCap(_shapeData.GetPoint(-1));
             DrawDotHandleCap(_shapeData.GetPoint(-2));
 
-            if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return)
+            if (evt.type == EventType.KeyDown && evt.keyCode == KeyCode.Return)
             {
                 CreateShape();
                 ResetShapeState(false);
+                return;
             }
-            else if (Event.current.button == 1 && Event.current.type == EventType.MouseDrag
-                && Event.current.shift && Event.current.control)
+
+            if (evt.button == 1 && evt.type == EventType.MouseDrag && evt.shift && evt.control)
             {
-                var deltaSign = Mathf.Sign(Event.current.delta.x + Event.current.delta.y);
+                var deltaSign = Mathf.Sign(evt.delta.x + evt.delta.y);
                 ShapeManager.settings.gapSize += Mathf.PI * _shapeData.radius * deltaSign * 0.001f;
                 ToolProperties.RepainWindow();
-                Event.current.Use();
+                evt.Use();
             }
+
+            // Disable PWB interaction during RMB / Alt navigation,
+            // but keep allocating control IDs to keep IMGUI in sync.
+            var navigating = evt.alt || evt.button == 1;
 
             bool clickOnPoint = false;
             for (int i = 0; i < _shapeData.pointsCount; ++i)
             {
                 if (isCircle && i == 2) i = _shapeData.pointsCount - 2;
+
+                // Always allocate the control id, even while navigating.
                 var controlId = GUIUtility.GetControlID(FocusType.Passive);
-                if (clickOnPoint) ToolProperties.RepainWindow();
-                else
+
+                if (navigating || clickOnPoint) continue;
+
+                var point = _shapeData.GetPoint(i);
+                var handleSize = UnityEditor.HandleUtility.GetHandleSize(point);
+                var guiPoint = UnityEditor.HandleUtility.WorldToGUIPoint(point);
+                var edgeWorld = point
+                    + UnityEngine.Camera.current.transform.right
+                    * handleSize * 0.0325f * PWBCore.staticData.controPointSize;
+                var guiEdge = UnityEditor.HandleUtility.WorldToGUIPoint(edgeWorld);
+
+                float radiusPx = Vector2.Distance(guiPoint, guiEdge);
+                float clickRadiusPx = Mathf.Max(radiusPx, 8f);
+                float distFromMouse = Vector2.Distance(guiPoint, evt.mousePosition);
+                bool mouseNearPoint = distFromMouse <= clickRadiusPx;
+
+                if (!mouseNearPoint) continue;
+
+                if (isPolygon) DrawDotHandleCap(point);
+
+                if (evt.button == 0 && evt.type == EventType.MouseDown)
                 {
-                    float distFromMouse = UnityEditor.HandleUtility.DistanceToRectangle(_shapeData.GetPoint(i),
-                        _shapeData.planeRotation, 0f);
-                    UnityEditor.HandleUtility.AddControl(controlId, distFromMouse);
-                    if (UnityEditor.HandleUtility.nearestControl != controlId) continue;
-                    if (isPolygon) DrawDotHandleCap(_shapeData.GetPoint(i));
-                    if (Event.current.button == 0 && Event.current.type == EventType.MouseDown)
-                    {
-                        _shapeData.selectedPointIdx = i;
-                        clickOnPoint = true;
-                        Event.current.Use();
-                    }
+                    _shapeData.selectedPointIdx = i;
+                    clickOnPoint = true;
+                    GUIUtility.hotControl = 0;
+                    GUIUtility.keyboardControl = 0;
+                    ToolProperties.RepainWindow();
+                    evt.Use();
                 }
             }
 
-            if (_shapeData.selectedPointIdx >= 0)
+            if (!navigating && _shapeData.selectedPointIdx >= 0)
             {
                 var selectedPoint = _shapeData.selectedPoint;
                 if (_updateHandlePosition)
@@ -172,19 +200,23 @@ namespace PluginMaster
                     selectedPoint = _handlePosition;
                     _updateHandlePosition = false;
                 }
+
                 var prevPosition = _shapeData.selectedPoint;
-                var snappedPoint = UnityEditor.Handles.PositionHandle(selectedPoint, _shapeData.planeRotation);
+                var snappedPoint = PWBPositionHandle(CONTROL_POINT_HANDLE_ID, selectedPoint, _shapeData.planeRotation);
                 snappedPoint = SnapToBounds(snappedPoint);
                 snappedPoint = SnapAndUpdateGridOrigin(snappedPoint, GridManager.settings.snappingEnabled,
                    ShapeManager.settings.paintOnPalettePrefabs, ShapeManager.settings.paintOnMeshesWithoutCollider,
                    ShapeManager.settings.ignoreSceneColliders, paintOnTheGrid: false, Vector3.down);
+
                 if (prevPosition != snappedPoint)
                 {
                     _shapeData.MovePoint(_shapeData.selectedPointIdx, snappedPoint);
                     updateStroke = true;
                     ToolProperties.RepainWindow();
                 }
+
                 _handlePosition = _shapeData.selectedPoint;
+
                 if (_shapeData.selectedPointIdx == 0)
                 {
                     var selectedRotation = _shapeData.rotation;
@@ -193,14 +225,17 @@ namespace PluginMaster
                         selectedRotation = _handleRotation;
                         _updateHandleRotation = false;
                     }
+
                     var prevRotation = _shapeData.rotation;
                     var rotation = UnityEditor.Handles.RotationHandle(selectedRotation, _shapeData.center);
+
                     if (prevRotation != rotation)
                     {
                         _shapeData.rotation = rotation;
                         updateStroke = true;
                         ToolProperties.RepainWindow();
                     }
+
                     _handleRotation = _shapeData.rotation;
                 }
             }
@@ -346,3 +381,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

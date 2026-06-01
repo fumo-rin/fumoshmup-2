@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 using System.Linq;
 
@@ -203,6 +204,7 @@ namespace PluginMaster
             }
         }
 
+        
         private static System.Collections.Generic
             .Dictionary<BoundsRotKey, Bounds> _boundsRotDictionary
             = new System.Collections.Generic.Dictionary<BoundsRotKey, Bounds>();
@@ -342,9 +344,26 @@ namespace PluginMaster
             var vertices = GetFurthestVertices(transform, direction, out magnitude);
             return magnitude;
         }
+        
+#if UNITY_6000_3_OR_NEWER
+        private static System.Collections.Generic.Dictionary<EntityId, Vector3[]>
+            _bottomVerticesDictionary = new System.Collections.Generic
+            .Dictionary<EntityId, Vector3[]>();
+#else
+        private static System.Collections.Generic.Dictionary<int, Vector3[]>
+            _bottomVerticesDictionary = new System.Collections.Generic.Dictionary<int, Vector3[]>();
+#endif
 
-        public static Vector3[] GetBottomVertices(Transform transform)
+        public static Vector3[] GetBottomVertices(Transform transform, bool useDictionary = true)
         {
+#if UNITY_6000_3_OR_NEWER
+            var key = transform.gameObject.GetEntityId();
+#else
+            var key = transform.gameObject.GetInstanceID();
+#endif
+            if (useDictionary && _bottomVerticesDictionary.ContainsKey(key))
+                return _bottomVerticesDictionary[key];
+
             var vertices = new System.Collections.Generic.HashSet<Vector3>();
             var allLocalVertices = new System.Collections.Generic.HashSet<Vector3>();
             var minY = float.MaxValue;
@@ -359,19 +378,23 @@ namespace PluginMaster
             foreach (var filter in meshFilters)
             {
                 if (filter.sharedMesh == null) continue;
-                foreach (var vertex in filter.sharedMesh.vertices) UpdateMinVertex(vertex, filter.transform);
+                foreach (var vertex in filter.sharedMesh.vertices)
+                    UpdateMinVertex(vertex, filter.transform);
             }
             var skinnedMeshRenderers = transform.GetComponentsInChildren<SkinnedMeshRenderer>();
             foreach (var renderer in skinnedMeshRenderers)
             {
                 if (renderer.sharedMesh == null) continue;
-                foreach (var vertex in renderer.sharedMesh.vertices) UpdateMinVertex(vertex, renderer.transform);
+                foreach (var vertex in renderer.sharedMesh.vertices)
+                    UpdateMinVertex(vertex, renderer.transform);
             }
 
             var threshold = 0.01f;
             minY += threshold;
             foreach (var vertex in allLocalVertices) if (vertex.y < minY) vertices.Add(vertex);
-            return vertices.ToArray();
+            var result = vertices.ToArray();
+            if (useDictionary) _bottomVerticesDictionary.Add(key, result);
+            return result;
         }
 
         public static float GetBottomMagnitude(Transform transform)
@@ -395,3 +418,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

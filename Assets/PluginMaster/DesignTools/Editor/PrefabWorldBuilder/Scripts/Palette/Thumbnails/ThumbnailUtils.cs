@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 
 using UnityEngine;
 
@@ -20,6 +21,8 @@ namespace PluginMaster
     public class RenderPipelineDefine
     {
         private const string _sesionStateKey = "PWB_LastPipeline";
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0004:Domain Reload Analyzer")]
         static RenderPipelineDefine()
         {
             UnityEditor.EditorApplication.delayCall += () =>
@@ -83,8 +86,10 @@ namespace PluginMaster
         private const int MULTIBRUSH_SIZE = 256;
         public const int SIZE = 256;
         private const int MIN_SIZE = 24;
+
         private static Texture2D _emptyTexture = null;
         private static bool _savingImage = false;
+
         public static bool savingImage => _savingImage;
         #endregion
 
@@ -164,7 +169,12 @@ namespace PluginMaster
         #region EDITOR LIFECYCLE
         [UnityEditor.InitializeOnLoadMethod]
         private static void RegisterPlayModeStateChangedCallback()
-            => UnityEditor.EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+        {
+
+            UnityEditor.EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+            UnityEditor.EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+
+        }
 
         private static void OnPlayModeStateChanged(UnityEditor.PlayModeStateChange state)
         {
@@ -353,3 +363,4 @@ namespace PluginMaster
         #endregion
     }
 }
+#pragma warning restore UDR0001

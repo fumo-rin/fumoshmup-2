@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -18,8 +19,10 @@ namespace PluginMaster
 {
     public static class GravityUtils
     {
+
         private static bool _isPlaying = false;
         private static bool _stop = false;
+
 
         private static void AddCollider(GameObject obj, Mesh mesh, SimulateGravityData data)
         {
@@ -72,7 +75,10 @@ namespace PluginMaster
 
             if (simData.ignoreSceneColliders)
             {
-#if UNITY_2022_2_OR_NEWER
+#if UNITY_6000_4_OR_NEWER
+                sceneColliders = Object.FindObjectsByType<Collider>()
+                   .Where(sc => sc.enabled && sc.gameObject.activeInHierarchy && !sc.isTrigger).ToArray();
+#elif UNITY_2022_2_OR_NEWER
                 sceneColliders = Object.FindObjectsByType<Collider>(FindObjectsSortMode.None)
                     .Where(sc => sc.enabled && sc.gameObject.activeInHierarchy && !sc.isTrigger).ToArray();
 #else
@@ -80,7 +86,10 @@ namespace PluginMaster
                     .Where(sc => sc.enabled && sc.gameObject.activeInHierarchy && !sc.isTrigger).ToArray();
 #endif
                 foreach (var sceneCollider in sceneColliders) sceneCollider.enabled = false;
-#if UNITY_2022_2_OR_NEWER
+#if UNITY_6000_4_OR_NEWER
+                var sceneMeshFilters = Object.FindObjectsByType<MeshFilter>()
+                    .Where(mf => mf.gameObject.activeInHierarchy && mf.sharedMesh != null).ToArray();
+#elif UNITY_2022_2_OR_NEWER
                 var sceneMeshFilters = Object.FindObjectsByType<MeshFilter>(FindObjectsSortMode.None)
                     .Where(mf => mf.gameObject.activeInHierarchy && mf.sharedMesh != null).ToArray();
 #else
@@ -97,7 +106,10 @@ namespace PluginMaster
             }
             else
             {
-#if UNITY_2022_2_OR_NEWER
+#if UNITY_6000_4_OR_NEWER
+                invisibleColliders = Object.FindObjectsByType<Collider>()
+                  .Where(sc => sc.enabled && sc.gameObject.activeInHierarchy && !IsVisible(sc.gameObject)).ToArray();
+#elif UNITY_2022_2_OR_NEWER
                 invisibleColliders = Object.FindObjectsByType<Collider>(FindObjectsSortMode.None)
                   .Where(sc => sc.enabled && sc.gameObject.activeInHierarchy && !IsVisible(sc.gameObject)).ToArray();
 #else
@@ -108,7 +120,9 @@ namespace PluginMaster
             }
             var originalGravity = Physics.gravity;
             Physics.gravity = simData.gravity;
-#if UNITY_2022_2_OR_NEWER
+#if UNITY_6000_4_OR_NEWER
+            var allBodies = Object.FindObjectsByType<Rigidbody>();
+#elif UNITY_2022_2_OR_NEWER
             var allBodies = Object.FindObjectsByType<Rigidbody>(FindObjectsSortMode.None);
 #else
             var allBodies = Object.FindObjectsOfType<Rigidbody>();
@@ -385,7 +399,12 @@ namespace PluginMaster
         [UnityEditor.InitializeOnLoad]
         private static class UndoEventHandler
         {
-            static UndoEventHandler() => UnityEditor.Undo.undoRedoPerformed += OnUndoRedoPerformed;
+            
+            static UndoEventHandler()
+            {
+                UnityEditor.Undo.undoRedoPerformed -= OnUndoRedoPerformed;
+                UnityEditor.Undo.undoRedoPerformed += OnUndoRedoPerformed;
+            }
             private static void OnUndoRedoPerformed()
             {
                 _isPlaying = false;
@@ -394,3 +413,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

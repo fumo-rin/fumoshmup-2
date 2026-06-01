@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -23,7 +24,7 @@ namespace PluginMaster
         [SerializeField] private bool _randomSurfaceDistance = false;
         [SerializeField] private RandomUtils.Range _randomSurfaceDistanceRange = new RandomUtils.Range(-0.005f, 0.005f);
         [SerializeField] protected bool _embedInSurface = false;
-        [SerializeField] protected bool _embedAtPivotHeight = true;
+        [SerializeField] protected bool _embedAtPivotHeight = false;
         [SerializeField] protected Vector3 _localPositionOffset = Vector3.zero;
         [SerializeField] protected bool _rotateToTheSurface = true;
         [SerializeField] private Vector3 _eulerOffset = Vector3.zero;
@@ -46,7 +47,9 @@ namespace PluginMaster
         [SerializeField] private ThumbnailSettings _thumbnailSettings = new ThumbnailSettings();
         [field: System.NonSerialized] private Texture2D _thumbnail = null;
         public System.Action OnDataChangedAction;
-        public static System.Action OnBrushSettingsChanged;
+
+        
+        public static System.Action OnBrushSettingsChanged = null;
         protected virtual void OnDataChanged()
         {
             if (OnDataChangedAction != null) OnDataChangedAction();
@@ -421,6 +424,7 @@ namespace PluginMaster
             _flipY = FlipAction.NONE;
         }
 
+        
         private static long _prevId = 0;
         protected void SetId()
         {
@@ -463,3 +467,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

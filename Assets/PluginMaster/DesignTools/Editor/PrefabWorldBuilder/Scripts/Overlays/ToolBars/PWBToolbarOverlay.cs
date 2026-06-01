@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 #if UNITY_2021_2_OR_NEWER
 using UnityEngine;
 using UnityEditor.Overlays;
@@ -22,6 +23,7 @@ namespace PluginMaster
     #region TOGGLE MANAGER
     public static class ToggleManager
     {
+        
         private static System.Collections.Generic.Dictionary<ToolController.Tool, IPWBToogle> _toogles = null;
         private static System.Collections.Generic.Dictionary<ToolController.Tool, IPWBToogle> toogles
         {
@@ -86,15 +88,18 @@ namespace PluginMaster
     public abstract class ToolToggleBase<T> : PWBToolbarToggle,
         IPWBToogle where T : UnityEditor.Toolbars.EditorToolbarToggle, new()
     {
+        
         private static ToolToggleBase<T> _instance = null;
         public static ToolToggleBase<T> instance => _instance;
         public abstract string id { get; }
         public abstract ToolController.Tool tool { get; }
-       
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0004:Domain Reload Analyzer")]
         public ToolToggleBase()
         {
             _instance = this;
             this.RegisterValueChangedCallback(OnValueChange);
+            ToolController.OnToolChange -= OnToolChange;
             ToolController.OnToolChange += OnToolChange;
         }
 
@@ -122,15 +127,15 @@ namespace PluginMaster
         public static void OnToolbarDisplayedChanged()
         {
             if (!PWBCore.staticData.closeAllWindowsWhenClosingTheToolbar) return;
-            if (PWBPropPlacementToolbarOverlay.IsDisplayed) return;
-            if (PWBSelectionToolbarOverlay.IsDisplayed) return;
-            if (PWBGridToolbarOverlay.IsDisplayed) return;
-            if (ModularEnvironmentsToolbarOverlay.IsDisplayed) return;
-            if (SettingsAndDocsToolbarOverlay.IsDisplayed) return;
+            if (PWBPropPlacementToolbarOverlay.isDisplayed) return;
+            if (PWBSelectionToolbarOverlay.isDisplayed) return;
+            if (PWBGridToolbarOverlay.isDisplayed) return;
+            if (ModularEnvironmentsToolbarOverlay.isDisplayed) return;
+            if (SettingsAndDocsToolbarOverlay.isDisplayed) return;
             PWBIO.CloseAllWindows();
         }
     }
     #endregion
 }
 #endif
-//PWBToolbarOverlay
+#pragma warning restore UDR0001

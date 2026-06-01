@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 using System.Linq;
 
@@ -47,12 +48,15 @@ namespace PluginMaster
             window.Show();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0004:Domain Reload Analyzer")]
         private void OnEnable()
         {
             LoadStyles();
             LoadIcons();
             LoadFolderHierarchy();
+            PaletteManager.OnPaletteChanged -= OnPaletteChanged;
             PaletteManager.OnPaletteChanged += OnPaletteChanged;
+            PaletteData.OnPaletteSaved -= OnPaletteChanged;
             PaletteData.OnPaletteSaved += OnPaletteChanged;
         }
 
@@ -229,3 +233,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

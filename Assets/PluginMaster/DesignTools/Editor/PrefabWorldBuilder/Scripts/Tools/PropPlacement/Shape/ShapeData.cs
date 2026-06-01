@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -22,10 +23,10 @@ namespace PluginMaster
         [SerializeField] private float _radius = 0f;
         [SerializeField] private float _arcAngle = 360f;
         [SerializeField] private Vector3 _normal = Vector3.up;
-        [SerializeField] private Plane _plane;
         [SerializeField] private int _firstVertexIdxAfterIntersection = 2;
         [SerializeField] private int _lastVertexIdxBeforeIntersection = 1;
         [SerializeField] private Vector3[] _arcIntersections = new Vector3[2];
+        private Plane _plane;
         private System.Collections.Generic.List<Vector3> _onSurfacePoints = new System.Collections.Generic.List<Vector3>();
         private int _circleSideCount = 8;
 
@@ -52,7 +53,7 @@ namespace PluginMaster
                 SetPoint(1, value, registerUndo: false, selectAll: false);
             }
             _normal = normal;
-            _plane = new Plane(_normal, points[0]);
+            _plane = new Plane(normal, value);
             if (_settings.projectionDirectionType == ShapeSettings.ShapeProjectionDirection.PLANE_NORMAL)
                 _settings.UpdateProjectDirection(-_normal);
         }
@@ -308,7 +309,7 @@ namespace PluginMaster
             _radius = 0f;
             _arcAngle = 360f;
             _normal = Vector3.up;
-            _plane = new Plane();
+            _plane = new Plane(_normal, Vector3.zero);
             _firstVertexIdxAfterIntersection = 2;
             _lastVertexIdxBeforeIntersection = 1;
             _circleSideCount = 8;
@@ -389,6 +390,7 @@ namespace PluginMaster
         public ShapeData((GameObject, int)[] objects, long initialBrushId, ShapeData shapeData)
             : base(objects, initialBrushId, shapeData) { }
 
+        
         private static ShapeData _instance = null;
         public static ShapeData instance
         {
@@ -432,3 +434,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

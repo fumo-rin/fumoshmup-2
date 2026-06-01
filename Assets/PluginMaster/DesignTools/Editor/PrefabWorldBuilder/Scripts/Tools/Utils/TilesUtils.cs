@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -59,7 +60,8 @@ namespace PluginMaster
                     prefab.transform.rotation * Quaternion.Euler(multibrush.eulerOffset), ignoreDissabled: true,
                     BoundsUtils.ObjectProperty.BOUNDING_BOX, recursive: true, useDictionary: false);
                 var localSize = bounds.size;
-                if (subtractBrushOffset) SubtractBrushOffset(ref localSize, item);
+                if (subtractBrushOffset)
+                    SubtractBrushOffset(ref localSize, item);
                 var itemSize = Vector3.Scale(localSize, scaleMultiplier);
                 cellSize = cellSizeType == SizeType.SMALLEST_OBJECT
                     ? Vector3.Min(cellSize, itemSize) : Vector3.Max(cellSize, itemSize);
@@ -72,27 +74,9 @@ namespace PluginMaster
             Vector3 defaultValue, bool tangentSpace, int quarterTurns, bool subtractBrushOffset)
         {
             if (brush == null) return defaultValue;
-            void SubtractBrushOffset(ref Vector3 size)
-            {
-                var dv = size - brush.localPositionOffset;
-#if UNITY_2021_1_OR_NEWER
-                dv.x = System.MathF.Round(dv.x, digits: 5);
-                dv.y = System.MathF.Round(dv.y, digits: 5);
-                dv.z = System.MathF.Round(dv.z, digits: 5);
-#else
-                dv.x = (float)System.Math.Round(dv.x, digits: 5);
-                dv.y = (float)System.Math.Round(dv.y, digits: 5);
-                dv.z = (float)System.Math.Round(dv.z, digits: 5);
-#endif
-                if (dv.x <= 0) dv.x = size.x;
-                if (dv.y <= 0) dv.y = size.y;
-                if (dv.z <= 0) dv.z = size.z;
-                size = dv;
-            }
 
             if (cellSizeType == SizeType.CUSTOM)
             {
-                if (subtractBrushOffset) SubtractBrushOffset(ref defaultValue);
                 return defaultValue;
             }
 
@@ -156,3 +140,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

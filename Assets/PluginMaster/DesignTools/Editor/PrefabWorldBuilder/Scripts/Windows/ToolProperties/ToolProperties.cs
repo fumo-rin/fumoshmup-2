@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,26 +11,64 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
 {
     public partial class ToolProperties : UnityEditor.EditorWindow
     {
+
         #region COMMON
         private const string UNDO_MSG = "Tool properties";
         private Vector2 _mainScrollPosition = Vector2.zero;
         private GUIContent _updateButtonContent = null;
         private GUISkin _skin = null;
         private GUIStyle _reloadBtnStyle = null;
+
+        private GUISkin skin
+        {
+            get
+            {
+                if (_skin != null) return _skin;
+                _skin = Resources.Load<GUISkin>("PWBSkin");
+                return _skin;
+            }
+        }
+        private GUIStyle reloadBtnStyle
+        {
+            get
+            {
+                if (_reloadBtnStyle != null) return _reloadBtnStyle;
+                if (skin == null) return GUIStyle.none;
+                _reloadBtnStyle = skin.GetStyle("EyeButton");
+                return _reloadBtnStyle;
+            }
+        }
         private static ToolProperties _instance = null;
+
 
         [UnityEditor.MenuItem("Tools/Plugin Master/Prefab World Builder/Tool Properties...", false, 1130)]
         public static void ShowWindow() => _instance = GetWindow<ToolProperties>("Tool Properties");
 
+        private static UnityEditor.EditorApplication.CallbackFunction _repaintDelayedCall = null;
+
         public static void RepainWindow()
         {
-            if (_instance != null) _instance.Repaint();
+            if (_instance == null) return;
+
+            if (_repaintDelayedCall == null)
+                _instance.Repaint();
+            else
+                UnityEditor.EditorApplication.delayCall -= _repaintDelayedCall;
+
+            _repaintDelayedCall = () =>
+            {
+                _repaintDelayedCall = null;
+                if (_instance != null) _instance.Repaint();
+            };
+
+            UnityEditor.EditorApplication.delayCall += _repaintDelayedCall;
         }
 
         public static void CloseWindow()
@@ -38,14 +76,14 @@ namespace PluginMaster
             if (_instance != null) _instance.Close();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0004:Domain Reload Analyzer")]
         private void OnEnable()
         {
             _updateButtonContent
                 = new GUIContent(Resources.Load<Texture2D>("Sprites/Update"), "Update Temp Colliders");
-            _skin = Resources.Load<GUISkin>("PWBSkin");
-            _reloadBtnStyle = _skin.GetStyle("EyeButton");
+            UnityEditor.Undo.undoRedoPerformed -= Repaint;
             UnityEditor.Undo.undoRedoPerformed += Repaint;
-            PWBCore.LoadFromFile();
+            PWBCore.Initialize();
         }
 
         private void OnDisable()
@@ -79,9 +117,7 @@ namespace PluginMaster
                 else if (ToolController.current == ToolController.Tool.REPLACER) ReplacerGroup();
                 else if (ToolController.current == ToolController.Tool.FLOOR) FloorGroup();
                 else if (ToolController.current == ToolController.Tool.WALL) WallGroup();
-#if PWB_BLOCK
                 else if (ToolController.current == ToolController.Tool.BLOCK) BlockGroup();
-#endif
             }
             if (Event.current.type == EventType.MouseDown && Event.current.button == 0)
             {
@@ -94,7 +130,7 @@ namespace PluginMaster
             if (_instance == null) return;
             UnityEditor.Undo.ClearUndo(_instance);
         }
-#endregion
+        #endregion
 
         #region UNDO
         [SerializeField] private LineData _lineData = LineData.instance;
@@ -157,5 +193,7 @@ namespace PluginMaster
             }
         }
         #endregion
+
     }
 }
+#pragma warning restore UDR0001

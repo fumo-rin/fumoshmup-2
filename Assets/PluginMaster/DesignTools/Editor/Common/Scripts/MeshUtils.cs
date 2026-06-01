@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -35,7 +36,6 @@ namespace PluginMaster
             }
             if (IsPrimitive(mesh))
             {
-                Debug.Log($"Mesh {mesh.name} is a primitive mesh.");
                 if (mesh.name == "Sphere") collider = target.AddComponent<SphereCollider>();
                 else if (mesh.name == "Capsule") collider = target.AddComponent<CapsuleCollider>();
                 else if (mesh.name == "Cube") collider = target.AddComponent<BoxCollider>();
@@ -48,44 +48,45 @@ namespace PluginMaster
         public static GameObject[] FindFilters(LayerMask mask, GameObject[] exclude = null, bool excludeColliders = true)
         {
             var objects = new System.Collections.Generic.HashSet<GameObject>();
-#if UNITY_2022_2_OR_NEWER
+#if UNITY_6000_4_OR_NEWER
+            var meshFilters = GameObject.FindObjectsByType<MeshFilter>();
+            var skinnedMeshes = GameObject.FindObjectsByType<SkinnedMeshRenderer>();
+#elif UNITY_2022_2_OR_NEWER
             var meshFilters = GameObject.FindObjectsByType<MeshFilter>(FindObjectsSortMode.None);
             var skinnedMeshes = GameObject.FindObjectsByType<SkinnedMeshRenderer>(FindObjectsSortMode.None);
 #else
             var meshFilters = GameObject.FindObjectsOfType<MeshFilter>();
             var skinnedMeshes = GameObject.FindObjectsOfType<SkinnedMeshRenderer>();
 #endif
-            foreach ( var meshFilter in meshFilters) objects.Add(meshFilter.gameObject);
+            foreach (var meshFilter in meshFilters) objects.Add(meshFilter.gameObject);
             foreach (var skinnedMesh in skinnedMeshes) objects.Add(skinnedMesh.gameObject);
 
             bool maskFilter(GameObject obj) => (mask.value & (1 << obj.layer)) != 0;
-            var filterList = new System.Collections.Generic.List<GameObject>(objects);
-            if (exclude != null)
+            var filterList = new System.Collections.Generic.List<GameObject>();
+            foreach (var o in objects)
             {
-                foreach(var o in objects)
-                {
-                    if(!maskFilter(o)) continue;
-                    if (exclude.Contains(o)) continue;
-                    filterList.Add(o);
-                }
-                objects = new System.Collections.Generic.HashSet<GameObject>(filterList);
+                if (!maskFilter(o)) continue;
+                if (exclude != null && exclude.Contains(o)) continue;
+                filterList.Add(o);
             }
             if (excludeColliders)
             {
-#if UNITY_2022_2_OR_NEWER
+#if UNITY_6000_4_OR_NEWER
+                var colliders = GameObject.FindObjectsByType<Collider>();
+#elif UNITY_2022_2_OR_NEWER
                 var colliders = GameObject.FindObjectsByType<Collider>(FindObjectsSortMode.None);
 #else
                 var colliders = GameObject.FindObjectsOfType<Collider>();
 #endif
                 var collidersSet = new System.Collections.Generic.HashSet<GameObject>();
-                foreach( var c in colliders) collidersSet.Add(c.gameObject);
-                filterList = new System.Collections.Generic.List<GameObject>();
-                foreach (var o in objects)
+                foreach (var c in colliders) collidersSet.Add(c.gameObject);
+                var filtered = new System.Collections.Generic.List<GameObject>();
+                foreach (var o in filterList)
                 {
-                    if (!maskFilter(o)) continue;
                     if (collidersSet.Contains(o)) continue;
-                    filterList.Add(o);
+                    filtered.Add(o);
                 }
+                filterList = filtered;
             }
             return filterList.ToArray();
         }
@@ -140,7 +141,7 @@ namespace PluginMaster
         {
             foreach (var filter in filters)
             {
-                if (Raycast(ray, out RaycastHit hit, out GameObject collider,new GameObject[]{ filter },
+                if (Raycast(ray, out RaycastHit hit, out GameObject collider, new GameObject[] { filter },
                     maxDistance, sameOriginAsRay, origin))
                 {
                     if (hit.distance > maxDistance) continue;
@@ -152,10 +153,80 @@ namespace PluginMaster
         }
 
 
+
+#if UNITY_6000_3_OR_NEWER
+        private static readonly System.Collections.Generic.Dictionary<EntityId,
+            (ComputeBuffer vertBuf, ComputeBuffer triBuf, int triCount, int groups)>
+            _meshBufferCache = new System.Collections.Generic.Dictionary<EntityId,
+            (ComputeBuffer, ComputeBuffer, int, int)>();
+#else
+        private static readonly System.Collections.Generic.Dictionary<int,
+            (ComputeBuffer vertBuf, ComputeBuffer triBuf, int triCount, int groups)>
+            _meshBufferCache = new System.Collections.Generic.Dictionary<int,
+            (ComputeBuffer, ComputeBuffer, int, int)>();
+#endif
         const string _meshRayIntersectComputeShaderPath = "Shaders/MeshRayIntersect";
-        static ComputeShader _meshRayIntersectComputeShader;
-        public static bool RayIntersectsMesh(Ray ray, Mesh mesh, Transform meshTransform, out Vector3 hitPoint,
-            out float distance, out Vector3 localNormal)
+
+        static ComputeShader _meshRayIntersectComputeShader = null;
+        private static ComputeBuffer _pooledDistBuf = null;
+        private static ComputeBuffer _pooledIdxBuf = null;
+        private static ComputeBuffer _pooledNormBuf = null;
+
+        private static readonly uint[] _distReadback = new uint[1];
+        private static readonly uint[] _idxReset = new uint[] { System.UInt32.MaxValue };
+        private static readonly uint[] _distReset = new uint[] { 0x7F7FFFFFu };
+        private static readonly Vector3[] _normReadback = new Vector3[1];
+        private static readonly Vector3[] _normReset = new Vector3[] { Vector3.zero };
+
+
+        private static (ComputeBuffer vertBuf, ComputeBuffer triBuf, int triCount, int groups)
+            GetOrCreateMeshBuffers(Mesh mesh)
+        {
+#if UNITY_6000_3_OR_NEWER
+            var id = mesh.GetEntityId();
+#else
+            var id = mesh.GetInstanceID();
+#endif
+            if (_meshBufferCache.TryGetValue(id, out var cached))
+                return cached;
+
+            var verts = mesh.vertices;
+            var tris = mesh.triangles;
+            int triCount = tris.Length / 3;
+            int groups = Mathf.CeilToInt(triCount / 64f);
+
+            var vertBuf = new ComputeBuffer(verts.Length, sizeof(float) * 3);
+            var triBuf = new ComputeBuffer(tris.Length, sizeof(int));
+            vertBuf.SetData(verts);
+            triBuf.SetData(tris);
+
+            cached = (vertBuf, triBuf, triCount, groups);
+            _meshBufferCache[id] = cached;
+            return cached;
+        }
+
+        private static void EnsurePooledResultBuffers()
+        {
+            _pooledDistBuf ??= new ComputeBuffer(1, sizeof(uint));
+            _pooledIdxBuf ??= new ComputeBuffer(1, sizeof(uint));
+            _pooledNormBuf ??= new ComputeBuffer(1, sizeof(float) * 3);
+        }
+
+        public static void ReleaseCachedBuffers()
+        {
+            foreach (var kvp in _meshBufferCache)
+            {
+                kvp.Value.vertBuf?.Release();
+                kvp.Value.triBuf?.Release();
+            }
+            _meshBufferCache.Clear();
+            _pooledDistBuf?.Release(); _pooledDistBuf = null;
+            _pooledIdxBuf?.Release(); _pooledIdxBuf = null;
+            _pooledNormBuf?.Release(); _pooledNormBuf = null;
+        }
+
+        public static bool RayIntersectsMesh(Ray ray, Mesh mesh, Transform meshTransform,
+            out Vector3 hitPoint, out float distance, out Vector3 localNormal)
         {
             distance = 0f;
             localNormal = Vector3.zero;
@@ -163,6 +234,7 @@ namespace PluginMaster
 
             if (_meshRayIntersectComputeShader == null)
                 _meshRayIntersectComputeShader = Resources.Load<ComputeShader>(_meshRayIntersectComputeShaderPath);
+
             int kFindMinT = _meshRayIntersectComputeShader.FindKernel("CSFindMinT");
             int kFindMinIndex = _meshRayIntersectComputeShader.FindKernel("CSFindMinIndex");
             int kComputeNorm = _meshRayIntersectComputeShader.FindKernel("CSComputeNormal");
@@ -170,22 +242,12 @@ namespace PluginMaster
             Vector3 localOrigin = meshTransform.InverseTransformPoint(ray.origin);
             Vector3 localDirection = meshTransform.InverseTransformDirection(ray.direction).normalized;
 
-            Vector3[] verts = mesh.vertices;
-            int[] tris = mesh.triangles;
-            int triCount = tris.Length / 3;
-            int groups = Mathf.CeilToInt(triCount / 64f);
+            var (vertBuf, triBuf, triCount, groups) = GetOrCreateMeshBuffers(mesh);
 
-            var vertBuf = new ComputeBuffer(verts.Length, sizeof(float) * 3);
-            var triBuf = new ComputeBuffer(tris.Length, sizeof(int));
-            var distBuf = new ComputeBuffer(1, sizeof(uint));
-            var idxBuf = new ComputeBuffer(1, sizeof(uint));
-            var normBuf = new ComputeBuffer(1, sizeof(float) * 3);
-
-            vertBuf.SetData(verts);
-            triBuf.SetData(tris);
-            distBuf.SetData(new uint[] { 0x7F7FFFFFu });
-            idxBuf.SetData(new uint[] { System.UInt32.MaxValue });
-            normBuf.SetData(new Vector3[] { Vector3.zero });
+            EnsurePooledResultBuffers();
+            _pooledDistBuf.SetData(_distReset);
+            _pooledIdxBuf.SetData(_idxReset);
+            _pooledNormBuf.SetData(_normReset);
 
             System.Action<int> BindCommon = kernel =>
             {
@@ -197,40 +259,33 @@ namespace PluginMaster
             };
 
             BindCommon(kFindMinT);
-            _meshRayIntersectComputeShader.SetBuffer(kFindMinT, "minDistanceBits", distBuf);
+            _meshRayIntersectComputeShader.SetBuffer(kFindMinT, "minDistanceBits", _pooledDistBuf);
             _meshRayIntersectComputeShader.Dispatch(kFindMinT, groups, 1, 1);
 
-            uint[] distBits = new uint[1];
-            distBuf.GetData(distBits);
-            float localT = System.BitConverter.ToSingle(System.BitConverter.GetBytes((int)distBits[0]), 0);
-            if (localT == float.MaxValue)
-            {
-                vertBuf.Release(); triBuf.Release();
-                distBuf.Release(); idxBuf.Release(); normBuf.Release();
-                return false;
-            }
-
             BindCommon(kFindMinIndex);
-            _meshRayIntersectComputeShader.SetBuffer(kFindMinIndex, "minDistanceBits", distBuf);
-            _meshRayIntersectComputeShader.SetBuffer(kFindMinIndex, "minTriangleIndex", idxBuf);
+            _meshRayIntersectComputeShader.SetBuffer(kFindMinIndex, "minDistanceBits", _pooledDistBuf);
+            _meshRayIntersectComputeShader.SetBuffer(kFindMinIndex, "minTriangleIndex", _pooledIdxBuf);
             _meshRayIntersectComputeShader.Dispatch(kFindMinIndex, groups, 1, 1);
 
             _meshRayIntersectComputeShader.SetBuffer(kComputeNorm, "vertices", vertBuf);
             _meshRayIntersectComputeShader.SetBuffer(kComputeNorm, "triangles", triBuf);
-            _meshRayIntersectComputeShader.SetBuffer(kComputeNorm, "minTriangleIndex", idxBuf);
-            _meshRayIntersectComputeShader.SetBuffer(kComputeNorm, "hitNormalBuffer", normBuf);
+            _meshRayIntersectComputeShader.SetBuffer(kComputeNorm, "minTriangleIndex", _pooledIdxBuf);
+            _meshRayIntersectComputeShader.SetBuffer(kComputeNorm, "hitNormalBuffer", _pooledNormBuf);
             _meshRayIntersectComputeShader.Dispatch(kComputeNorm, 1, 1, 1);
 
-            Vector3[] normals = new Vector3[1];
-            normBuf.GetData(normals);
+            GL.Flush();
 
-            vertBuf.Release(); triBuf.Release();
-            distBuf.Release(); idxBuf.Release(); normBuf.Release();
+            _pooledDistBuf.GetData(_distReadback);
+            float localT = System.BitConverter.ToSingle(
+                System.BitConverter.GetBytes((int)_distReadback[0]), 0);
+            if (localT >= float.MaxValue) return false;
+
+            _pooledNormBuf.GetData(_normReadback);
 
             Vector3 localHitPoint = localOrigin + localDirection * localT;
             hitPoint = meshTransform.TransformPoint(localHitPoint);
             distance = Vector3.Distance(ray.origin, hitPoint);
-            localNormal = normals[0].normalized;
+            localNormal = _normReadback[0].normalized;
             return true;
         }
 
@@ -266,10 +321,13 @@ namespace PluginMaster
                 if (mt.mesh == null) continue;
                 if (RayIntersectsMesh(ray, mt.mesh, mt.transform, out Vector3 p, out float d, out Vector3 localN))
                 {
-                    hitAny = true;
-                    hitPoint = p;
-                    distance = Mathf.Min(distance, d);
-                    hitNormal = mt.transform.TransformDirection(localN).normalized;
+                    if (d < distance)
+                    {
+                        hitAny = true;
+                        hitPoint = p;
+                        distance = d;
+                        hitNormal = mt.transform.TransformDirection(localN).normalized;
+                    }
                 }
             }
             if (!hitAny)
@@ -282,3 +340,4 @@ namespace PluginMaster
 
     }
 }
+#pragma warning restore UDR0001

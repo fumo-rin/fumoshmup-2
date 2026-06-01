@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 
 namespace PluginMaster
@@ -34,11 +35,11 @@ namespace PluginMaster
         {
             public readonly PatternState state = PatternState.START;
             protected Token(PatternState state) => this.state = state;
-            public static Token START = new Token(PatternState.START);
-            public static Token OPENING_PARENTHESIS = new Token(PatternState.OPENING_PARENTHESIS);
-            public static Token CLOSING_PARENTHESIS = new Token(PatternState.CLOSING_PARENTHESIS);
-            public static Token ELLIPSIS = new Token(PatternState.ELLIPSIS);
-            public static Token END = new Token(PatternState.END);
+            public static readonly Token START = new Token(PatternState.START);
+            public static readonly Token OPENING_PARENTHESIS = new Token(PatternState.OPENING_PARENTHESIS);
+            public static readonly Token CLOSING_PARENTHESIS = new Token(PatternState.CLOSING_PARENTHESIS);
+            public static readonly Token ELLIPSIS = new Token(PatternState.ELLIPSIS);
+            public static readonly Token END = new Token(PatternState.END);
         }
 
         public class IntToken : Token
@@ -389,3 +390,4 @@ namespace PluginMaster
         #endregion
     }
 }
+#pragma warning restore UDR0001

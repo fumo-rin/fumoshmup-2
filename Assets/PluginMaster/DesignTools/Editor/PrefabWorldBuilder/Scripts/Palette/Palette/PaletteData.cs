@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -274,7 +275,10 @@ namespace PluginMaster
         public bool ContainsBrush(MultibrushSettings brush)
             => _brushes.Contains(brush) || _brushes.Exists(b => b.id == brush.id);
 
-        public static System.Action OnPaletteSaved;
+        
+        public static System.Action OnPaletteSaved = null;
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0004:Domain Reload Analyzer")]
         public string Save()
         {
             if (UnityEditor.EditorApplication.isCompiling
@@ -319,6 +323,14 @@ namespace PluginMaster
             ClearObjectQuery();
         }
 
+        public bool RepairItemParentIds()
+        {
+            bool repaired = false;
+            foreach (var brush in _brushes)
+                if (brush.RepairItemParentIds()) repaired = true;
+            return repaired;
+        }
+
         public int hashCode => _hashCode;
         public override int GetHashCode()
         {
@@ -355,3 +367,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

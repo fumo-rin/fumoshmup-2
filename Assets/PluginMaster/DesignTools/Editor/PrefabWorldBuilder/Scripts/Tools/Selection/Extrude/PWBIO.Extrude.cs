@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ namespace PluginMaster
 {
     public static partial class PWBIO
     {
+
         private static Vector3 _extrudeHandlePosition;
         private static Vector3Int _extrudeDirection;
         private static Vector3 _initialExtrudePosition;
@@ -25,17 +27,31 @@ namespace PluginMaster
         private static Vector3 _deltaSnapped;
         private static Vector3 _extrudeSpacing;
         private static int _extrudegPreviewObjectCount = 0;
+        private static bool _draggingExtrudeHandle = false;
+        private static bool _editingExtrudeHandle = false;
+        private static bool _extrudeSelectionStarted = false;
+        private static bool _extrudeRectSelecting = false;
+        private static Vector2 _extrudeSelectionStartMousePosition;
+
+        private const float EXTRUDE_RECT_SELECTION_THRESHOLD = 5f;
 
         public static void ResetExtrudeState(bool askIfWantToSave = true)
         {
             if (askIfWantToSave && _extrudegPreviewObjectCount > 0) DisplaySaveDialog(CreateExtrudedObjects);
             _extrudegPreviewObjectCount = 0;
             ClearExtrudeAngles();
+            _draggingExtrudeHandle = false;
+            _editingExtrudeHandle = false;
+            _extrudeSelectionStarted = false;
+            _extrudeRectSelecting = false;
+            _extrudeNeedsInteractionReset = true;
+            UnityEditor.Tools.hidden = false;
         }
 
         public static void ClearExtrudeAngles() => _extrudeAngles.Clear();
         private static void ExtrudeDuringSceneGUI(UnityEditor.SceneView sceneView)
         {
+
             if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Escape)
             {
                 ResetUnityCurrentTool();
@@ -43,20 +59,69 @@ namespace PluginMaster
                 ToolController.DeselectTool();
                 return;
             }
-            if (SelectionManager.topLevelSelection.Length == 0) return;
+            if (_extrudeNeedsInteractionReset)
+            {
+                GUIUtility.hotControl = 0;
+                GUIUtility.keyboardControl = 0;
+                _draggingExtrudeHandle = false;
+                _editingExtrudeHandle = false;
+                _extrudeSelectionStarted = false;
+                _extrudeRectSelecting = false;
+                _extrudeNeedsInteractionReset = false;
+            }
+            if (SelectionManager.topLevelSelection.Length == 0)
+            {
+                ExtrudeSelectionInput(sceneView);
+                return;
+            }
+
             ExtrudeInput();
+
             if (SelectionManager.topLevelSelection.Length == 0) return;
+
             var settings = ExtrudeManager.settings;
             if (UnityEditor.Tools.current != UnityEditor.Tool.View && UnityEditor.Tools.current != UnityEditor.Tool.None)
-            {
                 SaveUnityCurrentTool();
-                UnityEditor.Tools.current = UnityEditor.Tool.None;
-            }
+            if (UnityEditor.Tools.current == UnityEditor.Tool.None)
+                UnityEditor.Tools.current = _unityCurrentTool != UnityEditor.Tool.None
+                    ? _unityCurrentTool
+                    : UnityEditor.Tool.Move;
+
+            UnityEditor.Tools.hidden = true;
             var anchor = settings.rotationAccordingTo == ExtrudeSettings.RotationAccordingTo.FRIST_SELECTED
                 ? SelectionManager.topLevelSelection.First().transform
                 : SelectionManager.topLevelSelection.Last().transform;
-            var handlePosition = UnityEditor.Handles.PositionHandle(_extrudeHandlePosition,
-                settings.space == Space.World ? Quaternion.identity : anchor.rotation);
+
+            var prevZTest = UnityEditor.Handles.zTest;
+            UnityEditor.Handles.zTest = UnityEngine.Rendering.CompareFunction.Always;
+
+            var hotControlBefore = GUIUtility.hotControl;
+
+            UnityEditor.EditorGUI.BeginChangeCheck();
+            var handlePosition = PWBPositionHandle(TOOL_HANDLE_ID, _extrudeHandlePosition,
+                settings.space == Space.World ? Quaternion.identity : anchor.rotation, showPlanes: false);
+            var changed = UnityEditor.EditorGUI.EndChangeCheck();
+
+            var hotControlAfter = GUIUtility.hotControl;
+
+            UnityEditor.Handles.zTest = prevZTest;
+
+            if (hotControlAfter != 0 && hotControlAfter != hotControlBefore)
+            {
+                _editingExtrudeHandle = true;
+                _extrudeSelectionStarted = false;
+                _extrudeRectSelecting = false;
+            }
+
+            if (changed) _draggingExtrudeHandle = _editingExtrudeHandle = true;
+            else if (_draggingExtrudeHandle && GUIUtility.hotControl == 0)
+                _draggingExtrudeHandle = false;
+
+            if (_editingExtrudeHandle && GUIUtility.hotControl == 0 && !changed)
+                _editingExtrudeHandle = false;
+
+            ExtrudeSelectionInput(sceneView);
+
             var handleDelta = handlePosition - _extrudeHandlePosition;
             _extrudeHandlePosition = handlePosition;
             var delta = _extrudeHandlePosition - _initialExtrudePosition;
@@ -115,6 +180,7 @@ namespace PluginMaster
         private static System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<Pose>>
             _extrudePoses = new System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<Pose>>();
 #endif
+        private static bool _extrudeNeedsInteractionReset = false;
 
         private static void PreviewExtrudedObjects(Camera camera, Transform anchor)
         {
@@ -274,5 +340,144 @@ namespace PluginMaster
             if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return)
                 CreateExtrudedObjects();
         }
+
+        private static void ExtrudeSelectionInput(UnityEditor.SceneView sceneView)
+        {
+            var currentEvent = Event.current;
+            if (currentEvent.button != 0 || currentEvent.alt) return;
+            if (GUIUtility.hotControl != 0 || _editingExtrudeHandle) return;
+
+            if ((currentEvent.type == EventType.MouseDown || currentEvent.type == EventType.MouseDrag)
+                && IsMouseNearExtrudeHandle(currentEvent.mousePosition))
+            {
+                _extrudeSelectionStarted = false;
+                _extrudeRectSelecting = false;
+                return;
+            }
+
+            if (currentEvent.type == EventType.MouseDown)
+            {
+                _extrudeSelectionStarted = true;
+                _extrudeRectSelecting = false;
+                _extrudeSelectionStartMousePosition = currentEvent.mousePosition;
+                return;
+            }
+
+            if (!_extrudeSelectionStarted) return;
+
+            if (currentEvent.type == EventType.MouseDrag)
+            {
+                if ((currentEvent.mousePosition - _extrudeSelectionStartMousePosition).magnitude
+                    >= EXTRUDE_RECT_SELECTION_THRESHOLD)
+                {
+                    _extrudeRectSelecting = true;
+                    sceneView.Repaint();
+                    currentEvent.Use();
+                }
+                return;
+            }
+
+            if (currentEvent.type == EventType.Repaint && _extrudeRectSelecting)
+            {
+                DrawExtrudeSelectionRect(currentEvent.mousePosition);
+                return;
+            }
+
+            if (currentEvent.type != EventType.MouseUp) return;
+
+            if (_extrudeRectSelecting)
+                SelectExtrudeRectObjects(GetExtrudeSelectionRect(currentEvent.mousePosition), currentEvent);
+            else
+                SelectExtrudeSingleObject(currentEvent);
+
+            _extrudeSelectionStarted = false;
+            _extrudeRectSelecting = false;
+            currentEvent.Use();
+        }
+
+        private static Rect GetExtrudeSelectionRect(Vector2 currentMousePosition)
+        {
+            return Rect.MinMaxRect(
+                Mathf.Min(_extrudeSelectionStartMousePosition.x, currentMousePosition.x),
+                Mathf.Min(_extrudeSelectionStartMousePosition.y, currentMousePosition.y),
+                Mathf.Max(_extrudeSelectionStartMousePosition.x, currentMousePosition.x),
+                Mathf.Max(_extrudeSelectionStartMousePosition.y, currentMousePosition.y));
+        }
+
+        private static void DrawExtrudeSelectionRect(Vector2 currentMousePosition)
+        {
+            var rect = GetExtrudeSelectionRect(currentMousePosition);
+
+            UnityEditor.Handles.BeginGUI();
+
+            var fillColor = new Color(0.3f, 0.55f, 1f, 0.12f);
+            var outlineColor = new Color(0.3f, 0.55f, 1f, 0.9f);
+
+            UnityEditor.EditorGUI.DrawRect(rect, fillColor);
+            UnityEditor.EditorGUI.DrawRect(new Rect(rect.xMin, rect.yMin, rect.width, 1f), outlineColor);
+            UnityEditor.EditorGUI.DrawRect(new Rect(rect.xMin, rect.yMax - 1f, rect.width, 1f), outlineColor);
+            UnityEditor.EditorGUI.DrawRect(new Rect(rect.xMin, rect.yMin, 1f, rect.height), outlineColor);
+            UnityEditor.EditorGUI.DrawRect(new Rect(rect.xMax - 1f, rect.yMin, 1f, rect.height), outlineColor);
+
+            UnityEditor.Handles.EndGUI();
+        }
+
+        private static void SelectExtrudeSingleObject(Event currentEvent)
+        {
+            var pickedObject = UnityEditor.HandleUtility.PickGameObject(currentEvent.mousePosition, false);
+
+            if (pickedObject == null)
+            {
+                if (!currentEvent.shift && !currentEvent.control && !currentEvent.command)
+                {
+                    UnityEditor.Selection.objects = new Object[0];
+                    SelectionManager.UpdateSelection();
+                }
+                return;
+            }
+
+            if (currentEvent.shift || currentEvent.control || currentEvent.command)
+            {
+                SelectionManager.ToggleSelection(pickedObject);
+            }
+            else
+            {
+                UnityEditor.Selection.activeGameObject = pickedObject;
+                SelectionManager.UpdateSelection();
+            }
+        }
+
+        private static void SelectExtrudeRectObjects(Rect rect, Event currentEvent)
+        {
+            var pickedObjects = UnityEditor.HandleUtility.PickRectObjects(rect, false);
+
+#if UNITY_2021_1_OR_NEWER
+            using (UnityEngine.Pool.HashSetPool<Object>
+                .Get(out System.Collections.Generic.HashSet<Object> selectedObjectsSet))
+#else
+            var selectedObjectsSet = new System.Collections.Generic.HashSet<Object>();
+#endif
+            {
+                if (currentEvent.shift || currentEvent.control || currentEvent.command)
+                    selectedObjectsSet.UnionWith(UnityEditor.Selection.objects);
+
+                if (currentEvent.control || currentEvent.command)
+                    selectedObjectsSet.ExceptWith(pickedObjects);
+                else
+                    selectedObjectsSet.UnionWith(pickedObjects);
+
+                UnityEditor.Selection.objects = selectedObjectsSet.ToArray();
+                SelectionManager.UpdateSelection();
+            }
+        }
+
+        private static bool IsMouseNearExtrudeHandle(Vector2 mousePosition)
+        {
+            var handleGuiPosition = UnityEditor.HandleUtility.WorldToGUIPoint(_extrudeHandlePosition);
+            const float HANDLE_PICK_DISTANCE = 18f;
+            return Vector2.Distance(mousePosition, handleGuiPosition) <= HANDLE_PICK_DISTANCE;
+        }
+
     }
 }
+#pragma warning restore UDR0001

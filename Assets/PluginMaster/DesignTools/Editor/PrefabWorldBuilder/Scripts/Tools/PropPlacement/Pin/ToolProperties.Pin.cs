@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -18,6 +19,8 @@ namespace PluginMaster
     public partial class ToolProperties : UnityEditor.EditorWindow
     {
         private static readonly string[] _pinModeNames = { "Auto", "Paint on surface", "Paint on grid" };
+
+        
         private static BrushPropertiesGroupState _pinOverwriteGroupState;
         private void PinGroup()
         {
@@ -119,3 +122,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

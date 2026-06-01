@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -218,6 +219,7 @@ namespace PluginMaster
         public TilingData((GameObject, int)[] objects, long initialBrushId, TilingData tilingData)
         : base(objects, initialBrushId, tilingData) { }
 
+        
         private static TilingData _instance = null;
         public static TilingData instance
         {
@@ -257,7 +259,8 @@ namespace PluginMaster
     }
 
     [System.Serializable]
-    public class TilingManager
-        : PersistentToolControllerBase<TilingToolName, TilingSettings, ControlPoint, TilingData, TilingSceneData>
+    public class TilingManager : PersistentToolControllerBase<TilingToolName, TilingSettings,
+        ControlPoint, TilingData, TilingSceneData, TilingManager>
     { }
 }
+#pragma warning restore UDR0001

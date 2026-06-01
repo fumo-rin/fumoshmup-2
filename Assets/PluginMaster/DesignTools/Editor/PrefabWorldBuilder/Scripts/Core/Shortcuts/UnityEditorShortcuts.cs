@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 #if UNITY_2019_1_OR_NEWER
 using UnityEngine;
 
@@ -30,13 +31,11 @@ namespace PluginMaster
             KeyCode.W, UnityEditor.ShortcutManagement.ShortcutModifiers.Shift
             | UnityEditor.ShortcutManagement.ShortcutModifiers.Alt)]
         private static void ToggleWall() => PWBIO.ToogleTool(ToolController.Tool.WALL);
-#if PWB_BLOCK
         public const string PWB_TOGGLE_BLOCK_SHORTCUT_ID = "Prefab World Builder/Tools - Toggle Block Tool";
         [UnityEditor.ShortcutManagement.Shortcut(PWB_TOGGLE_BLOCK_SHORTCUT_ID,
             KeyCode.B, UnityEditor.ShortcutManagement.ShortcutModifiers.Shift
             | UnityEditor.ShortcutManagement.ShortcutModifiers.Alt)]
         private static void ToggleBlock() => PWBIO.ToogleTool(ToolController.Tool.BLOCK);
-#endif
         public const string PWB_TOGGLE_PIN_SHORTCUT_ID = "Prefab World Builder/Tools - Toggle Pin Tool";
         [UnityEditor.ShortcutManagement.Shortcut(PWB_TOGGLE_PIN_SHORTCUT_ID,
             KeyCode.Alpha1, UnityEditor.ShortcutManagement.ShortcutModifiers.Shift
@@ -98,17 +97,26 @@ namespace PluginMaster
             UnityEditor.ShortcutManagement.ShortcutModifiers.Shift | UnityEditor.ShortcutManagement.ShortcutModifiers.Alt)]
         private static void ToggleMirror() => PWBIO.ToogleTool(ToolController.Tool.MIRROR);
         #endregion
-        #region WINDOWS
+        #region WINDOWS & OVERLAYS
         public const string PWB_CLOSE_ALL_WINDOWS_ID = "Prefab World Builder/Close All Windows";
         [UnityEditor.ShortcutManagement.Shortcut(PWB_CLOSE_ALL_WINDOWS_ID, KeyCode.End,
             UnityEditor.ShortcutManagement.ShortcutModifiers.Shift | UnityEditor.ShortcutManagement.ShortcutModifiers.Alt)]
         private static void PWBCloseAllWindows()
         {
-            ToolController.DeselectTool();
             PWBIO.CloseAllWindows();
+        }
+
+
+        public const string PWB_TOGGLE_OVERLAYS_ID = "Prefab World Builder/Toggle Overlays";
+        [UnityEditor.ShortcutManagement.Shortcut(PWB_TOGGLE_OVERLAYS_ID, KeyCode.P,
+            UnityEditor.ShortcutManagement.ShortcutModifiers.Shift | UnityEditor.ShortcutManagement.ShortcutModifiers.Alt)]
+        private static void PWBToggleOverlays()
+        {
+            PWBIO.ToggleOverlays();
         }
         #endregion
 
     }
 }
 #endif
+#pragma warning restore UDR0001

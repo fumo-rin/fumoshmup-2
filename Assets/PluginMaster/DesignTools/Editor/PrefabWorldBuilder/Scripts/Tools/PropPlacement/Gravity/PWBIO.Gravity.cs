@@ -11,14 +11,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 using System.Linq;
 namespace PluginMaster
 {
     public static partial class PWBIO
     {
+
         private static Mesh _gravityLinesMesh = null;
         private static Material _gravityLinesMaterial = null;
+
         private static readonly int OPACITY_PROP_ID = Shader.PropertyToID("_opacity");
 
         public static void InitializeGravityTool()
@@ -216,3 +219,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

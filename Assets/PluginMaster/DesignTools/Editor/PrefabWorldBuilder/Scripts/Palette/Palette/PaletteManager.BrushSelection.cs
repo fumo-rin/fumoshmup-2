@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -27,6 +28,8 @@ namespace PluginMaster
         public static bool movingBrushes => instance._movingBrushesFrom != null;
         private System.Collections.Generic.List<MultibrushSettings> _brushesToMove
             = new System.Collections.Generic.List<MultibrushSettings>();
+
+
         public static int selectedBrushIdx
         {
             get => instance._selectedBrushIdx;
@@ -69,6 +72,7 @@ namespace PluginMaster
                 PrefabPalette.RepaintWindow();
             }
         }
+
 
         public static MultibrushSettings selectedBrush
             => (instance._selectedBrushIdx < 0 || selectedPalette == null) ? null
@@ -183,6 +187,7 @@ namespace PluginMaster
             return instance._selectedPalette;
         }
 
+        
         public static PaletteData selectedPalette
         {
             get => instance._selectedPalette;
@@ -212,6 +217,7 @@ namespace PluginMaster
         }
         #endregion
         #region MULTI-SELECTION
+        
         public static int[] idxSelection
         {
             get => instance._idxSelection.ToArray();
@@ -288,3 +294,4 @@ namespace PluginMaster
         #endregion
     }
 }
+#pragma warning restore UDR0001

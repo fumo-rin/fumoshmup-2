@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -101,65 +102,70 @@ namespace PluginMaster
         #region TOOLBAR
         private PWBKeyShortcut _toolbarFloorToggle = new PWBKeyShortcut("Toggle Floor Tool",
             PWBShortcut.Group.GLOBAL, new PWBKeyCombinationUSM(Shortcuts.PWB_TOGGLE_FLOOR_SHORTCUT_ID));
+        public PWBKeyShortcut toolbarFloorToggle => _toolbarFloorToggle;
         private PWBKeyShortcut _toolbarWallToggle = new PWBKeyShortcut("Toggle Wall Tool",
             PWBShortcut.Group.GLOBAL, new PWBKeyCombinationUSM(Shortcuts.PWB_TOGGLE_WALL_SHORTCUT_ID));
-#if PWB_BLOCK
+        public PWBKeyShortcut toolbarWallToggle => _toolbarWallToggle;
         private PWBKeyShortcut _toolbarBlockToggle = new PWBKeyShortcut("Toggle Block Tool",
             PWBShortcut.Group.GLOBAL, new PWBKeyCombinationUSM(Shortcuts.PWB_TOGGLE_BLOCK_SHORTCUT_ID));
-#endif
-
+        public PWBKeyShortcut toolbarBlockToggle => _toolbarBlockToggle;
         private PWBKeyShortcut _toolbarPinToggle = new PWBKeyShortcut("Toggle Pin Tool",
             PWBShortcut.Group.GLOBAL, new PWBKeyCombinationUSM(Shortcuts.PWB_TOGGLE_PIN_SHORTCUT_ID));
+        public PWBKeyShortcut toolbarPinToggle => _toolbarPinToggle;
 
         private PWBKeyShortcut _toolbarBrushToggle = new PWBKeyShortcut("Toggle Brush Tool",
             PWBShortcut.Group.GLOBAL, new PWBKeyCombinationUSM(Shortcuts.PWB_TOGGLE_BRUSH_SHORTCUT_ID));
+        public PWBKeyShortcut toolbarBrushToggle => _toolbarBrushToggle;
 
         private PWBKeyShortcut _toolbarGravityToggle = new PWBKeyShortcut("Toggle Gravity Tool",
             PWBShortcut.Group.GLOBAL, new PWBKeyCombinationUSM(Shortcuts.PWB_TOGGLE_GRAVITY_SHORTCUT_ID));
+        public PWBKeyShortcut toolbarGravityToggle => _toolbarGravityToggle;
 
         private PWBKeyShortcut _toolbarLineToggle = new PWBKeyShortcut("Toggle Line Tool",
             PWBShortcut.Group.GLOBAL, new PWBKeyCombinationUSM(Shortcuts.PWB_TOGGLE_LINE_SHORTCUT_ID));
+        public PWBKeyShortcut toolbarLineToggle => _toolbarLineToggle;
 
         private PWBKeyShortcut _toolbarShapeToggle = new PWBKeyShortcut("Toggle Shape Tool",
             PWBShortcut.Group.GLOBAL, new PWBKeyCombinationUSM(Shortcuts.PWB_TOGGLE_SHAPE_SHORTCUT_ID));
+        public PWBKeyShortcut toolbarShapeToggle => _toolbarShapeToggle;
 
         private PWBKeyShortcut _toolbarTilingToggle = new PWBKeyShortcut("Toggle Tiling Tool",
             PWBShortcut.Group.GLOBAL, new PWBKeyCombinationUSM(Shortcuts.PWB_TOGGLE_TILING_SHORTCUT_ID));
+        public PWBKeyShortcut toolbarTilingToggle => _toolbarTilingToggle;
 
         private PWBKeyShortcut _toolbarReplacerToggle = new PWBKeyShortcut("Toggle Replacer Tool",
             PWBShortcut.Group.GLOBAL, new PWBKeyCombinationUSM(Shortcuts.PWB_TOGGLE_REPLACER_SHORTCUT_ID));
+        public PWBKeyShortcut toolbarReplacerToggle => _toolbarReplacerToggle;
 
         private PWBKeyShortcut _toolbarEraserToggle = new PWBKeyShortcut("Toggle Eraser Tool",
             PWBShortcut.Group.GLOBAL, new PWBKeyCombinationUSM(Shortcuts.PWB_TOGGLE_ERASER_SHORTCUT_ID));
+        public PWBKeyShortcut toolbarEraserToggle => _toolbarEraserToggle;
 
         private PWBKeyShortcut _toolbarSelectionToggle = new PWBKeyShortcut("Toggle Selection Tool",
             PWBShortcut.Group.GLOBAL, new PWBKeyCombinationUSM(Shortcuts.PWB_TOGGLE_SELECTION_SHORTCUT_ID));
+        public PWBKeyShortcut toolbarSelectionToggle => _toolbarSelectionToggle;
 
         private PWBKeyShortcut _toolbarCircleSelectToggle = new PWBKeyShortcut("Toggle Circle Selection Tool",
            PWBShortcut.Group.GLOBAL, new PWBKeyCombinationUSM(Shortcuts.PWB_TOGGLE_CIRCLE_SELECT_SHORTCUT_ID));
+        public PWBKeyShortcut toolbarCircleSelectToggle => _toolbarCircleSelectToggle;
 
         private PWBKeyShortcut _toolbarExtrudeToggle = new PWBKeyShortcut("Toggle Extrude Tool",
             PWBShortcut.Group.GLOBAL, new PWBKeyCombinationUSM(Shortcuts.PWB_TOGGLE_EXTRUDE_SHORTCUT_ID));
+        public PWBKeyShortcut toolbarExtrudeToggle => _toolbarExtrudeToggle;
 
         private PWBKeyShortcut _toolbarMirrorToggle = new PWBKeyShortcut("Toggle Mirror Tool",
             PWBShortcut.Group.GLOBAL, new PWBKeyCombinationUSM(Shortcuts.PWB_TOGGLE_MIRROR_SHORTCUT_ID));
-#if PWB_BLOCK
-        public PWBKeyShortcut toolbarBlockToggle => _toolbarBlockToggle;
-#endif
-        public PWBKeyShortcut toolbarFloorToggle => _toolbarFloorToggle;
-        public PWBKeyShortcut toolbarWallToggle => _toolbarWallToggle;
-        public PWBKeyShortcut toolbarPinToggle => _toolbarPinToggle;
-        public PWBKeyShortcut toolbarBrushToggle => _toolbarBrushToggle;
-        public PWBKeyShortcut toolbarGravityToggle => _toolbarGravityToggle;
-        public PWBKeyShortcut toolbarLineToggle => _toolbarLineToggle;
-        public PWBKeyShortcut toolbarShapeToggle => _toolbarShapeToggle;
-        public PWBKeyShortcut toolbarTilingToggle => _toolbarTilingToggle;
-        public PWBKeyShortcut toolbarReplacerToggle => _toolbarReplacerToggle;
-        public PWBKeyShortcut toolbarEraserToggle => _toolbarEraserToggle;
-        public PWBKeyShortcut toolbarSelectionToggle => _toolbarSelectionToggle;
-        public PWBKeyShortcut toolbarCircleSelectToggle => _toolbarCircleSelectToggle;
-        public PWBKeyShortcut toolbarExtrudeToggle => _toolbarExtrudeToggle;
         public PWBKeyShortcut toolbarMirrorToggle => _toolbarMirrorToggle;
+        #endregion
+
+        #region WINDOWS & OVERLAYS
+        private PWBKeyShortcut _closeAllWindows = new PWBKeyShortcut("Close All Windows",
+            PWBShortcut.Group.GLOBAL, new PWBKeyCombinationUSM(Shortcuts.PWB_CLOSE_ALL_WINDOWS_ID));
+        public PWBKeyShortcut closeAllWindows => _closeAllWindows;
+
+        private PWBKeyShortcut _toggleOverlays = new PWBKeyShortcut("Toggle Overlays",
+            PWBShortcut.Group.GLOBAL, new PWBKeyCombinationUSM(Shortcuts.PWB_TOGGLE_OVERLAYS_ID));
+        public PWBKeyShortcut toggleOverlays => _toggleOverlays;
         #endregion
 
         #region PALETTE
@@ -202,3 +208,4 @@ namespace PluginMaster
         #endregion
     }
 }
+#pragma warning restore UDR0001

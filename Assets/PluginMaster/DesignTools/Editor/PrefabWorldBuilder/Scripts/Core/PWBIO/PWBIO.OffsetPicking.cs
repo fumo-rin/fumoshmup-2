@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -18,10 +19,12 @@ namespace PluginMaster
 {
     public static partial class PWBIO
     {
+
         private static bool _offsetPicking = false;
         private static AxesUtils.Axis _offsetPickingAxis;
         private static float _offsetPickingValue = 0f;
         private static BrushSettings _offsetPickingBrush = null;
+
         public static void EnableOffsetPicking(AxesUtils.Axis axis, BrushSettings brush)
         {
             _offsetPickingBrush = brush;
@@ -93,3 +96,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

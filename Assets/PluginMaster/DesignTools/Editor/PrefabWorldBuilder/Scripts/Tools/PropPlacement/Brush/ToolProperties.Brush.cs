@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -21,6 +22,8 @@ namespace PluginMaster
         private static readonly string[] _heightTypeNames = { "Custom", "Radius" };
         private static readonly string[] _avoidOverlappingTypeNames = { "Disabled", "With Palette Prefabs",
             "With Brush Prefabs", "With Same Prefabs", "With All Objects" };
+
+        
         private static BrushPropertiesGroupState _brushOverwriteGroupState;
         private void BrushGroup()
         {
@@ -32,7 +35,8 @@ namespace PluginMaster
                 if (BrushManager.settings.showPreview)
                     UnityEditor.EditorGUILayout.HelpBox("The brushstroke preview can cause slowdown issues.",
                         UnityEditor.MessageType.Info);
-                UnityEditor.EditorGUILayout.LabelField("Brushstroke object count", BrushstrokeManager.itemCount.ToString());
+                UnityEditor.EditorGUILayout.LabelField("Brushstroke triangle count",
+                    BrushstrokeManager.triangleCount.ToString());
             }
             using (new GUILayout.VerticalScope(UnityEditor.EditorStyles.helpBox))
             {
@@ -46,6 +50,15 @@ namespace PluginMaster
                     if (check.changed)
                     {
                         BrushManager.settings.avoidOverlapping = avoidOverlapping;
+                    }
+                }
+                using (var check = new UnityEditor.EditorGUI.ChangeCheckScope())
+                {
+                    var overlapPadding = Mathf.Abs(UnityEditor.EditorGUILayout.FloatField("Overlap Padding",
+                        BrushManager.settings.overlapPadding));
+                    if (check.changed)
+                    {
+                        BrushManager.settings.overlapPadding = overlapPadding;
                     }
                 }
                 if (BrushManager.settings.brushShape != BrushToolBase.BrushShape.POINT)
@@ -96,7 +109,7 @@ namespace PluginMaster
                         UnityEditor.EditorGUILayout.MinMaxSlider("Slope Angle", ref minSlope, ref maxSlope, 0, 90);
                         minSlope = Mathf.Round(minSlope);
                         maxSlope = Mathf.Round(maxSlope);
-                        GUILayout.Label("[" + minSlope.ToString("00") + "°," + maxSlope.ToString("00") + "°]");
+                        GUILayout.Label("[" + minSlope.ToString("00") + "ï¿½," + maxSlope.ToString("00") + "ï¿½]");
                         if (check.changed)
                         {
                             BrushManager.settings.slopeFilter.v1 = minSlope;
@@ -146,3 +159,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ namespace PluginMaster
 {
     public static partial class PWBIO
     {
+        
         private static float _brushAngle = 0f;
         private static bool BrushRaycast(Ray ray, out RaycastHit hit, float maxDistance,
             LayerMask layerMask, BrushToolSettings settings, TerrainLayer[] terrainLayers, out GameObject collider)
@@ -70,6 +72,7 @@ namespace PluginMaster
             {
                 if (!BrushManager.settings.showPreview) DrawBrush(sceneView, ref hit, true);
                 Paint(BrushManager.settings);
+                RepaintInspectorAfterScenePaint();
                 Event.current.Use();
             }
         }
@@ -233,6 +236,9 @@ namespace PluginMaster
                         pivotToCenter = itemRotation * pivotToCenter;
                         var itemCenter = itemPosition + pivotToCenter;
                         var itemSize = Vector3.Scale(itemBounds.size, strokeItem.scaleMultiplier);
+                        itemSize.x += settings.overlapPadding * 2;
+                        itemSize.y += settings.overlapPadding * 2;
+                        itemSize.z += settings.overlapPadding * 2;
                         var collidingWith = new System.Collections.Generic.List<GameObject>();
                         boundsOctree.GetColliding(collidingWith, new Bounds(itemCenter, itemSize));
 
@@ -302,3 +308,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

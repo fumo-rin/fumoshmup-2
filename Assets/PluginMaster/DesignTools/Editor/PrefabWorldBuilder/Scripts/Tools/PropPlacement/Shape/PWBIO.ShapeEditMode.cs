@@ -11,15 +11,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
 {
     public static partial class PWBIO
     {
+
         private static bool _editingPersistentShape = true;
         private static ShapeData _initialPersistentShapeData = null;
         private static ShapeData _selectedPersistentShapeData = null;
+
         private static void DeselectPersistentShapes()
         {
             var persistentShapes = ShapeManager.instance.GetPersistentItems();
@@ -312,3 +315,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

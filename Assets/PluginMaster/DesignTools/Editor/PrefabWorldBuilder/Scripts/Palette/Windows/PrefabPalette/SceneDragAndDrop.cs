@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -14,6 +14,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -23,6 +24,7 @@ namespace PluginMaster
         private static readonly int _sceneDragHint = "SceneDragAndDrop".GetHashCode();
         private const string DRAG_ID = "SceneDragAndDrop";
 
+        
         public static void StartDrag(ISceneDragReceiver receiver, string title)
         {
             StopDrag();
@@ -35,8 +37,10 @@ namespace PluginMaster
             receiver.StartDrag();
             UnityEditor.DragAndDrop.StartDrag(title);
 #if UNITY_2019_1_OR_NEWER
+            UnityEditor.SceneView.duringSceneGui -= OnSceneGUI;
             UnityEditor.SceneView.duringSceneGui += OnSceneGUI;
 #else
+            UnityEditor.SceneView.onSceneGUIDelegate -= OnSceneGUI;
             UnityEditor.SceneView.onSceneGUIDelegate += OnSceneGUI;
 #endif
         }
@@ -89,3 +93,4 @@ namespace PluginMaster
         void PerformDrag(Event evt);
     }
 }
+#pragma warning restore UDR0001

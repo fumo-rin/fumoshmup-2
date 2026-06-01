@@ -11,12 +11,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
 {
     public partial class ToolProperties : UnityEditor.EditorWindow
     {
+        
         private static BrushPropertiesGroupState _gravityOverwriteGroupState;
 
         private static readonly string[] _tempCollidersActionNames = { "Disabled",
@@ -63,7 +65,7 @@ namespace PluginMaster
                     }
 
                     using (new UnityEditor.EditorGUI.DisabledGroupScope(!GravityToolController.settings.createTempColliders))
-                        if (GUILayout.Button(_updateButtonContent, _reloadBtnStyle))
+                        if (GUILayout.Button(_updateButtonContent, reloadBtnStyle))
                             PWBCore.UpdateTempColliders();
 
                 }
@@ -90,3 +92,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 using System.Linq;
 
@@ -28,7 +29,7 @@ namespace PluginMaster
         public const string RELATIVE_RESOURCES_DIR = RELATIVE_TOOL_DIR + "/Resources";
         public const string RELATIVE_DATA_DIR = RELATIVE_RESOURCES_DIR + "/" + DATA_DIR;
         public const string PALETTES_DIR = "Palettes";
-        public const string VERSION = "4.10.0";
+        public const string VERSION = "4.12.0";
 
         [SerializeField] private string _version = VERSION;
         [SerializeField] private string _rootDirectory = null;
@@ -55,7 +56,8 @@ namespace PluginMaster
             {
                 var dir = PWBSettings.fullDataDir + "/" + PALETTES_DIR;
 #if !PWB_DO_NOT_INITIALIZE_ON_LOAD
-                if (!System.IO.Directory.Exists(dir)) System.IO.Directory.CreateDirectory(dir);
+                if (!System.IO.Directory.Exists(dir) && System.IO.File.Exists(dataPath))
+                    System.IO.Directory.CreateDirectory(dir);
 #endif
                 return dir;
             }
@@ -416,26 +418,24 @@ namespace PluginMaster
 
         [SerializeField] private PaletteManager _paletteManager = PaletteManager.instance;
 
-        [SerializeField] private FloorManager _floorManager = FloorManager.instance as FloorManager;
-        [SerializeField] private WallManager _wallManager = WallManager.instance as WallManager;
-#if PWB_BLOCK
-        [SerializeField] private BlockManager _blockManager = BlockManager.instance as BlockManager;
-#endif
-        [SerializeField] private PinManager _pinManager = PinManager.instance as PinManager;
-        [SerializeField] private BrushManager _brushManager = BrushManager.instance as BrushManager;
-        [SerializeField] private GravityToolController _gravityToolController = GravityToolController.instance as GravityToolController;
-        [SerializeField] private LineManager _lineManager = LineManager.instance as LineManager;
-        [SerializeField] private ShapeManager _shapeManager = ShapeManager.instance as ShapeManager;
-        [SerializeField] private TilingManager _tilingManager = TilingManager.instance as TilingManager;
-        [SerializeField] private ReplacerManager _replacerManager = ReplacerManager.instance as ReplacerManager;
-        [SerializeField] private EraserManager _eraserManager = EraserManager.instance as EraserManager;
+        [SerializeField] private FloorManager _floorManager = FloorManager.instance;
+        [SerializeField] private WallManager _wallManager = WallManager.instance;
+        [SerializeField] private BlockManager _blockManager = BlockManager.instance;
+        [SerializeField] private PinManager _pinManager = PinManager.instance;
+        [SerializeField] private BrushManager _brushManager = BrushManager.instance;
+        [SerializeField] private GravityToolController _gravityToolController = GravityToolController.instance;
+        [SerializeField] private LineManager _lineManager = LineManager.instance;
+        [SerializeField] private ShapeManager _shapeManager = ShapeManager.instance;
+        [SerializeField] private TilingManager _tilingManager = TilingManager.instance;
+        [SerializeField] private ReplacerManager _replacerManager = ReplacerManager.instance;
+        [SerializeField] private EraserManager _eraserManager = EraserManager.instance;
 
         [SerializeField]
-        private SelectionToolController _selectionToolController = SelectionToolController.instance as SelectionToolController;
+        private SelectionToolController _selectionToolController = SelectionToolController.instance;
         [SerializeField]
-        private CircleSelectManager _circleSelectToolController = CircleSelectManager.instance as CircleSelectManager;
-        [SerializeField] private ExtrudeManager _extrudeSettings = ExtrudeManager.instance as ExtrudeManager;
-        [SerializeField] private MirrorManager _mirrorManager = MirrorManager.instance as MirrorManager;
+        private CircleSelectManager _circleSelectToolController = CircleSelectManager.instance;
+        [SerializeField] private ExtrudeManager _extrudeSettings = ExtrudeManager.instance;
+        [SerializeField] private MirrorManager _mirrorManager = MirrorManager.instance;
         [SerializeField] private GridManager _snapManager = new GridManager();
         #endregion
 
@@ -460,6 +460,7 @@ namespace PluginMaster
         #region FILE OPERATIONS
         public void Save() => Save(false);
         public void SaveAndUpdateVersion() => Save(true);
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0004:Domain Reload Analyzer")]
         public void Save(bool updateVersion)
         {
             if (UnityEditor.EditorApplication.isCompiling
@@ -470,7 +471,6 @@ namespace PluginMaster
                 UnityEditor.EditorApplication.delayCall += () => Save(updateVersion);
                 return;
             }
-
             _saving = true;
 #if !PWB_DO_NOT_INITIALIZE_ON_LOAD
             if (updateVersion) VersionUpdate();
@@ -489,7 +489,11 @@ namespace PluginMaster
         public static string ReadDataText()
         {
             var fullFilePath = dataPath;
-            if (!System.IO.File.Exists(fullFilePath)) PWBCore.staticData.Save(false);
+            if (!System.IO.File.Exists(fullFilePath))
+            {
+                PWBCore.staticData.Save(false);
+                if (!System.IO.File.Exists(fullFilePath)) return null;
+            }
             return System.IO.File.ReadAllText(fullFilePath);
         }
 
@@ -503,3 +507,4 @@ namespace PluginMaster
         #endregion
     }
 }
+#pragma warning restore UDR0001

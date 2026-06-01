@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 using System.Linq;
 
@@ -21,12 +22,14 @@ namespace PluginMaster
         #region PARENT MANAGEMENT
 
         public const string PARENT_COLLIDER_NAME = "PluginMasterPrefabPaintTempMeshColliders";
+
         private static GameObject _parentCollider = null;
 #if UNITY_6000_3_OR_NEWER
         private static EntityId _parentColliderId = EntityId.None;
 #else
         private static int _parentColliderId = -1;
 #endif
+
         private static GameObject parentCollider
         {
             get
@@ -64,6 +67,7 @@ namespace PluginMaster
         #endregion
 
         #region DATA STRUCTURES
+
 #if UNITY_6000_3_OR_NEWER
         private static System.Collections.Generic.Dictionary<EntityId, GameObject> _tempCollidersIds
             = new System.Collections.Generic.Dictionary<EntityId, GameObject>();
@@ -91,23 +95,10 @@ namespace PluginMaster
             _tempCollidersTargetChildrenIds
             = new System.Collections.Generic.Dictionary<int, System.Collections.Generic.HashSet<int>>();
 #endif
+
         #endregion
 
         #region QUERIES
-
-        public static bool CollidersContains(GameObject[] selection, string colliderName)
-        {
-            int objId;
-            if (!int.TryParse(colliderName, out objId)) return false;
-            foreach (var obj in selection)
-#if UNITY_6000_3_OR_NEWER
-                if (obj.GetEntityId().Equals(objId))
-#else
-                if (obj.GetInstanceID() == objId)
-#endif
-                    return true;
-            return false;
-        }
 #if UNITY_6000_3_OR_NEWER
         public static bool IsTempCollider(EntityId instanceId) => _tempCollidersIds.ContainsKey(instanceId);
 #else
@@ -366,6 +357,7 @@ namespace PluginMaster
 
         #region UPDATE & LIFECYCLE
 
+        
         public static bool updatingTempColliders { get; set; }
 
         public static void UpdateTempColliders(bool force = false)
@@ -554,3 +546,4 @@ namespace PluginMaster
 #endregion
     }
 }
+#pragma warning restore UDR0001

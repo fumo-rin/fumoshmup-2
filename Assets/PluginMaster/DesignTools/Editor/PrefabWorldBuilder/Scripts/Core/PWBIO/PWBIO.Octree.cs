@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ namespace PluginMaster
     public static partial class PWBIO
     {
         private const float MIN_OCTREE_NODE_SIZE = 0.5f;
+
         private static BoundsOctree _boundsOctree = new BoundsOctree(initialWorldSize: 10,
             initialWorldPos: Vector3.zero, MIN_OCTREE_NODE_SIZE, MIN_OCTREE_NODE_SIZE);
 
@@ -103,10 +105,12 @@ namespace PluginMaster
             }
             else
             {
-#if UNITY_2022_2_OR_NEWER
-                allObjects = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+#if UNITY_6000_4_OR_NEWER
+                allObjects = Object.FindObjectsByType<GameObject>();
+#elif UNITY_2022_2_OR_NEWER
+                allObjects = Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
 #else
-                allObjects = GameObject.FindObjectsOfType<GameObject>();
+                allObjects = Object.FindObjectsOfType<GameObject>();
 #endif
                 var allObjectsRoots = new System.Collections.Generic.HashSet<GameObject>();
                 foreach (var obj in allObjects)
@@ -141,3 +145,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

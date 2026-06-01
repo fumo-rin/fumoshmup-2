@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -173,6 +174,8 @@ namespace PluginMaster
         public MultibrushItemSettings GetItemAt(int index)
         {
             if (index >= _items.Count) return null;
+            var item = _items[index];
+            if(item.parentSettings == null) item.InitializeParentSettings(this);
             return _items[index];
         }
 
@@ -181,7 +184,9 @@ namespace PluginMaster
         {
             var items = _items.Where(i => i.id == itemId).ToArray();
             if (items.Length == 0) return null;
-            return items[0];
+            var item = _items[0];
+            if (item.parentSettings == null) item.InitializeParentSettings(this);
+            return item;
         }
 
         public void InsertItemAt(MultibrushItemSettings item, int index)
@@ -342,8 +347,8 @@ namespace PluginMaster
         public override BrushSettings Clone()
         {
             var clone = new MultibrushSettings();
-            clone.Copy(this);
             clone.SetId();
+            clone.Copy(this);
             clone.palette = _palette;
             if (thumbnail != null)
             {
@@ -358,8 +363,8 @@ namespace PluginMaster
         public MultibrushSettings CloneAndChangePalette(PaletteData palette)
         {
             var clone = new MultibrushSettings();
-            clone.Copy(this);
             clone.SetId();
+            clone.Copy(this);
             clone.palette = palette;
             return clone;
         }
@@ -397,13 +402,13 @@ namespace PluginMaster
             {
                 if (item.prefab == null) continue;
                 var newBrush = new MultibrushSettings();
+                newBrush.SetId();
                 newBrush.Copy(this);
                 newBrush._items.Clear();
                 var itemClone = item.Clone() as MultibrushItemSettings;
                 itemClone.parentSettings = newBrush;
                 newBrush._items.Add(itemClone);
                 newBrush.name = item.prefab.name;
-                newBrush.SetId();
                 newBrush.palette = palette;
                 if (itemClone.thumbnailSettings.useCustomImage && item.thumbnail != null)
                 {
@@ -506,6 +511,16 @@ namespace PluginMaster
             }
         }
 
+        public float maxTrianglesCount
+        {
+            get
+            {
+                float max = float.MinValue;
+                foreach (var item in _items)
+                    max = Mathf.Max(max, item.trianglesCount);
+                return max;
+            }
+        }
         public void UpdateAssetTypes()
         {
             foreach (var item in _items) item.UpdateAssetType();
@@ -516,6 +531,13 @@ namespace PluginMaster
             foreach (var item in items) if (item.prefab == null) RemoveItem(item);
         }
 
+        public bool RepairItemParentIds()
+        {
+            bool repaired = false;
+            foreach (var item in _items)
+                if (item.RepairParentId(this)) repaired = true;
+            return repaired;
+        }
         public override int GetHashCode()
         {
             int hashCode = 917907199;
@@ -538,5 +560,15 @@ namespace PluginMaster
             }
             return new MultibrushSettings(prefab, palette);
         }
+
+        public override void OnAfterDeserialize()
+        {
+            base.OnAfterDeserialize();
+            foreach (var item in _items)
+            {
+                item.InitializeParentSettings(this);
+            }
+        }
     }
 }
+#pragma warning restore UDR0001

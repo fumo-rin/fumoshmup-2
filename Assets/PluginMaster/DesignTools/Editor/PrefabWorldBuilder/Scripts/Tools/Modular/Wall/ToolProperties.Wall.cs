@@ -11,12 +11,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
 {
     public partial class ToolProperties : UnityEditor.EditorWindow
     {
+        
         private static BrushPropertiesGroupState _wallOverwriteGroupState;
         private void WallGroup()
         {
@@ -53,7 +55,7 @@ namespace PluginMaster
                     if (check.changed)
                     {
                         settings.moduleSizeType = moduleSizeType;
-                        if (settings.moduleSizeType == TilesUtils.SizeType.CUSTOM) WallManager.settings.ResetSize();
+                        if (settings.moduleSizeType == TilesUtils.SizeType.CUSTOM) WallManager.instance.ResetSize();
                     }
                 }
 
@@ -87,27 +89,28 @@ namespace PluginMaster
                         using (var check = new UnityEditor.EditorGUI.ChangeCheckScope())
                         {
                             UnityEditor.EditorGUIUtility.labelWidth = 80;
-                            sizeIndex = UnityEditor.EditorGUILayout.Popup("Wall Length", settings.GetIndexOfSelectedSize(),
-                                settings.GetSizesNames());
+                            sizeIndex = UnityEditor.EditorGUILayout.Popup("Wall Length",
+                                WallManager.instance.GetIndexOfSelectedSize(),
+                                WallManager.instance.GetSizesNames());
                             if (check.changed)
                             {
-                                settings.SelectSize(sizeIndex);
+                                WallManager.instance.SelectSize(sizeIndex);
                             }
                         }
                         using (new GUILayout.HorizontalScope())
                         {
                             GUILayout.FlexibleSpace();
-                            if (GUILayout.Button("Reset")) WallManager.settings.ResetSize();
+                            if (GUILayout.Button("Reset")) WallManager.instance.ResetSize();
                             if (GUILayout.Button("Save..."))
                             {
                                 RenameWindow.ShowWindow(position.position + Event.current.mousePosition,
-                                    WallManager.settings.SaveSize, "Save Size", settings.selectedSizeName);
+                                    WallManager.instance.SaveSize, "Save Size", WallManager.instance.selectedSizeName);
                             }
                             using (new UnityEditor.EditorGUI.DisabledGroupScope(sizeIndex == 0))
                             {
                                 if (GUILayout.Button("Delete"))
                                 {
-                                    WallManager.settings.DeleteSelectedSize();
+                                    WallManager.instance.DeleteSelectedSize();
                                 }
                             }
                         }
@@ -205,3 +208,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

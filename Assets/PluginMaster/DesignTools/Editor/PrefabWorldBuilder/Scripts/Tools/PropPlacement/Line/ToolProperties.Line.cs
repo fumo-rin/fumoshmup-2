@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -20,11 +21,14 @@ namespace PluginMaster
         private static readonly string[] _lineModeNames = { "Auto", "Paint on surface", "Paint on the line" };
         private static readonly string[] _lineSpacingNames = { "Bounds", "Constant" };
         private static readonly string[] _lineAxesAlongTheLineNames = { "X", "Z" };
-        private static string[] _shapeProjDirNames = new string[]
+
+        private static readonly string[] _shapeProjDirNames = new string[]
         { "+X", "-X", "+Y", "-Y", "+Z", "-Z", "Perpendicular to plane", "From center", "To center" };
+
 
         private static int _lineProjDirIdx = 6;
         private static BrushPropertiesGroupState _lineOverwriteGroupState;
+
         private void LineBaseGUI<SETTINGS>(SETTINGS lineSettings) where SETTINGS : LineSettings
         {
             void OnValueChanged()
@@ -229,3 +233,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

@@ -11,16 +11,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
 {
     public static partial class PWBIO
     {
+
         #region HANDLERS
         private static void ShapeInitializeOnLoad()
         {
+            ShapeManager.settings.OnDataChanged -= OnShapeSettingsChanged;
             ShapeManager.settings.OnDataChanged += OnShapeSettingsChanged;
+            BrushSettings.OnBrushSettingsChanged -= PreviewSelectedPersistentShapes;
             BrushSettings.OnBrushSettingsChanged += PreviewSelectedPersistentShapes;
         }
         private static void OnShapeToolModeChanged()
@@ -139,10 +143,18 @@ namespace PluginMaster
                 {
                     if (showHandles)
                     {
-                        float distFromMouse = UnityEditor.HandleUtility.DistanceToRectangle(shapeData.GetPoint(i),
-                       shapeData.planeRotation, 0f);
+                        var handleSize = UnityEditor.HandleUtility.GetHandleSize(shapeData.GetPoint(i));
+                        var guiPoint = UnityEditor.HandleUtility.WorldToGUIPoint(shapeData.GetPoint(i));
+                        var edgeWorld = shapeData.GetPoint(i)
+                            + UnityEngine.Camera.current.transform.right
+                            * handleSize * 0.0325f * PWBCore.staticData.controPointSize;
+                        var guiEdge = UnityEditor.HandleUtility.WorldToGUIPoint(edgeWorld);
+                        float radiusPx = Vector2.Distance(guiPoint, guiEdge);
+                        float clickRadiusPx = Mathf.Max(radiusPx, 8f);
+                        float distFromMouse = Vector2.Distance(guiPoint, Event.current.mousePosition);
                         UnityEditor.HandleUtility.AddControl(controlId, distFromMouse);
-                        if (UnityEditor.HandleUtility.nearestControl != controlId) continue;
+                        bool mouseNearPoint = distFromMouse <= clickRadiusPx;
+                        if (UnityEditor.HandleUtility.nearestControl != controlId || !mouseNearPoint) continue;
                         if (isPolygon) DrawDotHandleCap(shapeData.GetPoint(i));
                         if (Event.current.button == 0 && Event.current.type == EventType.MouseDown)
                         {
@@ -170,7 +182,7 @@ namespace PluginMaster
                     _updateHandlePosition = false;
                 }
                 var prevPosition = shapeData.selectedPoint;
-                var snappedPoint = UnityEditor.Handles.PositionHandle(selectedPoint, shapeData.planeRotation);
+                var snappedPoint = PWBPositionHandle(CONTROL_POINT_HANDLE_ID, selectedPoint, shapeData.planeRotation);
                 snappedPoint = SnapToBounds(snappedPoint);
                 snappedPoint = SnapAndUpdateGridOrigin(snappedPoint, GridManager.settings.snappingEnabled,
                    shapeData.settings.paintOnPalettePrefabs, shapeData.settings.paintOnMeshesWithoutCollider,
@@ -283,16 +295,18 @@ namespace PluginMaster
             if (shapeData.state < ToolController.ToolState.EDIT) return;
 
             var arcLines = new Vector3[] { shapeData.GetPoint(-1), shapeData.center, shapeData.GetPoint(-2) };
-            UnityEditor.Handles.color = new Color(0f, 0f, 0f, 0.7f);
+            UnityEditor.Handles.color = new Color(0f, 0f, 0.7f);
             UnityEditor.Handles.DrawAAPolyLine(4, arcLines);
             UnityEditor.Handles.color = new Color(1f, 1f, 1f, 0.7f);
             UnityEditor.Handles.DrawAAPolyLine(2, arcLines);
             var arcPoints = GetArcVertices(shapeData.radius * 1.5f, shapeData);
-            UnityEditor.Handles.color = new Color(0f, 0f, 0f, 0.7f);
+            UnityEditor.Handles.color = new Color(0f, 0f, 0.7f);
             UnityEditor.Handles.DrawAAPolyLine(4, arcPoints);
             UnityEditor.Handles.color = new Color(1f, 1f, 1f, 0.7f);
             UnityEditor.Handles.DrawAAPolyLine(2, arcPoints);
         }
         #endregion
+
     }
 }
+#pragma warning restore UDR0001

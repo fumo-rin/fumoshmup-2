@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -53,10 +54,12 @@ namespace PluginMaster
                 _surface = surface;
             }
         }
+
         private static System.Collections.Generic.List<PaintStrokeItem> _paintStroke
             = new System.Collections.Generic.List<PaintStrokeItem>();
 
         public static bool painting { get; set; }
+
         private const string PAINT_CMD = "Paint";
 
         private static System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<(GameObject, int)>>
@@ -68,6 +71,7 @@ namespace PluginMaster
                 System.Collections.Generic.List<(GameObject, int)>>();
             if (_paintStroke.Count == 0)
             {
+                painting = false;
                 if (BrushstrokeManager.brushstroke.Length == 0) BrushstrokeManager.UpdateBrushstroke();
                 return paintedObjects;
             }
@@ -133,3 +137,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

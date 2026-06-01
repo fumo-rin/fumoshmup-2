@@ -11,25 +11,46 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
 {
     public static partial class PWBIO
     {
+
         private static System.Collections.Generic.List<System.Collections.Generic.List<Vector3>> _initialPinBoundPoints
             = new System.Collections.Generic.List<System.Collections.Generic.List<Vector3>>();
         private static System.Collections.Generic.List<System.Collections.Generic.List<Vector3>> _pinBoundPoints
             = new System.Collections.Generic.List<System.Collections.Generic.List<Vector3>>();
         private static int _pinBoundPointIdx = 0;
+        private static int pinBoundPointIdx
+        {
+            get
+            {
+                if (PinManager.settings.flattenTerrain && _pinBoundPointIdx == 0
+                    && _pinBoundPoints[pinBoundLayerIdx].Count > 0) return 1;
+                return _pinBoundPointIdx;
+            }
+            set => _pinBoundPointIdx = value;
+        }
         private static int _pinBoundLayerIdx = 0;
+        private static int pinBoundLayerIdx
+        {
+            get
+            {
+                if (PinManager.settings.flattenTerrain) return 0;
+                return _pinBoundLayerIdx;
+            }
+            set => _pinBoundLayerIdx = value; 
+        }
 
         private static void UpdatePinScale()
         {
             for (int l = 0; l < _pinBoundPoints.Count; ++l)
                 for (int p = 0; p < _pinBoundPoints[l].Count; ++p)
                     _pinBoundPoints[l][p] = _initialPinBoundPoints[l][p] * _pinScale;
-            _pinOffset = _pinBoundPoints[_pinBoundLayerIdx][_pinBoundPointIdx];
+            _pinOffset = _pinBoundPoints[pinBoundLayerIdx][pinBoundPointIdx];
         }
         private static void UpdatePinScale(float value)
         {
@@ -42,17 +63,17 @@ namespace PluginMaster
         {
             get
             {
-                _pinBoundPointIdx = 0;
-                return _pinBoundPoints[_pinBoundLayerIdx][_pinBoundPointIdx];
+                pinBoundPointIdx = 0;
+                return _pinBoundPoints[pinBoundLayerIdx][pinBoundPointIdx];
             }
         }
         private static Vector3 nextBoundPoint
         {
             get
             {
-                ++_pinBoundPointIdx;
-                if (_pinBoundPointIdx >= _pinBoundPoints[_pinBoundLayerIdx].Count) _pinBoundPointIdx = 0;
-                return _pinBoundPoints[_pinBoundLayerIdx][_pinBoundPointIdx];
+                ++pinBoundPointIdx;
+                if (pinBoundPointIdx >= _pinBoundPoints[pinBoundLayerIdx].Count) pinBoundPointIdx = 0;
+                return _pinBoundPoints[pinBoundLayerIdx][pinBoundPointIdx];
             }
         }
 
@@ -60,9 +81,9 @@ namespace PluginMaster
         {
             get
             {
-                --_pinBoundPointIdx;
-                if (_pinBoundPointIdx < 0) _pinBoundPointIdx = _pinBoundPoints[_pinBoundLayerIdx].Count - 1;
-                return _pinBoundPoints[_pinBoundLayerIdx][_pinBoundPointIdx];
+                --pinBoundPointIdx;
+                if (pinBoundPointIdx < 0) pinBoundPointIdx = _pinBoundPoints[pinBoundLayerIdx].Count - 1;
+                return _pinBoundPoints[pinBoundLayerIdx][pinBoundPointIdx];
             }
         }
 
@@ -70,9 +91,9 @@ namespace PluginMaster
         {
             get
             {
-                ++_pinBoundLayerIdx;
-                if (_pinBoundLayerIdx >= _pinBoundPoints.Count) _pinBoundLayerIdx = 0;
-                return _pinBoundPoints[_pinBoundLayerIdx][_pinBoundPointIdx];
+                ++pinBoundLayerIdx;
+                if (pinBoundLayerIdx >= _pinBoundPoints.Count) pinBoundLayerIdx = 0;
+                return _pinBoundPoints[pinBoundLayerIdx][pinBoundPointIdx];
             }
         }
 
@@ -80,12 +101,14 @@ namespace PluginMaster
         {
             get
             {
-                --_pinBoundLayerIdx;
-                if (_pinBoundLayerIdx < 0) _pinBoundLayerIdx = _pinBoundPoints.Count - 1;
+                --pinBoundLayerIdx;
+                if (pinBoundLayerIdx < 0) pinBoundLayerIdx = _pinBoundPoints.Count - 1;
 
-                return _pinBoundPoints[_pinBoundLayerIdx][_pinBoundPointIdx];
+                return _pinBoundPoints[pinBoundLayerIdx][pinBoundPointIdx];
             }
         }
+
+        
 
         private static void SetPinValues(Quaternion additionRotation)
         {
@@ -211,7 +234,7 @@ namespace PluginMaster
             BrushSettings brushSettings = strokeItem.settings;
             if (PinManager.settings.overwriteBrushProperties) brushSettings = PinManager.settings.brushSettings;
             repaint = true;
-            _pinOffset = _pinBoundPoints[_pinBoundLayerIdx][_pinBoundPointIdx];
+            _pinOffset = _pinBoundPoints[pinBoundLayerIdx][pinBoundPointIdx];
             UnityEditor.SceneView.RepaintAll();
         }
         public static void UpdatePinValues(GameObject prefab, Quaternion rotation)
@@ -226,11 +249,12 @@ namespace PluginMaster
             var fromUpToNormalEulerRounded = RoundEulerToStraightAngles(fromUpToNormalRotation.eulerAngles);
             fromUpToNormalRotation = Quaternion.Euler(fromUpToNormalEulerRounded);
             SetPinValues(additionalRotation);
-            var layerIdx = Mathf.Clamp(_pinBoundLayerIdx, 0, _pinBoundPoints.Count - 1);
-            var pointIdx = Mathf.Clamp(_pinBoundPointIdx, 0, _pinBoundPoints[layerIdx].Count - 1);
+            var layerIdx = Mathf.Clamp(pinBoundLayerIdx, 0, _pinBoundPoints.Count - 1);
+            var pointIdx = Mathf.Clamp(pinBoundPointIdx, 0, _pinBoundPoints[layerIdx].Count - 1);
             UpdatePinScale();
             repaint = true;
             UnityEditor.SceneView.RepaintAll();
         }
     }
 }
+#pragma warning restore UDR0001

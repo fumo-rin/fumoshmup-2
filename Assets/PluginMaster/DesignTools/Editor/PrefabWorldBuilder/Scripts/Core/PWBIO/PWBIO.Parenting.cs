@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -19,9 +20,11 @@ namespace PluginMaster
     public static partial class PWBIO
     {
         private const string PWB_OBJ_NAME = "Prefab World Builder";
+
         private static Transform _autoParent = null;
         private static System.Collections.Generic.Dictionary<string, Transform> _subParents
             = new System.Collections.Generic.Dictionary<string, Transform>();
+
         public static void ResetAutoParent() => _autoParent = null;
 
         private const string NO_PALETTE_NAME = "<#PALETTE@>";
@@ -82,13 +85,16 @@ namespace PluginMaster
                 + tool + PARENT_KEY_SEPARATOR + id + PARENT_KEY_SEPARATOR + brush
                 + PARENT_KEY_SEPARATOR + prefab;
 
-            string subParentKey = GetSubParentKey(autoParentId,
-                parentingSettings.createSubparentPerPalette ? PaletteManager.selectedPalette.name : NO_PALETTE_NAME,
-                parentingSettings.createSubparentPerTool
-                ? ToolController.GetToolFromSettings(settings as IToolSettings).ToString() : NO_TOOL_NAME,
-                string.IsNullOrEmpty(toolObjectId) ? NO_OBJ_ID : toolObjectId,
-                parentingSettings.createSubparentPerBrush ? PaletteManager.selectedBrush.name : NO_BRUSH_NAME,
-                parentingSettings.createSubparentPerPrefab ? prefabName : NO_PREFAB_NAME);
+            var paletteName = parentingSettings.createSubparentPerPalette && PaletteManager.selectedPalette != null
+                ? PaletteManager.selectedPalette.name : NO_PALETTE_NAME;
+            var toolName = parentingSettings.createSubparentPerTool
+                ? ToolController.GetToolFromSettings(settings as IToolSettings).ToString() : NO_TOOL_NAME;
+            var objId = string.IsNullOrEmpty(toolObjectId) ? NO_OBJ_ID : toolObjectId;
+            var brushName = parentingSettings.createSubparentPerBrush && PaletteManager.selectedBrush != null
+                ? PaletteManager.selectedBrush.name : NO_BRUSH_NAME;
+            var prefabKey = parentingSettings.createSubparentPerPrefab ? prefabName : NO_PREFAB_NAME;
+
+            string subParentKey = GetSubParentKey(autoParentId, paletteName, toolName, objId, brushName, prefabKey);
 
             create = !(_subParents.ContainsKey(subParentKey));
             if (!create && _subParents[subParentKey] == null) create = true;
@@ -160,3 +166,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

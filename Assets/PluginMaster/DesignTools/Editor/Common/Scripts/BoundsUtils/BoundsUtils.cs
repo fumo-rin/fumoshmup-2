@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 namespace PluginMaster
 {
@@ -44,6 +45,7 @@ namespace PluginMaster
             }
             return max;
         }
+        
 #if UNITY_6000_3_OR_NEWER
         private static System.Collections.Generic.Dictionary<(EntityId, ObjectProperty), Bounds> _boundsDictionary
             = new System.Collections.Generic.Dictionary<(EntityId, ObjectProperty), Bounds>();
@@ -116,6 +118,7 @@ namespace PluginMaster
             if (useDictionary) _boundsDictionary.Add(key, result);
             return result;
         }
+        
 #if UNITY_6000_3_OR_NEWER
         private static System.Collections.Generic.Dictionary<(EntityId, ObjectProperty, Vector2), Bounds>
             _boundsRecursiveDictionary = new System.Collections.Generic
@@ -206,3 +209,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

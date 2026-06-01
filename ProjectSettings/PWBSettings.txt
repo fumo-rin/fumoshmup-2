@@ -533,6 +533,78 @@
                     "_keyCode": 101
                 }
             },
+            "_blockPreviewRotate90YCW": {
+                "_name": "Rotate preview 90� around Y",
+                "_group": 131072,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 1,
+                    "_keyCode": 115
+                }
+            },
+            "_blockRotate90YCW": {
+                "_name": "Rotate 90� around Y",
+                "_group": 131072,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 0,
+                    "_keyCode": 97
+                }
+            },
+            "_blockRotate90XCW": {
+                "_name": "Rotate 90� around X",
+                "_group": 131072,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 0,
+                    "_keyCode": 103
+                }
+            },
+            "_blockRotate90ZCW": {
+                "_name": "Rotate 90� around Z",
+                "_group": 131072,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 0,
+                    "_keyCode": 98
+                }
+            },
+            "_blockRotate90YCCW": {
+                "_name": "Rotate -90� around Y",
+                "_group": 131072,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 1,
+                    "_keyCode": 97
+                }
+            },
+            "_blockRotate90XCCW": {
+                "_name": "Rotate -90� around X",
+                "_group": 131072,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 1,
+                    "_keyCode": 103
+                }
+            },
+            "_blockRotate90ZCCW": {
+                "_name": "Rotate -90� around Z",
+                "_group": 131072,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 1,
+                    "_keyCode": 98
+                }
+            },
+            "_toolModesMoveSymmetryOriginToMousePos": {
+                "_name": "Move the symmetry origin to mouse position",
+                "_group": 262144,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 1,
+                    "_keyCode": 115
+                }
+            },
             "_gridEnableShortcuts": {
                 "_name": "First step to enable grid shortcuts",
                 "_group": 3,
@@ -1458,6 +1530,78 @@
                     "_keyCode": 101
                 }
             },
+            "_blockPreviewRotate90YCW": {
+                "_name": "Rotate preview 90� around Y",
+                "_group": 131072,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 1,
+                    "_keyCode": 115
+                }
+            },
+            "_blockRotate90YCW": {
+                "_name": "Rotate 90� around Y",
+                "_group": 131072,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 0,
+                    "_keyCode": 97
+                }
+            },
+            "_blockRotate90XCW": {
+                "_name": "Rotate 90� around X",
+                "_group": 131072,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 0,
+                    "_keyCode": 103
+                }
+            },
+            "_blockRotate90ZCW": {
+                "_name": "Rotate 90� around Z",
+                "_group": 131072,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 0,
+                    "_keyCode": 98
+                }
+            },
+            "_blockRotate90YCCW": {
+                "_name": "Rotate -90� around Y",
+                "_group": 131072,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 1,
+                    "_keyCode": 97
+                }
+            },
+            "_blockRotate90XCCW": {
+                "_name": "Rotate -90� around X",
+                "_group": 131072,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 1,
+                    "_keyCode": 103
+                }
+            },
+            "_blockRotate90ZCCW": {
+                "_name": "Rotate -90� around Z",
+                "_group": 131072,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 1,
+                    "_keyCode": 98
+                }
+            },
+            "_toolModesMoveSymmetryOriginToMousePos": {
+                "_name": "Move the symmetry origin to mouse position",
+                "_group": 262144,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 1,
+                    "_keyCode": 115
+                }
+            },
             "_gridEnableShortcuts": {
                 "_name": "First step to enable grid shortcuts",
                 "_group": 3,
@@ -2380,6 +2524,78 @@
                 "_conflicted": false,
                 "_keyCombination": {
                     "_modifiers": 0,
+                    "_keyCode": 115
+                }
+            },
+            "_blockPreviewRotate90YCW": {
+                "_name": "Rotate preview 90� around Y",
+                "_group": 131072,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 0,
+                    "_keyCode": 115
+                }
+            },
+            "_blockRotate90YCW": {
+                "_name": "Rotate 90� around Y",
+                "_group": 131072,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 0,
+                    "_keyCode": 97
+                }
+            },
+            "_blockRotate90XCW": {
+                "_name": "Rotate 90� around X",
+                "_group": 131072,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 0,
+                    "_keyCode": 103
+                }
+            },
+            "_blockRotate90ZCW": {
+                "_name": "Rotate 90� around Z",
+                "_group": 131072,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 0,
+                    "_keyCode": 98
+                }
+            },
+            "_blockRotate90YCCW": {
+                "_name": "Rotate -90� around Y",
+                "_group": 131072,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 1,
+                    "_keyCode": 97
+                }
+            },
+            "_blockRotate90XCCW": {
+                "_name": "Rotate -90� around X",
+                "_group": 131072,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 1,
+                    "_keyCode": 103
+                }
+            },
+            "_blockRotate90ZCCW": {
+                "_name": "Rotate -90� around Z",
+                "_group": 131072,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 1,
+                    "_keyCode": 98
+                }
+            },
+            "_toolModesMoveSymmetryOriginToMousePos": {
+                "_name": "Move the symmetry origin to mouse position",
+                "_group": 262144,
+                "_conflicted": false,
+                "_keyCombination": {
+                    "_modifiers": 1,
                     "_keyCode": 115
                 }
             },

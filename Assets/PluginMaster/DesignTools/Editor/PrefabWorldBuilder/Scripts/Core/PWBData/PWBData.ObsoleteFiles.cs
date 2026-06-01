@@ -1,6 +1,6 @@
 /*
 Copyright (c) Omar Duarte
-Unauthorized copying of this file, via any medium is strictly prohibited.
+Unauthorized copying of this path, via any medium is strictly prohibited.
 Writen by Omar Duarte.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 
 namespace PluginMaster
 {
@@ -18,13 +19,8 @@ namespace PluginMaster
     {
         public void DeleteObsoleteFiles()
         {
-            const string obsoleteFilesDeletedSessionStateKey = "PWBObsoleteFilesDeleted";
-            if (UnityEditor.SessionState.GetBool(obsoleteFilesDeletedSessionStateKey, false)) return;
-            else UnityEditor.SessionState.SetBool(obsoleteFilesDeletedSessionStateKey, true);
-
             var rootDirFullPath = PWBCore.GetFullPath(_rootDirectory);
-            var obsoleteDir = rootDirFullPath + "/Scripts";
-            if (!System.IO.Directory.Exists(obsoleteDir)) return;
+
             var obsoleteDirNew = rootDirFullPath + "/Scripts/Obsolete";
             if (System.IO.Directory.Exists(obsoleteDirNew))
             {
@@ -33,20 +29,29 @@ namespace PluginMaster
                 if (System.IO.File.Exists(metaFilePath))
                     System.IO.File.Delete(metaFilePath);
                 PWBCore.refreshDatabase = true;
-                return;
             }
-            var files = new string[]
+
+            const string obsoleteFilesDeletedSessionStateKey = "PWBObsoleteFilesDeleted" + PWBData.VERSION;
+            if (UnityEditor.SessionState.GetBool(obsoleteFilesDeletedSessionStateKey, false)) return;
+            else UnityEditor.SessionState.SetBool(obsoleteFilesDeletedSessionStateKey, true);
+
+            var obsoleteRootDir = rootDirFullPath + "/Scripts";
+            if (!System.IO.Directory.Exists(obsoleteRootDir)) return;
+
+            var filePaths = new string[]
             {
                "Shortcuts.cs",
                "SnapManager.cs",
                "SnapSettingsWindow.cs",
                "ToolBase.cs",
-               "ToolManager.cs"
+               "ToolManager.cs",
+               "Tools/Modular/Block/Core/PWBIO.BlockSymmetryOriginHandling.cs",
+               "Tools/Modular/Block/ToolModesOverlay/ToolModesOverlay.BlockMirrorModes.cs"
             };
             var filesWereDeleted = false;
-            foreach (var file in files)
+            foreach (var path in filePaths)
             {
-                var filePath = obsoleteDir + "/" + file;
+                var filePath = obsoleteRootDir + "/" + path;
                 if (System.IO.File.Exists(filePath))
                 {
                     System.IO.File.Delete(filePath);
@@ -61,3 +66,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

@@ -11,20 +11,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
 {
     public partial class ToolProperties : UnityEditor.EditorWindow
     {
+        
         private static float _maxRadius = 50f;
-        private static Vector3[] _dir =
+        private static readonly Vector3[] _dir =
         {
             Vector3.right, Vector3.left,
             Vector3.up, Vector3.down,
             Vector3.forward, Vector3.back
         };
-        private static string[] _dirNames = new string[] { "+X", "-X", "+Y", "-Y", "+Z", "-Z" };
+        private static readonly string[] _dirNames = new string[] { "+X", "-X", "+Y", "-Y", "+Z", "-Z" };
 
         private static readonly string[] _brushShapeOptions = { "Point", "Circle", "Square" };
         private static readonly string[] _spacingOptions = { "Auto", "Custom" };
@@ -496,3 +498,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

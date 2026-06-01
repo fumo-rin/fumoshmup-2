@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -27,6 +28,8 @@ namespace PluginMaster
 
         private bool _repaint = false;
         private bool _updateBrushStroke = false;
+
+        
         private static BrushProperties _instance = null;
         public static BrushProperties instance => _instance;
         [UnityEditor.MenuItem("Tools/Plugin Master/Prefab World Builder/Brush Properties...", false, 1120)]
@@ -43,10 +46,12 @@ namespace PluginMaster
             if (_instance != null) _instance.Close();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0004:Domain Reload Analyzer")]
         private void OnEnable()
         {
             _instance = this;
             _data = PWBCore.staticData;
+            PaletteManager.OnBrushSelectionChanged -= OnBrushChanged;
             PaletteManager.OnBrushSelectionChanged += OnBrushChanged;
             _skin = Resources.Load<GUISkin>("PWBSkin");
             if (_skin == null) return;
@@ -55,6 +60,7 @@ namespace PluginMaster
             _thumbnailToggleStyle = _skin.GetStyle("ThumbnailToggle");
             wantsMouseMove = true;
             wantsMouseEnterLeaveWindow = true;
+            PaletteManager.OnSelectionChanged -= UpdateBrushSelectionSettings;
             PaletteManager.OnSelectionChanged += UpdateBrushSelectionSettings;
 
             _sameStateIcon = new GUIContent(Resources.Load<Texture2D>("Sprites/Same"),
@@ -63,6 +69,7 @@ namespace PluginMaster
                 "The Selection contains different values for this element");
             _changedStateIcon = new GUIContent(Resources.Load<Texture2D>("Sprites/Edited"),
                 "This value has changed");
+            UnityEditor.Undo.undoRedoPerformed -= Repaint;
             UnityEditor.Undo.undoRedoPerformed += Repaint;
         }
 
@@ -87,6 +94,7 @@ namespace PluginMaster
                 Close();
                 return;
             }
+            OpenObjectPickerIfRequested();
             if (_itemAdded)
             {
                 PaletteManager.selectedBrush.InsertItemAt(_newItem, _newItemIdx);
@@ -193,3 +201,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

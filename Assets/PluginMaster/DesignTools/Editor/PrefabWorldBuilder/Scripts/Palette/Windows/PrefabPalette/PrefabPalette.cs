@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -20,13 +21,17 @@ namespace PluginMaster
         #region COMMON
         private GUISkin _skin = null;
         private int _initFrameCount = -1;
+        private int _onGUILayoutCount = 0;
 
         [SerializeField] private PaletteManager _paletteManager = null;
 
+        
         private static PrefabPalette _instance = null;
         public static PrefabPalette instance => _instance;
         [UnityEditor.MenuItem("Tools/Plugin Master/Prefab World Builder/Palette...", false, 1110)]
         public static void ShowWindow() => _instance = GetWindow<PrefabPalette>("Palette");
+
+        
         private static bool _repaint = false;
         public static void RepaintWindow()
         {
@@ -47,6 +52,7 @@ namespace PluginMaster
             if (_instance != null) _instance.Close();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0004:Domain Reload Analyzer")]
         private void OnEnable()
         {
             _instance = this;
@@ -83,6 +89,7 @@ namespace PluginMaster
             UpdateLabelFilter();
             UpdateFilteredList(false);
             PaletteManager.ClearSelection(false);
+            UnityEditor.Undo.undoRedoPerformed -= OnPaletteChange;
             UnityEditor.Undo.undoRedoPerformed += OnPaletteChange;
         }
 
@@ -94,20 +101,27 @@ namespace PluginMaster
             if (_instance == null) return;
             UnityEditor.Undo.ClearUndo(_instance);
         }
-
+        
 
         private void OnGUI()
         {
+            if (Event.current.type == EventType.Layout)
+                _onGUILayoutCount++;
 
-            var currentFrame = Time.frameCount;
             if (_initFrameCount < 0)
             {
-                _initFrameCount = currentFrame;
+                _initFrameCount = _onGUILayoutCount;
                 Repaint();
                 return;
             }
 
-            bool initializing = currentFrame <= _initFrameCount + 2;
+            if (_onGUILayoutCount == _initFrameCount)
+            {
+                Repaint();
+                return;
+            }
+
+            bool initializing = _onGUILayoutCount <= _initFrameCount + 2;
             if (initializing && Event.current.type != EventType.Repaint && Event.current.type != EventType.Layout)
             {
                 Repaint();
@@ -302,3 +316,4 @@ namespace PluginMaster
         #endregion
     }
 }
+#pragma warning restore UDR0001

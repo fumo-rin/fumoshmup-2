@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -33,10 +34,12 @@ namespace PluginMaster
     }
 
     [System.Serializable]
-    public class ToolControllerBase<TOOL_SETTINGS> : IToolController, ISerializationCallbackReceiver
+    public class ToolControllerBase<TOOL_SETTINGS, TOOL_MANAGER> : IToolController, ISerializationCallbackReceiver
         where TOOL_SETTINGS : IToolSettings, new()
+        where TOOL_MANAGER : ToolControllerBase<TOOL_SETTINGS, TOOL_MANAGER>, new()
     {
-        protected static ToolControllerBase<TOOL_SETTINGS> _instance = null;
+
+        protected static TOOL_MANAGER _instance = null;
         private static System.Collections.Generic.Dictionary<string, TOOL_SETTINGS> _staticProfiles
             = new System.Collections.Generic.Dictionary<string, TOOL_SETTINGS>
         { { ToolProfile.DEFAULT, new TOOL_SETTINGS() } };
@@ -49,11 +52,11 @@ namespace PluginMaster
 
         protected ToolControllerBase() { }
 
-        public static ToolControllerBase<TOOL_SETTINGS> instance
+        public static TOOL_MANAGER instance
         {
             get
             {
-                if (_instance == null) _instance = new ToolControllerBase<TOOL_SETTINGS>();
+                if (_instance == null) _instance = new TOOL_MANAGER();
                 return _instance;
             }
         }
@@ -160,14 +163,16 @@ namespace PluginMaster
     }
 
     [System.Serializable]
-    public class PersistentToolControllerBase<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT, TOOL_DATA, SCENE_DATA>
-        : ToolControllerBase<TOOL_SETTINGS>, IPersistentToolController
+    public class PersistentToolControllerBase<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT, TOOL_DATA, SCENE_DATA, TOOL_MANAGER>
+        : ToolControllerBase<TOOL_SETTINGS, TOOL_MANAGER>, IPersistentToolController
         where TOOL_NAME : IToolName, new()
         where TOOL_SETTINGS : IToolSettings, new()
         where CONTROL_POINT : ControlPoint, new()
         where TOOL_DATA : PersistentData<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT>, new()
+        where TOOL_MANAGER : ToolControllerBase<TOOL_SETTINGS, TOOL_MANAGER>, new()
         where SCENE_DATA : SceneData<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT, TOOL_DATA>, new()
     {
+
         private static System.Collections.Generic.List<SCENE_DATA> _staticSceneItems = null;
         [SerializeField] private System.Collections.Generic.List<SCENE_DATA> _sceneItems = _staticSceneItems;
 
@@ -178,15 +183,15 @@ namespace PluginMaster
         [SerializeField] private bool _applyBrushToExisting = _staticApplyBrushToExisting;
 
         private static IPersistentData.Visibility _itemsVisibility = IPersistentData.Visibility.SHOW_ALL;
+
         protected PersistentToolControllerBase() { }
-        public new static PersistentToolControllerBase<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT, TOOL_DATA, SCENE_DATA> instance
+        public new static TOOL_MANAGER instance
         {
             get
             {
                 if (_instance == null)
-                    _instance = new PersistentToolControllerBase
-                        <TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT, TOOL_DATA, SCENE_DATA>();
-                return _instance as PersistentToolControllerBase<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT, TOOL_DATA, SCENE_DATA>;
+                    _instance = new TOOL_MANAGER();
+                return _instance;
             }
         }
 
@@ -375,3 +380,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

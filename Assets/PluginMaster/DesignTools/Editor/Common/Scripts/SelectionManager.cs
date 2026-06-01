@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 using System.Linq;
 
@@ -19,11 +20,16 @@ namespace PluginMaster
     [UnityEditor.InitializeOnLoad]
     public static class SelectionManager
     {
+
         private static GameObject[] _topLevelSelection = new GameObject[0];
         private static GameObject[] _topLevelSelectionWithPrefabs = new GameObject[0];
         private static GameObject[] _selection = new GameObject[0];
         public static System.Action selectionChanged;
-        static SelectionManager() => UnityEditor.Selection.selectionChanged += UpdateSelection;
+        static SelectionManager()
+        {
+            UnityEditor.Selection.selectionChanged -= UpdateSelection;
+            UnityEditor.Selection.selectionChanged += UpdateSelection;
+        }
 
         private static void UpdateSelection(System.Collections.Generic.List<GameObject> list,
             bool filteredByTopLevel, bool excludePrefabs)
@@ -101,3 +107,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

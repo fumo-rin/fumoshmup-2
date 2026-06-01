@@ -11,12 +11,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
 {
     public static partial class PWBIO
     {
+
         private static bool _gridShorcutEnabled = false;
         public static bool gridShorcutEnabled => _gridShorcutEnabled;
         private static SceneViewCameraOrientation.Orientation _cameraOrientation
@@ -184,7 +186,10 @@ namespace PluginMaster
                 : axis == AxesUtils.Axis.Y ? Vector3.up : Vector3.forward), originOffset);
             Vector3 focusPoint;
             if (plane.Raycast(camRay, out float distance)) focusPoint = camRay.GetPoint(distance);
-            else return;
+            else
+            {
+                return;
+            }
 
             if (!GridManager.settings.radialGridEnabled && GridManager.settings.drawGridAsTexture)
                 DrawGridQuad(axis, sceneView);
@@ -349,5 +354,7 @@ namespace PluginMaster
             }
             return false;
         }
+
     }
 }
+#pragma warning restore UDR0001

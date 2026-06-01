@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ namespace PluginMaster
 {
     public static partial class PWBIO
     {
+
         private static System.Collections.Generic.HashSet<GameObject> _disabledObjects
             = new System.Collections.Generic.HashSet<GameObject>();
         private static bool _editingPersistentLine = false;
@@ -391,5 +393,7 @@ namespace PluginMaster
             var persistentLines = LineManager.instance.GetPersistentItems();
             foreach (var l in persistentLines) l.ClearSelection();
         }
+
     }
 }
+#pragma warning restore UDR0001

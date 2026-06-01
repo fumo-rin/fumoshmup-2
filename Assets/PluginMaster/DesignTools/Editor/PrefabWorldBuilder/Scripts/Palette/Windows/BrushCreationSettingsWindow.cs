@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright (c) Omar Duarte
 Unauthorized copying of this file, via any medium is strictly prohibited.
 Writen by Omar Duarte.
@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -30,11 +31,13 @@ namespace PluginMaster
         [UnityEditor.MenuItem("Tools/Plugin Master/Prefab World Builder/Brush Creation Settings...", false, 1140)]
         public static void ShowWindow() => GetWindow<BrushCreationSettingsWindow>();
 
-        private static string UNDO_MSG = "Brush Creation Settings";
+        private const string UNDO_MSG = "Brush Creation Settings";
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0004:Domain Reload Analyzer")]
         private void OnEnable()
         {
             _data = PWBCore.staticData;
+            UnityEditor.Undo.undoRedoPerformed -= Repaint;
             UnityEditor.Undo.undoRedoPerformed += Repaint;
             titleContent = new GUIContent(PaletteManager.selectedPalette.name + " - Brush Creation Settings");
             
@@ -134,3 +137,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

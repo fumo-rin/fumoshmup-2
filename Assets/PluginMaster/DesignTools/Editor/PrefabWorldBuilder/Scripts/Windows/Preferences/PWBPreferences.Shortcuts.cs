@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -20,6 +21,7 @@ namespace PluginMaster
         #region DATA & STATE
         private bool _floorCategory = false;
         private bool _wallCategory = false;
+        private bool _blockCategory = false;
         private bool _pinCategory = false;
         private bool _brushCategory = false;
         private bool _gravityCategory = false;
@@ -35,8 +37,12 @@ namespace PluginMaster
         private bool _paletteCategory = false;
         private bool _gizmosCategory = false;
         private bool _toolbarCategory = true;
+        private bool _uiCategory = false;
+        private bool _toolModesCategory = false;
 
         private PWBKeyShortcut _selectedShortcut = null;
+
+        
         private static Texture2D _warningTexture = null;
         private static Texture2D warningTexture
         {
@@ -147,7 +153,10 @@ namespace PluginMaster
             _toolbarCategory = false;
             _floorCategory = false;
             _wallCategory = false;
+            _blockCategory = false;
             _gizmosCategory = false;
+            _uiCategory = false;
+            _toolModesCategory = false;
             category = true;
         }
 
@@ -185,6 +194,9 @@ namespace PluginMaster
                     break;
                 case ToolController.Tool.CIRCLE_SELECT:
                     _instance.SelectCategory(ref _instance._circleSelectCategory);
+                    break;
+                case ToolController.Tool.BLOCK:
+                    _instance.SelectCategory(ref _instance._blockCategory);
                     break;
                 default: return;
             }
@@ -226,3 +238,4 @@ namespace PluginMaster
         #endregion
     }
 }
+#pragma warning restore UDR0001

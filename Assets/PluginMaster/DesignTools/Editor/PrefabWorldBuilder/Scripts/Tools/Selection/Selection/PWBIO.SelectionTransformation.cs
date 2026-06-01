@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -172,7 +173,7 @@ namespace PluginMaster
 
             var handlePosition = _movingSelectionHandle ? _selectionHandlePosition : points[_selectedBoxPointIdx];
             var r = _movingSelectionHandle ? _selectionHnadleRotation : rotation;
-            handlePosition = UnityEditor.Handles.PositionHandle(handlePosition, r);
+            handlePosition = PWBPositionHandle(TOOL_HANDLE_ID, handlePosition, r);
             if (_editingSelectionRotation) return false;
             _selectionHandlePosition = handlePosition;
             int hotControlAfter = GUIUtility.hotControl;
@@ -321,3 +322,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

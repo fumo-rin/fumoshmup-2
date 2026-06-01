@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -18,8 +19,9 @@ namespace PluginMaster
     public partial class ToolProperties : UnityEditor.EditorWindow
     {
         private static readonly string[] _shapeTypeNames = { "Circle", "Polygon" };
+        
         private static BrushPropertiesGroupState _shapeOverwriteGroupState;
-        private static string[] _shapeDirNames = new string[] { "+X", "-X", "+Y", "-Y", "+Z", "-Z", "Normal to surface" };
+        private static readonly string[] _shapeDirNames = new string[] { "+X", "-X", "+Y", "-Y", "+Z", "-Z", "Normal to surface" };
         private void ShapeGroup()
         {
             UnityEditor.EditorGUIUtility.labelWidth = 100;
@@ -91,3 +93,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

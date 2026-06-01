@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -41,10 +42,10 @@ namespace PluginMaster
           PWBShortcut.Group.PIN, KeyCode.Period, EventModifiers.Control | EventModifiers.Shift);
 
         [SerializeField]
-        private PWBKeyShortcut _pinRotate90YCW = new PWBKeyShortcut("Rotate 90º around Y",
+        private PWBKeyShortcut _pinRotate90YCW = new PWBKeyShortcut("Rotate 90ï¿½ around Y",
           PWBShortcut.Group.PIN, KeyCode.Q, EventModifiers.Control);
         [SerializeField]
-        private PWBKeyShortcut _pinRotate90YCCW = new PWBKeyShortcut("Rotate -90º around Y",
+        private PWBKeyShortcut _pinRotate90YCCW = new PWBKeyShortcut("Rotate -90ï¿½ around Y",
           PWBShortcut.Group.PIN, KeyCode.W, EventModifiers.Control);
         [SerializeField]
         private PWBKeyShortcut _pinRotateAStepYCW = new PWBKeyShortcut("Rotate in steps around Y",
@@ -55,10 +56,10 @@ namespace PluginMaster
         PWBShortcut.Group.PIN, KeyCode.W, EventModifiers.Control | EventModifiers.Shift);
 
         [SerializeField]
-        private PWBKeyShortcut _pinRotate90XCW = new PWBKeyShortcut("Rotate 90º around X",
+        private PWBKeyShortcut _pinRotate90XCW = new PWBKeyShortcut("Rotate 90ï¿½ around X",
           PWBShortcut.Group.PIN, KeyCode.K, EventModifiers.Control | EventModifiers.Alt);
         [SerializeField]
-        private PWBKeyShortcut _pinRotate90XCCW = new PWBKeyShortcut("Rotate -90º around X",
+        private PWBKeyShortcut _pinRotate90XCCW = new PWBKeyShortcut("Rotate -90ï¿½ around X",
           PWBShortcut.Group.PIN, KeyCode.L, EventModifiers.Control | EventModifiers.Alt);
         [SerializeField]
         private PWBKeyShortcut _pinRotateAStepXCW = new PWBKeyShortcut("Rotate in steps around X",
@@ -69,10 +70,10 @@ namespace PluginMaster
         PWBShortcut.Group.PIN, KeyCode.L, EventModifiers.Control | EventModifiers.Alt | EventModifiers.Shift);
 
         [SerializeField]
-        private PWBKeyShortcut _pinRotate90ZCW = new PWBKeyShortcut("Rotate 90º around Z",
+        private PWBKeyShortcut _pinRotate90ZCW = new PWBKeyShortcut("Rotate 90ï¿½ around Z",
           PWBShortcut.Group.PIN, KeyCode.Period, EventModifiers.Control | EventModifiers.Alt);
         [SerializeField]
-        private PWBKeyShortcut _pinRotate90ZCCW = new PWBKeyShortcut("Rotate -90º around Z",
+        private PWBKeyShortcut _pinRotate90ZCCW = new PWBKeyShortcut("Rotate -90ï¿½ around Z",
           PWBShortcut.Group.PIN, KeyCode.Comma, EventModifiers.Control | EventModifiers.Alt);
         [SerializeField]
         private PWBKeyShortcut _pinRotateAStepZCW = new PWBKeyShortcut("Rotate in steps around Z",
@@ -256,22 +257,22 @@ namespace PluginMaster
 
         #region TILING & SELECTION
         [SerializeField]
-        private PWBKeyShortcut _selectionRotate90XCW = new PWBKeyShortcut("Rotate 90º around X",
+        private PWBKeyShortcut _selectionRotate90XCW = new PWBKeyShortcut("Rotate 90ï¿½ around X",
           PWBShortcut.Group.TILING | PWBShortcut.Group.SELECTION, KeyCode.U, EventModifiers.Control | EventModifiers.Shift);
         [SerializeField]
-        private PWBKeyShortcut _selectionRotate90XCCW = new PWBKeyShortcut("Rotate -90º around X",
+        private PWBKeyShortcut _selectionRotate90XCCW = new PWBKeyShortcut("Rotate -90ï¿½ around X",
           PWBShortcut.Group.TILING | PWBShortcut.Group.SELECTION, KeyCode.J, EventModifiers.Control | EventModifiers.Shift);
         [SerializeField]
-        private PWBKeyShortcut _selectionRotate90YCW = new PWBKeyShortcut("Rotate 90º around Y",
+        private PWBKeyShortcut _selectionRotate90YCW = new PWBKeyShortcut("Rotate 90ï¿½ around Y",
           PWBShortcut.Group.TILING | PWBShortcut.Group.SELECTION, KeyCode.K, EventModifiers.Control | EventModifiers.Alt);
         [SerializeField]
-        private PWBKeyShortcut _selectionRotate90YCCW = new PWBKeyShortcut("Rotate -90º around Y",
+        private PWBKeyShortcut _selectionRotate90YCCW = new PWBKeyShortcut("Rotate -90ï¿½ around Y",
           PWBShortcut.Group.TILING | PWBShortcut.Group.SELECTION, KeyCode.L, EventModifiers.Control | EventModifiers.Alt);
         [SerializeField]
-        private PWBKeyShortcut _selectionRotate90ZCW = new PWBKeyShortcut("Rotate 90º around Z",
+        private PWBKeyShortcut _selectionRotate90ZCW = new PWBKeyShortcut("Rotate 90ï¿½ around Z",
           PWBShortcut.Group.TILING | PWBShortcut.Group.SELECTION, KeyCode.U, EventModifiers.Control | EventModifiers.Alt);
         [SerializeField]
-        private PWBKeyShortcut _selectionRotate90ZCCW = new PWBKeyShortcut("Rotate -90º around Z",
+        private PWBKeyShortcut _selectionRotate90ZCCW = new PWBKeyShortcut("Rotate -90ï¿½ around Z",
           PWBShortcut.Group.TILING | PWBShortcut.Group.SELECTION, KeyCode.J, EventModifiers.Control | EventModifiers.Alt);
         public PWBKeyShortcut selectionRotate90XCW => _selectionRotate90XCW;
         public PWBKeyShortcut selectionRotate90XCCW => _selectionRotate90XCCW;
@@ -311,16 +312,68 @@ namespace PluginMaster
 
         #region FLOOR
         [SerializeField]
-        private PWBKeyShortcut _floorRotate90YCW = new PWBKeyShortcut("Rotate 90º around Y",
-          PWBShortcut.Group.FLOOR, KeyCode.E, EventModifiers.Shift);
+        private PWBKeyShortcut _floorRotate90YCW = new PWBKeyShortcut("Rotate 90ï¿½ around Y",
+          PWBShortcut.Group.FLOOR, KeyCode.S, EventModifiers.Shift);
         public PWBKeyShortcut floorRotate90YCW => _floorRotate90YCW;
         #endregion
 
         #region WALL
         [SerializeField]
-        private PWBKeyShortcut _wallHalfTurn = new PWBKeyShortcut("Rotate 180º around Y",
-          PWBShortcut.Group.WALL, KeyCode.E, EventModifiers.Shift);
+        private PWBKeyShortcut _wallHalfTurn = new PWBKeyShortcut("Rotate 180ï¿½ around Y",
+          PWBShortcut.Group.WALL, KeyCode.S, EventModifiers.Shift);
         public PWBKeyShortcut wallHalfTurn => _wallHalfTurn;
+        #endregion
+
+        #region BLOCK
+        [SerializeField]
+        private PWBKeyShortcut _blockPreviewRotate90YCW = new PWBKeyShortcut("Rotate preview 90ï¿½ around Y",
+          PWBShortcut.Group.BLOCK, KeyCode.S, EventModifiers.Shift);
+        public PWBKeyShortcut blockPreviewRotate90YCW => _blockPreviewRotate90YCW;
+
+        [SerializeField]
+        private PWBHoldKeysAndClickShortcut _blockRotate90YCW
+           = new PWBHoldKeysAndClickShortcut("Rotate 90ï¿½ around Y",
+         PWBShortcut.Group.BLOCK, KeyCode.A);
+        public PWBKeyShortcut blockRotate90YCW => _blockRotate90YCW;
+
+        [SerializeField]
+        private PWBHoldKeysAndClickShortcut _blockRotate90XCW
+           = new PWBHoldKeysAndClickShortcut("Rotate 90ï¿½ around X",
+         PWBShortcut.Group.BLOCK, KeyCode.G);
+        public PWBKeyShortcut blockRotate90XCW => _blockRotate90XCW;
+
+        [SerializeField]
+        private PWBHoldKeysAndClickShortcut _blockRotate90ZCW
+           = new PWBHoldKeysAndClickShortcut("Rotate 90ï¿½ around Z",
+         PWBShortcut.Group.BLOCK, KeyCode.B);
+        public PWBKeyShortcut blockRotate90ZCW => _blockRotate90ZCW;
+
+        [SerializeField]
+        private PWBHoldKeysAndClickShortcut _blockRotate90YCCW
+           = new PWBHoldKeysAndClickShortcut("Rotate -90ï¿½ around Y",
+         PWBShortcut.Group.BLOCK, KeyCode.A, EventModifiers.Shift);
+        public PWBKeyShortcut blockRotate90YCCW => _blockRotate90YCCW;
+
+        [SerializeField]
+        private PWBHoldKeysAndClickShortcut _blockRotate90XCCW
+           = new PWBHoldKeysAndClickShortcut("Rotate -90ï¿½ around X",
+         PWBShortcut.Group.BLOCK, KeyCode.G, EventModifiers.Shift);
+        public PWBKeyShortcut blockRotate90XCCW => _blockRotate90XCCW;
+
+        [SerializeField]
+        private PWBHoldKeysAndClickShortcut _blockRotate90ZCCW
+           = new PWBHoldKeysAndClickShortcut("Rotate -90ï¿½ around Z",
+         PWBShortcut.Group.BLOCK, KeyCode.B, EventModifiers.Shift);
+        public PWBKeyShortcut blockRotate90ZCCW => _blockRotate90ZCCW;
+        #endregion
+        
+        #region TOOL_MODES
+        [SerializeField]
+        private PWBHoldKeysAndClickShortcut _toolModesMoveSymmetryOriginToMousePos
+            = new PWBHoldKeysAndClickShortcut("Move the symmetry origin to mouse position",
+          PWBShortcut.Group.TOOL_MODES, KeyCode.S, EventModifiers.Shift);
+        public PWBHoldKeysAndClickShortcut toolModesMoveSymmetryOriginToMousePos => _toolModesMoveSymmetryOriginToMousePos;
         #endregion
     }
 }
+#pragma warning restore UDR0001

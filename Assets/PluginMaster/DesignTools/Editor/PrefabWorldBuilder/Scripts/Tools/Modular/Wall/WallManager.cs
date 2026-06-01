@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 using System.Linq;
 
@@ -30,8 +31,23 @@ namespace PluginMaster
         public float size { get => _size; set => _size = value; }
     }
     [System.Serializable]
-    public class WallSettings : ModularToolBase, ISerializationCallbackReceiver
+    public class WallSettings : ModularToolBase
     {
+        public void SetCustomLength(float value)
+        {
+            var wallLenghtAxis = AxesUtils.GetOtherAxis(forwardAxis, upwardAxis);
+            AxesUtils.SetAxisValue(ref _moduleSize, wallLenghtAxis, value);
+            WallManager.wallLength = value;
+            PWBCore.SetSavePending();
+        }
+
+        public void SetThickness(float value)
+        {
+            AxesUtils.SetAxisValue(ref _moduleSize, forwardAxis, value);
+            WallManager.wallThickness = value;
+            PWBCore.SetSavePending();
+        }
+
         [SerializeField] private bool _autoCalculateAxes = true;
         public bool autoCalculateAxes
         {
@@ -66,6 +82,27 @@ namespace PluginMaster
                 }
             }
         }
+        
+    }
+    [System.Serializable]
+    public class WallManager : ToolControllerBase<WallSettings, WallManager>
+    {
+        public enum ToolState
+        {
+            FIRST_WALL_PREVIEW,
+            EDITING
+        }
+
+        public static ToolState state { get; set; } = ToolState.FIRST_WALL_PREVIEW;
+
+        public static float wallThickness { get; set; } = 1f;
+        public static float wallLength { get; set; } = 1f;
+        public static AxesUtils.Axis wallLenghtAxis { get; set; } = AxesUtils.Axis.X;
+        public static Vector3 startPoint { get; set; } = Vector3.zero;
+        public static Vector3 startPointSnapped { get; set; } = Vector3.zero;
+        public static Vector3 endPointSnapped { get; set; } = Vector3.zero;
+        public static bool halfTurn { get; set; } = false;
+
         #region SIZES
 
         [SerializeField] private WallCellSize[] _sizes = null;
@@ -80,34 +117,21 @@ namespace PluginMaster
             {
                 if (_selectedSizeName == value) return;
                 _selectedSizeName = value;
-                var newSize = moduleSize;
+                var newSize = settings.moduleSize;
                 AxesUtils.SetAxisValue(ref newSize, WallManager.wallLenghtAxis, _sizesDictionary[selectedSizeName]);
-                moduleSize = newSize;
-                OnDataChanged();
+                settings.moduleSize = newSize;
+                PWBCore.SetSavePending();
             }
         }
-        public void SetCustomLength(float value)
-        {
-            var wallLenghtAxis = AxesUtils.GetOtherAxis(forwardAxis, upwardAxis);
-            AxesUtils.SetAxisValue(ref _moduleSize, wallLenghtAxis, value);
-            WallManager.wallLength = value;
-            OnDataChanged();
-        }
 
-        public void SetThickness(float value)
-        {
-            AxesUtils.SetAxisValue(ref _moduleSize, forwardAxis, value);
-            WallManager.wallThickness = value;
-            OnDataChanged();
-        }
         public void SaveSize(string name)
         {
-            var size = AxesUtils.GetAxisValue(moduleSize, WallManager.wallLenghtAxis);
+            var size = AxesUtils.GetAxisValue(settings.moduleSize, WallManager.wallLenghtAxis);
             if (_sizesDictionary.ContainsKey(name))
                 _sizesDictionary[name] = size;
             else _sizesDictionary.Add(name, size);
             _selectedSizeName = name;
-            OnDataChanged();
+            PWBCore.SetSavePending();
         }
 
         public string[] GetSizesNames() => _sizesDictionary.Keys.ToArray();
@@ -123,38 +147,24 @@ namespace PluginMaster
         public void SelectSize(int index) => selectedSizeName = GetSizeAt(index);
         public void ResetSize()
         {
-            var newSize = moduleSize;
+            var newSize = settings.moduleSize;
             AxesUtils.SetAxisValue(ref newSize, WallManager.wallLenghtAxis, _sizesDictionary[selectedSizeName]);
-            moduleSize = newSize;
-            OnDataChanged();
+            settings.moduleSize = newSize;
+            PWBCore.SetSavePending();
         }
         #endregion
-        public void OnBeforeSerialize()
+        public override void OnBeforeSerialize()
         {
+            base.OnBeforeSerialize();
             _sizes = _sizesDictionary.Select(pair => new WallCellSize(pair.Key, pair.Value)).ToArray();
         }
 
-        public void OnAfterDeserialize()
+        public override void OnAfterDeserialize()
         {
+            base.OnAfterDeserialize();
             if (_sizes == null || _sizes.Length == 0) return;
             _sizesDictionary = _sizes.ToDictionary(origin => origin.name, origin => origin.size);
         }
     }
-    [System.Serializable]
-    public class WallManager : ToolControllerBase<WallSettings>
-    {
-        public enum ToolState
-        {
-            FIRST_WALL_PREVIEW,
-            EDITING
-        }
-        public static ToolState state { get; set; } = ToolState.FIRST_WALL_PREVIEW;
-        public static float wallThickness { get; set; } = 1f;
-        public static float wallLength { get; set; } = 1f;
-        public static AxesUtils.Axis wallLenghtAxis { get; set; } = AxesUtils.Axis.X;
-        public static Vector3 startPoint { get; set; } = Vector3.zero;
-        public static Vector3 startPointSnapped { get; set; } = Vector3.zero;
-        public static Vector3 endPointSnapped { get; set; } = Vector3.zero;
-        public static bool halfTurn { get; set; } = false;
-    }
 }
+#pragma warning restore UDR0001

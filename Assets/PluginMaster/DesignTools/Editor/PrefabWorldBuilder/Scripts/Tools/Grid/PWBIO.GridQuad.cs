@@ -11,16 +11,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
 {
     public static partial class PWBIO
     {
+
         private static Mesh _gridMesh = null;
         private static Material _gridMaterial = null;
         private static Material _grid64Material = null;
         private static Material _majorLinesGridMaterial = null;
+
 
         private static void DrawGridQuad(AxesUtils.Axis axis, UnityEditor.SceneView sceneView)
         {
@@ -144,3 +147,4 @@ namespace PluginMaster
 
     }
 }
+#pragma warning restore UDR0001

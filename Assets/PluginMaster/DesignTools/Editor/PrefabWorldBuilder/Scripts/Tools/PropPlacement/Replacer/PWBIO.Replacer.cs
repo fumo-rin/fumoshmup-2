@@ -11,12 +11,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
 {
     public static partial class PWBIO
     {
+
         private class ReplacerPaintStrokeItem : PaintStrokeItem
         {
             public Transform target = null;
@@ -287,5 +289,7 @@ namespace PluginMaster
             ReplacePreview(camera, ReplacerManager.settings, _cachedReplacerTargets);
             foreach (var renderer in _replaceRenderers) renderer.enabled = false;
         }
+
     }
 }
+#pragma warning restore UDR0001

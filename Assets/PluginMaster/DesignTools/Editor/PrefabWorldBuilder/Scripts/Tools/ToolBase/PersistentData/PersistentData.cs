@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 
@@ -49,6 +50,7 @@ namespace PluginMaster
         where CONTROL_POINT : ControlPoint, new()
     {
         #region ID & NAME
+        
         private static long _nextId = System.DateTime.Now.Ticks;
         [SerializeField] protected long _id = _nextId;
         public static long nextId => _nextId;
@@ -286,3 +288,4 @@ namespace PluginMaster
         #endregion
     }
 }
+#pragma warning restore UDR0001

@@ -11,12 +11,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
 {
     public static partial class PWBIO
     {
+
         private static bool _showMirrorHandles = true;
         private static GameObject _mirrorObject = null;
         private static Transform _mirroredTransform = null;
@@ -113,13 +115,14 @@ namespace PluginMaster
             if (_showMirrorHandles)
             {
                 var prevPose = MirrorManager.settings.mirrorPose;
-                MirrorManager.settings.mirrorPosition = UnityEditor.Handles.PositionHandle(MirrorManager.settings.mirrorPosition,
-                    MirrorManager.settings.mirrorRotation);
+                MirrorManager.settings.mirrorPosition = PWBPositionHandle(TOOL_HANDLE_ID,
+                    MirrorManager.settings.mirrorPosition, MirrorManager.settings.mirrorRotation);
                 MirrorManager.settings.mirrorPosition = SnapAndUpdateGridOrigin(MirrorManager.settings.mirrorPosition,
                 GridManager.settings.snappingEnabled, paintOnPalettePrefabs: true, paintOnMeshesWithoutCollider: true,
                  ignoresceneColliders: true, paintOnTheGrid: false, Vector3.down);
                 MirrorManager.settings.mirrorPosition = SnapToBounds(MirrorManager.settings.mirrorPosition);
-                MirrorManager.settings.mirrorRotation = UnityEditor.Handles.RotationHandle(MirrorManager.settings.mirrorRotation,
+                MirrorManager.settings.mirrorRotation
+                    = UnityEditor.Handles.RotationHandle(MirrorManager.settings.mirrorRotation,
                     MirrorManager.settings.mirrorPosition);
                 if (prevPose != MirrorManager.settings.mirrorPose) ToolProperties.RepainWindow();
             }
@@ -217,3 +220,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

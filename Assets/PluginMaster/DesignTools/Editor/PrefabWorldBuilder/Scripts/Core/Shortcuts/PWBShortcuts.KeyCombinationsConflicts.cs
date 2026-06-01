@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -136,13 +137,21 @@ namespace PluginMaster
                         _toolbarSelectionToggle,
                         _toolbarExtrudeToggle,
                         _toolbarMirrorToggle,
-#if PWB_BLOCK
                         _toolbarBlockToggle,
-#endif
                         /*/// FLOOR ///*/
                         _floorRotate90YCW,
                         /*/// WALL ///*/
                         _wallHalfTurn,
+                        /*/// BLOCK ///*/
+                        _blockPreviewRotate90YCW,
+                        _blockRotate90XCW,
+                        _blockRotate90YCW,
+                        _blockRotate90ZCW,
+                        _blockRotate90XCCW,
+                        _blockRotate90YCCW,
+                        _blockRotate90ZCCW,
+                        /*/// TOOL_MODES ///*/
+                        _toolModesMoveSymmetryOriginToMousePos,
                     };
                 return _keyShortcuts;
             }
@@ -210,3 +219,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

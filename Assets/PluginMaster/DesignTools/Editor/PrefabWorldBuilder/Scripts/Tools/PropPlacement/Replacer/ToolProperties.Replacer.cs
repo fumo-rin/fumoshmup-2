@@ -11,12 +11,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
 {
     public partial class ToolProperties : UnityEditor.EditorWindow
     {
+        
         private static BrushPropertiesGroupState _replacerOverwriteGroupState;
         private static readonly string[] _replacerModeOptions = { "Target Center", "Target Pivot", "On Surface" };
         private void ReplacerGroup()
@@ -94,3 +96,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

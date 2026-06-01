@@ -11,14 +11,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
 {
     public static partial class BrushstrokeManager
     {
+
         private static int _cellsCountX = 0;
         private static int _cellsCountZ = 0;
+
         public static int cellsCountX => _cellsCountX;
         public static int cellsCountZ => _cellsCountZ;
         public static void ResetCellCount()
@@ -109,3 +112,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

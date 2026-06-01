@@ -11,12 +11,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
 {
     public static partial class PWBIO
     {
+        
         private static Vector3 _flatteningCenter = Vector3.zero;
 
         private static void FlatenTerrain()
@@ -60,6 +62,7 @@ namespace PluginMaster
             var mapHitX = Mathf.RoundToInt(localHit.x * density.x);
             var mapHitZ = Mathf.RoundToInt(localHit.z * density.y);
             var heighMap = terrainData.GetHeights(0, 0, resolution, resolution);
+            var heightOnTerrain = heighMap[Mathf.Clamp(mapHitZ, 0, resolution - 1), Mathf.Clamp(mapHitX, 0, resolution - 1)];
             return heighMap[Mathf.Clamp(mapHitZ, 0, resolution - 1), Mathf.Clamp(mapHitX, 0, resolution - 1)];
         }
 
@@ -200,3 +203,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

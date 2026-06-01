@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 
@@ -18,13 +19,29 @@ namespace PluginMaster
 {
     public partial class ToolProperties : UnityEditor.EditorWindow
     {
+        
         private static BrushPropertiesGroupState _floorOverwriteGroupState;
+        private static readonly string[] _gridAlignmentNames = { "Top face", "Bottom face", "Pivot point" };
         private void FloorGroup()
         {
             ToolProfileGUI(FloorManager.instance);
 
             var settings = FloorManager.settings;
             UnityEditor.EditorGUIUtility.labelWidth = 80;
+            using (new GUILayout.VerticalScope(UnityEditor.EditorStyles.helpBox))
+            {
+                UnityEditor.EditorGUIUtility.labelWidth = 90;
+                using (var check = new UnityEditor.EditorGUI.ChangeCheckScope())
+                {
+                    var gridAlignment = (FloorSettings.GridAlignment)UnityEditor.EditorGUILayout.Popup(
+                        "Grid alignment", (int)settings.gridAlignment, _gridAlignmentNames);
+                    if (check.changed)
+                    {
+                        settings.gridAlignment = gridAlignment;
+                        UnityEditor.SceneView.RepaintAll();
+                    }
+                }
+            }
             using (new GUILayout.VerticalScope(UnityEditor.EditorStyles.helpBox))
             {
                 using (var check = new UnityEditor.EditorGUI.ChangeCheckScope())
@@ -47,7 +64,7 @@ namespace PluginMaster
                     if (check.changed)
                     {
                         settings.moduleSizeType = moduleSizeType;
-                        if (settings.moduleSizeType == TilesUtils.SizeType.CUSTOM) FloorManager.settings.ResetSize();
+                        if (settings.moduleSizeType == TilesUtils.SizeType.CUSTOM) FloorManager.instance.ResetSize();
                     }
                 }
 
@@ -80,27 +97,28 @@ namespace PluginMaster
                     using (var check = new UnityEditor.EditorGUI.ChangeCheckScope())
                     {
                         UnityEditor.EditorGUIUtility.labelWidth = 70;
-                        sizeIndex = UnityEditor.EditorGUILayout.Popup("Cell Size", settings.GetIndexOfSelectedSize(),
-                            settings.GetSizesNames());
+                        sizeIndex = UnityEditor.EditorGUILayout.Popup("Cell Size",
+                            FloorManager.instance.GetIndexOfSelectedSize(),
+                            FloorManager.instance.GetSizesNames());
                         if (check.changed)
                         {
-                            settings.SelectSize(sizeIndex);
+                            FloorManager.instance.SelectSize(sizeIndex);
                         }
                     }
                     using (new GUILayout.HorizontalScope())
                     {
                         GUILayout.FlexibleSpace();
-                        if (GUILayout.Button("Reset")) FloorManager.settings.ResetSize();
+                        if (GUILayout.Button("Reset")) FloorManager.instance.ResetSize();
                         if (GUILayout.Button("Save..."))
                         {
                             RenameWindow.ShowWindow(position.position + Event.current.mousePosition,
-                                FloorManager.settings.SaveSize, "Save Size", settings.selectedSizeName);
+                                FloorManager.instance.SaveSize, "Save Size", FloorManager.instance.selectedSizeName);
                         }
                         using (new UnityEditor.EditorGUI.DisabledGroupScope(sizeIndex == 0))
                         {
                             if (GUILayout.Button("Delete"))
                             {
-                                FloorManager.settings.DeleteSelectedSize();
+                                FloorManager.instance.DeleteSelectedSize();
                             }
                         }
                     }
@@ -193,3 +211,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

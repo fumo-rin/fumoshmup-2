@@ -11,12 +11,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
 {
     public static partial class PWBCore
     {
+        
         private static PWBData _staticData = null;
         public static bool staticDataWasInitialized => _staticData != null;
         public static PWBData staticData
@@ -44,7 +46,9 @@ namespace PluginMaster
         public static bool _loadedFromFile = false;
 
         public static long _loadTimeSpan = 0;
-        public static System.Action OnLoadedFromFile;
+
+        public static System.Action OnLoadedFromFile = null;
+
         public static void LoadFromFile()
         {
             var now = System.DateTime.Now.Ticks / System.TimeSpan.TicksPerMillisecond;
@@ -103,9 +107,7 @@ namespace PluginMaster
             && System.IO.Path.IsPathRooted(path)
             && !System.IO.Path.GetPathRoot(path).Equals(System.IO.Path.DirectorySeparatorChar.ToString(),
                 System.StringComparison.Ordinal);
-
         #region BLOCK MANAGER DATA
-#if PWB_BLOCK
         [System.Serializable]
         private class BlockManagerData
         {
@@ -125,7 +127,7 @@ namespace PluginMaster
                 Debug.LogException(e);
             }
         }
-#endif
-#endregion
+        #endregion
     }
 }
+#pragma warning restore UDR0001

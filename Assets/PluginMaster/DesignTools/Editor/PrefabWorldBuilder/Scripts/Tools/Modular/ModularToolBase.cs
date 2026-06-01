@@ -11,10 +11,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
 {
+    [System.Serializable]
     public class ModularToolBase : IToolSettings, IPaintToolSettings
     {
         [SerializeField] private TilesUtils.SizeType _moduleSizeType = TilesUtils.SizeType.BIGGEST_OBJECT;
@@ -104,12 +106,13 @@ namespace PluginMaster
             if (brush == null) return Vector3.one;
             int quarterTurns = 0;
             if (this is FloorSettings) quarterTurns = FloorManager.quarterTurns;
+            else if (this is BlockSettings) quarterTurns = BlockManager.quarterTurns;
             return TilesUtils.GetCellSize(moduleSizeType, brush, upwardAxis, forwardAxis,
-                moduleSize, tangentSpace: false, quarterTurns, FloorManager.settings.subtractBrushOffset);
+                moduleSize, tangentSpace: false, quarterTurns, subtractBrushOffset);
         }
         public virtual void UpdateCellSize()
         {
-            if (moduleSizeType == TilesUtils.SizeType.CUSTOM && !FloorManager.settings.subtractBrushOffset) return;
+            if (moduleSizeType == TilesUtils.SizeType.CUSTOM && !subtractBrushOffset) return;
 
             BrushSettings brush = PaletteManager.selectedBrush;
             if (overwriteBrushProperties) brush = brushSettings;
@@ -118,8 +121,9 @@ namespace PluginMaster
             int quarterTurns = 0;
             if (this is FloorSettings) quarterTurns = FloorManager.quarterTurns;
             else if (this is WallSettings) quarterTurns = WallManager.halfTurn ? 2 : 0;
+            else if (this is BlockSettings) quarterTurns = BlockManager.quarterTurns;
             _moduleSize = TilesUtils.GetCellSize(moduleSizeType, brush, upwardAxis, forwardAxis,
-                moduleSize, tangentSpace: false, quarterTurns, FloorManager.settings.subtractBrushOffset);
+                moduleSize, tangentSpace: false, quarterTurns, subtractBrushOffset);
             ToolProperties.RepainWindow();
             UnityEditor.SceneView.RepaintAll();
         }
@@ -195,3 +199,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

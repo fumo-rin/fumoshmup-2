@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -37,7 +38,9 @@ namespace PluginMaster
             EXTRUDE = 8192,
             MIRROR = 16384,
             FLOOR = 32768,
-            WALL = 65536
+            WALL = 65536,
+            BLOCK = 131072,
+            TOOL_MODES = 262144,
         }
         [SerializeField] private string _name = null;
         [SerializeField] private Group _group = Group.NONE;
@@ -184,3 +187,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

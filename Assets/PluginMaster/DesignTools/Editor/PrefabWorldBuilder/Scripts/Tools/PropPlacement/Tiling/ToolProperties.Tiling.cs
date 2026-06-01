@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -19,6 +20,7 @@ namespace PluginMaster
     {
         private static readonly string[] _tilingModeNames = { "Auto", "Paint on surface", "Paint on the plane" };
         private static readonly string[] _cellTypeNames = { "Smallest object", "Biggest object", "Custom" };
+        
         private static BrushPropertiesGroupState _tilingOverwriteGroupState;
         private void TilingGroup()
         {
@@ -86,3 +88,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

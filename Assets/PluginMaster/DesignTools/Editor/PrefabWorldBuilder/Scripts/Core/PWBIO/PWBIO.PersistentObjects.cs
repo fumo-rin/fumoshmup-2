@@ -11,12 +11,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
 {
     public static partial class PWBIO
     {
+
         #region STATE
         static bool _persistentItemWasEdited = false;
         #endregion
@@ -102,6 +104,7 @@ namespace PluginMaster
         private static bool _updateStroke = false;
         public static bool updateStroke { get => _updateStroke; set => _updateStroke = value; }
 
+
         public static void UpdateStroke() => updateStroke = true;
 
         public static void UpdateSelectedPersistentObject()
@@ -121,7 +124,6 @@ namespace PluginMaster
             }
             repaint = true;
         }
-
         #endregion
 
         #region SELECTION & EDITING
@@ -160,14 +162,18 @@ namespace PluginMaster
             }
         }
 
-        private static void ResetSelectedPersistentObject<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT, TOOL_DATA, SCENE_DATA>
-            (PersistentToolControllerBase<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT, TOOL_DATA, SCENE_DATA> manager,
+        private static void ResetSelectedPersistentObject<TOOL_NAME, TOOL_SETTINGS,
+            CONTROL_POINT, TOOL_DATA, SCENE_DATA, TOOL_MANAGER>
+            (PersistentToolControllerBase<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT,
+                TOOL_DATA, SCENE_DATA, TOOL_MANAGER> manager,
             ref bool editingPersistentObject, TOOL_DATA initialPersistentData)
             where TOOL_NAME : IToolName, new()
             where TOOL_SETTINGS : IToolSettings, new()
             where CONTROL_POINT : ControlPoint, new()
             where TOOL_DATA : PersistentData<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT>, new()
             where SCENE_DATA : SceneData<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT, TOOL_DATA>, new()
+            where TOOL_MANAGER : PersistentToolControllerBase<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT,
+                TOOL_DATA, SCENE_DATA, TOOL_MANAGER>, new()
         {
             editingPersistentObject = false;
             if (initialPersistentData == null) return;
@@ -177,27 +183,35 @@ namespace PluginMaster
             selectedItem.ClearSelection();
         }
 
-        private static void DeselectPersistentItems<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT, TOOL_DATA, SCENE_DATA>
-            (PersistentToolControllerBase<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT, TOOL_DATA, SCENE_DATA> manager)
+        private static void DeselectPersistentItems<TOOL_NAME, TOOL_SETTINGS,
+            CONTROL_POINT, TOOL_DATA, SCENE_DATA, TOOL_MANAGER>
+            (PersistentToolControllerBase<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT,
+                TOOL_DATA, SCENE_DATA, TOOL_MANAGER> manager)
             where TOOL_NAME : IToolName, new()
             where TOOL_SETTINGS : IToolSettings, new()
             where CONTROL_POINT : ControlPoint, new()
             where TOOL_DATA : PersistentData<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT>, new()
             where SCENE_DATA : SceneData<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT, TOOL_DATA>, new()
+            where TOOL_MANAGER : PersistentToolControllerBase<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT,
+                TOOL_DATA, SCENE_DATA, TOOL_MANAGER>, new()
         {
             var persitentTilings = manager.GetPersistentItems();
             foreach (var i in persitentTilings) i.ClearSelection();
         }
 
-        private static bool ApplySelectedPersistentObject<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT, TOOL_DATA, SCENE_DATA>
+        private static bool ApplySelectedPersistentObject<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT,
+            TOOL_DATA, SCENE_DATA, TOOL_MANAGER>
             (bool deselectPoint, ref bool editingPersistentObject, ref TOOL_DATA initialPersistentData,
             ref TOOL_DATA selectedPersistentData,
-            PersistentToolControllerBase<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT, TOOL_DATA, SCENE_DATA> manager)
+            PersistentToolControllerBase<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT,
+                TOOL_DATA, SCENE_DATA, TOOL_MANAGER> manager)
             where TOOL_NAME : IToolName, new()
             where TOOL_SETTINGS : IToolSettings, new()
             where CONTROL_POINT : ControlPoint, new()
             where TOOL_DATA : PersistentData<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT>, new()
             where SCENE_DATA : SceneData<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT, TOOL_DATA>, new()
+            where TOOL_MANAGER : PersistentToolControllerBase<TOOL_NAME, TOOL_SETTINGS, CONTROL_POINT,
+                TOOL_DATA, SCENE_DATA, TOOL_MANAGER>, new()
         {
             editingPersistentObject = false;
             if (initialPersistentData == null) return false;
@@ -358,3 +372,4 @@ namespace PluginMaster
         #endregion
     }
 }
+#pragma warning restore UDR0001

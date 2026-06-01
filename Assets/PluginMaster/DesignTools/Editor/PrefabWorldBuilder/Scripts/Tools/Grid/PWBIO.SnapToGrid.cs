@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -72,7 +73,6 @@ namespace PluginMaster
             }
             return result;
         }
-#if PWB_BLOCK
         private static Vector3 SnapPositionToCellFaceCenter(Vector3 position)
         {
             var step = GridManager.settings.step;
@@ -88,7 +88,6 @@ namespace PluginMaster
             else faceOffset.y = (localPos.y >= 0 ? 1f : -1f) * step.y * 0.5f;
             return cellCenter + rotation * faceOffset;
         }
-#endif
         private static Vector3 SnapAndUpdateGridOrigin(Vector3 point, bool snapToGrid,
             bool paintOnPalettePrefabs, bool paintOnMeshesWithoutCollider, bool ignoresceneColliders, bool paintOnTheGrid,
             Vector3 projectionDirection)
@@ -321,3 +320,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

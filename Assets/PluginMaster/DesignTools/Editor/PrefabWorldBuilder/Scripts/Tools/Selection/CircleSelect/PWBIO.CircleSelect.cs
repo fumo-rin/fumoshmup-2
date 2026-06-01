@@ -11,13 +11,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using System.Linq;
 using UnityEngine;
 namespace PluginMaster
 {
     public static partial class PWBIO
     {
+
         private static Material _transparentBlueMaterial = null;
+        private static Vector2 _lastCircleSelectMousePos;
+        private static System.Collections.Generic.HashSet<GameObject> _toSelect
+            = new System.Collections.Generic.HashSet<GameObject>();
+
         public static Material transparentBlueMaterial
         {
             get
@@ -28,8 +34,6 @@ namespace PluginMaster
             }
         }
 
-        private static System.Collections.Generic.HashSet<GameObject> _toSelect
-            = new System.Collections.Generic.HashSet<GameObject>();
         private static void CircleSelectDuringSceneGUI(UnityEditor.SceneView sceneView)
         {
             CircleSelectMouseEvents();
@@ -44,25 +48,50 @@ namespace PluginMaster
                 _lastHitDistance = mouseHit.distance;
                 center = mouseHit.point;
             }
-            DrawCircleTool(center, sceneView.camera, new Color(0.455f, 0.596f, 0.8f, 1f), CircleSelectManager.settings.radius);
-            GetCircleToolTargets(mouseRay, sceneView.camera, CircleSelectManager.settings,
-                CircleSelectManager.settings.radius, _toSelect);
+            DrawCircleTool(center, sceneView.camera, new Color(0.455f, 0.596f, 0.8f, 1f),
+                CircleSelectManager.settings.radius);
+
+            if (_lastCircleSelectMousePos != mousePos)
+            {
+                _lastCircleSelectMousePos = mousePos;
+                _selectMeshCache.Clear();
+                GetCircleToolTargets(mouseRay, sceneView.camera, CircleSelectManager.settings,
+                    CircleSelectManager.settings.radius, _toSelect);
+            }
+
             DrawObjectsToSelect(sceneView.camera);
         }
 
+        private static readonly System.Collections.Generic.Dictionary<GameObject,
+            (Mesh mesh, Matrix4x4 matrix)[]> _selectMeshCache
+            = new System.Collections.Generic.Dictionary<GameObject, (Mesh, Matrix4x4)[]>();
+
         private static void DrawObjectsToSelect(Camera camera)
         {
-            if (Event.current.type != EventType.Repaint) return;
             foreach (var obj in _toSelect)
             {
-                var filters = obj.GetComponentsInChildren<MeshFilter>();
-                foreach (var filter in filters)
+                if (obj == null) continue;
+
+                if (!_selectMeshCache.TryGetValue(obj, out var meshesData))
                 {
-                    var mesh = filter.sharedMesh;
-                    if (mesh == null) continue;
-                    for (int subMeshIdx = 0; subMeshIdx < mesh.subMeshCount; ++subMeshIdx)
-                        Graphics.DrawMesh(mesh, filter.transform.localToWorldMatrix,
-                            transparentBlueMaterial, 0, camera, subMeshIdx);
+                    var meshFilters = obj.GetComponentsInChildren<MeshFilter>();
+                    var meshesDataSet = new System.Collections.Generic.HashSet<(Mesh, Matrix4x4)>
+                        (meshFilters.Select(f => (f.sharedMesh, f.transform.localToWorldMatrix)));
+
+                    var skinnedRenderers = obj.GetComponentsInChildren<SkinnedMeshRenderer>();
+                    if (skinnedRenderers.Length > 0)
+                    {
+                        meshesDataSet.UnionWith(skinnedRenderers.Where(r => r != null && r.sharedMesh != null)
+                            .Select(r => (r.sharedMesh, r.transform.localToWorldMatrix)));
+                    }
+                    meshesData = meshesDataSet.ToArray();
+                    _selectMeshCache[obj] = meshesData;
+                }
+
+                foreach (var item in meshesData)
+                {
+                    for (int subMeshIdx = 0; subMeshIdx < item.mesh.subMeshCount; ++subMeshIdx)
+                        EnqueueRawPreviewDraw(item.mesh, item.matrix, transparentBlueMaterial, subMeshIdx, layer: 0);
                 }
             }
         }
@@ -99,3 +128,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

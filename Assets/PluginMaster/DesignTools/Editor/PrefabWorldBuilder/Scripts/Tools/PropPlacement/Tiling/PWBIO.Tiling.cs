@@ -11,16 +11,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
 {
     public static partial class PWBIO
     {
+
         #region HANDLERS
         private static void TilingInitializeOnLoad()
         {
+            TilingManager.settings.OnDataChanged -= OnTilingSettingsChanged;
             TilingManager.settings.OnDataChanged += OnTilingSettingsChanged;
+
+            BrushSettings.OnBrushSettingsChanged -= PreviewSelectedPersistentTilings;
             BrushSettings.OnBrushSettingsChanged += PreviewSelectedPersistentTilings;
         }
         private static void OnUndoTiling() => ClearTilingStroke();
@@ -272,22 +277,22 @@ namespace PluginMaster
                 _rotateTilingAxis = axis;
             }
             var menu = new UnityEditor.GenericMenu();
-            menu.AddItem(new GUIContent("Rotate 90º around Y ... "
+            menu.AddItem(new GUIContent("Rotate 90ï¿½ around Y ... "
                 + PWBSettings.shortcuts.selectionRotate90YCW.combination.ToString()), on: false,
                 () => Rotate90(Vector3.down));
-            menu.AddItem(new GUIContent("Rotate -90º around Y ... "
+            menu.AddItem(new GUIContent("Rotate -90ï¿½ around Y ... "
                 + PWBSettings.shortcuts.selectionRotate90YCCW.combination.ToString()), on: false,
                 () => Rotate90(Vector3.up));
-            menu.AddItem(new GUIContent("Rotate 90º around X ... "
+            menu.AddItem(new GUIContent("Rotate 90ï¿½ around X ... "
                 + PWBSettings.shortcuts.selectionRotate90XCW.combination.ToString()), on: false,
                 () => Rotate90(Vector3.left));
-            menu.AddItem(new GUIContent("Rotate -90º around X ... "
+            menu.AddItem(new GUIContent("Rotate -90ï¿½ around X ... "
                 + PWBSettings.shortcuts.selectionRotate90XCCW.combination.ToString()), on: false,
                 () => Rotate90(Vector3.right));
-            menu.AddItem(new GUIContent("Rotate 90º around Z ... "
+            menu.AddItem(new GUIContent("Rotate 90ï¿½ around Z ... "
                 + PWBSettings.shortcuts.selectionRotate90ZCW.combination.ToString()), on: false,
                 () => Rotate90(Vector3.back));
-            menu.AddItem(new GUIContent("Rotate -90º around Z ... "
+            menu.AddItem(new GUIContent("Rotate -90ï¿½ around Z ... "
                 + PWBSettings.shortcuts.selectionRotate90ZCCW.combination.ToString()), on: false,
                 () => Rotate90(Vector3.forward));
             menu.AddSeparator(string.Empty);
@@ -332,7 +337,7 @@ namespace PluginMaster
             if (data.selectedPointIdx < 0) return false;
             var prevPoint = data.selectedPoint;
             wasEdited = SetTilingSelectedPoint(data,
-                UnityEditor.Handles.PositionHandle(data.selectedPoint, data.settings.rotation));
+                PWBPositionHandle(CONTROL_POINT_HANDLE_ID, data.selectedPoint, data.settings.rotation));
             if (prevPoint != data.selectedPoint) ToolProperties.RepainWindow();
             if (data.selectedPointIdx == 8)
             {
@@ -413,5 +418,7 @@ namespace PluginMaster
             SetTilingRotation(tilingData, rotation);
         }
         #endregion
+
     }
 }
+#pragma warning restore UDR0001

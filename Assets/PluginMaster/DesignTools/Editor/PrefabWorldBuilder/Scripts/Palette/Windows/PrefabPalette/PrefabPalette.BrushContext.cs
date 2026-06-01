@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 
 namespace PluginMaster
@@ -168,10 +169,12 @@ namespace PluginMaster
 #endif
             }
             var selection = new System.Collections.Generic.List<GameObject>();
-#if UNITY_2022_2_OR_NEWER
-            var objects = GameObject.FindObjectsByType<Transform>(FindObjectsSortMode.None);
+#if UNITY_6000_4_OR_NEWER
+            var objects = Object.FindObjectsByType<Transform>();
+#elif UNITY_2022_2_OR_NEWER
+            var objects = Object.FindObjectsByType<Transform>(FindObjectsSortMode.None);
 #else
-            var objects = GameObject.FindObjectsOfType<Transform>();
+            var objects = Object.FindObjectsOfType<Transform>();
 #endif
             foreach (var obj in objects)
             {
@@ -260,3 +263,4 @@ namespace PluginMaster
         }
     }
 }
+#pragma warning restore UDR0001

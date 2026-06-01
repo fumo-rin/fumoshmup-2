@@ -11,6 +11,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+#pragma warning disable UDR0001
 using UnityEngine;
 using System.Linq;
 
@@ -18,6 +19,7 @@ namespace PluginMaster
 {
     public partial class PWBItemsWindow : UnityEditor.EditorWindow
     {
+        
         private static PWBItemsWindow _instance = null;
 
         private GUIContent _showAllIcon = null;
@@ -44,8 +46,10 @@ namespace PluginMaster
             if (_instance != null) _instance.Repaint();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0004:Domain Reload Analyzer")]
         private void OnEnable()
         {
+            UnityEditor.Undo.undoRedoPerformed -= Repaint;
             UnityEditor.Undo.undoRedoPerformed += Repaint;
             _skin = Resources.Load<GUISkin>("PWBSkin");
             if (_skin == null) return;
@@ -342,3 +346,4 @@ namespace PluginMaster
 
     }
 }
+#pragma warning restore UDR0001
