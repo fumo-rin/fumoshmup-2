@@ -35,12 +35,9 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Debug
   - World UI
   m_SortingLayers:
-  - name: Shadows
-    uniqueID: 2814714315
-    locked: 0
   - name: Loot
     uniqueID: 3164713073
     locked: 0
