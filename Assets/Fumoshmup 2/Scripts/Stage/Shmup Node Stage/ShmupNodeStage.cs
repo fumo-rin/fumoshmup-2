@@ -573,8 +573,8 @@ namespace FumoShmup2
             if (fromNode == null || toNode == null)
                 return;
 
-            Rect fromRect = new Rect(fromNode.position + viewOffset, fromNode.Size);
-            Rect toRect = new Rect(toNode.position + viewOffset, toNode.Size);
+            Rect fromRect = new Rect(fromNode.position + viewOffset, fromNode.IsCompacted ? CompactNodeSize : fromNode.Size);
+            Rect toRect = new Rect(toNode.position + viewOffset, toNode.IsCompacted ? CompactNodeSize : toNode.Size);
 
             Vector2[] points = GetClosestEdgePoint(fromRect, toRect);
             DrawArrow(points[0], points[1]);

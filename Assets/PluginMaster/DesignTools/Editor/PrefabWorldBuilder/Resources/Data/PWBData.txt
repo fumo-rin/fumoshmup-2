@@ -46,7 +46,7 @@
         ]
     },
     "_paletteManager": {
-        "_selectedBrushIdx": 8,
+        "_selectedBrushIdx": -1,
         "_showBrushName": false,
         "_viewList": false,
         "_showTabsInMultipleRows": false,

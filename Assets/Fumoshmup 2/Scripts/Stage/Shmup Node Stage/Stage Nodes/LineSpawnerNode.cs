@@ -51,6 +51,8 @@ namespace FumoShmup2
         public float loopAddedDelay = 0.15f;
         public float attackStall = 2f;
 
+        bool collapsedEditable;
+
         public IEnumerator RunNode()
         {
             if (toSpawn == null)
@@ -116,6 +118,25 @@ namespace FumoShmup2
 #if UNITY_EDITOR
             base.DrawCompactedContents(stage, rect, selected);
             if (selected)
+            {
+                collapsedEditable = EF_Button(rect, collapsedEditable ? "End Editing" : "Start Editing");
+            }
+            if (selected && collapsedEditable)
+            {
+                RecordUndo("Modify Node Value");
+                start = EF_ShmupSpace(start, ColorHelper.PastelGreen, nameof(start));
+                RecordUndo("Modify Node Value");
+                startEnd = EF_ShmupSpace(startEnd, ColorHelper.PastelGreen, nameof(startEnd));
+                RecordUndo("Modify Node Value");
+                target = EF_ShmupSpace(target, ColorHelper.PastelCyan, nameof(target));
+                RecordUndo("Modify Node Value");
+                targetEnd = EF_ShmupSpace(targetEnd, ColorHelper.PastelCyan, nameof(targetEnd));
+                RecordUndo("Modify Node Value");
+                exit = EF_ShmupSpace(exit, ColorHelper.PastelRed, nameof(exit));
+                RecordUndo("Modify Node Value");
+                exitEnd = EF_ShmupSpace(exitEnd, ColorHelper.PastelRed, nameof(exitEnd));
+            }
+            if (selected && !collapsedEditable)
             {
                 RecordUndo("Modify Node Value");
                 EF_ShmupSpace(start, ColorHelper.PastelGreen, nameof(start));

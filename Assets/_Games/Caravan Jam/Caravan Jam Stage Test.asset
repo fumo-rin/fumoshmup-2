@@ -1093,10 +1093,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.EnemyModifierNode
   IsEnabled: 1
   title: EnemyModifierNode
-  position: {x: 311, y: -363}
+  position: {x: 624, y: -463}
   skipIndex: 5
   IsCompacted: 1
-  EnemyHealth: 60
+  EnemyHealth: 1000
   LargeHealthPool: 0
   RevengeAttackOverride: {fileID: 0}
   Indicator: 0
