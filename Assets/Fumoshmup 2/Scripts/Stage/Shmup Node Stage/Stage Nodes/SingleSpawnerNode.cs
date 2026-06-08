@@ -74,7 +74,7 @@ namespace FumoShmup2
                     result.StallAttackLoop(attackStall);
                     result.SetBaseAttacks(new EnemyUnit.AttackComponent(attackLoops, loopAddedDelay, attackLoop.ToArray()));
                 }
-                if (EnemyMod is EnemyModifierNode mod)
+                if (EnemyMod is EnemyModifierNode mod && mod.IsEnabled)
                 {
                     mod.ModifyEnemy(result);
                 }
@@ -108,7 +108,8 @@ namespace FumoShmup2
             base.DrawCompactedContents(stage, rect, selected);
             if (selected)
             {
-                collapsedEditable = EF_Button(rect, collapsedEditable ? "End Editing" : "Start Editing");
+                int t = 0;
+                collapsedEditable = EF_Button(Helper_BuildFieldRect(rect, ref t, 1), collapsedEditable ? "End Editing" : "Start Editing");
             }
             if (selected && collapsedEditable)
             {

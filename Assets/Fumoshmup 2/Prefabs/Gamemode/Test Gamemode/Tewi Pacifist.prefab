@@ -211,6 +211,7 @@ MonoBehaviour:
     HitSound: {fileID: 11400000, guid: e31e953852c3d1b42968b59ed65302e3, type: 2}
     DeathSound: {fileID: 11400000, guid: 5caf95d22aad54b44ab39ba549e3597b, type: 2}
   hitIframesDuration: 2.25
+  <PlayerUnitCollider>k__BackingField: {fileID: 0}
   <SweepSound>k__BackingField: {fileID: 11400000, guid: d3b21972db970de41b2926fbab50fff0, type: 2}
   playerHitboxes:
   - {fileID: 3515506440374234703}
@@ -623,7 +624,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 467262385
-  m_SortingLayer: -3
+  m_SortingLayer: -1
   m_SortingOrder: -100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 5c7a04af83415df49a40a8dd0191af76, type: 3}

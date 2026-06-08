@@ -1014,6 +1014,8 @@ namespace FumoShmup2
                 }
                 if (node is IStageNodeModifier mod)
                 {
+                    if (!node.IsEnabled)
+                        continue;
                     alreadyRun.Add(node);
 
                     var linkedNodes = mod.LinkedNodes

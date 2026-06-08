@@ -134,6 +134,7 @@ MonoBehaviour:
   SweepDuration: 1.35
   SweepLootChance: 255
   EntryDuration: 1.65
+  collapsedEditable: 0
   attackLoop:
   - rid: 697206350788952323
   - rid: 697206356773961839
@@ -769,6 +770,7 @@ MonoBehaviour:
   SweepDuration: 0
   SweepLootChance: 255
   EntryDuration: 1.25
+  collapsedEditable: 0
   attackLoop:
   - rid: 697206350788952273
   attackLoops: 3
@@ -970,6 +972,7 @@ MonoBehaviour:
   SweepDuration: 0
   SweepLootChance: 255
   EntryDuration: 1.25
+  collapsedEditable: 0
   attackLoop:
   - rid: 697206350788952266
   attackLoops: 3
@@ -1015,6 +1018,7 @@ MonoBehaviour:
   SweepDuration: 0
   SweepLootChance: 255
   EntryDuration: 1.25
+  collapsedEditable: 0
   attackLoop:
   - rid: 697206350788952274
   attackLoops: 3
@@ -1091,12 +1095,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3d60dbc466de254f88f14f7b9f5b37d, type: 3}
   m_Name: EnemyModifierNode
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.EnemyModifierNode
-  IsEnabled: 1
+  IsEnabled: 0
   title: EnemyModifierNode
-  position: {x: 624, y: -463}
+  position: {x: 632, y: -478}
   skipIndex: 5
   IsCompacted: 1
-  EnemyHealth: 1000
+  EnemyHealth: 80
   LargeHealthPool: 0
   RevengeAttackOverride: {fileID: 0}
   Indicator: 0
@@ -1104,9 +1108,9 @@ MonoBehaviour:
   AmmoSecondsOrCount: 0
   ammoCount: 1
   ammoTime: 1
-  attackDelay: 0.5
+  attackDelay: 0.75
   actionOverride:
-    rid: 2916799881244049613
+    rid: -2
   LinkedNodes:
   - {fileID: -5107880642564846739}
   - {fileID: 6667908978271352750}
@@ -1116,11 +1120,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2916799881244049613
-      type: {class: NodeActions/ChasePlayerDownScreen, ns: FumoShmup2, asm: Fumoshmup2}
-      data:
-        duration: 6
-        speed: 5
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!114 &2630359856714861511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1756,6 +1757,7 @@ MonoBehaviour:
   SweepDuration: 0.85
   SweepLootChance: 255
   EntryDuration: 0.25
+  collapsedEditable: 0
   attackLoop:
   - rid: 697206512732864707
   attackLoops: 1

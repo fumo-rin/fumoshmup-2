@@ -102,7 +102,6 @@ namespace FumoShmup2
         #endregion
 
         public List<StageNode> LinkedNodes = new();
-        [NYI("Feature")]
         public void ModifyEnemy(EnemyUnit e)
         {
             bool hasPlayer = ShmupPlayer.PlayerAs(out ShmupPlayer p);
@@ -112,10 +111,10 @@ namespace FumoShmup2
             }
             e.StartNewHealth(EnemyHealth, EnemyHealth);
             if (RevengeAttackOverride != null) e.SetRevengeAttackOverride(new(RevengeAttackOverride));
-            //e.SetAttackStall(attackDelay);
+            e.StallAttackLoop(attackDelay);
             if (Indicator)
             {
-                //EnemyIndicator.TrackUnit(e);
+                EnemyIndicator.TrackUnit(e);
             }
         }
         public void LinkNode(ShmupNodeStage stage, StageNode node)

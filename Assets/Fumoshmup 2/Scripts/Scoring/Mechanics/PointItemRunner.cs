@@ -8,6 +8,8 @@ namespace FumoShmup2
 {
     public class PointItemRunner : MonoBehaviour
     {
+        public static float SuperEndTime;
+        public static bool SuperMechanic => SuperEndTime > Time.time;
         public delegate float PickupValue(float multiplier);
         public static PickupValue WhenPointItemValue;
 
@@ -15,11 +17,11 @@ namespace FumoShmup2
         public static PickupComboMultiplier WhenGetComboValue;
         public static void SpawnPointItem(Vector2 position)
         {
-            bool cashOut = false;
+            bool cashOut = SuperMechanic;
             if (ShmupSession.CurrentAs(out ShmupSession s) && ShmupPlayer.PlayerAs(out ShmupPlayer p) && p.IsAlive)
             {
-                float multi = WhenGetComboValue?.Invoke() ?? 1f;
-                float scoreValue = (WhenPointItemValue?.Invoke(cashOut ? 5f : 1f) ?? 1000f) * multi;
+                float combo = WhenGetComboValue?.Invoke() ?? 1f;
+                float scoreValue = (WhenPointItemValue?.Invoke(cashOut ? 5f : 1f) ?? 1000f) * combo;
                 PointItemRunner.Create(position, cashOut, scoreValue);
             }
             else
@@ -57,7 +59,11 @@ namespace FumoShmup2
         }
         [rinCore.Initialize(0)]
         internal static void ResetPointItems() => items.Clear();
-        private void Awake() => items.Clear();
+        private void Awake()
+        {
+            items.Clear();
+            SuperEndTime = Time.time - 1f;
+        }
         float focusReleaseTime = 0f;
         bool focusWasHeld;
         void WhenPickup(PointItem item)
@@ -65,7 +71,8 @@ namespace FumoShmup2
             GameSession.TryAddScoreRaw(item.scoreValue, "Score Pickup");
             if (ShmupSession.CurrentAs(out ShmupSession s))
             {
-                s.ChangeFloat(ShmupSession.keys.HitCount, item.scoringCashIn ? -50f : 10f, 0f, 99999f);
+                float combo = WhenGetComboValue?.Invoke() ?? 1f;
+                s.ChangeFloat(ShmupSession.keys.HitCount, item.scoringCashIn ? -250f : 10f * combo, 0f, 100000f);
             }
             ProjectileRenderer.SpawnCosmeticLootParticle(item.Position);
         }

@@ -21,6 +21,9 @@ public partial class ShmupPlayer : IHit
     private float iframesEndTime = 0f;
     public delegate void IframesDurationActivation(float duration);
     public static event IframesDurationActivation WhenIframesActivatedGetDuration;
+    public delegate void PlayerDeathAction();
+    public static event PlayerDeathAction WhenPlayerDieFrame;
+    public static event PlayerDeathAction WhenPlayerRespawnFrame;
     public void SetCurrentIFrames(float duration)
     {
         CurrentIFramesDamageReductionPercent = 100f;
@@ -67,6 +70,7 @@ public partial class ShmupPlayer : IHit
             bool hasSession = GameSession.CurrentAs(out ShmupSession session);
             IEnumerator KillAndRespawn()
             {
+                WhenPlayerDieFrame?.Invoke();
                 manualAliveFlag = false;
                 gameObject.SetActive(false);
                 hitData.DeathSound.Play(CurrentPosition);
@@ -106,6 +110,7 @@ public partial class ShmupPlayer : IHit
                         yield break;
                     }
                 }
+                WhenPlayerRespawnFrame?.Invoke();
                 Vector2 v = new Vector2Shmup(0.5f, 0.2f).Vector2Now;
                 manualAliveFlag = true;
                 transform.position = v;

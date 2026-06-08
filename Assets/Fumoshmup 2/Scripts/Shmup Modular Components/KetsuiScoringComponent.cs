@@ -1,7 +1,9 @@
 using rinCore;
+using System.Collections;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace FumoShmup2
@@ -9,48 +11,87 @@ namespace FumoShmup2
     [DefaultExecutionOrder(-50)]
     public class KetsuiScoringComponent : MonoBehaviour
     {
+        [SerializeField] InputActionReference PowerFire;
         [SerializeField] TMP_Text hitText, comboText;
+
         [SerializeField] Slider comboSlider;
         float visibleHit;
-        float comboDecaySeconds = 0f;
-        float lowComboDecayStall;
-        float enemyKillLockTimeEnd;
-        int CurrentCombo;
+        float freezeTimeEnd;
 
-        const float MAX_COMBO_DECAY = 2f;
-
+        const int MAX_COMBO = 9;
+        float ComboValue100 = 0f;
+        bool Spending => PowerFire.ReleasedLongerThan(0.15f);
+        Coroutine RunningKillChange;
+        bool RedHit => Spending || RunningKillChange != null;
+        int VisibleCombo => DetermineCombo().ToInt();
         private void Graze(int delta, int total)
         {
             if (ShmupSession.CurrentAs(out ShmupSession s))
             {
-                s.ChangeFloat(ShmupSession.keys.HitCount, 3, 0f, 99999f);
+                s.ChangeFloat(ShmupSession.keys.HitCount, delta.AsFloat(3f), 0f, 100000f);
             }
+            ComboValue100 += delta;
         }
         private float DetermineCombo()
         {
-            float combo = CurrentCombo.AsFloat(1f).Clamp(1f, 5f);
+            float combo = ComboValue100.Multiply(0.01f).Floor().Clamp(0f, MAX_COMBO - 1).Add(1);
             return combo;
+        }
+        private void ChangeCombo(float value)
+        {
+            ComboValue100 = ComboValue100.Add(value).Clamp(0f, MAX_COMBO.Add(-1) * 100f + 99f);
         }
         private void WhenEnemyKilled(EnemyUnit e)
         {
-            CurrentCombo = CurrentCombo.Add(1).Clamp(1, 5);
-            enemyKillLockTimeEnd = Time.time + 0.2f;
-            comboDecaySeconds = (comboDecaySeconds + (e.CurrentMaxHealth > 0f ? e.CurrentMaxHealth * 0.004f : 0.25f)).Clamp(0f, MAX_COMBO_DECAY);
+            float comboAdd = (e.CurrentMaxHealth * 0.4f).Clamp(20f, 100f);
+            Debug.Log(comboAdd + " from : " + e.CurrentMaxHealth);
+            ChangeCombo(comboAdd);
         }
         private void WhenContinue()
         {
             visibleHit = 0f;
-            comboDecaySeconds = 0f;
-            lowComboDecayStall = 0f;
-            enemyKillLockTimeEnd = 0f;
-            CurrentCombo = 1;
+            ComboValue100 = 0f;
+            //in the future reset the economy in the session. obviouslyin theh session itself.
+        }
+        void LowerHitCount(float delta)
+        {
+            if (ShmupSession.CurrentAs(out ShmupSession s))
+            {
+                if (RunningKillChange != null)
+                {
+                    StopCoroutine(RunningKillChange);
+                }
+                RunningKillChange = StartCoroutine(CO_Run(s));
+            }
+            IEnumerator CO_Run(ShmupSession s)
+            {
+                float lowerCount = delta.Absolute();
+                float stepSize = lowerCount / 50f;
+                while (lowerCount > 0f)
+                {
+                    float trueDelta = stepSize.Min(lowerCount).AbsoluteNegative();
+                    s.ChangeFloat(ShmupSession.keys.HitCount, trueDelta, 0f, 100000f);
+                    lowerCount -= stepSize;
+                    yield return 0.015f.WaitForSeconds();
+                }
+                RunningKillChange = null;
+            }
+        }
+        private void WhenBomb()
+        {
+            float count = visibleHit * 0.2f;
+            LowerHitCount(count.Clamp(2500f, 25000f));
+        }
+        private void WhenDie()
+        {
+            float count = visibleHit * 0.5f;
+            LowerHitCount(count.Clamp(10000f, 25000f));
         }
         private void WhenEnemiesDamaged(float damage)
         {
-            lowComboDecayStall = Time.time + 0.3f;
             if (ShmupSession.CurrentAs(out ShmupSession s))
             {
-                s.ChangeFloat(ShmupSession.keys.HitCount, damage * 0.2f, 0, 99999f);
+                s.ChangeFloat(ShmupSession.keys.HitCount, damage * VisibleCombo, 0, 100000f);
             }
         }
         private void OnEnable()
@@ -60,6 +101,8 @@ namespace FumoShmup2
             EnemyUnit.WhenEnemyKilled += WhenEnemyKilled;
             EnemyUnit.WhenAnyEnemyDamaged += WhenEnemiesDamaged;
             ShmupSession.WhenContinue += WhenContinue;
+            PlayerBomb.WhenBomba += WhenBomb;
+            ShmupPlayer.WhenPlayerDieFrame += WhenDie;
         }
         private void OnDisable()
         {
@@ -68,20 +111,35 @@ namespace FumoShmup2
             EnemyUnit.WhenEnemyKilled -= WhenEnemyKilled;
             EnemyUnit.WhenAnyEnemyDamaged -= WhenEnemiesDamaged;
             ShmupSession.WhenContinue -= WhenContinue;
+            PlayerBomb.WhenBomba -= WhenBomb;
+            ShmupPlayer.WhenPlayerDieFrame -= WhenDie;
         }
         private void Update()
         {
             float hit = 0;
+            float ComboValueDecay = 20f;
             if (ShmupSession.CurrentAs(out ShmupSession s))
             {
-                #region Stalled
-                if (s.GameLogicStalled || EnemyUnit.BossPhaseStall)
+                #region Stalled & Draw
+                bool stall = s.GameLogicStalled || EnemyUnit.BossPhaseStall;
+                hit = s.GetFloat(ShmupSession.keys.HitCount);
+                s.SetFloat(ShmupSession.keys.HitCount, hit, 0, 99999f);
+                visibleHit = visibleHit.LerpTowards(hit, 20f * Time.deltaTime);
+
+                if (visibleHit <= 1f)
+                    hitText.text = "";
+                else
                 {
-                    lowComboDecayStall = Time.time + 0.3f;
+                    string number = visibleHit.Floor().ToInt().Clamp(1, 100000).ToString();
+                    hitText.text = (visibleHit >= 1f && RedHit) ? number.Color(ColorHelper.RedHealthBackground) : number;
+                }
+
+                if (stall)
+                {
                     return;
                 }
                 #endregion
-                #region Player Shooting
+                #region Player State
                 bool hasPlayer = ShmupPlayer.PlayerAs(out ShmupPlayer p);
                 if (hasPlayer)
                 {
@@ -89,9 +147,9 @@ namespace FumoShmup2
                     {
 
                     }
-                    else if (comboDecaySeconds <= 0)
+                    if (!p.IsAlive)
                     {
-
+                        ComboValue100 = 0f;
                     }
                 }
                 else
@@ -99,54 +157,15 @@ namespace FumoShmup2
 
                 }
                 #endregion
-                #region Combo
-                void RunCombo()
-                {
-                    if (hasPlayer && !p.IsAlive)
-                    {
-                        comboDecaySeconds = (comboDecaySeconds - Time.deltaTime.Multiply(4f)).Clamp(0f, MAX_COMBO_DECAY);
-                        if (CurrentCombo > 1 && comboDecaySeconds <= 0f)
-                        {
-                            CurrentCombo = 1;
-                        }
-                        return;
-                    }
-                    if (Time.time < enemyKillLockTimeEnd)
-                        return;
-                    if (Time.time <= lowComboDecayStall && comboDecaySeconds.IsBetween(0.01f, 0.25f))
-                    {
-                        comboDecaySeconds = 0.25f;
-                    }
-                    else
-                    {
-                        comboDecaySeconds = (comboDecaySeconds - Time.deltaTime).Clamp(0f, MAX_COMBO_DECAY);
-                        if (CurrentCombo > 1 && comboDecaySeconds <= 0f)
-                        {
-                            CurrentCombo = 1;
-                        }
-                    }
-                }
-                RunCombo();
-                comboSlider.SetValuesInt(comboDecaySeconds.Multiply(8f).ToInt(), 8.MultiplyAndFloorAsFloat(MAX_COMBO_DECAY).ToInt(), 0);
-                comboText.text = CurrentCombo <= 1 ? "" : CurrentCombo.Clamp(1, 5).ToString() + "x";
-                #endregion
-                #region Hit Decay & Text
-                hit = s.GetFloat(ShmupSession.keys.HitCount);
-                if (comboDecaySeconds <= 0f)
-                {
-                    hit = (hit - Time.deltaTime * hit.Clamp(1000f, 20000f) * 0.2f).Clamp(0, 99999);
-                }
-                s.SetFloat(ShmupSession.keys.HitCount, hit, 0, 99999f);
+                #region Combo & Logic
 
-                visibleHit = visibleHit.LerpTowards(hit, 20f * Time.deltaTime);
+                ChangeCombo(Time.deltaTime * ComboValueDecay.AbsoluteNegative());
+                const float comboMod = 16f / 100f;
+                int comboSliderNumber = (ComboValue100 % 100f).Multiply(comboMod).ToInt();
+                comboSlider.SetValuesInt(ComboValue100 < 1f ? 0 : comboSliderNumber, 16, 0);
+                comboText.text = VisibleCombo <= 1 ? "" : VisibleCombo.ToString() + "x";
 
-                if (visibleHit <= 1f)
-                    hitText.text = "";
-                else
-                {
-                    string number = visibleHit.Floor().ToInt().Clamp(1, 99999).ToString();
-                    hitText.text = (visibleHit >= 1f && comboDecaySeconds <= 0.1f) ? number.Color(ColorHelper.RedHealthBackground) : number;
-                }
+
                 #endregion
             }
         }

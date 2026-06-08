@@ -11,7 +11,7 @@ namespace FumoShmup2
             float hitValue = 0;
             if (ShmupSession.CurrentAs(out ShmupSession sess))
             {
-                hitValue = 0.1f * sess.GetFloat(ShmupSession.keys.HitCount).Clamp(0f, 99999f);
+                hitValue = 0.1f * sess.GetFloat(ShmupSession.keys.HitCount).Clamp(0f, 100000f);
             }
             return (hitValue + 1000f) * multiplier;
         }

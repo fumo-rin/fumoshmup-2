@@ -32,6 +32,7 @@ MonoBehaviour:
   SweepDuration: 0.26
   SweepLootChance: 255
   EntryDuration: 0.75
+  collapsedEditable: 0
   attackLoop:
   - rid: 697206062794932588
   attackLoops: 1
@@ -474,6 +475,7 @@ MonoBehaviour:
   SweepDuration: 0
   SweepLootChance: 255
   EntryDuration: 0.75
+  collapsedEditable: 0
   attackLoop:
   - rid: 697206069577646591
   attackLoops: 3
@@ -518,6 +520,7 @@ MonoBehaviour:
   SweepDuration: 0
   SweepLootChance: 255
   EntryDuration: 0.75
+  collapsedEditable: 0
   attackLoop:
   - rid: 697206069577646590
   attackLoops: 3
@@ -669,6 +672,7 @@ MonoBehaviour:
   SweepDuration: 0.26
   SweepLootChance: 255
   EntryDuration: 0.75
+  collapsedEditable: 0
   attackLoop:
   - rid: 697206062794932580
   attackLoops: 1
@@ -716,6 +720,7 @@ MonoBehaviour:
   SweepDuration: 0
   SweepLootChance: 255
   EntryDuration: 0.75
+  collapsedEditable: 0
   attackLoop:
   - rid: 697206069577646592
   attackLoops: 3
@@ -965,6 +970,7 @@ MonoBehaviour:
   SweepDuration: 0
   SweepLootChance: 255
   EntryDuration: 1.11
+  collapsedEditable: 0
   attackLoop:
   - rid: 697206069577646589
   attackLoops: 3
@@ -1009,6 +1015,7 @@ MonoBehaviour:
   SweepDuration: 0.26
   SweepLootChance: 255
   EntryDuration: 0.75
+  collapsedEditable: 0
   attackLoop:
   - rid: 697206069577646627
   attackLoops: 2
@@ -1103,6 +1110,7 @@ MonoBehaviour:
   SweepDuration: 0.26
   SweepLootChance: 255
   EntryDuration: 0.75
+  collapsedEditable: 0
   attackLoop:
   - rid: 697206069577646626
   attackLoops: 2

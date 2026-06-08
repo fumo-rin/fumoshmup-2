@@ -147,6 +147,8 @@ MonoBehaviour:
     - rid: 697206015994364311
     phaseHealth: 1500
     blockDash: 0
+    Loops: 1
+    PhaseIndex: 0
   startingHealth: 350
   hitSound: {fileID: 0}
   lowHitSound: {fileID: 0}

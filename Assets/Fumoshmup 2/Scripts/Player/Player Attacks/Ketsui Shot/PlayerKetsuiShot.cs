@@ -21,7 +21,7 @@ namespace FumoShmup2
             float nextProjectileShotTime = Time.time + 0.15f;
             float damageTime = Time.time;
             a.BuildInput(Owner, out Projectile.InputSettings input);
-            float nextLockonTime = Time.time + 0.45f;
+            float nextLockonTime = Time.time + 0.3f;
             while (ShmupInput.Focus && ShmupInput.Shoot)
             {
                 nextProjectileShotTime -= Time.deltaTime;
@@ -43,7 +43,7 @@ namespace FumoShmup2
                             if (Owner == (object)hit)
                                 continue;
 
-                            hit.SendHit(new IHit.HitPacket(item.point, new Projectile.ProjectileDamage(Owner, 225f * delta, 1f)), out float damageDealt);
+                            hit.SendHit(new IHit.HitPacket(item.point, new Projectile.ProjectileDamage(Owner, 265f * delta, 1f)), out float damageDealt);
                             if (damageDealt > 0f)
                             {
                                 ProjectileRenderer.HitParticle(item.point, item.normal, new()
@@ -64,7 +64,7 @@ namespace FumoShmup2
                             if (LockOn.Count < 4)
                             {
                                 LockOn.Add(autoAim);
-                                nextLockonTime = Time.time + 0.15f;
+                                nextLockonTime = Time.time + 0.225f;
                                 lockOnSound.Play(option + Owner.CurrentPosition);
                             }
                         }
@@ -81,7 +81,7 @@ namespace FumoShmup2
                         ketsui.SetMods(new ProjectileModChase(new(3f, 0f), ketsui.OptionalTarget, 270f));
                         if (a.Single(6f.RandomPositiveNegativeRange(), 80f).Spawn(ketsui, superShot, out Projectile p))
                         {
-                            p.SetDamage(new(Owner, 1.75f, 1f));
+                            p.SetDamage(new(Owner, 1.55f, 1f));
                         }
                     }
                 }
@@ -102,7 +102,7 @@ namespace FumoShmup2
     #endregion
     public partial class PlayerKetsuiShot : MonoBehaviour
     {
-        [SerializeField] InputActionReference shootingAction, focusAction;
+        [SerializeField] InputActionReference shootingAction, focusAction, powerFire;
         [SerializeField] ShmupUnit Owner;
         [SerializeField] ProjectileDefineSO unfocusShot, optionShot, superShot;
         [SerializeField] ACWrapper unfocusShotSound;
@@ -122,10 +122,57 @@ namespace FumoShmup2
         bool Shooting => !shootingAction.ReleasedLongerThan(0.175f);
         bool CanSuperShot => focusAction.PressedLongerThan(0.175f);
         float cachedFocusLerp = 0f;
-        Coroutine currentShot;
+        Coroutine currentShot, powerShot;
         float forwardLockTimeEnd;
         void Update()
         {
+            if (powerFire.JustPressed() && powerShot == null)
+            {
+                a.BuildInput(Owner, out Projectile.InputSettings power);
+                powerShot = StartCoroutine(CO_Power(power));
+                IEnumerator CO_Power(Projectile.InputSettings input)
+                {
+                    float hit = 0f;
+                    if (ShmupSession.CurrentAs(out ShmupSession sess))
+                    {
+                        hit = sess.GetFloat(ShmupSession.keys.HitCount);
+                    }
+                    if (hit <= 9999)
+                    {
+                        powerShot = null;
+                        yield break;
+                    }
+                    while (!powerFire.ReleasedLongerThan(0.15f) && Owner.IsAlive && Owner != null && hit > 100f && sess != null)
+                    {
+                        if (EnemyUnit.FindEnemyFromDotProduct(Owner.CurrentPosition, Vector2.up, out EnemyUnit homing, 0.35f) && homing.IsAlive)
+                        {
+                            input.SetOptionalTarget(homing);
+                            input.SetMods(new ProjectileModChase(new(1f, 0f), homing, 540f));
+                        }
+                        input.SetOrigin(Owner.CurrentPosition);
+                        float spin = 540f * Time.time;
+                        spin = spin % 360f;
+                        if (a.Circle(spin, 3, 22f).Spawn(input, superShot, out List<Projectile> proj))
+                        {
+                            foreach (var item in proj)
+                            {
+                                item.SetDamage(new(Owner, 4f, 1f));
+                            }
+                        }
+                        if (sess != null)
+                        {
+                            hit = sess.ChangeFloat(ShmupSession.keys.HitCount, -32000f * 0.015f, 0f, 100000f);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                        PointItemRunner.SuperEndTime = Time.time + 0.6f;
+                        yield return 0.015f.WaitForSeconds();
+                    }
+                    powerShot = null;
+                }
+            }
             if (ShmupInput.FocusReleasedLongerThan(0.25f) || ShmupInput.ShootReleasedLongerThan(0.65f))
             {
                 LockOn.Clear();
@@ -150,7 +197,6 @@ namespace FumoShmup2
                 laserLerp = 0f;
                 return;
             }
-
             IEnumerator CO_Shot()
             {
                 void Forward()
@@ -165,12 +211,12 @@ namespace FumoShmup2
                         forward.SetOrigin(Owner.CurrentPosition + new Vector2(-0.2f, 0.45f));
                         if (a.Single(0f, speed).Spawn(forward, unfocusShot, out Projectile p1))
                         {
-                            p1.SetDamage(new(Owner, 1.95f, 1f));
+                            p1.SetDamage(new(Owner, 1.75f, 1f));
                         }
                         forward.SetOrigin(Owner.CurrentPosition + new Vector2(0.2f, 0.45f));
                         if (a.Single(0f, speed).Spawn(forward, unfocusShot, out Projectile p2))
                         {
-                            p2.SetDamage(new(Owner, 1.95f, 1f));
+                            p2.SetDamage(new(Owner, 1.75f, 1f));
                         }
                     }
                     forwardLockTimeEnd = Time.time + 0.049f;
@@ -203,7 +249,7 @@ namespace FumoShmup2
                                 {
                                     shotcap.Add(p);
                                     p.AddForward(remainingShots.AsFloat(0.05f));
-                                    p.SetDamage(new(Owner, 2.75f, 1f));
+                                    p.SetDamage(new(Owner, 3.25f, 1f));
                                 }
                             }
                         }
@@ -235,6 +281,10 @@ namespace FumoShmup2
             if (currentShot != null)
                 StopCoroutine(currentShot);
             currentShot = null;
+
+            if (powerShot != null)
+                StopCoroutine(powerShot);
+            powerShot = null;
         }
         private void OnEnable()
         {

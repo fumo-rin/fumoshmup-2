@@ -5866,6 +5866,7 @@ MonoBehaviour:
   lockOnSound: {fileID: 11400000, guid: e4f32f2c0633e6c4c8573c1e44f0a57b, type: 2}
   shootingAction: {fileID: 1864257387097275648, guid: 34edc816a52e4fc4ab2d77bcdba58669, type: 3}
   focusAction: {fileID: -1145331697551703494, guid: 34edc816a52e4fc4ab2d77bcdba58669, type: 3}
+  powerFire: {fileID: -4776179778478946973, guid: 34edc816a52e4fc4ab2d77bcdba58669, type: 3}
   Owner: {fileID: 6582323571233060469}
   unfocusShot: {fileID: 11400000, guid: 645aaccd5b9ad8c4d8bca44d5664cee9, type: 2}
   optionShot: {fileID: 11400000, guid: 1c229417e58976947acc847a02f452bd, type: 2}

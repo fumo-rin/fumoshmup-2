@@ -125,14 +125,14 @@ MonoBehaviour:
     _id: 1064118458
   - items:
     - globalId:
-        globalObjectIdString: GlobalObjectId_V1-1-d7dac78d018b7be4ca57306ea26d94fe-11981177322015356926-0
-      _typeString: UnityEngine.Shader, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
+        globalObjectIdString: GlobalObjectId_V1-3-923bda31fbe291044a3cc57adfb22972-11400000-0
+      _typeString: FumoShmup2.ShmupNodeStage, Fumoshmup2, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      _obj: {fileID: -6465566751694194690, guid: d7dac78d018b7be4ca57306ea26d94fe, type: 3}
+      _obj: {fileID: 11400000, guid: 923bda31fbe291044a3cc57adfb22972, type: 2}
       isSceneGameObject: 0
       isFolder: 0
       isAsset: 1
-      _id: 1040694601
+      _id: 1046554210
     name: Page 2
     _id: 1059572019
   - items: []

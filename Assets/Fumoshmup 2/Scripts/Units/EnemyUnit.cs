@@ -707,14 +707,14 @@ namespace FumoShmup2
                     }
                     if (IsBoss)
                     {
-                        float halfPercent = CurrentMaxHealth * 0.005f;
+                        /*float halfPercent = CurrentMaxHealth * 0.005f;
                         for (int i = 0; i < 40; i++)
                         {
                             if (damageCap.PerSecond > i.AsFloat(halfPercent))
                             {
                                 damage *= 0.95f;
                             }
-                        }
+                        }*/
                     }
                     GameSession.TryAddScoreRaw(damage * 250d, "Enemy Damage");
                     damageDealt = damage.Min(CurrentHealth);
@@ -788,7 +788,11 @@ namespace FumoShmup2
         }
         public void KillWithLoot()
         {
-            if (sealRadius > 0.1f)
+            if (PointItemRunner.SuperMechanic)
+            {
+                ProjectileRunner.SealBullets(CurrentPosition, this, 33f, 255, out _);
+            }
+            else if (sealRadius > 0.1f)
             {
                 ProjectileRunner.SealBullets(CurrentPosition, this, sealRadius, 255, out _);
             }

@@ -7,6 +7,8 @@ namespace FumoShmup2
 {
     public abstract class PlayerBomb : MonoBehaviour
     {
+        public delegate void BomboAction();
+        public static event BomboAction WhenBomba;
         static PlayerBomb active;
         static bool IsValidAndActive => active != null && active.gameObject != null && active.gameObject.activeInHierarchy;
         public static bool CanBomb
@@ -28,6 +30,7 @@ namespace FumoShmup2
             if (IsValidAndActive && CanBomb && active is PlayerBomb b)
             {
                 GlobalCoroutineRunner.StartRoutine("Player Bomb", b.BombPayload(Owner), false);
+                WhenBomba?.Invoke();
                 return true;
             }
             return false;
