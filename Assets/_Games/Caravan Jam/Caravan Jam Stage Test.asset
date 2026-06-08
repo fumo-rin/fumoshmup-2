@@ -40,8 +40,8 @@ MonoBehaviour:
   SweepLootChance: 255
   attackLoop:
   - rid: 697206350788952306
-  attackLoops: 1
-  loopAddedDelay: 0.65
+  attackLoops: 2
+  loopAddedDelay: 1.75
   attackStall: 0.75
   references:
     version: 2
@@ -50,7 +50,7 @@ MonoBehaviour:
       type: {class: CaravanAtatcks/Stage2/Fodder/DoubleShot, ns: Caravan, asm: CaravanJam}
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
-        ammoSeconds: 2.4
+        ammoSeconds: 0.6
 --- !u!114 &-8999329023708059090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,8 +228,8 @@ MonoBehaviour:
   SweepLootChance: 255
   attackLoop:
   - rid: 697206350788952308
-  attackLoops: 1
-  loopAddedDelay: 0.65
+  attackLoops: 2
+  loopAddedDelay: 1.75
   attackStall: 0.75
   references:
     version: 2
@@ -238,7 +238,7 @@ MonoBehaviour:
       type: {class: CaravanAtatcks/Stage2/Fodder/DoubleShot, ns: Caravan, asm: CaravanJam}
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
-        ammoSeconds: 2.4
+        ammoSeconds: 0.6
 --- !u!114 &-7320112418387840548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -399,8 +399,8 @@ MonoBehaviour:
   position: {x: 825.0625, y: -124.75653}
   skipIndex: 40
   IsCompacted: 0
-  toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
-  storedModifier: {fileID: 0}
+  toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
+  storedModifier: {fileID: -4891702980193641951}
   start: {x: 0.05000016, y: 1.2559997}
   startEnd: {x: 0.8675, y: 1.288}
   target: {x: 0.4675, y: 0.90400004}
@@ -502,6 +502,42 @@ MonoBehaviour:
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
         ammoSeconds: 0.6
+--- !u!114 &-4891702980193641951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3d60dbc466de254f88f14f7b9f5b37d, type: 3}
+  m_Name: EnemyModifierNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.EnemyModifierNode
+  IsEnabled: 1
+  title: EnemyModifierNode
+  position: {x: 1524, y: -530}
+  skipIndex: 40
+  IsCompacted: 0
+  EnemyHealth: 45
+  LargeHealthPool: 0
+  RevengeAttackOverride: {fileID: 0}
+  Indicator: 0
+  AmmoOverride: 0
+  AmmoSecondsOrCount: 0
+  ammoCount: 1
+  ammoTime: 1
+  attackDelay: 0.3
+  actionOverride:
+    rid: -2
+  LinkedNodes:
+  - {fileID: -3525028640292555020}
+  - {fileID: -5923801040860991818}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!114 &-4055235318180003536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -616,8 +652,8 @@ MonoBehaviour:
   position: {x: 1658.0625, y: 25.24347}
   skipIndex: 40
   IsCompacted: 0
-  toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
-  storedModifier: {fileID: 0}
+  toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
+  storedModifier: {fileID: -4891702980193641951}
   start: {x: 0.9499998, y: 1.2559997}
   startEnd: {x: 0.1325, y: 1.288}
   target: {x: 0.5325, y: 0.90400004}
@@ -708,8 +744,8 @@ MonoBehaviour:
   SweepLootChance: 255
   attackLoop:
   - rid: 697206350788952307
-  attackLoops: 1
-  loopAddedDelay: 0.65
+  attackLoops: 2
+  loopAddedDelay: 1.75
   attackStall: 0.75
   references:
     version: 2
@@ -718,7 +754,7 @@ MonoBehaviour:
       type: {class: CaravanAtatcks/Stage2/Fodder/DoubleShot, ns: Caravan, asm: CaravanJam}
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
-        ammoSeconds: 2.4
+        ammoSeconds: 0.6
 --- !u!114 &-1586241089028309848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -824,8 +860,8 @@ MonoBehaviour:
   SweepLootChance: 255
   attackLoop:
   - rid: 697206350788952309
-  attackLoops: 1
-  loopAddedDelay: 0.65
+  attackLoops: 2
+  loopAddedDelay: 1.75
   attackStall: 0.75
   references:
     version: 2
@@ -834,7 +870,7 @@ MonoBehaviour:
       type: {class: CaravanAtatcks/Stage2/Fodder/DoubleShot, ns: Caravan, asm: CaravanJam}
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
-        ammoSeconds: 2.4
+        ammoSeconds: 0.6
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -868,7 +904,7 @@ MonoBehaviour:
     enabled: 1
   <StageScene>k__BackingField: {fileID: 11400000, guid: 9ac2b125f6a81b04ca14a6031c9663e9, type: 2}
   currentLinkAttempt: {fileID: 0}
-  selectedSkipIndex: 0
+  selectedSkipIndex: 4
   StageEndDialogue: {fileID: 0}
   enemyTable:
   - {fileID: 2745390351675722610, guid: df43bc81f13947848881cceacf20cbb1, type: 3}
@@ -922,6 +958,7 @@ MonoBehaviour:
   - {fileID: 5632986173688845907}
   - {fileID: -7278305265860221916}
   - {fileID: 2364178360822742134}
+  - {fileID: -4891702980193641951}
 --- !u!114 &1011325165538966211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1072,8 +1109,8 @@ MonoBehaviour:
   SweepLootChance: 255
   attackLoop:
   - rid: 697206350788952272
-  attackLoops: 1
-  loopAddedDelay: 0.65
+  attackLoops: 2
+  loopAddedDelay: 1.75
   attackStall: 0.75
   references:
     version: 2
@@ -1082,7 +1119,7 @@ MonoBehaviour:
       type: {class: CaravanAtatcks/Stage2/Fodder/DoubleShot, ns: Caravan, asm: CaravanJam}
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
-        ammoSeconds: 2.4
+        ammoSeconds: 0.6
 --- !u!114 &2364178360822742134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1162,8 +1199,8 @@ MonoBehaviour:
   SweepLootChance: 255
   attackLoop:
   - rid: 697206350788952264
-  attackLoops: 1
-  loopAddedDelay: 0.65
+  attackLoops: 2
+  loopAddedDelay: 1.75
   attackStall: 0.75
   references:
     version: 2
@@ -1172,7 +1209,7 @@ MonoBehaviour:
       type: {class: CaravanAtatcks/Stage2/Fodder/DoubleShot, ns: Caravan, asm: CaravanJam}
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
-        ammoSeconds: 2.4
+        ammoSeconds: 0.6
 --- !u!114 &2669113132102823721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1301,8 +1338,8 @@ MonoBehaviour:
   SweepLootChance: 255
   attackLoop:
   - rid: 697206350788952265
-  attackLoops: 1
-  loopAddedDelay: 0.65
+  attackLoops: 2
+  loopAddedDelay: 1.75
   attackStall: 0.75
   references:
     version: 2
@@ -1311,7 +1348,7 @@ MonoBehaviour:
       type: {class: CaravanAtatcks/Stage2/Fodder/DoubleShot, ns: Caravan, asm: CaravanJam}
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
-        ammoSeconds: 2.4
+        ammoSeconds: 0.6
 --- !u!114 &3712953942190829779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1371,8 +1408,8 @@ MonoBehaviour:
   SweepLootChance: 255
   attackLoop:
   - rid: 697206350788952278
-  attackLoops: 1
-  loopAddedDelay: 0.65
+  attackLoops: 2
+  loopAddedDelay: 1.75
   attackStall: 0.75
   references:
     version: 2
@@ -1381,7 +1418,7 @@ MonoBehaviour:
       type: {class: CaravanAtatcks/Stage2/Fodder/DoubleShot, ns: Caravan, asm: CaravanJam}
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
-        ammoSeconds: 2.4
+        ammoSeconds: 0.6
 --- !u!114 &3911439123735741859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1422,8 +1459,8 @@ MonoBehaviour:
   SweepLootChance: 255
   attackLoop:
   - rid: 697206350788952277
-  attackLoops: 1
-  loopAddedDelay: 0.65
+  attackLoops: 2
+  loopAddedDelay: 1.75
   attackStall: 0.75
   references:
     version: 2
@@ -1432,7 +1469,7 @@ MonoBehaviour:
       type: {class: CaravanAtatcks/Stage2/Fodder/DoubleShot, ns: Caravan, asm: CaravanJam}
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
-        ammoSeconds: 2.4
+        ammoSeconds: 0.6
 --- !u!114 &5632986173688845907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1498,7 +1535,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.LineSpawnerNode
   IsEnabled: 1
   title: LineSpawnerNode
-  position: {x: 542, y: -805}
+  position: {x: 542, y: -806}
   skipIndex: 5
   IsCompacted: 1
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
@@ -1626,8 +1663,8 @@ MonoBehaviour:
   SweepLootChance: 255
   attackLoop:
   - rid: 697206350788952275
-  attackLoops: 1
-  loopAddedDelay: 0.65
+  attackLoops: 2
+  loopAddedDelay: 1.75
   attackStall: 0.75
   references:
     version: 2
@@ -1636,7 +1673,7 @@ MonoBehaviour:
       type: {class: CaravanAtatcks/Stage2/Fodder/DoubleShot, ns: Caravan, asm: CaravanJam}
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
-        ammoSeconds: 2.4
+        ammoSeconds: 0.6
 --- !u!114 &7472998715273484378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1714,8 +1751,8 @@ MonoBehaviour:
   SweepLootChance: 255
   attackLoop:
   - rid: 697206350788952271
-  attackLoops: 1
-  loopAddedDelay: 0.65
+  attackLoops: 2
+  loopAddedDelay: 1.75
   attackStall: 0.75
   references:
     version: 2
@@ -1724,7 +1761,7 @@ MonoBehaviour:
       type: {class: CaravanAtatcks/Stage2/Fodder/DoubleShot, ns: Caravan, asm: CaravanJam}
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
-        ammoSeconds: 2.4
+        ammoSeconds: 0.6
 --- !u!114 &8372824485595593443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1811,8 +1848,8 @@ MonoBehaviour:
   SweepLootChance: 255
   attackLoop:
   - rid: 697206350788952276
-  attackLoops: 1
-  loopAddedDelay: 0.65
+  attackLoops: 2
+  loopAddedDelay: 1.75
   attackStall: 0.75
   references:
     version: 2
@@ -1821,7 +1858,7 @@ MonoBehaviour:
       type: {class: CaravanAtatcks/Stage2/Fodder/DoubleShot, ns: Caravan, asm: CaravanJam}
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
-        ammoSeconds: 2.4
+        ammoSeconds: 0.6
 --- !u!114 &9076090597195459960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1863,7 +1900,7 @@ MonoBehaviour:
   attackLoop:
   - rid: 697206350788952310
   attackLoops: 1
-  loopAddedDelay: 0.65
+  loopAddedDelay: 1.75
   attackStall: 0.75
   references:
     version: 2
@@ -1872,4 +1909,4 @@ MonoBehaviour:
       type: {class: CaravanAtatcks/Stage2/Fodder/DoubleShot, ns: Caravan, asm: CaravanJam}
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
-        ammoSeconds: 2.4
+        ammoSeconds: 0.6

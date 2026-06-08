@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: rinCore::RinCore.ACWrapper
   SoundName: Player Kill Sound
   soundVolume: 0.905
-  audioMixerOverride: {fileID: -1549346045928506887, guid: 2d90163c4095a0a4283cc9766c8294e4, type: 2}
   <soundClips>k__BackingField:
   - clip: {fileID: 8300000, guid: 32df1a896de745d4cadbe1c92671c0ff, type: 3}
     PitchVariancePercent: 4.5
@@ -36,6 +35,8 @@ MonoBehaviour:
     PitchOrigin: 1.6
     Volume: 0.331
     Muted: 0
-  <singleChannel>k__BackingField: 1
+  <soundMode>k__BackingField: 0
   <singleRepeatLockoutTime>k__BackingField: 0.001
   <Is3D>k__BackingField: 1
+  IsNetworked: 0
+  <NetworkID>k__BackingField: 0

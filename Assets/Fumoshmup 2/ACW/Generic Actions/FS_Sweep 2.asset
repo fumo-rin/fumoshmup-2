@@ -35,6 +35,8 @@ MonoBehaviour:
     PitchOrigin: 2.06
     Volume: 1
     Muted: 0
-  <singleChannel>k__BackingField: 1
+  <soundMode>k__BackingField: 0
   <singleRepeatLockoutTime>k__BackingField: 0.01
   <Is3D>k__BackingField: 1
+  IsNetworked: 0
+  <NetworkID>k__BackingField: 0

@@ -278,12 +278,14 @@ namespace Caravan
                     {
                         float elapsed = 0f;
                         input.addedForward = 0.35f;
+                        var singleInput = input.Copy().SetMods(new ProjectileModAccelerate(new(2f, 1f), 13f, 6f));
                         while (elapsed < ammoSeconds)
                         {
                             input.ReAimWithOptionalTarget(sender.CurrentPosition);
+                            singleInput.ReAimWithOptionalTarget(sender.CurrentPosition);
                             for (int i = 0; i < 2; i++)
                             {
-                                Single(0f, 4f).Spawn(input, projectile, out _);
+                                Single(0f, 4f).Spawn(singleInput, projectile, out _);
                                 Arc(0f, 60f, 3, 10f).Spawn(input, projectile, out _);
                             }
                             elapsed += TICK * 12;

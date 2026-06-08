@@ -38,6 +38,9 @@ TagManager:
   - Debug
   - World UI
   m_SortingLayers:
+  - name: Effects
+    uniqueID: 2800787963
+    locked: 0
   - name: Loot
     uniqueID: 3164713073
     locked: 0
@@ -49,9 +52,6 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Effects
-    uniqueID: 2800787963
     locked: 0
   - name: Projectiles
     uniqueID: 3975774537

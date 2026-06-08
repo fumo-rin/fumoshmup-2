@@ -12,7 +12,8 @@ namespace FumoShmup2
     public partial class PlayerKetsuiShot
     {
         [SerializeField] LineRenderer laser;
-        [SerializeField] ACWrapper laserSound, lockOnSound;
+        [SerializeField] ACWrapper laserStartSound, lockOnSound, lockOnShotSound;
+        [SerializeField] AudioSource laserSustainedSound;
         float laserLerp;
         readonly List<EnemyUnit> LockOn = new(4);
         IEnumerator CO_Supershot()
@@ -35,7 +36,6 @@ namespace FumoShmup2
 
                     RaycastHit2D[] laserhit = Physics2D.BoxCastAll(input.Origin, new(2f, 1f), 0f, Vector2.up, laserLerp);
 
-                    laserSound.Play(Owner.CurrentPosition);
                     foreach (var item in laserhit)
                     {
                         if (item.collider is Collider2D col && col.GetComponent<IHit>() is IHit hit)
@@ -43,7 +43,7 @@ namespace FumoShmup2
                             if (Owner == (object)hit)
                                 continue;
 
-                            hit.SendHit(new IHit.HitPacket(item.point, new Projectile.ProjectileDamage(Owner, 265f * delta, 1f)), out float damageDealt);
+                            hit.SendHit(new IHit.HitPacket(item.point, new Projectile.ProjectileDamage(Owner, Dps_Focus * delta * 0.6f, 1f)), out float damageDealt);
                             if (damageDealt > 0f)
                             {
                                 ProjectileRenderer.HitParticle(item.point, item.normal, new()
@@ -81,7 +81,9 @@ namespace FumoShmup2
                         ketsui.SetMods(new ProjectileModChase(new(3f, 0f), ketsui.OptionalTarget, 270f));
                         if (a.Single(6f.RandomPositiveNegativeRange(), 80f).Spawn(ketsui, superShot, out Projectile p))
                         {
-                            p.SetDamage(new(Owner, 1.55f, 1f));
+                            const float lockonDPSMod = 1f / 124f;
+                            p.SetDamage(new(Owner, lockonDPSMod * Dps_Focus * 0.4f, 1f));
+                            lockOnShotSound.Play(ketsui.Sender.CurrentPosition);
                         }
                     }
                 }
@@ -93,6 +95,7 @@ namespace FumoShmup2
                 laser.SetPositions(pos);
                 laserLerp = laserLerp.LerpTowards(20f, 4f * Time.deltaTime);
                 laserLerp = laserLerp.Clamp(2f, 20f);
+                laserStartSound.Play(Owner.CurrentPosition);
                 yield return null;
                 laser.enabled = true;
             }
@@ -102,6 +105,7 @@ namespace FumoShmup2
     #endregion
     public partial class PlayerKetsuiShot : MonoBehaviour
     {
+        [SerializeField] int Dps_Unfocus = 600, Dps_Focus = 440;
         [SerializeField] InputActionReference shootingAction, focusAction, powerFire;
         [SerializeField] ShmupUnit Owner;
         [SerializeField] ProjectileDefineSO unfocusShot, optionShot, superShot;
@@ -147,16 +151,16 @@ namespace FumoShmup2
                         if (EnemyUnit.FindEnemyFromDotProduct(Owner.CurrentPosition, Vector2.up, out EnemyUnit homing, 0.35f) && homing.IsAlive)
                         {
                             input.SetOptionalTarget(homing);
-                            input.SetMods(new ProjectileModChase(new(1f, 0f), homing, 540f));
+                            input.SetMods(new ProjectileModChase(new(1.25f, 0f), homing, 720f));
                         }
                         input.SetOrigin(Owner.CurrentPosition);
                         float spin = 540f * Time.time;
                         spin = spin % 360f;
-                        if (a.Circle(spin, 3, 22f).Spawn(input, superShot, out List<Projectile> proj))
+                        if (a.Circle(spin, 3, 33f).Spawn(input, superShot, out List<Projectile> proj))
                         {
                             foreach (var item in proj)
                             {
-                                item.SetDamage(new(Owner, 4f, 1f));
+                                item.SetDamage(new(Owner, 6f, 1f));
                             }
                         }
                         if (sess != null)
@@ -207,16 +211,17 @@ namespace FumoShmup2
                     forward.SetDirection(Vector2.up);
                     for (var i = 0; i < 3; i++)
                     {
+                        const float ForwardDamageMod = 1f / 82.6f;
                         float speed = 36f + i.AsFloat(8f);
                         forward.SetOrigin(Owner.CurrentPosition + new Vector2(-0.2f, 0.45f));
                         if (a.Single(0f, speed).Spawn(forward, unfocusShot, out Projectile p1))
                         {
-                            p1.SetDamage(new(Owner, 1.75f, 1f));
+                            p1.SetDamage(new(Owner, ForwardDamageMod * 0.4f * Dps_Unfocus, 1f));
                         }
                         forward.SetOrigin(Owner.CurrentPosition + new Vector2(0.2f, 0.45f));
                         if (a.Single(0f, speed).Spawn(forward, unfocusShot, out Projectile p2))
                         {
-                            p2.SetDamage(new(Owner, 1.75f, 1f));
+                            p2.SetDamage(new(Owner, ForwardDamageMod * 0.4f * Dps_Unfocus, 1f));
                         }
                     }
                     forwardLockTimeEnd = Time.time + 0.049f;
@@ -245,11 +250,12 @@ namespace FumoShmup2
                                 float xMod = (shot.x.Absolute() - 0.5f);
                                 xMod = xMod.MapTo01(0f, 1f, true);
                                 float angle = xMod.MapFrom01(0f, 30f) * -shot.x.SignInt();
+                                const float optionPointBlankDpsMod = 1f / 400f;
                                 if (a.Single(angle, 25f + i.AsFloat(5f)).Spawn(input, optionShot, out Projectile p))
                                 {
                                     shotcap.Add(p);
                                     p.AddForward(remainingShots.AsFloat(0.05f));
-                                    p.SetDamage(new(Owner, 3.25f, 1f));
+                                    p.SetDamage(new(Owner, optionPointBlankDpsMod * 0.6f * Dps_Unfocus, 1f));
                                 }
                             }
                         }

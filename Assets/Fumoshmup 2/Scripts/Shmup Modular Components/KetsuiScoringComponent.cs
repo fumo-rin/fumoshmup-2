@@ -11,18 +11,17 @@ namespace FumoShmup2
     [DefaultExecutionOrder(-50)]
     public class KetsuiScoringComponent : MonoBehaviour
     {
-        [SerializeField] InputActionReference PowerFire;
         [SerializeField] TMP_Text hitText, comboText;
-
         [SerializeField] Slider comboSlider;
         float visibleHit;
         float freezeTimeEnd;
 
         const int MAX_COMBO = 9;
         float ComboValue100 = 0f;
-        bool Spending => PowerFire.ReleasedLongerThan(0.15f);
+        bool Spending => PointItemRunner.SuperMechanic;
         Coroutine RunningKillChange;
-        bool RedHit => Spending || RunningKillChange != null;
+        bool RedHit => RunningKillChange != null;
+        bool GreenHit => Spending;
         int VisibleCombo => DetermineCombo().ToInt();
         private void Graze(int delta, int total)
         {
@@ -80,6 +79,7 @@ namespace FumoShmup2
         private void WhenBomb()
         {
             float count = visibleHit * 0.2f;
+            ChangeCombo(ComboValue100.Multiply(0.666f).Clamp(0f, 200f).AbsoluteNegative());
             LowerHitCount(count.Clamp(2500f, 25000f));
         }
         private void WhenDie()
@@ -117,9 +117,21 @@ namespace FumoShmup2
         private void Update()
         {
             float hit = 0;
-            float ComboValueDecay = 20f;
+            float ComboValueDecay = 30f;
             if (ShmupSession.CurrentAs(out ShmupSession s))
             {
+                #region Combo & Logic
+
+                const float comboMod = 16f / 100f;
+                int comboSliderNumber = (ComboValue100 % 100f).Multiply(comboMod).ToInt();
+                comboSlider.SetValuesInt(ComboValue100 < 1f ? 0 : comboSliderNumber, 16, 0);
+                comboText.text = VisibleCombo <= 1 ? "" : VisibleCombo.ToString() + "x";
+
+                if (Spending)
+                {
+                    ComboValueDecay *= 7f;
+                }
+                #endregion
                 #region Stalled & Draw
                 bool stall = s.GameLogicStalled || EnemyUnit.BossPhaseStall;
                 hit = s.GetFloat(ShmupSession.keys.HitCount);
@@ -131,12 +143,16 @@ namespace FumoShmup2
                 else
                 {
                     string number = visibleHit.Floor().ToInt().Clamp(1, 100000).ToString();
-                    hitText.text = (visibleHit >= 1f && RedHit) ? number.Color(ColorHelper.RedHealthBackground) : number;
+                    hitText.text = (GreenHit) ? number.Color(ColorHelper.PastelGreen) : (visibleHit >= 1f && RedHit) ? number.Color(ColorHelper.RedHealthBackground) : number;
                 }
 
                 if (stall)
                 {
                     return;
+                }
+                else
+                {
+                    ChangeCombo(Time.deltaTime * ComboValueDecay.AbsoluteNegative());
                 }
                 #endregion
                 #region Player State
@@ -156,16 +172,6 @@ namespace FumoShmup2
                 {
 
                 }
-                #endregion
-                #region Combo & Logic
-
-                ChangeCombo(Time.deltaTime * ComboValueDecay.AbsoluteNegative());
-                const float comboMod = 16f / 100f;
-                int comboSliderNumber = (ComboValue100 % 100f).Multiply(comboMod).ToInt();
-                comboSlider.SetValuesInt(ComboValue100 < 1f ? 0 : comboSliderNumber, 16, 0);
-                comboText.text = VisibleCombo <= 1 ? "" : VisibleCombo.ToString() + "x";
-
-
                 #endregion
             }
         }

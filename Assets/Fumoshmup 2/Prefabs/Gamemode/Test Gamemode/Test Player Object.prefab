@@ -5862,8 +5862,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.PlayerKetsuiShot
   laser: {fileID: 1066120843735743700}
-  laserSound: {fileID: 11400000, guid: e7722a00684d3a34b95e739f5a08bdb3, type: 2}
+  laserStartSound: {fileID: 0}
   lockOnSound: {fileID: 11400000, guid: e4f32f2c0633e6c4c8573c1e44f0a57b, type: 2}
+  lockOnShotSound: {fileID: 11400000, guid: e7722a00684d3a34b95e739f5a08bdb3, type: 2}
+  laserSustainedSound: {fileID: 0}
+  Dps_Unfocus: 500
+  Dps_Focus: 320
   shootingAction: {fileID: 1864257387097275648, guid: 34edc816a52e4fc4ab2d77bcdba58669, type: 3}
   focusAction: {fileID: -1145331697551703494, guid: 34edc816a52e4fc4ab2d77bcdba58669, type: 3}
   powerFire: {fileID: -4776179778478946973, guid: 34edc816a52e4fc4ab2d77bcdba58669, type: 3}

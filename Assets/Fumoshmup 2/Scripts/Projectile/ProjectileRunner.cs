@@ -23,6 +23,8 @@ namespace FumoShmup2
                 return 1f;
             }
 
+            float finalSlowDown = 1f;
+
             float slowdownIdeal = 0.666f;
             float slowdownMax = 0.45f;
             float slowdownNone = 1f;
@@ -35,22 +37,29 @@ namespace FumoShmup2
 
             if (bulletCount <= halfRequired)
             {
-                return slowdownNone;
+                finalSlowDown = slowdownNone;
             }
             else if (bulletCount <= requiredProjectiles)
             {
                 float t = (bulletCount - halfRequired) / (float)(requiredProjectiles - halfRequired);
-                return Mathf.Lerp(slowdownNone, slowdownIdeal, t);
+                finalSlowDown = Mathf.Lerp(slowdownNone, slowdownIdeal, t);
             }
             else if (bulletCount <= overloadStart)
             {
-                return slowdownIdeal;
+                finalSlowDown = slowdownIdeal;
             }
             else
             {
                 float t = Mathf.InverseLerp(overloadStart, overloadEnd, bulletCount);
-                return Mathf.Lerp(slowdownIdeal, slowdownMax, t);
+                finalSlowDown = Mathf.Lerp(slowdownIdeal, slowdownMax, t);
             }
+
+            //post process
+            if (PointItemRunner.SuperMechanic)
+            {
+                finalSlowDown = finalSlowDown.Min(0.666f) * 0.8f;
+            }
+            return finalSlowDown;
         }
     }
     #endregion
