@@ -21,7 +21,7 @@ namespace FumoShmup2
             if (ShmupSession.CurrentAs(out ShmupSession s) && ShmupPlayer.PlayerAs(out ShmupPlayer p) && p.IsAlive)
             {
                 float combo = WhenGetComboValue?.Invoke() ?? 1f;
-                float scoreValue = (WhenPointItemValue?.Invoke(cashOut ? 5f : 1f) ?? 1000f) * combo;
+                float scoreValue = (WhenPointItemValue?.Invoke(cashOut ? 5f : 1f) ?? 1000f);
                 PointItemRunner.Create(position, cashOut, scoreValue);
             }
             else

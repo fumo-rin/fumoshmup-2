@@ -580,7 +580,7 @@ namespace FumoShmup2
             DrawArrow(points[0], points[1]);
         }
 
-        private static readonly Vector2 CompactNodeSize = new Vector2(150, 60);
+        private static readonly Vector2 CompactNodeSize = new Vector2(180, 60);
         private void DrawNodes()
         {
             void RefreshLinks()
@@ -776,7 +776,7 @@ namespace FumoShmup2
         #region Context Menu Create Nodes
         private void ContextMenuCreateNodes(GenericMenu menu, Vector2 mousePosition)
         {
-            AddCreateNodeEntries(menu, mousePosition, "Stage", typeof(LineSpawnerNode), typeof(SingleSpawnerNode));
+            AddCreateNodeEntries(menu, mousePosition, "Stage", typeof(LineSpawnerNode), typeof(SingleSpawnerNode), typeof(SequenceSpawnerNode));
             AddCreateNodeEntries(menu, mousePosition, "Boss", typeof(BossNode));
             AddCreateNodeEntries(menu, mousePosition, "Special", typeof(PrefabRunnerNode));
             AddCreateNodeEntries(menu, mousePosition, "Wait Instructions", typeof(WaitForTimeOrEnemiesAliveNode), typeof(DialogueAndWaitNode), typeof(WaitForTimeNode));

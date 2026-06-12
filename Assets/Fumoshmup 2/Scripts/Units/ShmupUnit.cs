@@ -44,6 +44,7 @@ namespace FumoShmup2
         }
         public void StopMovement()
         {
+            this.ClearAllActions();
             if (runningAttackMovement != null)
             {
                 StopCoroutine(runningAttackMovement);

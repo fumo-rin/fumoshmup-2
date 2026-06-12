@@ -55,6 +55,7 @@ namespace FumoShmup2
 
         public IEnumerator RunNode()
         {
+            WasModifiedByModifier = false;
             if (toSpawn == null)
             {
                 Debug.LogError($"[{this.GetType().ToString()}]Missing Enemy for : " + this.name);
@@ -120,7 +121,7 @@ namespace FumoShmup2
             if (selected)
             {
                 int t = 0;
-                collapsedEditable = EF_Button(Helper_BuildFieldRect(rect, ref t, 1), collapsedEditable ? "End Editing" : "Start Editing");
+                collapsedEditable = EF_BoolField(Helper_BuildFieldRect(rect, ref t, 1), "Collapsed Editable", collapsedEditable);
             }
             if (selected && collapsedEditable)
             {

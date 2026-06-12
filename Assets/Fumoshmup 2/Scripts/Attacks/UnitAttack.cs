@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Properties;
 
 namespace FumoShmup2
 {
@@ -125,9 +126,21 @@ namespace FumoShmup2
                 if (EnemyUnit.FindEnemyFromDotProduct(player.CurrentPosition, Vector2.up, out EnemyUnit autoTarget, 0.25f))
                     input.AssignTarget(autoTarget);
 
-                return Sender.StartCoroutineExtras(CO_AttackPayload(player, input), null, callback);
+                return Sender.StartCoroutineExtras(AttackWrapper(CO_AttackPayload(player, input)), null, callback);
             }
             return null;
+        }
+        private IEnumerator AttackWrapper(IEnumerator wrap)
+        {
+            while (ShmupPlayer.PlayerAs(out ShmupPlayer p) && !p.IsAlive)
+            {
+                if (p == null)
+                {
+                    yield break;
+                }
+                yield return TICK.WaitForSeconds();
+            }
+            yield return wrap;
         }
         protected abstract IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input);
     }

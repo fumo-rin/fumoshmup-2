@@ -51,6 +51,43 @@ MonoBehaviour:
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
         ammoSeconds: 0.6
+--- !u!114 &-9151339290813168827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2706ab5175d57244aa33d5f6a91a491, type: 3}
+  m_Name: SequenceSpawnerNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.SequenceSpawnerNode
+  IsEnabled: 1
+  title: Shmup Node Stage 3 steps
+  position: {x: 575, y: -329}
+  skipIndex: 4
+  IsCompacted: 0
+  storedModifier: {fileID: 0}
+  spawnedEnemy: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
+  runSeperately: 0
+  PostWait: 1.5
+  ExitDelay: 5
+  ExitDuration: 1.25
+  EntryDuration: 0.75
+  attackLoop: []
+  attackLoops: 3
+  loopAddedDelay: 0.15
+  attackStall: 2
+  HasIndicator: 0
+  Sealing: 0
+  SealingRadius: 0
+  SweepOverride: 0
+  SweepDuration: 0
+  SweepLootChance: 255
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &-8999329023708059090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,7 +314,7 @@ MonoBehaviour:
   IsEnabled: 1
   title: MusicNode
   position: {x: 41, y: -585}
-  skipIndex: 5
+  skipIndex: 7
   IsCompacted: 0
   music: {fileID: 11400000, guid: d65686781837f874a8ba5cb52c6c2fc4, type: 2}
 --- !u!114 &-6241233833773795437
@@ -295,7 +332,7 @@ MonoBehaviour:
   IsEnabled: 1
   title: LineSpawnerNode
   position: {x: 725, y: -788}
-  skipIndex: 5
+  skipIndex: 7
   IsCompacted: 1
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   storedModifier: {fileID: 2364178360822742134}
@@ -346,7 +383,7 @@ MonoBehaviour:
   IsEnabled: 1
   title: LineSpawnerNode
   position: {x: 1188, y: -113}
-  skipIndex: 5
+  skipIndex: 7
   IsCompacted: 1
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   storedModifier: {fileID: 2364178360822742134}
@@ -465,8 +502,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.LineSpawnerNode
   IsEnabled: 1
   title: LineSpawnerNode
-  position: {x: 336, y: -826}
-  skipIndex: 5
+  position: {x: 341, y: -834}
+  skipIndex: 7
   IsCompacted: 1
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   storedModifier: {fileID: 2364178360822742134}
@@ -884,8 +921,11 @@ MonoBehaviour:
   m_Name: Caravan Jam Stage Test
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.ShmupNodeStage
   SkipEntries:
+  - skipName: testing 2
+    skipValue: 4
+    enabled: 1
   - skipName: testing 1
-    skipValue: 5
+    skipValue: 7
     enabled: 1
   - skipName: pre mid 1
     skipValue: 10
@@ -904,7 +944,7 @@ MonoBehaviour:
     enabled: 1
   <StageScene>k__BackingField: {fileID: 11400000, guid: 9ac2b125f6a81b04ca14a6031c9663e9, type: 2}
   currentLinkAttempt: {fileID: 0}
-  selectedSkipIndex: 4
+  selectedSkipIndex: 0
   StageEndDialogue: {fileID: 0}
   enemyTable:
   - {fileID: 2745390351675722610, guid: df43bc81f13947848881cceacf20cbb1, type: 3}
@@ -959,6 +999,7 @@ MonoBehaviour:
   - {fileID: -7278305265860221916}
   - {fileID: 2364178360822742134}
   - {fileID: -4891702980193641951}
+  - {fileID: -9151339290813168827}
 --- !u!114 &1011325165538966211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1135,7 +1176,7 @@ MonoBehaviour:
   IsEnabled: 0
   title: EnemyModifierNode
   position: {x: 632, y: -478}
-  skipIndex: 5
+  skipIndex: 7
   IsCompacted: 1
   EnemyHealth: 80
   LargeHealthPool: 0
@@ -1364,7 +1405,7 @@ MonoBehaviour:
   IsEnabled: 1
   title: WaitForTimeOrEnemiesAliveNode
   position: {x: 929, y: 169}
-  skipIndex: 5
+  skipIndex: 7
   IsCompacted: 0
   WaitDuration: 9
   AliveEnemiesRequired: 0
@@ -1485,7 +1526,7 @@ MonoBehaviour:
   IsEnabled: 1
   title: LineSpawnerNode
   position: {x: 973, y: -156}
-  skipIndex: 5
+  skipIndex: 7
   IsCompacted: 1
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   storedModifier: {fileID: 2364178360822742134}
@@ -1535,8 +1576,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.LineSpawnerNode
   IsEnabled: 1
   title: LineSpawnerNode
-  position: {x: 542, y: -806}
-  skipIndex: 5
+  position: {x: 543, y: -806}
+  skipIndex: 7
   IsCompacted: 1
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   storedModifier: {fileID: 2364178360822742134}
@@ -1587,7 +1628,7 @@ MonoBehaviour:
   IsEnabled: 0
   title: LineSpawnerNode
   position: {x: 781, y: -168}
-  skipIndex: 5
+  skipIndex: 7
   IsCompacted: 1
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   storedModifier: {fileID: 0}
@@ -1777,7 +1818,7 @@ MonoBehaviour:
   IsEnabled: 1
   title: SingleSpawnerNode
   position: {x: 1014, y: -601}
-  skipIndex: 5
+  skipIndex: 7
   IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: c4bda3598de51724dac21de53dd545fc, type: 3}
   storedModifier: {fileID: 0}

@@ -188,7 +188,8 @@ MonoBehaviour:
       type: {class: CaravanAtatcks/Stage2/Boss/SpikesDoubleFan, ns: Caravan, asm: CaravanJam}
       data:
         spikeProj: {fileID: 11400000, guid: 000459453896acd479c74a2d32fa78ba, type: 2}
-        spikeProj2: {fileID: 11400000, guid: d5e4cf0f85f13bb49b6ebcdfb76464d6, type: 2}
+        mazeProj: {fileID: 11400000, guid: 84a623da29b1d274c8f1e32e4c65acc4, type: 2}
+        Loops: 6
 --- !u!50 &2153864815207065291
 Rigidbody2D:
   serializedVersion: 5
@@ -330,7 +331,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 864358923
-  m_SortingLayer: 4
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 9bed5311a0a848f478a85da5eb827085, type: 3}

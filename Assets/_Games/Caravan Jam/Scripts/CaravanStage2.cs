@@ -565,60 +565,52 @@ namespace Caravan
                 [System.Serializable]
                 public class SpikesDoubleFan : UnitAttack
                 {
-                    [SerializeField] ProjectileDefineSO spikeProj, spikeProj2;
+                    [SerializeField] ProjectileDefineSO spikeProj, mazeProj;
+                    public int Loops = 6;
                     protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
                     {
-                        int iteration = -1;
-                        input.addedForward = 0.45f;
-                        input.SetMods(new ProjectileModAccelerate(new(2f, 0f), 4f, 8f));
-                        bool alternate = false;
-                        foreach (var prime in 72.Primes(30))
+                        for (int l = 0; l < Loops; l++)
                         {
-                            iteration++;
-                            if (iteration % 24 == 0)
+                            input.ReAimWithOptionalTarget(sender.CurrentPosition);
+                            for (int i = 0; i < 6; i++)
                             {
-                                sender.StartMovement(ShmupUnit.Testing.CO_TestDash(sender), out WaitUntil w);
-                                yield return w;
-                                alternate = !alternate;
+                                Circle(i.AsFloat(1f).Multiply(360f / 48f), 24, 3f + i.AsFloat(1f)).Spawn(input, mazeProj, out iterationList);
                             }
-                            if (iteration % 24 > 4)
+                            input.ReAimWithOptionalTarget(sender.CurrentPosition);
+                            foreach (var offset in (3f + l).StepFromTo(-60f, 140f))
                             {
-                                input.ReAimWithOptionalTarget(sender.CurrentPosition);
-                                float speed = 2 + iteration.AsFloat(0.05f);
-                                var arc = Arc(iteration.AsFloat(3.5f) * alternate.AsFloat(-1f, 1f), 360 + prime, 3 + iteration.Min(18), iteration % 12 + speed.Min(4f));
-                                if (alternate)
+                                if (offset.Absolute() % 36f < 7f)
                                 {
-                                    arc = arc.Reverse();
+                                    yield return TICK.WaitForSeconds();
+                                    continue;
                                 }
-                                arc.Spawn(input, spikeProj, out _);
+                                float extraOffset = offset.ReverseQuantize(14f);
+                                input.SetOrigin(sender.CurrentPosition);
+                                Arc(offset + extraOffset, 200f, 7, 8f).Spawn(input, spikeProj, out iterationList);
+                                yield return TICK.WaitForSeconds(1);
                             }
-                            yield return TICK.WaitForSeconds(2);
-                        }
+                            yield return TICK.WaitForSeconds(10);
 
-                        iteration = -1;
-                        foreach (var prime in 288.Primes(30))
-                        {
-                            iteration++;
-                            if (iteration % 12 == 0)
+                            input.ReAimWithOptionalTarget(sender.CurrentPosition);
+                            for (int i = 0; i < 6; i++)
                             {
-                                sender.StartMovement(ShmupUnit.Testing.CO_TestDash(sender), out WaitUntil w2);
-                                yield return w2;
-                                alternate = !alternate;
+                                Circle((i.AsFloat(1f) + 1f).Multiply(360f / 48f), 24, 3f + i.AsFloat(1f)).Spawn(input, mazeProj, out iterationList);
                             }
-                            if (iteration % 12 > 2)
+                            input.ReAimWithOptionalTarget(sender.CurrentPosition);
+                            foreach (var offset in (3f + l).StepFromTo(60f, -140f))
                             {
-                                input.ReAimWithOptionalTarget(sender.CurrentPosition);
-                                float speed = 2 + iteration.AsFloat(0.05f);
-                                var arc = Arc(iteration.AsFloat(-5.2f) * alternate.AsFloat(-1f, 1f), 360 + prime, 3 + iteration.Min(26), iteration % 12 + speed.Min(6f));
-                                if (alternate)
+                                if (offset.Absolute() % 36f < 7f)
                                 {
-                                    arc = arc.Reverse();
+                                    yield return TICK.WaitForSeconds();
+                                    continue;
                                 }
-                                arc.Spawn(input, spikeProj2, out _);
+                                float extraOffset = offset.ReverseQuantize(14f);
+                                input.SetOrigin(sender.CurrentPosition);
+                                Arc(offset + extraOffset, 200f, 7, 8f).Spawn(input, spikeProj, out iterationList);
+                                yield return TICK.WaitForSeconds(1);
                             }
-                            yield return TICK.WaitForSeconds(3);
+                            yield return TICK.WaitForSeconds(20);
                         }
-                        yield return TICK.WaitForSeconds(40);
                     }
                 }
             }

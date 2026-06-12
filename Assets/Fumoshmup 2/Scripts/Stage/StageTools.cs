@@ -23,9 +23,10 @@ namespace FumoShmup2
             {
                 float iFramesDuration = lerpSettings?.duration - 0.3f ?? 0.5f;
                 iFramesDuration = iFramesDuration.Min(0.6f);
-                if (!result.IsBoss)
+                if (result.IsBoss)
+                {
                     result.SetIframes(iFramesDuration, 60f);
-
+                }
                 result.Action_MoveWithLerp(lerpSettings.Value);
             }
             return result != null;

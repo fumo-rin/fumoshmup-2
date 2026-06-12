@@ -246,6 +246,7 @@ namespace FumoShmup2
         public void StopActionsForBoss(Stall stall = null)
         {
             StopMovement();
+            RB.linearVelocity = Vector2.zero;
             Action_BossRecenter(0.85f);
             SetIframes(1.25f, 90f);
             StallAttackLoop(0.9f, stall);
@@ -515,7 +516,10 @@ namespace FumoShmup2
                 float delay = 0f;
                 if (stall is DelayedStall s)
                     delay = s.delay;
-                yield return delay.WaitForSeconds();
+                if (delay > 0f)
+                {
+                    yield return delay.WaitForSeconds();
+                }
 
                 AttackStallEndTime = endTime;
                 if (CurrentRunningAttack != null)
@@ -549,10 +553,13 @@ namespace FumoShmup2
         {
             if (Time.time < AttackStallEndTime)
                 return;
+            if (IsBoss && BossPhaseStall)
+                return;
 
             if (!IsOnScreenAndAlive)
             {
                 AttackStallEndTime = AttackStallEndTime.Max(Time.time + 0.1f);
+                return;
             }
             if (TryGetNextPhase(out UnitPhase phase))
             {
@@ -576,10 +583,6 @@ namespace FumoShmup2
                     ForceKill();
                     return;
                 }
-            }
-            if (this.IsRunningActions)
-            {
-                return;
             }
             if (ProjectileRunner.IsSweeping)
                 return;
@@ -662,6 +665,29 @@ namespace FumoShmup2
         public RecentDamage RecentDamageTaken => new(damageCap);
         public float CurrentMaxHealth { get; private set; }
         public float HealthPercent100 => CurrentHealth.Clamp(0, CurrentMaxHealth) / CurrentMaxHealth.Clamp(1, 99999999f) * 100f;
+        public float PhaseHealthPercent100
+        {
+            get
+            {
+                if (!HasPhases)
+                    return HealthPercent100;
+
+                float damageRemaining = phaseTrackedDamage;
+
+                foreach (var phase in phases)
+                {
+                    if (damageRemaining < phase.phaseHealth)
+                    {
+                        float phaseHealthRemaining = phase.phaseHealth - damageRemaining;
+                        return phaseHealthRemaining / phase.phaseHealth * 100f;
+                    }
+
+                    damageRemaining -= phase.phaseHealth;
+                }
+
+                return 0f;
+            }
+        }
         public void StartNewHealth(float newHealth, float maxHealth)
         {
             CurrentMaxHealth = maxHealth;
@@ -692,7 +718,7 @@ namespace FumoShmup2
                     {
                         return;
                     }
-                    if (HealthPercent100 < 15f && CurrentMaxHealth > 200)
+                    if (PhaseHealthPercent100 < 15f && CurrentMaxHealth > 200)
                     {
                         lowHitSound.Play(CurrentPosition);
                     }
@@ -873,10 +899,11 @@ namespace FumoShmup2
         {
             this.SetAction("Move With Lerp", new MoveLerpAction(this, lerp.duration, lerp));
             MoveLerpEndTime = lerp.duration + Time.time;
+            StallAttackLoop(lerp.duration);
         }
         public void Action_BossRecenter(float duration)
         {
-            ShmupWorldspace.MapToWorldspaceUnclamped(0.5f, 0.6f, out Vector2 b);
+            ShmupWorldspace.MapToWorldspaceUnclamped(0.5f, 0.7f, out Vector2 b);
             this.SetAction("Boss Recenter", new MoveLerpAction(this, duration, new MoveLerpAction.LerpSettings(CurrentPosition, b, duration)));
             MoveLerpEndTime = duration + Time.time;
         }
@@ -1040,6 +1067,7 @@ namespace FumoShmup2
             {
                 BossPhaseStallEnd = Time.time + 5f;
                 damageCap = new(4f, 1f / 20f);
+                StallAttackLoop(0.9f, null);
             }
         }
         private void OnDisable()
