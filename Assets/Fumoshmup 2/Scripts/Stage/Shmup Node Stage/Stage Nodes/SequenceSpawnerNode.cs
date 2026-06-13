@@ -1,4 +1,3 @@
-using NUnit.Framework.Api;
 using rinCore;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ namespace FumoShmup2
     {
         int EditIndex = 0;
         bool editSequence;
-        List<SequenceEntry> entries = new();
+        public List<SequenceEntry> entries = new();
         [System.Serializable]
         public struct SequenceEntry
         {
@@ -110,19 +109,35 @@ namespace FumoShmup2
             }
             yield return Spawn();
         }
+        private void CollapsedVectorDraw()
+        {
+#if UNITY_EDITOR
+            int iteration = 0;
+            foreach (var item in entries)
+            {
+                SequenceEntry entry = entries[iteration];
+                EF_ShmupSpace(entry.a, ColorHelper.PastelGreen, "");
+                EF_ShmupSpace(entry.b, ColorHelper.PastelCyan, iteration.ToString());
+                EF_ShmupSpace(entry.c, ColorHelper.PastelRed, "");
+                EF_ShmupSpace(entry.sequencePostDelayVec2, ColorHelper.PastelPurple, "");
+                iteration++;
+            }
+#endif
+        }
+        protected override void DrawCompactedContents(ShmupNodeStage stage, Rect rect, in bool selected)
+        {
+            base.DrawCompactedContents(stage, rect, selected);
+            if (selected)
+            {
+                CollapsedVectorDraw();
+            }
+        }
         private void EditCurrentIndex(in bool selected)
         {
+#if UNITY_EDITOR
             if (selected && !editSequence)
             {
-                int iteration = 0;
-                foreach (var item in entries)
-                {
-                    SequenceEntry entry = entries[iteration];
-                    EF_ShmupSpace(entry.a, ColorHelper.PastelGreen, "");
-                    EF_ShmupSpace(entry.b, ColorHelper.PastelCyan, "");
-                    EF_ShmupSpace(entry.c, ColorHelper.PastelRed, "");
-                    iteration++;
-                }
+                CollapsedVectorDraw();
                 return;
             }
             if (selected && entries.Count > 0)
@@ -140,6 +155,7 @@ namespace FumoShmup2
                 editSequence = false;
                 EditIndex = 0;
             }
+#endif
         }
         private void FlipXPositions()
         {
@@ -162,14 +178,13 @@ namespace FumoShmup2
         }
         protected override void DrawNodeContents(ShmupNodeStage stage, Rect rect, in bool selected)
         {
-            title = nameof(ShmupNodeStage).SpaceByCapitals() + $" {entries.Count} steps";
-            int index = 0;
             #region Edit Sequence
 #if UNITY_EDITOR
+            title = nameof(ShmupNodeStage).SpaceByCapitals() + $" {entries.Count} steps";
+            int index = 0;
             if (!editSequence && EF_Button(Helper_BuildFieldRect(rect, ref index, 1), "Start Edit Sequence"))
             {
                 editSequence = true;
-                EditIndex = 0;
             }
             if (editSequence && EF_Button(Helper_BuildFieldRect(rect, ref index, 1), "End Edit Sequence"))
             {
@@ -179,6 +194,14 @@ namespace FumoShmup2
             {
                 if (EF_Button(Helper_BuildFieldRect(rect, ref index, 1), "Add Sequence Step"))
                 {
+                    ShmupStageEditor.EF_ButtonGridReset();
+                    if (entries.TryGetIndex(EditIndex, out SequenceEntry result) || entries.TryGetIndex(entries.Count - 1, out result))
+                    {
+                        entries.Add(result);
+                        EditIndex = entries.Count - 1;
+                        stage.Dirty();
+                        return;
+                    }
                     entries.Add(new()
                     {
                         a = new(0.5f, 1.3f),
@@ -186,24 +209,25 @@ namespace FumoShmup2
                         c = new(-0.25f, 0.6f),
                         sequencePostDelayVec2 = new(0.25f, 0.4f)
                     });
+                    EditIndex = entries.Count - 1;
                     stage.Dirty();
                 }
                 if (EF_Button(Helper_BuildFieldRect(rect, ref index, 1), "Remove Current Step"))
                 {
+                    ShmupStageEditor.EF_ButtonGridReset();
                     if (entries.TryGetIndex(EditIndex, out SequenceEntry result))
                     {
                         entries.Remove(result);
                         stage.Dirty();
                     }
+                    if (EditIndex > entries.Count - 1)
+                        EditIndex--;
                 }
                 int maxIndex = entries.Count;
-                if (EditIndex > maxIndex)
+                if (EditIndex > maxIndex || EditIndex < 0)
                 {
                     editSequence = false;
-                }
-                if (EditIndex + 1 < maxIndex && editSequence && EF_Button(Helper_BuildFieldRect(rect, ref index, 1), "Next Sequence Step"))
-                {
-                    EditIndex = EditIndex + 1;
+                    EditIndex = 0;
                 }
             }
 #endif
@@ -254,6 +278,12 @@ namespace FumoShmup2
             EF_TypeDropdownList<UnitAttack>(Helper_BuildFieldRect(rect, ref index), "Attack Loop", nameof(attackLoop), unityBackingObject);
 
             EditCurrentIndex(selected);
+
+            if (selected)
+            {
+                EditIndex = ShmupStageEditor.EF_ButtonGrid(entries.Count, 8, EditIndex);
+                ShmupStageEditor.CurrentActionText = "Editing : " + EditIndex;
+            }
 #endif
             #endregion
         }

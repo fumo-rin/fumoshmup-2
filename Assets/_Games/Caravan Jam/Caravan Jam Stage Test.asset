@@ -64,12 +64,65 @@ MonoBehaviour:
   m_Name: SequenceSpawnerNode
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.SequenceSpawnerNode
   IsEnabled: 1
-  title: Shmup Node Stage 3 steps
-  position: {x: 575, y: -329}
+  title: Shmup Node Stage 13 steps
+  position: {x: 547, y: -21}
   skipIndex: 4
   IsCompacted: 0
+  entries:
+  - a: {x: 0.5, y: 1.3}
+    b: {x: 0.855, y: 0.574}
+    c: {x: 1.25, y: 0.6}
+    sequencePostDelayVec2: {x: 0.11750001, y: 0.10399997}
+  - a: {x: 0.5, y: 1.3}
+    b: {x: 0.77250004, y: 0.622}
+    c: {x: 1.25, y: 0.6}
+    sequencePostDelayVec2: {x: 0.11750001, y: 0.10399997}
+  - a: {x: 0.5, y: 1.3}
+    b: {x: 0.615, y: 0.676}
+    c: {x: 1.25, y: 0.6}
+    sequencePostDelayVec2: {x: 0.11750001, y: 0.10399997}
+  - a: {x: 0.5, y: 1.3}
+    b: {x: 0.61, y: 0.50600004}
+    c: {x: 1.25, y: 0.6}
+    sequencePostDelayVec2: {x: 0.11750001, y: 0.10399997}
+  - a: {x: 0.5, y: 1.3}
+    b: {x: 0.4325, y: 0.5580001}
+    c: {x: 1.25, y: 0.6}
+    sequencePostDelayVec2: {x: 0.11750001, y: 0.10399997}
+  - a: {x: 0.5, y: 1.3}
+    b: {x: 0.5, y: 0.72}
+    c: {x: 1.25, y: 0.6}
+    sequencePostDelayVec2: {x: 0.20249999, y: 0.348}
+  - a: {x: 0.5, y: 1.3}
+    b: {x: 0.35500002, y: 0.76600003}
+    c: {x: 1.25, y: 0.6}
+    sequencePostDelayVec2: {x: 0.11750001, y: 0.10399997}
+  - a: {x: 0.5, y: 1.3}
+    b: {x: 0.4325, y: 0.5580001}
+    c: {x: 1.25, y: 0.6}
+    sequencePostDelayVec2: {x: 0.11750001, y: 0.10399997}
+  - a: {x: 0.5, y: 1.3}
+    b: {x: 0.26999998, y: 0.602}
+    c: {x: 1.25, y: 0.6}
+    sequencePostDelayVec2: {x: 0.11750001, y: 0.10399997}
+  - a: {x: 0.5, y: 1.3}
+    b: {x: 0.110000014, y: 0.63999987}
+    c: {x: 1.25, y: 0.6}
+    sequencePostDelayVec2: {x: 0.11750001, y: 0.10399997}
+  - a: {x: 0.5, y: 1.3}
+    b: {x: 0.40499997, y: 0.36399996}
+    c: {x: 1.25, y: 0.6}
+    sequencePostDelayVec2: {x: 0.11750001, y: 0.10399997}
+  - a: {x: 0.5, y: 1.3}
+    b: {x: 0.21749997, y: 0.42400002}
+    c: {x: 1.25, y: 0.6}
+    sequencePostDelayVec2: {x: 0.11750001, y: 0.10399997}
+  - a: {x: 0.5, y: 1.3}
+    b: {x: 0.11500001, y: 0.46600002}
+    c: {x: 1.25, y: 0.6}
+    sequencePostDelayVec2: {x: 0.11750001, y: 0.10399997}
   storedModifier: {fileID: 0}
-  spawnedEnemy: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
+  spawnedEnemy: {fileID: 2745390351675722610, guid: df43bc81f13947848881cceacf20cbb1, type: 3}
   runSeperately: 0
   PostWait: 1.5
   ExitDelay: 5
@@ -206,6 +259,60 @@ MonoBehaviour:
       type: {class: UtilityAttacks/AttackWait, ns: FumoShmup2, asm: Fumoshmup2}
       data:
         waitDuration: 0.15
+--- !u!114 &-8150773502708646762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2706ab5175d57244aa33d5f6a91a491, type: 3}
+  m_Name: SequenceSpawnerNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.SequenceSpawnerNode
+  IsEnabled: 1
+  title: Shmup Node Stage 4 steps
+  position: {x: 1143, y: -253}
+  skipIndex: 4
+  IsCompacted: 0
+  entries:
+  - a: {x: 0.2775, y: 1.2820002}
+    b: {x: 0.4525, y: 0.57}
+    c: {x: 1.25, y: 0.6}
+    sequencePostDelayVec2: {x: 0.125, y: 0.09799999}
+  - a: {x: 0.705, y: 1.3159999}
+    b: {x: 0.35, y: 0.5}
+    c: {x: 1.25, y: 0.6}
+    sequencePostDelayVec2: {x: 0.1225, y: 0.095999956}
+  - a: {x: 0.525, y: 1.3579999}
+    b: {x: 0.35250002, y: 0.674}
+    c: {x: 1.25, y: 0.6}
+    sequencePostDelayVec2: {x: 0.1275, y: 0.102}
+  - a: {x: 0.1325, y: 1.222}
+    b: {x: 0.3025, y: 0.588}
+    c: {x: 1.2475, y: 0.596}
+    sequencePostDelayVec2: {x: 0.1275, y: 0.09799999}
+  storedModifier: {fileID: 0}
+  spawnedEnemy: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
+  runSeperately: 0
+  PostWait: 1.5
+  ExitDelay: 5
+  ExitDuration: 1.25
+  EntryDuration: 0.75
+  attackLoop: []
+  attackLoops: 3
+  loopAddedDelay: 0.15
+  attackStall: 2
+  HasIndicator: 0
+  Sealing: 0
+  SealingRadius: 0
+  SweepOverride: 0
+  SweepDuration: 0
+  SweepLootChance: 255
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &-7942890760676200294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1000,6 +1107,7 @@ MonoBehaviour:
   - {fileID: 2364178360822742134}
   - {fileID: -4891702980193641951}
   - {fileID: -9151339290813168827}
+  - {fileID: -8150773502708646762}
 --- !u!114 &1011325165538966211
 MonoBehaviour:
   m_ObjectHideFlags: 0

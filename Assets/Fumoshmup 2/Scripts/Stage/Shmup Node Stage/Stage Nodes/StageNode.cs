@@ -10,6 +10,7 @@ namespace FumoShmup2
 #if UNITY_EDITOR
     using UnityEditor;
     using UnityEditor.Search;
+    using static FumoShmup2.ShmupStageEditor;
     using static rinCore.EF_Utility;
 #endif
 #if UNITY_EDITOR

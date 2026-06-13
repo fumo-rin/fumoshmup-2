@@ -132,6 +132,69 @@ namespace FumoShmup2
         }
         #endregion
         #region Shmup Box
+        #region Button Grid
+        public struct ButtonGridRequest
+        {
+            public int buttonCount;
+            public int buttonsPerRow;
+            public int selectedIndex;
+        }
+        public static void EF_ButtonGridReset()
+        {
+            CurrentGrid = null;
+        }
+        public static int EF_ButtonGrid(int count, int perRow, int current)
+        {
+            if (CurrentGrid == null)
+            {
+                CurrentGrid = new ButtonGridRequest
+                {
+                    buttonCount = count,
+                    buttonsPerRow = perRow,
+                    selectedIndex = current
+                };
+            }
+
+            return CurrentGrid.Value.selectedIndex;
+        }
+        private static ButtonGridRequest? CurrentGrid;
+        private void DrawRequestedButtonGrid()
+        {
+            if (CurrentGrid == null)
+                return;
+
+            var grid = CurrentGrid.Value;
+
+            const float buttonHeight = 24f;
+            const float spacing = 2f;
+
+            float startY = viewOffset.y + shmupBoxSize.y + 10f;
+
+            float buttonWidth =
+                (shmupBoxSize.x - ((grid.buttonsPerRow - 1) * spacing))
+                / grid.buttonsPerRow;
+
+            for (int i = 0; i < grid.buttonCount; i++)
+            {
+                int row = i / grid.buttonsPerRow;
+                int col = i % grid.buttonsPerRow;
+
+                Rect rect = new Rect(
+                    viewOffset.x + col * (buttonWidth + spacing),
+                    startY + row * (buttonHeight + spacing),
+                    buttonWidth,
+                    buttonHeight);
+
+                if (GUI.Button(rect, i.ToString()))
+                {
+                    var g = CurrentGrid.Value;
+                    g.selectedIndex = i;
+                    CurrentGrid = g;
+                }
+            }
+        }
+        #endregion
+
         private Vector2 shmupBoxSize = new Vector2(400, 500);
         private static readonly float knobSize = 12f;
         public static Vector2 EF_ShmupBox(Vector2 pos, Color32 color, string label)
@@ -200,6 +263,23 @@ namespace FumoShmup2
             Vector2 norm = local / new Vector2(shmupRect.width, shmupRect.height) + new Vector2(0.5f, 0.5f);
             norm.y = 1f - norm.y;
             return norm;
+        }
+        private void DrawCurrentActionText()
+        {
+            if (string.IsNullOrEmpty(CurrentActionText))
+                return;
+
+            GUIStyle style = new GUIStyle(EditorStyles.boldLabel);
+            style.alignment = TextAnchor.LowerLeft;
+            style.normal.textColor = Color.white;
+
+            Rect rect = new Rect(
+                viewOffset.x + 5f,
+                viewOffset.y + shmupBoxSize.y - 22f,
+                shmupBoxSize.x - 10f,
+                20f);
+
+            GUI.Label(rect, CurrentActionText, style);
         }
         private void DrawShmupBox()
         {
@@ -834,20 +914,38 @@ namespace FumoShmup2
         {
             activeNode = null;
             isDraggingNode = false;
-            Repaint();
+            CurrentActionText = "";
+            if (this != null) Repaint();
         }
+        public static bool ChangedNodeThisFrame;
+        StageNode lastNode;
+        public static string CurrentActionText;
         private void OnGUI()
         {
+            lastNode = activeNode;
+            if (ChangedNodeThisFrame)
+            {
+                CurrentActionText = "";
+                EF_ButtonGridReset();
+            }
             DrawToolbar();
+            if (activeNode == null)
+            {
+                EF_ButtonGridReset();
+            }
             if (activeStage == null)
             {
                 EditorGUILayout.HelpBox("Select a FumoShmupStage asset to edit.", MessageType.Info);
                 return;
             }
+
             DrawShmupBox();
+            DrawCurrentActionText();
             DrawGrid(GRID_SMALL, 0.2f, Color.gray);
             DrawGrid(GRID_LARGE, 0.4f, Color.gray);
+
             DrawNodes();
+            DrawRequestedButtonGrid();
             DrawSkipEntries();
             if (activeStage.IsLinking)
             {
@@ -857,6 +955,9 @@ namespace FumoShmup2
             {
                 HandleEvents(Event.current);
             }
+
+            ChangedNodeThisFrame = activeNode != lastNode;
+            lastNode = activeNode;
         }
         private void OnDisable()
         {
