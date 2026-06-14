@@ -31,11 +31,10 @@ namespace FumoShmup2
             {
                 Slider s = Instantiate(instance.enemySlider, instance.sliderAnchor);
                 s.gameObject.SetActive(true);
-                s.maxValue = ShmupWorldspace.WorldSpace.max.x;
-                s.minValue = ShmupWorldspace.WorldSpace.min.x;
                 while (tracked != null && tracked.IsAlive)
                 {
-                    s.value = tracked.CurrentPosition.x;
+                    ShmupWorldspace.MapWorldspaceToNormalized(tracked.CurrentPosition, out Vector2 space, true);
+                    s.SetValues(space.x, 1f, 0f);
                     yield return null;
                 }
                 Destroy(s.gameObject);

@@ -40,7 +40,7 @@ namespace FumoShmup2
         public float SealingRadius = 0f;
 
         public bool SweepOverride = false;
-        public float SweepDuration = 0f;
+        public float SweepDuration = 0.05f;
         public int SweepLootChance = 255;
         public float EntryDuration = 0.75f;
 
@@ -49,7 +49,7 @@ namespace FumoShmup2
         [SerializeReference] public List<UnitAttack> attackLoop = new();
         public int attackLoops = 3;
         public float loopAddedDelay = 0.15f;
-        public float attackStall = 2f;
+        public float attackStall = 0.75f;
 
 
         public IEnumerator RunNode()

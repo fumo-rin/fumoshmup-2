@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3217051552466667707}
   - component: {fileID: 4041419922476507644}
   m_Layer: 0
-  m_Name: Bowap Pellet
+  m_Name: Flickering Balls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1487,8 +1487,9 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: 936570831, guid: 7bf95be74d36409429ae5362fc3894d0, type: 3}
-    - sprite: {fileID: -758980212, guid: 7bf95be74d36409429ae5362fc3894d0, type: 3}
+    - sprite: {fileID: -1234525937, guid: 9345baabdbda04e48b72f4464717b9d8, type: 3}
+    - sprite: {fileID: 125273021, guid: 9345baabdbda04e48b72f4464717b9d8, type: 3}
+    - sprite: {fileID: 1972214578, guid: 9345baabdbda04e48b72f4464717b9d8, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:
@@ -4783,7 +4784,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73b4ce8c036c6ec4aa57a064a42524f3, type: 2}
+  - {fileID: 2100000, guid: 09393e76482b17a4e9d90937fa89686a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

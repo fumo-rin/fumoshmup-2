@@ -482,7 +482,7 @@ namespace FumoShmup2
                     startSize = define.Size * (projectile.Faction != ProjectileFaction.Enemy ? 1f : scaleFactor),
                     startLifetime = animationDuration,
                     remainingLifetime = animationDuration - animationElapsed,
-                    rotation3D = new Vector3(0, 0, -(angle + addedSpin)),
+                    rotation3D = define.LockRotation ? new(0f, 0f, 0f) : new Vector3(0, 0, -(angle + addedSpin)),
                 };
 
                 particlesByDefine[key].Add(particle);

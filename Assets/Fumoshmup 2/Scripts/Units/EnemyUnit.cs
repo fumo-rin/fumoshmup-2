@@ -696,8 +696,6 @@ namespace FumoShmup2
             {
 
             });
-            if (IsBoss)
-                Debug.Log("New Health : " + CurrentHealth + " of " + CurrentMaxHealth);
         }
         public void SetSealRadius(float r) => sealRadius = r;
         int LootCount => !IsBoss ? CurrentMaxHealth.Multiply(0.04f).ToInt().Max(4) : PhasesTotalHealth.Multiply(0.02f).Clamp(50f, 1000f).ToInt();
@@ -899,7 +897,6 @@ namespace FumoShmup2
         {
             this.SetAction("Move With Lerp", new MoveLerpAction(this, lerp.duration, lerp));
             MoveLerpEndTime = lerp.duration + Time.time;
-            StallAttackLoop(lerp.duration);
         }
         public void Action_BossRecenter(float duration)
         {

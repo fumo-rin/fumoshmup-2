@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2706ab5175d57244aa33d5f6a91a491, type: 3}
   m_Name: SequenceSpawnerNode
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.SequenceSpawnerNode
-  IsEnabled: 1
+  IsEnabled: 0
   title: Shmup Node Stage 13 steps
   position: {x: 547, y: -21}
   skipIndex: 4
@@ -122,16 +122,17 @@ MonoBehaviour:
     c: {x: 1.25, y: 0.6}
     sequencePostDelayVec2: {x: 0.11750001, y: 0.10399997}
   storedModifier: {fileID: 0}
-  spawnedEnemy: {fileID: 2745390351675722610, guid: df43bc81f13947848881cceacf20cbb1, type: 3}
+  spawnedEnemy: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
   runSeperately: 0
   PostWait: 1.5
   ExitDelay: 5
   ExitDuration: 1.25
   EntryDuration: 0.75
-  attackLoop: []
-  attackLoops: 3
+  attackLoop:
+  - rid: 5849968421756993839
+  attackLoops: 2
   loopAddedDelay: 0.15
-  attackStall: 2
+  attackStall: 0.75
   HasIndicator: 0
   Sealing: 0
   SealingRadius: 0
@@ -140,7 +141,12 @@ MonoBehaviour:
   SweepLootChance: 255
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 5849968421756993839
+      type: {class: CaravanAtatcks/Stage2/Fodder/DoubleShot, ns: Caravan, asm: CaravanJam}
+      data:
+        projectile: {fileID: 11400000, guid: edc2538c2296e764eb09efc63e2bcbea, type: 2}
+        ammoSeconds: 2.4
 --- !u!114 &-8999329023708059090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,7 +189,7 @@ MonoBehaviour:
   - rid: 697206350788952305
   attackLoops: 4
   loopAddedDelay: 1.5
-  attackStall: 0.05
+  attackStall: 0.6
   references:
     version: 2
     RefIds:
@@ -232,7 +238,7 @@ MonoBehaviour:
   - rid: 697206356503953512
   attackLoops: 1
   loopAddedDelay: 1
-  attackStall: 0.05
+  attackStall: 1.65
   references:
     version: 2
     RefIds:
@@ -271,7 +277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2706ab5175d57244aa33d5f6a91a491, type: 3}
   m_Name: SequenceSpawnerNode_Copy
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.SequenceSpawnerNode
-  IsEnabled: 1
+  IsEnabled: 0
   title: Shmup Node Stage 4 steps
   position: {x: 1143, y: -253}
   skipIndex: 4
@@ -300,10 +306,11 @@ MonoBehaviour:
   ExitDelay: 5
   ExitDuration: 1.25
   EntryDuration: 0.75
-  attackLoop: []
-  attackLoops: 3
+  attackLoop:
+  - rid: 5849968421756993838
+  attackLoops: 2
   loopAddedDelay: 0.15
-  attackStall: 2
+  attackStall: 0.75
   HasIndicator: 0
   Sealing: 0
   SealingRadius: 0
@@ -312,7 +319,12 @@ MonoBehaviour:
   SweepLootChance: 255
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 5849968421756993838
+      type: {class: CaravanAtatcks/Stage2/Fodder/DoubleShot, ns: Caravan, asm: CaravanJam}
+      data:
+        projectile: {fileID: 11400000, guid: edc2538c2296e764eb09efc63e2bcbea, type: 2}
+        ammoSeconds: 2.4
 --- !u!114 &-7942890760676200294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,6 +588,25 @@ MonoBehaviour:
       type: {class: bestAttack/Rain, ns: FumoShmup2, asm: Fumoshmup2}
       data:
         projectile: {fileID: 11400000, guid: ec5127393eed65d4bb8c76934cdf796a, type: 2}
+--- !u!114 &-5751986555748471576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299281ec626e5854db3167f10fb0c2c6, type: 3}
+  m_Name: WaitForTimeOrEnemiesAliveNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeOrEnemiesAliveNode
+  IsEnabled: 1
+  title: WaitForTimeOrEnemiesAliveNode
+  position: {x: 898, y: -469}
+  skipIndex: 4
+  IsCompacted: 1
+  WaitDuration: 15
+  AliveEnemiesRequired: 0
 --- !u!114 &-5457370901202123582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -682,6 +713,41 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+--- !u!114 &-4700150657626401253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3d60dbc466de254f88f14f7b9f5b37d, type: 3}
+  m_Name: EnemyModifierNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.EnemyModifierNode
+  IsEnabled: 1
+  title: EnemyModifierNode
+  position: {x: 801, y: -654}
+  skipIndex: 4
+  IsCompacted: 1
+  EnemyHealth: 1000
+  LargeHealthPool: 0
+  RevengeAttackOverride: {fileID: 0}
+  Indicator: 0
+  AmmoOverride: 0
+  AmmoSecondsOrCount: 0
+  ammoCount: 1
+  ammoTime: 1
+  attackDelay: 0.75
+  actionOverride:
+    rid: -2
+  LinkedNodes:
+  - {fileID: 4484938643443374942}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!114 &-4055235318180003536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -724,7 +790,7 @@ MonoBehaviour:
   - rid: 697206350788952303
   attackLoops: 4
   loopAddedDelay: 1.5
-  attackStall: 0.05
+  attackStall: 0.6
   references:
     version: 2
     RefIds:
@@ -1051,7 +1117,7 @@ MonoBehaviour:
     enabled: 1
   <StageScene>k__BackingField: {fileID: 11400000, guid: 9ac2b125f6a81b04ca14a6031c9663e9, type: 2}
   currentLinkAttempt: {fileID: 0}
-  selectedSkipIndex: 0
+  selectedSkipIndex: 3
   StageEndDialogue: {fileID: 0}
   enemyTable:
   - {fileID: 2745390351675722610, guid: df43bc81f13947848881cceacf20cbb1, type: 3}
@@ -1108,6 +1174,9 @@ MonoBehaviour:
   - {fileID: -4891702980193641951}
   - {fileID: -9151339290813168827}
   - {fileID: -8150773502708646762}
+  - {fileID: 4484938643443374942}
+  - {fileID: -5751986555748471576}
+  - {fileID: -4700150657626401253}
 --- !u!114 &1011325165538966211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1420,7 +1489,7 @@ MonoBehaviour:
   - rid: 697206350788952304
   attackLoops: 4
   loopAddedDelay: 1.5
-  attackStall: 0.05
+  attackStall: 0.6
   references:
     version: 2
     RefIds:
@@ -1619,6 +1688,51 @@ MonoBehaviour:
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
         ammoSeconds: 0.6
+--- !u!114 &4484938643443374942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e5394d13f31365488c5d55ef9ce6c98, type: 3}
+  m_Name: SingleSpawnerNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.SingleSpawnerNode
+  IsEnabled: 1
+  title: SingleSpawnerNode
+  position: {x: 517, y: -535}
+  skipIndex: 4
+  IsCompacted: 0
+  toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
+  storedModifier: {fileID: -4700150657626401253}
+  start: {x: 1.1925, y: 0.732}
+  target: {x: 0.29000002, y: 0.724}
+  exit: {x: -0.35, y: 0.75}
+  WaitAfterSpawn: 0
+  ExitDelay: 5.5
+  ExitDuration: 0.75
+  HasIndicator: 1
+  Sealing: 0
+  SealingRadius: 0
+  SweepOverride: 1
+  SweepDuration: 0.36
+  SweepLootChance: 255
+  EntryDuration: 4.75
+  collapsedEditable: 0
+  attackLoop:
+  - rid: 5849968421756993848
+  attackLoops: 3
+  loopAddedDelay: 0.15
+  attackStall: 1.25
+  references:
+    version: 2
+    RefIds:
+    - rid: 5849968421756993848
+      type: {class: CaravanAtatcks/Stage2/Boss/DVDAttack, ns: Caravan, asm: CaravanJam}
+      data:
+        dvdProj: {fileID: 11400000, guid: edc2538c2296e764eb09efc63e2bcbea, type: 2}
 --- !u!114 &5632986173688845907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1684,7 +1798,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.LineSpawnerNode
   IsEnabled: 1
   title: LineSpawnerNode
-  position: {x: 543, y: -806}
+  position: {x: 530, y: -819}
   skipIndex: 7
   IsCompacted: 1
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}

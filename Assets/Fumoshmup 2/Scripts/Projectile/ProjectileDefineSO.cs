@@ -279,6 +279,7 @@ namespace FumoShmup2
         public float animationSpeed;
         [Range(0f, 100)] public float animationSpreadPercent = 10f;
         public float spin;
+        public bool LockRotation;
         [SearchContext("prefab:any")] public ParticleSystem particleSystemPrefab;
         [SortingLayer] public string SortingLayer = "Default";
         public bool useFlare;

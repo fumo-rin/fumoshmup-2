@@ -43,13 +43,13 @@ namespace FumoShmup2
         public bool Sealing = false;
         public float SealingRadius = 0f;
         public bool SweepOverride = false;
-        public float SweepDuration = 0f;
+        public float SweepDuration = 0.05f;
         public int SweepLootChance = 255;
 
         [SerializeReference] public List<UnitAttack> attackLoop = new();
         public int attackLoops = 3;
         public float loopAddedDelay = 0.15f;
-        public float attackStall = 2f;
+        public float attackStall = 0.75f;
 
         bool collapsedEditable;
 

@@ -433,6 +433,52 @@ namespace Caravan
             public class Boss
             {
                 [Serializable]
+                public class DVDAttack : UnitAttack
+                {
+                    AttackBuilder a = new();
+                    public ProjectileDefineSO dvdProj;
+                    protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
+                    {
+                        input.SetMods(new ProjectileModAccelerate(new ProjectileModSettings(0.5f, 0f), 2f, 20f),
+                            new ProjectileModAccelerate(new ProjectileModSettings(1f, 1f), 8f, 6f));
+                        input.addedForward = 0.75f;
+                        input.SetDirection(Vector2.down);
+                        float timeDelta = 0f;
+                        for (int i = 0; i < 80; i++)
+                        {
+                            if (i % 8 < 2)
+                            {
+                                timeDelta += TICK * 5f;
+                                yield return TICK.WaitForSeconds(5);
+                                continue;
+                            }
+                            timeDelta += TICK * 2f;
+                            float offset = 12 * i;
+                            input.SetOrigin(sender.CurrentPosition);
+                            if (i % 2 == 0 && Arc(offset - 36f + timeDelta.Multiply(1500f), 60f + i.AsFloat(1f), 3, 12f).Spawn(input, dvdProj, out iterationList))
+                            {
+                                foreach (var result in iterationList)
+                                {
+                                    result.WhenOffscreen += Bounce;
+                                }
+                            }
+                            yield return TICK.WaitForSeconds(2);
+                        }
+                        yield return 3f.WaitForSeconds();
+                    }
+                    void Bounce(Projectile p, Vector2 normal)
+                    {
+                        if (normal != Vector2.up && p != null && p.IsActive)
+                        {
+                            var input = new Projectile.InputSettings(p.Position, p.Sender, p.EffectiveVelocity.Bounce(normal, 0.6f), new Projectile.ProjectileDamage(p.Sender, 1f, 1f), p.Faction);
+                            input.SetMods(new ProjectileModGravity(new(2f, 1f), 4f, 6f));
+                            input.Flare = false;
+                            input.addedForward = 0.35f;
+                            Single(0f, p.VelocityNotZero.magnitude).Spawn(input, dvdProj, out Projectile result);
+                        }
+                    }
+                }
+                [Serializable]
                 public class BossPhase1 : UnitAttack
                 {
                     public ProjectileDefineSO wallsProj, ArcsProj;
