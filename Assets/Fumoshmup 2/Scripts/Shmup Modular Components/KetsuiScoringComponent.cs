@@ -43,7 +43,6 @@ namespace FumoShmup2
         private void WhenEnemyKilled(EnemyUnit e)
         {
             float comboAdd = (e.CurrentMaxHealth * 0.4f).Clamp(20f, 100f);
-            Debug.Log(comboAdd + " from : " + e.CurrentMaxHealth);
             ChangeCombo(comboAdd);
         }
         private void WhenContinue()

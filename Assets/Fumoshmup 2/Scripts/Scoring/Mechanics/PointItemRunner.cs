@@ -22,7 +22,6 @@ namespace FumoShmup2
             {
                 float combo = WhenGetComboValue?.Invoke() ?? 1f;
                 float scoreValue = (WhenPointItemValue?.Invoke(cashOut ? 5f : 1f) ?? 1000f);
-                Debug.Log(scoreValue);
                 PointItemRunner.Create(position, cashOut, scoreValue);
             }
             else
