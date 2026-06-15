@@ -3864,8 +3864,8 @@
                 "z": 0.0,
                 "w": 1.0
             },
-            "_showPositionHandle": true,
-            "_showRotationHandle": false,
+            "_showPositionHandle": false,
+            "_showRotationHandle": true,
             "_showScaleHandle": false,
             "_radialGridEnabled": false,
             "_radialStep": 1.0,
