@@ -264,6 +264,24 @@ namespace Caravan
                     Arc(0f, 40f, 3, 7f).Spawn(input, shot, out _);
                 }
             }
+            [System.Serializable]
+            public class RNGTesting : UnitAttack
+            {
+                public ProjectileDefineSO shot;
+                protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
+                {
+                    for (int i = 0; i < 1000; i++)
+                    {
+                        float rng = RNG.FloatRange(0f, 360f);
+                        Single(rng, 4f).Spawn(input, shot, out _);
+                        if (i % 50 == 0)
+                        {
+                            yield return TICK.WaitForSeconds();
+                        }
+                    }
+                    yield return TICK.WaitForSeconds(90);
+                }
+            }
         }
         public class Stage2
         {

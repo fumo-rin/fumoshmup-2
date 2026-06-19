@@ -49,4 +49,4 @@ MonoBehaviour:
   <singleRepeatLockoutTime>k__BackingField: 0.01
   <Is3D>k__BackingField: 1
   IsNetworked: 0
-  <NetworkID>k__BackingField: 0
+  <NetworkID>k__BackingField: 123

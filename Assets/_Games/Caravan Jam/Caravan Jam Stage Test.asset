@@ -487,6 +487,51 @@ MonoBehaviour:
       data:
         projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
         ammoSeconds: 0.6
+--- !u!114 &-6016704655819241725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e5394d13f31365488c5d55ef9ce6c98, type: 3}
+  m_Name: SingleSpawnerNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.SingleSpawnerNode
+  IsEnabled: 1
+  title: SingleSpawnerNode
+  position: {x: 1051, y: -946}
+  skipIndex: 4
+  IsCompacted: 0
+  toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
+  storedModifier: {fileID: 0}
+  start: {x: -0.25, y: 1.05}
+  target: {x: 0.15, y: 0.65}
+  exit: {x: -0.35, y: 0.75}
+  WaitAfterSpawn: 0.1
+  ExitDelay: 5
+  ExitDuration: 1.25
+  HasIndicator: 0
+  Sealing: 0
+  SealingRadius: 0
+  SweepOverride: 0
+  SweepDuration: 0.05
+  SweepLootChance: 255
+  EntryDuration: 0.75
+  collapsedEditable: 0
+  attackLoop:
+  - rid: 5849968555752423543
+  attackLoops: 3
+  loopAddedDelay: 0.15
+  attackStall: 0.75
+  references:
+    version: 2
+    RefIds:
+    - rid: 5849968555752423543
+      type: {class: CaravanAtatcks/Testing/RNGTesting, ns: Caravan, asm: CaravanJam}
+      data:
+        shot: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
 --- !u!114 &-5950316487948779974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1117,7 +1162,7 @@ MonoBehaviour:
     enabled: 1
   <StageScene>k__BackingField: {fileID: 11400000, guid: 9ac2b125f6a81b04ca14a6031c9663e9, type: 2}
   currentLinkAttempt: {fileID: 0}
-  selectedSkipIndex: 3
+  selectedSkipIndex: 0
   StageEndDialogue: {fileID: 0}
   enemyTable:
   - {fileID: 2745390351675722610, guid: df43bc81f13947848881cceacf20cbb1, type: 3}
@@ -1177,6 +1222,7 @@ MonoBehaviour:
   - {fileID: 4484938643443374942}
   - {fileID: -5751986555748471576}
   - {fileID: -4700150657626401253}
+  - {fileID: -6016704655819241725}
 --- !u!114 &1011325165538966211
 MonoBehaviour:
   m_ObjectHideFlags: 0
