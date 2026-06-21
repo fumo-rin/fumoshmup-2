@@ -380,6 +380,8 @@ namespace FumoShmup2
         public class AttackComponent
         {
             public int Loops = 3;
+            public bool FinishedLoopCycle => attackIndex > 0 && attacks.Count > 0 && attackIndex % attacks.Count == 0;
+            public bool IsLastAttackInCurrentLoop => attackIndex > 0 && attackIndex % attacks.Count == attacks.Count - 1;
             private int Steps => attacks == null ? 0 : Loops * attacks.Count;
             [SerializeField, Range(0f, 6f)] public float LoopsDelay = 0f;
             [SerializeReference] public List<UnitAttack> attacks = new();
@@ -506,7 +508,6 @@ namespace FumoShmup2
         }
         public class InstantStall : Stall
         {
-
         }
         public void StallAttackLoop(float duration, Stall stall = null)
         {
@@ -610,9 +611,21 @@ namespace FumoShmup2
                     {
                         return;
                     }
-                    if (containedBaseAttack != null && containedBaseAttack.TryStartNext(this, out Coroutine nextBaseAttack, () => StallAttackLoop(containedBaseAttack.LoopsDelay)))
+                    if (containedBaseAttack != null)
                     {
-                        CurrentRunningAttack = nextBaseAttack;
+                        Action callback = containedBaseAttack.IsLastAttackInCurrentLoop ? () =>
+                        {
+                            CurrentRunningAttack = null;
+                            StallAttackLoop(containedBaseAttack.LoopsDelay);
+                        }
+                        : () =>
+                        {
+                            CurrentRunningAttack = null;
+                        };
+                        if (containedBaseAttack.TryStartNext(this, out Coroutine nextBaseAttack, callback))
+                        {
+                            CurrentRunningAttack = nextBaseAttack;
+                        }
                     }
                     break;
             }
@@ -1023,7 +1036,6 @@ namespace FumoShmup2
         private float IframesEndTime = 0f;
         public void SetIframes(float duration, float iFramesDamageReduction100)
         {
-            Debug.Log("Set Iframes: " + iFramesDamageReduction100 + "%");
             CurrentIFramesDamageReductionPercent = iFramesDamageReduction100.Clamp(0f, 100f);
             IframesEndTime = duration + Time.time;
         }

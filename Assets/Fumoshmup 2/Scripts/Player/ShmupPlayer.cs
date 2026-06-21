@@ -65,6 +65,8 @@ public partial class ShmupPlayer : IHit
         if (HasIframes)
             return false;
         currentHit = GlobalCoroutineRunner.StartRoutine("Player Hit", CO_Hit(), false);
+        return true;
+
         IEnumerator CO_Hit()
         {
             bool hasSession = GameSession.CurrentAs(out ShmupSession session);
@@ -119,6 +121,17 @@ public partial class ShmupPlayer : IHit
                 int currentBombs = session.GetInt(ShmupSession.keys.CurrentBombs);
                 session.SetInt(ShmupSession.keys.CurrentBombs, currentBombs.Max(session.GetInt(ShmupSession.keys.StartingBombs)), 0, 6);
             }
+
+            hitData.HitSound.Play(CurrentPosition);
+            if (ShmupPracticeMode.Invincibility)
+            {
+                SetCurrentIFrames(0.05f);
+                currentHit = null;
+                yield break;
+            }
+
+            SetCurrentIFrames(hitIframesDuration);
+
             bool cancelable = hasSession && session.GetInt(ShmupSession.keys.CurrentBombs) > 0;
             if (!cancelable)
             {
@@ -127,8 +140,6 @@ public partial class ShmupPlayer : IHit
                 yield break;
             }
             hitData.HitVolume.weight = 1f;
-            hitData.HitSound.Play(CurrentPosition);
-            SetCurrentIFrames(hitIframesDuration);
             bool cancelled = false;
             float endUnscaled = 0.2f;
             while (endUnscaled > 0f && !cancelled)//cancelling window
@@ -161,7 +172,6 @@ public partial class ShmupPlayer : IHit
             }
             currentHit = null;
         }
-        return true;
     }
 }
 #endregion

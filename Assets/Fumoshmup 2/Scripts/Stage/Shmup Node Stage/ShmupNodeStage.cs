@@ -859,6 +859,7 @@ namespace FumoShmup2
             AddCreateNodeEntries(menu, mousePosition, "Stage", typeof(LineSpawnerNode), typeof(SingleSpawnerNode), typeof(SequenceSpawnerNode));
             AddCreateNodeEntries(menu, mousePosition, "Boss", typeof(BossNode));
             AddCreateNodeEntries(menu, mousePosition, "Special", typeof(PrefabRunnerNode));
+            AddCreateNodeEntries(menu, mousePosition, "Segment Nodes", typeof(BooksNode));
             AddCreateNodeEntries(menu, mousePosition, "Wait Instructions", typeof(WaitForTimeOrEnemiesAliveNode), typeof(DialogueAndWaitNode), typeof(WaitForTimeNode));
             AddCreateNodeEntries(menu, mousePosition, "When Section Start", typeof(MusicNode));
             AddCreateNodeEntries(menu, mousePosition, "Modifier Nodes", typeof(RepeatNode), typeof(EnemyModifierNode));
@@ -1065,6 +1066,7 @@ namespace FumoShmup2
         #endregion
         [field: SerializeField] public int selectedSkipIndex = -1;
         [SerializeField] protected DialogueStackSO StageEndDialogue;
+        [UnityEngine.Search.SearchContext("t:EnemyUnit")]
         public List<EnemyUnit> enemyTable = new();
         [SerializeReference]
         public List<StageNode> nodes = new List<StageNode>();

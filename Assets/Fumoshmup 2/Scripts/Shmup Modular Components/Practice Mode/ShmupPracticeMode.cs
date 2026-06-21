@@ -36,6 +36,67 @@ namespace FumoShmup2
     {
         public static int BossSkip { get; private set; } = 0;
         private static int skipValue;
+        [Initialize(0)]
+        private static void ResetCachedValues()
+        {
+            cachedInvincibility = null;
+            cachedSkipDialogue = null;
+        }
+        static bool? cachedSkipDialogue;
+        public static bool SkipDialogue
+        {
+            get
+            {
+                if (cachedSkipDialogue != null)
+                {
+                    return cachedSkipDialogue.Value;
+                }
+                const string KEY = "Practice Mode Skip Dialogue";
+                bool Value = IsOn;
+                if (!Value)
+                {
+                    cachedSkipDialogue = false;
+                    return false;
+                }
+                PersistentJSON.TryLoad(out Value, KEY);
+                cachedSkipDialogue = Value;
+                return Value;
+            }
+            set
+            {
+                const string KEY = "Practice Mode Skip Dialogue";
+                PersistentJSON.TrySave(value, KEY);
+                cachedSkipDialogue = value;
+            }
+        }
+        static bool? cachedInvincibility;
+        public static bool Invincibility
+        {
+            get
+            {
+                if (cachedInvincibility != null)
+                {
+                    return cachedInvincibility.Value;
+                }
+                const string KEY = "Practice Mode Invincibility";
+                bool Value = IsOn;
+                if (!Value)
+                {
+                    cachedInvincibility = false;
+                    return false;
+                }
+                PersistentJSON.TryLoad(out Value, KEY);
+                cachedInvincibility = Value;
+                return Value;
+            }
+            set
+            {
+                const string KEY = "Practice Mode Invincibility";
+                PersistentJSON.TrySave(value, KEY);
+                cachedInvincibility = value;
+            }
+        }
+
         static string menuPracticeModeKey = "Shmup_Practice_Mode";
         public static int StageSkipValue
         {

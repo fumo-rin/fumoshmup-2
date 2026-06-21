@@ -3,6 +3,7 @@ using rinCore;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
+using UnityEditor;
 
 namespace FumoShmup2
 {
@@ -70,9 +71,8 @@ namespace FumoShmup2
         [SerializeField] TMP_Dropdown warpDropdown;
         [SerializeField] Slider bossWarp;
         [SerializeField] TMP_Text bossWarpText;
-        [SerializeField] Toggle skipDialogue;
+        [SerializeField] Toggle skipDialogue, invincibility;
         [SerializeField] GameObject practiceModeNest;
-        static bool skipDialogueValue = false;
         static ShmupPracticeModeUI instance;
         static ShmupStage currentStage;
         private static ShmupStage pendingStage;
@@ -155,7 +155,11 @@ namespace FumoShmup2
             }
             skipDialogue.onValueChanged.RemoveAllListeners();
             skipDialogue.onValueChanged.AddListener(OnToggleSkipDialogue);
-            OnToggleSkipDialogue(skipDialogueValue);
+            OnToggleSkipDialogue(ShmupPracticeMode.SkipDialogue);
+
+            invincibility.onValueChanged.RemoveAllListeners();
+            invincibility.onValueChanged.AddListener(OnInvincibleToggle);
+            OnInvincibleToggle(ShmupPracticeMode.Invincibility);
 
             bossWarp.onValueChanged.RemoveAllListeners();
             bossWarp.onValueChanged.AddListener(SetBossSkip);
@@ -178,7 +182,11 @@ namespace FumoShmup2
 
             skipDialogue.onValueChanged.RemoveAllListeners();
             skipDialogue.onValueChanged.AddListener(OnToggleSkipDialogue);
-            OnToggleSkipDialogue(skipDialogueValue);
+            OnToggleSkipDialogue(ShmupPracticeMode.SkipDialogue);
+
+            invincibility.onValueChanged.RemoveAllListeners();
+            invincibility.onValueChanged.AddListener(OnInvincibleToggle);
+            OnInvincibleToggle(ShmupPracticeMode.Invincibility);
 
             bossWarp.onValueChanged.RemoveAllListeners();
             bossWarp.onValueChanged.AddListener(SetBossSkip);
@@ -192,19 +200,18 @@ namespace FumoShmup2
         }
         private void OnToggleSkipDialogue(bool value)
         {
-            skipDialogueValue = value;
+            ShmupPracticeMode.SkipDialogue = value;
             skipDialogue.isOn = value;
+        }
+        private void OnInvincibleToggle(bool value)
+        {
+            ShmupPracticeMode.Invincibility = value;
+            invincibility.isOn = value;
         }
 
         private void OnQuickReset()
         {
             currentStage.RunStage(ShmupPracticeMode.StageSkipValue - 1);
-        }
-        public static bool SkipDialogue()
-        {
-            if (!ShmupPracticeMode.IsOn)
-                return false;
-            return skipDialogueValue;
         }
     }
 

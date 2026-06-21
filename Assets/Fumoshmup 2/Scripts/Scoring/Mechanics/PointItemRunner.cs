@@ -124,8 +124,8 @@ namespace FumoShmup2
                     continue;
                 }
             }
-            itemParticle.RenderAnimatedPoints(PointItems, 0.3f, false);
-            cashInRenderer.RenderAnimatedPoints(ChargedPointItems, 0.3f, false);
+            itemParticle.RenderAnimatedPoints(PointItems, 3f, false);
+            cashInRenderer.RenderAnimatedPoints(ChargedPointItems, 3f, false);
             focusWasHeld = ShmupInput.Focus;
         }
         private static void Create(Vector2 worldPosition, bool scoringCashIn, double scoreValue)

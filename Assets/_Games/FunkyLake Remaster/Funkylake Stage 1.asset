@@ -1,0 +1,924 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8165878561173087374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 548c74236282c74408af0add52103885, type: 3}
+  m_Name: MusicNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.MusicNode
+  IsEnabled: 1
+  title: MusicNode
+  position: {x: -464, y: -356}
+  skipIndex: 20
+  IsCompacted: 0
+  music: {fileID: 11400000, guid: 83fd23bdbe6f9284e8d09424dd3547c4, type: 2}
+--- !u!114 &-8104222094359324651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e5394d13f31365488c5d55ef9ce6c98, type: 3}
+  m_Name: SingleSpawnerNode_Copy_Copy_Copy_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.SingleSpawnerNode
+  IsEnabled: 1
+  title: SingleSpawnerNode
+  position: {x: 1292, y: 593}
+  skipIndex: 40
+  IsCompacted: 0
+  toSpawn: {fileID: 2745390351675722610, guid: 6e966d668ddfb5a4a961dcb6aca7a0fb, type: 3}
+  storedModifier: {fileID: -2883183830389805953}
+  start: {x: 1.1949999, y: 0.5360002}
+  target: {x: 0.22, y: 0.6059998}
+  exit: {x: -0.36750007, y: 0.828}
+  WaitAfterSpawn: 1.05
+  ExitDelay: 3.8
+  ExitDuration: 2
+  HasIndicator: 1
+  Sealing: 0
+  SealingRadius: 0
+  SweepOverride: 1
+  SweepDuration: 0.45
+  SweepLootChance: 255
+  EntryDuration: 0.75
+  collapsedEditable: 0
+  attackLoop:
+  - rid: 5849968596988723694
+  - rid: 5849968596988723695
+  - rid: 5849968596988723696
+  attackLoops: 1
+  loopAddedDelay: 0
+  attackStall: 0.45
+  references:
+    version: 2
+    RefIds:
+    - rid: 5849968596988723694
+      type: {class: Funkylike/Stage1/Stage/FishBuffEntry, ns: , asm: Assembly-CSharp}
+      data:
+        projectile: {fileID: 11400000, guid: bbaefcb56e1df9544b8c97f3f2513c77, type: 2}
+    - rid: 5849968596988723695
+      type: {class: UtilityAttacks/AttackWait, ns: FumoShmup2, asm: Fumoshmup2}
+      data:
+        waitDuration: 0.5
+    - rid: 5849968596988723696
+      type: {class: Funkylike/Stage1/Stage/FishBuff, ns: , asm: Assembly-CSharp}
+      data:
+        projectile: {fileID: 11400000, guid: 84a623da29b1d274c8f1e32e4c65acc4, type: 2}
+        repeats: 3
+--- !u!114 &-6089321416454121283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2706ab5175d57244aa33d5f6a91a491, type: 3}
+  m_Name: SequenceSpawnerNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.SequenceSpawnerNode
+  IsEnabled: 1
+  title: Shmup Node Stage 5 steps
+  position: {x: 588, y: -381}
+  skipIndex: 20
+  IsCompacted: 1
+  entries:
+  - a: {x: 0.93, y: 1.2639997}
+    b: {x: 0.815, y: 0.704}
+    c: {x: 1.35, y: 0.798}
+    sequencePostDelayVec2: {x: 0.11750001, y: 0.16400003}
+  - a: {x: 0.93, y: 1.2639997}
+    b: {x: 0.705, y: 0.78}
+    c: {x: 1.3824999, y: 0.73399997}
+    sequencePostDelayVec2: {x: 0.1225, y: 0.162}
+  - a: {x: 0.93, y: 1.2639997}
+    b: {x: 0.5925, y: 0.82}
+    c: {x: 1.3924999, y: 0.878}
+    sequencePostDelayVec2: {x: 0.120000005, y: 0.15999997}
+  - a: {x: 0.93, y: 1.2639997}
+    b: {x: 0.745, y: 0.634}
+    c: {x: 1.4325, y: 0.726}
+    sequencePostDelayVec2: {x: 0.11750001, y: 0.16400003}
+  - a: {x: 0.93, y: 1.2639997}
+    b: {x: 0.6275, y: 0.68799996}
+    c: {x: 1.2574999, y: 0.672}
+    sequencePostDelayVec2: {x: 0.1225, y: 0.102}
+  storedModifier: {fileID: 0}
+  spawnedEnemy: {fileID: 2745390351675722610, guid: 825f0380c765f104396916a6ce5fe517, type: 3}
+  runSeperately: 0
+  PostWait: 0.75
+  ExitDelay: 3.5
+  ExitDuration: 1.25
+  EntryDuration: 0.75
+  attackLoop:
+  - rid: 5849968596988723526
+  attackLoops: 4
+  loopAddedDelay: 0.95
+  attackStall: 0.75
+  HasIndicator: 0
+  Sealing: 0
+  SealingRadius: 0
+  SweepOverride: 0
+  SweepDuration: 0.05
+  SweepLootChance: 255
+  references:
+    version: 2
+    RefIds:
+    - rid: 5849968596988723526
+      type: {class: Funkylike/Stage1/Stage/FishFodder, ns: , asm: Assembly-CSharp}
+      data:
+        armProjectile: {fileID: 11400000, guid: bbaefcb56e1df9544b8c97f3f2513c77, type: 2}
+        spamProjectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+--- !u!114 &-4613081150637210246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2706ab5175d57244aa33d5f6a91a491, type: 3}
+  m_Name: SequenceSpawnerNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.SequenceSpawnerNode
+  IsEnabled: 1
+  title: Shmup Node Stage 5 steps
+  position: {x: 572, y: -768}
+  skipIndex: 20
+  IsCompacted: 1
+  entries:
+  - a: {x: 0.06999999, y: 1.2639997}
+    b: {x: 0.10499999, y: 0.708}
+    c: {x: -0.35000002, y: 0.798}
+    sequencePostDelayVec2: {x: 0.13, y: 0.144}
+  - a: {x: 0.06999999, y: 1.2639997}
+    b: {x: 0.19999999, y: 0.78}
+    c: {x: -0.3825, y: 0.73399997}
+    sequencePostDelayVec2: {x: 0.125, y: 0.14600003}
+  - a: {x: 0.06999999, y: 1.2639997}
+    b: {x: 0.29500002, y: 0.86800003}
+    c: {x: -0.39249998, y: 0.878}
+    sequencePostDelayVec2: {x: 0.1225, y: 0.14999998}
+  - a: {x: 0.06999999, y: 1.2639997}
+    b: {x: 0.18, y: 0.61}
+    c: {x: -0.4325, y: 0.726}
+    sequencePostDelayVec2: {x: 0.1225, y: 0.14999998}
+  - a: {x: 0.06999999, y: 1.2639997}
+    b: {x: 0.315, y: 0.69}
+    c: {x: -0.2575, y: 0.672}
+    sequencePostDelayVec2: {x: 0.1225, y: 0.102}
+  storedModifier: {fileID: 0}
+  spawnedEnemy: {fileID: 2745390351675722610, guid: 825f0380c765f104396916a6ce5fe517, type: 3}
+  runSeperately: 0
+  PostWait: 0
+  ExitDelay: 3.5
+  ExitDuration: 1.25
+  EntryDuration: 0.75
+  attackLoop:
+  - rid: 5849968596988723525
+  attackLoops: 4
+  loopAddedDelay: 0.95
+  attackStall: 0.75
+  HasIndicator: 0
+  Sealing: 0
+  SealingRadius: 0
+  SweepOverride: 0
+  SweepDuration: 0.05
+  SweepLootChance: 255
+  references:
+    version: 2
+    RefIds:
+    - rid: 5849968596988723525
+      type: {class: Funkylike/Stage1/Stage/FishFodder, ns: , asm: Assembly-CSharp}
+      data:
+        armProjectile: {fileID: 11400000, guid: bbaefcb56e1df9544b8c97f3f2513c77, type: 2}
+        spamProjectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+--- !u!114 &-4268414712100275738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299281ec626e5854db3167f10fb0c2c6, type: 3}
+  m_Name: WaitForTimeOrEnemiesAliveNode_Copy_Copy_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeOrEnemiesAliveNode
+  IsEnabled: 1
+  title: WaitForTimeOrEnemiesAliveNode
+  position: {x: 580, y: 335}
+  skipIndex: 40
+  IsCompacted: 1
+  WaitDuration: 2.63
+  AliveEnemiesRequired: 1
+--- !u!114 &-4254518605193446210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3d60dbc466de254f88f14f7b9f5b37d, type: 3}
+  m_Name: EnemyModifierNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.EnemyModifierNode
+  IsEnabled: 1
+  title: EnemyModifierNode
+  position: {x: 852, y: -648}
+  skipIndex: 20
+  IsCompacted: 1
+  EnemyHealth: 200
+  LargeHealthPool: 0
+  RevengeAttackOverride: {fileID: 0}
+  Indicator: 0
+  AmmoOverride: 0
+  AmmoSecondsOrCount: 0
+  ammoCount: 1
+  ammoTime: 1
+  attackDelay: 0.75
+  actionOverride:
+    rid: -2
+  LinkedNodes:
+  - {fileID: 325018335509286496}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+--- !u!114 &-3711636350974879170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e5394d13f31365488c5d55ef9ce6c98, type: 3}
+  m_Name: SingleSpawnerNode_Copy_Copy_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.SingleSpawnerNode
+  IsEnabled: 1
+  title: SingleSpawnerNode
+  position: {x: 864, y: 459}
+  skipIndex: 40
+  IsCompacted: 0
+  toSpawn: {fileID: 2745390351675722610, guid: 6e966d668ddfb5a4a961dcb6aca7a0fb, type: 3}
+  storedModifier: {fileID: -2883183830389805953}
+  start: {x: 0.685, y: 1.128}
+  target: {x: 0.5, y: 0.7439999}
+  exit: {x: -0.36750007, y: 0.828}
+  WaitAfterSpawn: 0.1
+  ExitDelay: 3.8
+  ExitDuration: 2
+  HasIndicator: 1
+  Sealing: 0
+  SealingRadius: 0
+  SweepOverride: 1
+  SweepDuration: 0.45
+  SweepLootChance: 255
+  EntryDuration: 0.75
+  collapsedEditable: 0
+  attackLoop:
+  - rid: 5849968596988723691
+  - rid: 5849968596988723692
+  - rid: 5849968596988723693
+  attackLoops: 1
+  loopAddedDelay: 0
+  attackStall: 0.45
+  references:
+    version: 2
+    RefIds:
+    - rid: 5849968596988723691
+      type: {class: Funkylike/Stage1/Stage/FishBuffEntry, ns: , asm: Assembly-CSharp}
+      data:
+        projectile: {fileID: 11400000, guid: bbaefcb56e1df9544b8c97f3f2513c77, type: 2}
+    - rid: 5849968596988723692
+      type: {class: UtilityAttacks/AttackWait, ns: FumoShmup2, asm: Fumoshmup2}
+      data:
+        waitDuration: 0.5
+    - rid: 5849968596988723693
+      type: {class: Funkylike/Stage1/Stage/FishBuff, ns: , asm: Assembly-CSharp}
+      data:
+        projectile: {fileID: 11400000, guid: 84a623da29b1d274c8f1e32e4c65acc4, type: 2}
+        repeats: 3
+--- !u!114 &-3428264273408201923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299281ec626e5854db3167f10fb0c2c6, type: 3}
+  m_Name: WaitForTimeOrEnemiesAliveNode_Copy_Copy_Copy_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeOrEnemiesAliveNode
+  IsEnabled: 1
+  title: WaitForTimeOrEnemiesAliveNode
+  position: {x: 1672, y: 674}
+  skipIndex: 40
+  IsCompacted: 1
+  WaitDuration: 5
+  AliveEnemiesRequired: 0
+--- !u!114 &-2883183830389805953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3d60dbc466de254f88f14f7b9f5b37d, type: 3}
+  m_Name: EnemyModifierNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.EnemyModifierNode
+  IsEnabled: 1
+  title: EnemyModifierNode
+  position: {x: 1370, y: 0}
+  skipIndex: 40
+  IsCompacted: 1
+  EnemyHealth: 500
+  LargeHealthPool: 0
+  RevengeAttackOverride: {fileID: 0}
+  Indicator: 0
+  AmmoOverride: 0
+  AmmoSecondsOrCount: 0
+  ammoCount: 1
+  ammoTime: 1
+  attackDelay: 0.75
+  actionOverride:
+    rid: -2
+  LinkedNodes:
+  - {fileID: -2251866232924006473}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+--- !u!114 &-2251866232924006473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e5394d13f31365488c5d55ef9ce6c98, type: 3}
+  m_Name: SingleSpawnerNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.SingleSpawnerNode
+  IsEnabled: 1
+  title: SingleSpawnerNode
+  position: {x: 877, y: -44}
+  skipIndex: 40
+  IsCompacted: 1
+  toSpawn: {fileID: 2745390351675722610, guid: 6e966d668ddfb5a4a961dcb6aca7a0fb, type: 3}
+  storedModifier: {fileID: -2883183830389805953}
+  start: {x: 0.42000002, y: 1.088}
+  target: {x: 0.33249998, y: 0.622}
+  exit: {x: 1.3675001, y: 0.828}
+  WaitAfterSpawn: 1.05
+  ExitDelay: 4.75
+  ExitDuration: 1.89
+  HasIndicator: 1
+  Sealing: 0
+  SealingRadius: 0
+  SweepOverride: 1
+  SweepDuration: 0.45
+  SweepLootChance: 255
+  EntryDuration: 0.75
+  collapsedEditable: 0
+  attackLoop:
+  - rid: 5849968596988723630
+  - rid: 5849968596988723658
+  - rid: 5849968596988723657
+  attackLoops: 1
+  loopAddedDelay: 0
+  attackStall: 0.45
+  references:
+    version: 2
+    RefIds:
+    - rid: 5849968596988723630
+      type: {class: Funkylike/Stage1/Stage/FishBuffEntry, ns: , asm: Assembly-CSharp}
+      data:
+        projectile: {fileID: 11400000, guid: bbaefcb56e1df9544b8c97f3f2513c77, type: 2}
+    - rid: 5849968596988723657
+      type: {class: Funkylike/Stage1/Stage/FishBuff, ns: , asm: Assembly-CSharp}
+      data:
+        projectile: {fileID: 11400000, guid: 84a623da29b1d274c8f1e32e4c65acc4, type: 2}
+        repeats: 6
+    - rid: 5849968596988723658
+      type: {class: UtilityAttacks/AttackWait, ns: FumoShmup2, asm: Fumoshmup2}
+      data:
+        waitDuration: 0.5
+--- !u!114 &-1344853932644740644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75e966954de8b714ca0eb2f2f4c8c76f, type: 3}
+  m_Name: WaitForTimeNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeNode
+  IsEnabled: 1
+  title: WaitForTimeNode
+  position: {x: 580, y: -1099}
+  skipIndex: 20
+  IsCompacted: 0
+  WaitTime: 1
+--- !u!114 &-1245724368600611125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299281ec626e5854db3167f10fb0c2c6, type: 3}
+  m_Name: WaitForTimeOrEnemiesAliveNode_Copy_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeOrEnemiesAliveNode
+  IsEnabled: 1
+  title: WaitForTimeOrEnemiesAliveNode
+  position: {x: 435, y: 152}
+  skipIndex: 40
+  IsCompacted: 1
+  WaitDuration: 2
+  AliveEnemiesRequired: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 402a3f0e7ec535749ac36027c36e1a5c, type: 3}
+  m_Name: Funkylake Stage 1
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.ShmupNodeStage
+  SkipEntries:
+  - skipName: Section 1
+    skipValue: 20
+    enabled: 1
+  - skipName: Section 2
+    skipValue: 40
+    enabled: 1
+  - skipName: Section 3
+    skipValue: 60
+    enabled: 1
+  - skipName: Section 4
+    skipValue: 80
+    enabled: 1
+  - skipName: Midboss
+    skipValue: 100
+    enabled: 1
+  <StageScene>k__BackingField: {fileID: 11400000, guid: 9ac2b125f6a81b04ca14a6031c9663e9, type: 2}
+  currentLinkAttempt: {fileID: 0}
+  selectedSkipIndex: 1
+  StageEndDialogue: {fileID: 0}
+  enemyTable:
+  - {fileID: 2745390351675722610, guid: 825f0380c765f104396916a6ce5fe517, type: 3}
+  - {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
+  - {fileID: 2745390351675722610, guid: 6e966d668ddfb5a4a961dcb6aca7a0fb, type: 3}
+  - {fileID: 2745390351675722610, guid: a3bad9f63c8750949b1c8b0662f9674c, type: 3}
+  - {fileID: 2745390351675722610, guid: 8ca6de5fa82d30145936fefbc29e58be, type: 3}
+  nodes:
+  - {fileID: -8165878561173087374}
+  - {fileID: -4613081150637210246}
+  - {fileID: -6089321416454121283}
+  - {fileID: 325018335509286496}
+  - {fileID: -4254518605193446210}
+  - {fileID: 1477747461723930526}
+  - {fileID: 2082788951074154924}
+  - {fileID: 8511822492218068913}
+  - {fileID: 235313957320826876}
+  - {fileID: 227158974217421712}
+  - {fileID: 8710164854440857984}
+  - {fileID: -2251866232924006473}
+  - {fileID: -2883183830389805953}
+  - {fileID: 5168428173565287729}
+  - {fileID: -1245724368600611125}
+  - {fileID: -1344853932644740644}
+  - {fileID: 4242413593974745824}
+  - {fileID: -4268414712100275738}
+  - {fileID: -3711636350974879170}
+  - {fileID: -8104222094359324651}
+  - {fileID: 6626648565612485301}
+  - {fileID: 6482099287722149152}
+  - {fileID: -3428264273408201923}
+--- !u!114 &227158974217421712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299281ec626e5854db3167f10fb0c2c6, type: 3}
+  m_Name: WaitForTimeOrEnemiesAliveNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeOrEnemiesAliveNode
+  IsEnabled: 1
+  title: WaitForTimeOrEnemiesAliveNode
+  position: {x: 587, y: -247}
+  skipIndex: 20
+  IsCompacted: 1
+  WaitDuration: 2.5
+  AliveEnemiesRequired: 1
+--- !u!114 &235313957320826876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299281ec626e5854db3167f10fb0c2c6, type: 3}
+  m_Name: WaitForTimeOrEnemiesAliveNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeOrEnemiesAliveNode
+  IsEnabled: 1
+  title: WaitForTimeOrEnemiesAliveNode
+  position: {x: 349, y: -839}
+  skipIndex: 20
+  IsCompacted: 1
+  WaitDuration: 1.45
+  AliveEnemiesRequired: 0
+--- !u!114 &325018335509286496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e5394d13f31365488c5d55ef9ce6c98, type: 3}
+  m_Name: SingleSpawnerNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.SingleSpawnerNode
+  IsEnabled: 1
+  title: SingleSpawnerNode
+  position: {x: 575, y: -557}
+  skipIndex: 20
+  IsCompacted: 1
+  toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
+  storedModifier: {fileID: -4254518605193446210}
+  start: {x: 0.42000002, y: 1.088}
+  target: {x: 0.4825, y: 0.69200003}
+  exit: {x: 1.1800001, y: 0.814}
+  WaitAfterSpawn: 0.1
+  ExitDelay: 7
+  ExitDuration: 1.25
+  HasIndicator: 0
+  Sealing: 0
+  SealingRadius: 0
+  SweepOverride: 0
+  SweepDuration: 0.05
+  SweepLootChance: 255
+  EntryDuration: 0.75
+  collapsedEditable: 0
+  attackLoop:
+  - rid: 5849968596988723544
+  - rid: 5849968596988723559
+  attackLoops: 1
+  loopAddedDelay: 0
+  attackStall: 0.75
+  references:
+    version: 2
+    RefIds:
+    - rid: 5849968596988723544
+      type: {class: Funkylike/Stage1/Stage/FishArrowHead, ns: , asm: Assembly-CSharp}
+      data:
+        projectile: {fileID: 11400000, guid: bbaefcb56e1df9544b8c97f3f2513c77, type: 2}
+        arrowProjectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+    - rid: 5849968596988723559
+      type: {class: Funkylike/Stage1/Stage/FishArrowRage, ns: , asm: Assembly-CSharp}
+      data:
+        projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+        Flip: 1
+--- !u!114 &1477747461723930526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299281ec626e5854db3167f10fb0c2c6, type: 3}
+  m_Name: WaitForTimeOrEnemiesAliveNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeOrEnemiesAliveNode
+  IsEnabled: 1
+  title: WaitForTimeOrEnemiesAliveNode
+  position: {x: 342, y: -649}
+  skipIndex: 20
+  IsCompacted: 1
+  WaitDuration: 1.66
+  AliveEnemiesRequired: 1
+--- !u!114 &2082788951074154924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299281ec626e5854db3167f10fb0c2c6, type: 3}
+  m_Name: WaitForTimeOrEnemiesAliveNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeOrEnemiesAliveNode
+  IsEnabled: 1
+  title: WaitForTimeOrEnemiesAliveNode
+  position: {x: 343, y: -455}
+  skipIndex: 20
+  IsCompacted: 1
+  WaitDuration: 1.87
+  AliveEnemiesRequired: 2
+--- !u!114 &4242413593974745824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e5394d13f31365488c5d55ef9ce6c98, type: 3}
+  m_Name: SingleSpawnerNode_Copy_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.SingleSpawnerNode
+  IsEnabled: 1
+  title: SingleSpawnerNode
+  position: {x: 469, y: 426}
+  skipIndex: 40
+  IsCompacted: 0
+  toSpawn: {fileID: 2745390351675722610, guid: 6e966d668ddfb5a4a961dcb6aca7a0fb, type: 3}
+  storedModifier: {fileID: -2883183830389805953}
+  start: {x: 0.58, y: 1.088}
+  target: {x: 0.79499996, y: 0.6279999}
+  exit: {x: 1.2175, y: 0.872}
+  WaitAfterSpawn: 1.35
+  ExitDelay: 3.8
+  ExitDuration: 2
+  HasIndicator: 1
+  Sealing: 0
+  SealingRadius: 0
+  SweepOverride: 1
+  SweepDuration: 0.45
+  SweepLootChance: 255
+  EntryDuration: 0.75
+  collapsedEditable: 0
+  attackLoop:
+  - rid: 5849968596988723688
+  - rid: 5849968596988723689
+  - rid: 5849968596988723690
+  attackLoops: 1
+  loopAddedDelay: 0
+  attackStall: 0.45
+  references:
+    version: 2
+    RefIds:
+    - rid: 5849968596988723688
+      type: {class: Funkylike/Stage1/Stage/FishBuffEntry, ns: , asm: Assembly-CSharp}
+      data:
+        projectile: {fileID: 11400000, guid: bbaefcb56e1df9544b8c97f3f2513c77, type: 2}
+    - rid: 5849968596988723689
+      type: {class: UtilityAttacks/AttackWait, ns: FumoShmup2, asm: Fumoshmup2}
+      data:
+        waitDuration: 0.5
+    - rid: 5849968596988723690
+      type: {class: Funkylike/Stage1/Stage/FishBuff, ns: , asm: Assembly-CSharp}
+      data:
+        projectile: {fileID: 11400000, guid: 84a623da29b1d274c8f1e32e4c65acc4, type: 2}
+        repeats: 3
+--- !u!114 &5168428173565287729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2706ab5175d57244aa33d5f6a91a491, type: 3}
+  m_Name: SequenceSpawnerNode_Copy_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.SequenceSpawnerNode
+  IsEnabled: 1
+  title: Shmup Node Stage 5 steps
+  position: {x: 656, y: 243}
+  skipIndex: 40
+  IsCompacted: 1
+  entries:
+  - a: {x: 0.93, y: 1.2639997}
+    b: {x: 0.815, y: 0.704}
+    c: {x: 1.35, y: 0.798}
+    sequencePostDelayVec2: {x: 0.11750001, y: 0.16400003}
+  - a: {x: 0.93, y: 1.2639997}
+    b: {x: 0.705, y: 0.78}
+    c: {x: 1.3824999, y: 0.73399997}
+    sequencePostDelayVec2: {x: 0.1225, y: 0.162}
+  - a: {x: 0.93, y: 1.2639997}
+    b: {x: 0.5925, y: 0.82}
+    c: {x: 1.3924999, y: 0.878}
+    sequencePostDelayVec2: {x: 0.120000005, y: 0.15999997}
+  - a: {x: 0.93, y: 1.2639997}
+    b: {x: 0.745, y: 0.634}
+    c: {x: 1.4325, y: 0.726}
+    sequencePostDelayVec2: {x: 0.11750001, y: 0.16400003}
+  - a: {x: 0.93, y: 1.2639997}
+    b: {x: 0.6275, y: 0.68799996}
+    c: {x: 1.2574999, y: 0.672}
+    sequencePostDelayVec2: {x: 0.1225, y: 0.102}
+  storedModifier: {fileID: 0}
+  spawnedEnemy: {fileID: 2745390351675722610, guid: 825f0380c765f104396916a6ce5fe517, type: 3}
+  runSeperately: 0
+  PostWait: 0.75
+  ExitDelay: 3.5
+  ExitDuration: 1.25
+  EntryDuration: 0.75
+  attackLoop:
+  - rid: 5849968596988723635
+  attackLoops: 4
+  loopAddedDelay: 0.95
+  attackStall: 0.75
+  HasIndicator: 0
+  Sealing: 0
+  SealingRadius: 0
+  SweepOverride: 0
+  SweepDuration: 0.05
+  SweepLootChance: 255
+  references:
+    version: 2
+    RefIds:
+    - rid: 5849968596988723635
+      type: {class: Funkylike/Stage1/Stage/FishFodder, ns: , asm: Assembly-CSharp}
+      data:
+        armProjectile: {fileID: 11400000, guid: bbaefcb56e1df9544b8c97f3f2513c77, type: 2}
+        spamProjectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+--- !u!114 &6482099287722149152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75e966954de8b714ca0eb2f2f4c8c76f, type: 3}
+  m_Name: WaitForTimeNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeNode
+  IsEnabled: 1
+  title: WaitForTimeNode
+  position: {x: 831, y: 372}
+  skipIndex: 40
+  IsCompacted: 1
+  WaitTime: 0.25
+--- !u!114 &6626648565612485301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 299281ec626e5854db3167f10fb0c2c6, type: 3}
+  m_Name: WaitForTimeOrEnemiesAliveNode_Copy_Copy_Copy_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.WaitForTimeOrEnemiesAliveNode
+  IsEnabled: 1
+  title: WaitForTimeOrEnemiesAliveNode
+  position: {x: 1276, y: 491}
+  skipIndex: 40
+  IsCompacted: 0
+  WaitDuration: 2.25
+  AliveEnemiesRequired: 0
+--- !u!114 &8511822492218068913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e5394d13f31365488c5d55ef9ce6c98, type: 3}
+  m_Name: SingleSpawnerNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.SingleSpawnerNode
+  IsEnabled: 1
+  title: SingleSpawnerNode
+  position: {x: 557, y: -934}
+  skipIndex: 20
+  IsCompacted: 1
+  toSpawn: {fileID: 2745390351675722610, guid: b9e2d261fa1f4994cb6a9a8d44a5a2f8, type: 3}
+  storedModifier: {fileID: -4254518605193446210}
+  start: {x: 0.08500001, y: 1.1240001}
+  target: {x: 0.22749999, y: 0.578}
+  exit: {x: -0.325, y: 0.774}
+  WaitAfterSpawn: 0.1
+  ExitDelay: 4.5
+  ExitDuration: 1.25
+  HasIndicator: 0
+  Sealing: 0
+  SealingRadius: 0
+  SweepOverride: 0
+  SweepDuration: 0.05
+  SweepLootChance: 255
+  EntryDuration: 0.75
+  collapsedEditable: 0
+  attackLoop:
+  - rid: 5849968596988723601
+  - rid: 5849968596988723602
+  attackLoops: 1
+  loopAddedDelay: 0
+  attackStall: 0.75
+  references:
+    version: 2
+    RefIds:
+    - rid: 5849968596988723601
+      type: {class: Funkylike/Stage1/Stage/FishArrowHead, ns: , asm: Assembly-CSharp}
+      data:
+        projectile: {fileID: 11400000, guid: bbaefcb56e1df9544b8c97f3f2513c77, type: 2}
+        arrowProjectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+    - rid: 5849968596988723602
+      type: {class: Funkylike/Stage1/Stage/FishArrowRage, ns: , asm: Assembly-CSharp}
+      data:
+        projectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}
+        Flip: 0
+--- !u!114 &8710164854440857984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2706ab5175d57244aa33d5f6a91a491, type: 3}
+  m_Name: SequenceSpawnerNode_Copy
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.SequenceSpawnerNode
+  IsEnabled: 1
+  title: Shmup Node Stage 5 steps
+  position: {x: 657, y: 82}
+  skipIndex: 40
+  IsCompacted: 1
+  entries:
+  - a: {x: 0.06999999, y: 1.2639997}
+    b: {x: 0.20500001, y: 0.834}
+    c: {x: 0.4525, y: 1.1760001}
+    sequencePostDelayVec2: {x: 0.13, y: 0.144}
+  - a: {x: 0.06999999, y: 1.2639997}
+    b: {x: 0.39249998, y: 0.85}
+    c: {x: 0.65, y: 1.1620001}
+    sequencePostDelayVec2: {x: 0.125, y: 0.14600003}
+  - a: {x: 0.06999999, y: 1.2639997}
+    b: {x: 0.54, y: 0.718}
+    c: {x: 1.11, y: 1.174}
+    sequencePostDelayVec2: {x: 0.1225, y: 0.14999998}
+  - a: {x: 0.06999999, y: 1.2639997}
+    b: {x: 0.67, y: 0.628}
+    c: {x: 1.2425001, y: 0.88600004}
+    sequencePostDelayVec2: {x: 0.1225, y: 0.14999998}
+  - a: {x: 0.06999999, y: 1.2639997}
+    b: {x: 0.8625, y: 0.50600004}
+    c: {x: 1.235, y: 0.644}
+    sequencePostDelayVec2: {x: 0.1225, y: 0.102}
+  storedModifier: {fileID: 0}
+  spawnedEnemy: {fileID: 2745390351675722610, guid: 825f0380c765f104396916a6ce5fe517, type: 3}
+  runSeperately: 0
+  PostWait: 0
+  ExitDelay: 3.5
+  ExitDuration: 1.25
+  EntryDuration: 0.75
+  attackLoop:
+  - rid: 5849968596988723627
+  attackLoops: 4
+  loopAddedDelay: 0.95
+  attackStall: 0.75
+  HasIndicator: 0
+  Sealing: 0
+  SealingRadius: 0
+  SweepOverride: 0
+  SweepDuration: 0.05
+  SweepLootChance: 255
+  references:
+    version: 2
+    RefIds:
+    - rid: 5849968596988723627
+      type: {class: Funkylike/Stage1/Stage/FishFodder, ns: , asm: Assembly-CSharp}
+      data:
+        armProjectile: {fileID: 11400000, guid: bbaefcb56e1df9544b8c97f3f2513c77, type: 2}
+        spamProjectile: {fileID: 11400000, guid: 29cf0650018ab164aa8ee39fad123157, type: 2}

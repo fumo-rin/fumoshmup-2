@@ -23,7 +23,7 @@ namespace FumoShmup2
             float damageTime = Time.time;
             a.BuildInput(Owner, out Projectile.InputSettings input);
             float nextLockonTime = Time.time + 0.3f;
-            while (ShmupInput.Focus && ShmupInput.Shoot)
+            while (CanSuperShot && Shooting)
             {
                 nextProjectileShotTime -= Time.deltaTime;
                 input.SetOrigin(Owner.CurrentPosition);
@@ -181,7 +181,7 @@ namespace FumoShmup2
             {
                 LockOn.Clear();
             }
-            cachedFocusLerp = cachedFocusLerp.LerpUnclamped(focusAction.IsPressedRaw() ? 1f : 0f, Time.deltaTime * 12f).Clamp(0f, 1f);
+            cachedFocusLerp = cachedFocusLerp.LerpUnclamped(CanSuperShot && Shooting ? 1f : 0f, Time.deltaTime * 12f).Clamp(0f, 1f);
             int optionIteration = 0;
             foreach (var a in Options(cachedFocusLerp))
             {

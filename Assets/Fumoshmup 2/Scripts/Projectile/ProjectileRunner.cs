@@ -296,7 +296,7 @@ namespace FumoShmup2
                     continue;
                 backdropIteration.Add(iteration.Position);
             }
-            backdropRenderer.RenderAnimatedPoints(backdropIteration, Time.time, true);
+            backdropRenderer.RenderAnimatedPoints(backdropIteration, 1f, true);
         }
     }
     #endregion
