@@ -28,7 +28,8 @@ namespace FumoShmup2
             ShmupGamemode.SetCurrent(Gamemode);
             if (!stageIndex.TryGetNextStage(out ShmupStage next))
             {
-                Debug.LogError("bwuz");
+                Debug.LogWarning("No next stage found. Aborting Session Start");
+                return;
             }
             ShmupStage.WhenSpawnPlayerRequest = ShmupGamemode.SpawnCurrentPlayer; // this is without event tag so it can be = nulled
             SceneLoader.LoadScenePair(next.StageScene, () => next.RunStage(0), 0.25f);
@@ -43,6 +44,10 @@ namespace FumoShmup2
     #region Stage
     public partial class ShmupSession
     {
+        public void ExternallyAssignStages(IEnumerable<ShmupStage> stages)
+        {
+            stageIndex.ExternalAssignStages(stages);
+        }
         [SerializeField] ShmupStageIndex stageIndex = new();
         public void LoadNextStageOrMenu() => stageIndex.GoNextStageOrMenu();
         public void ExitToMenu() => stageIndex.GoMenu();
@@ -53,6 +58,15 @@ namespace FumoShmup2
             [SerializeField] ScenePairSO mainMenuScene;
             [SerializeField] List<ShmupStage> gameModeStages = new();
             Queue<ShmupStage> StageQueue;
+            public void ExternalAssignStages(IEnumerable<ShmupStage> stages)
+            {
+                gameModeStages = new(stages);
+                StageQueue = new();
+                foreach (var item in stages)
+                {
+                    StageQueue.Enqueue(item);
+                }
+            }
             public void LoadStagesToQueue()
             {
                 StageQueue = new();

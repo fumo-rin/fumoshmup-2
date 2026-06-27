@@ -1,0 +1,6 @@
+[levelName]
+Testing Level Info
+[levelCredits]
+John Testing
+[missionDescription]
+Tewi has employed c4 and pipebombs to destroy the area. The only one who can stop her is you. Rip and tear.

@@ -6,16 +6,26 @@ namespace FumoShmup2
     public class MarioLevelSelectItem : MonoBehaviour
     {
         [SerializeField] int levelIndex;
+        [field: SerializeField] public List<ShmupStage> AttachedStages { get; private set; } = new();
+        public TextAsset StageInfo;
         static List<MarioLevelSelectItem> selections = new();
         Dictionary<Vector2Int, MarioLevelSelectItem> neighbours = new();
         static int currentSelection;
         static bool mapBuilt;
+
+        public delegate void LevelSelectionEvent(MarioLevelSelectItem selected);
+        public static event LevelSelectionEvent WhenLevelSelected;
+
         private void OnEnable()
         {
             selections.Add(this);
             mapBuilt = false;
         }
-
+        private static void SetCurrentSelection(MarioLevelSelectItem item)
+        {
+            currentSelection = item.levelIndex;
+            WhenLevelSelected?.Invoke(item);
+        }
         private void OnDisable()
         {
             selections.Remove(this);
@@ -93,7 +103,7 @@ namespace FumoShmup2
 
             if (result != null)
             {
-                currentSelection = result.levelIndex;
+                SetCurrentSelection(result);
             }
             return result != null;
         }

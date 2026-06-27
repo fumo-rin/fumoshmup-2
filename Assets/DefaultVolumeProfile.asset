@@ -116,6 +116,64 @@ MonoBehaviour:
   scale:
     m_OverrideState: 1
     m_Value: 1
+--- !u!114 &-6428868724812435062
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 737bb5c030cbe824a900bc5999ac94f9, type: 3}
+  m_Name: UnderwaterUrp
+  m_EditorClassIdentifier: Pinwheel.Poseidon.Runtime::Pinwheel.Poseidon.FX.URP.UnderwaterUrp
+  active: 1
+  maxDepth:
+    m_OverrideState: 1
+    m_Value: 10
+  surfaceColorBoost:
+    m_OverrideState: 1
+    m_Value: 1
+  shallowFogColor:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 0, b: 1, a: 0.5}
+  deepFogColor:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 0, b: 1, a: 1}
+  viewDistance:
+    m_OverrideState: 1
+    m_Value: 40
+  noiseTexture:
+    m_OverrideState: 1
+    m_Value: {fileID: 0}
+    dimension: 1
+  causticTexture:
+    m_OverrideState: 1
+    m_Value: {fileID: 0}
+    dimension: 1
+  causticSize:
+    m_OverrideState: 1
+    m_Value: 10
+  causticStrength:
+    m_OverrideState: 1
+    m_Value: 1
+  distortionNormalMap:
+    m_OverrideState: 1
+    m_Value: {fileID: 0}
+    dimension: 1
+  distortionStrength:
+    m_OverrideState: 1
+    m_Value: 1
+  waterFlowSpeed:
+    m_OverrideState: 1
+    m_Value: 1
+  waterLevel:
+    m_OverrideState: 1
+    m_Value: 0
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &-4684104097051993075
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -315,6 +373,8 @@ MonoBehaviour:
   - {fileID: 3952235880345496173}
   - {fileID: 7213837356742447187}
   - {fileID: 321949690216195217}
+  - {fileID: -6428868724812435062}
+  - {fileID: 2416896508091829255}
 --- !u!114 &321949690216195217
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -401,6 +461,29 @@ MonoBehaviour:
     m_Value: {fileID: 0}
     dimension: 1
   contribution:
+    m_OverrideState: 1
+    m_Value: 0
+--- !u!114 &2416896508091829255
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 720855a007109dd4190a93defd8e3bb9, type: 3}
+  m_Name: WetLensUrp
+  m_EditorClassIdentifier: Pinwheel.Poseidon.Runtime::Pinwheel.Poseidon.FX.URP.WetLensUrp
+  active: 1
+  dropletsNormalMap:
+    m_OverrideState: 1
+    m_Value: {fileID: 0}
+    dimension: 1
+  strength:
+    m_OverrideState: 1
+    m_Value: 1
+  intensity:
     m_OverrideState: 1
     m_Value: 0
 --- !u!114 &3952235880345496173
