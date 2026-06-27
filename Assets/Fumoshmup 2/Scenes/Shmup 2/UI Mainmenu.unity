@@ -448,7 +448,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68542cab944b774987038600b8f95b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: rinCore::rinCore.FumoMenuSceneButton
-  sceneToLoad: {fileID: 11400000, guid: 49b88cf1033524245b6320badf79430c, type: 2}
+  sceneToLoad: {fileID: 11400000, guid: c9ffdf7083ab53c48ab3646ba36e25d8, type: 2}
   EndSession: 0
 --- !u!114 &100760292
 MonoBehaviour:

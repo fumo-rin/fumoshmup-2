@@ -3099,7 +3099,7 @@ MonoBehaviour:
     DifficultyColor:
       serializedVersion: 2
       rgba: 4294963340
-  <LabelColor>k__BackingField: {r: 0.54901963, g: 0.9411765, b: 1, a: 0.21176471}
+  <LabelColor>k__BackingField: {r: 0.54901963, g: 0.9411765, b: 1, a: 0.2901961}
 --- !u!1 &1320623205
 GameObject:
   m_ObjectHideFlags: 0

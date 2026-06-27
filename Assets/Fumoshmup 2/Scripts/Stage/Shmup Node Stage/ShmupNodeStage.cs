@@ -91,6 +91,65 @@ namespace FumoShmup2
     #endregion
     public partial class ShmupStageEditor : EditorWindow
     {
+        #region Context Menu Create Nodes
+        private void ContextMenuCreateNodes(GenericMenu menu, Vector2 mousePosition)
+        {
+            AddCreateNodeEntries(menu, mousePosition, "Stage", typeof(LineSpawnerNode), typeof(SingleSpawnerNode), typeof(SequenceSpawnerNode));
+            AddCreateNodeEntries(menu, mousePosition, "Boss", typeof(BossNode));
+            AddCreateNodeEntries(menu, mousePosition, "Special", typeof(PrefabRunnerNode), typeof(TextNode));
+            AddCreateNodeEntries(menu, mousePosition, "Segment Nodes", typeof(BooksNode));
+            AddCreateNodeEntries(menu, mousePosition, "Wait Instructions", typeof(WaitForTimeOrEnemiesAliveNode), typeof(DialogueAndWaitNode), typeof(WaitForTimeNode));
+            AddCreateNodeEntries(menu, mousePosition, "When Section Start", typeof(MusicNode));
+            AddCreateNodeEntries(menu, mousePosition, "Modifier Nodes", typeof(RepeatNode), typeof(EnemyModifierNode));
+            AddCreateNodeEntries(menu, mousePosition, "Deprecated", typeof(BossNodeCave));
+        }
+        #region Special Nodes Helper
+        void AddCreateNodeEntries(GenericMenu menu, Vector2 mousePosition, string entryCategory, params Type[] nodeTypes)
+        {
+            foreach (var type in nodeTypes)
+            {
+                if (!typeof(StageNode).IsAssignableFrom(type))
+                    continue;
+
+                string entryName = $"Create {entryCategory} Node/{type.Name}";
+                menu.AddItem(new GUIContent(entryName), false, () =>
+                {
+                    AddNodeByType(type, mousePosition);
+                });
+            }
+        }
+        void AddNodeByType(Type nodeType, Vector2 mousePosition)
+        {
+            if (activeStage == null)
+                return;
+
+            Undo.RecordObject(activeStage, "Add Stage Node");
+            Vector2 graphPos = mousePosition - viewOffset;
+            StageNode node = ScriptableObject.CreateInstance(nodeType) as StageNode;
+            if (node == null)
+            {
+                Debug.LogError($"Failed to create node of type {nodeType}");
+                return;
+            }
+
+            node.position = graphPos;
+            node.title = nodeType.Name;
+            node.skipIndex = CurrentSkipValue;
+            node.name = nodeType.Name;
+            node.IsEnabled = true;
+
+            AssetDatabase.AddObjectToAsset(node, activeStage);
+            activeStage.nodes.Add(node);
+            EditorUtility.SetDirty(node);
+            EditorUtility.SetDirty(activeStage);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+            Repaint();
+        }
+        #endregion
+        #endregion
+
         #region Destroy Node
         private void DestroyNode(StageNode hoveredNode)
         {
@@ -238,7 +297,8 @@ namespace FumoShmup2
             }
 
             Vector2 topLeftRelative = pixelPos - shmupRect.position;
-            GUIStyle style = EditorStyles.boldLabel;
+
+            GUIStyle style = new GUIStyle(EditorStyles.boldLabel);
             style.normal.textColor = Color.white;
             GUI.Label(new Rect(shmupRect.x + topLeftRelative.x, shmupRect.y + topLeftRelative.y, 200, 20), label, style);
 
@@ -671,12 +731,16 @@ namespace FumoShmup2
                 {
                     mod.RevalidateNodes();
                 }
+
                 foreach (var enemyMod in activeStage.nodes.OfType<EnemyModifierNode>())
                 {
                     enemyMod.RevalidateNodes();
                 }
             }
-            if (activeStage == null) return;
+
+            if (activeStage == null)
+                return;
+
             RefreshLinks();
 
             foreach (var node in activeStage.nodes)
@@ -694,8 +758,11 @@ namespace FumoShmup2
 
                 Vector2 drawSize = node.IsCompacted ? CompactNodeSize : node.Size;
                 Rect rect = new Rect(node.position + viewOffset, drawSize);
-                Color prevColor = GUI.color;
-                Color prevBackground = GUI.backgroundColor;
+
+                Color previousGUIColor = GUI.color;
+                Color previousBackgroundColor = GUI.backgroundColor;
+                bool previousEnabled = GUI.enabled;
+
                 #region Draw Links
 
                 if (node is IStageNodeModifier mod)
@@ -703,7 +770,9 @@ namespace FumoShmup2
                     mod.RevalidateNodes();
 
                     foreach (var item in mod.LinkedNodes)
+                    {
                         DrawNodeConnection(mod as StageNode, item);
+                    }
                 }
 
                 if (node is EnemyModifierNode enemyModLink)
@@ -711,34 +780,68 @@ namespace FumoShmup2
                     enemyModLink.RevalidateNodes();
 
                     foreach (var item in enemyModLink.LinkedNodes)
+                    {
                         DrawNodeConnection(enemyModLink, item);
+                    }
                 }
 
                 #endregion
-                if (activeNode != node && (rect.xMax < -1000 || rect.yMax < -1000 || rect.xMin > position.width + 1000 || rect.yMin > position.height + 1000))
+
+                if (activeNode != node &&
+                    (rect.xMax < -1000 ||
+                     rect.yMax < -1000 ||
+                     rect.xMin > position.width + 1000 ||
+                     rect.yMin > position.height + 1000))
+                {
+                    GUI.color = previousGUIColor;
+                    GUI.backgroundColor = previousBackgroundColor;
+                    GUI.enabled = previousEnabled;
                     continue;
+                }
 
                 bool isActive = node == activeNode;
+
                 if (!node.IsEnabled)
+                {
                     GUI.backgroundColor = ColorHelper.Gray3;
+                }
+                else if (isActive)
+                {
+                    GUI.backgroundColor = new Color(0.5f, 0.7f, 1f, 1f);
+                }
                 else
-                    GUI.backgroundColor = isActive ? new Color(0.5f, 0.7f, 1f, 1f) : Color.white;
+                {
+                    GUI.backgroundColor = Color.white;
+                }
 
                 string extraText = "";
-                if (activeStage.IsLinking && ((node is IStageNodeRunable linkable && linkable.IsLinkable) || node is EnemyModifierNode))
+
+                if (activeStage.IsLinking &&
+                    ((node is IStageNodeRunable linkable && linkable.IsLinkable) ||
+                     node is EnemyModifierNode))
                 {
                     GUI.color = ColorHelper.PastelYellow;
                     extraText += "(Linkable) ";
                 }
-                GUI.Box(rect, node.IsCompacted ? "▸ " + extraText + node.title.SpaceByCapitals() : extraText + node.title.SpaceByCapitals());
-                GUI.backgroundColor = prevBackground;
-                GUI.color = prevColor;
+
+                GUI.Box(
+                    rect,
+                    node.IsCompacted
+                        ? "▸ " + extraText + node.title.SpaceByCapitals()
+                        : extraText + node.title.SpaceByCapitals()
+                );
 
                 node.DrawFromEditor(activeStage, rect, isActive);
+
+                GUI.color = previousGUIColor;
+                GUI.backgroundColor = previousBackgroundColor;
+                GUI.enabled = previousEnabled;
 
                 EditorGUIUtility.AddCursorRect(rect, MouseCursor.MoveArrow);
             }
             GUI.color = Color.white;
+            GUI.backgroundColor = Color.white;
+            GUI.enabled = true;
         }
         #endregion
         #region Click Event
@@ -852,64 +955,6 @@ namespace FumoShmup2
             EditorUtility.SetDirty(activeStage);
             AssetDatabase.Refresh();
         }
-        #endregion
-        #region Context Menu Create Nodes
-        private void ContextMenuCreateNodes(GenericMenu menu, Vector2 mousePosition)
-        {
-            AddCreateNodeEntries(menu, mousePosition, "Stage", typeof(LineSpawnerNode), typeof(SingleSpawnerNode), typeof(SequenceSpawnerNode));
-            AddCreateNodeEntries(menu, mousePosition, "Boss", typeof(BossNode));
-            AddCreateNodeEntries(menu, mousePosition, "Special", typeof(PrefabRunnerNode));
-            AddCreateNodeEntries(menu, mousePosition, "Segment Nodes", typeof(BooksNode));
-            AddCreateNodeEntries(menu, mousePosition, "Wait Instructions", typeof(WaitForTimeOrEnemiesAliveNode), typeof(DialogueAndWaitNode), typeof(WaitForTimeNode));
-            AddCreateNodeEntries(menu, mousePosition, "When Section Start", typeof(MusicNode));
-            AddCreateNodeEntries(menu, mousePosition, "Modifier Nodes", typeof(RepeatNode), typeof(EnemyModifierNode));
-            AddCreateNodeEntries(menu, mousePosition, "Deprecated", typeof(BossNodeCave));
-        }
-        #region Special Nodes Helper
-        void AddCreateNodeEntries(GenericMenu menu, Vector2 mousePosition, string entryCategory, params Type[] nodeTypes)
-        {
-            foreach (var type in nodeTypes)
-            {
-                if (!typeof(StageNode).IsAssignableFrom(type))
-                    continue;
-
-                string entryName = $"Create {entryCategory} Node/{type.Name}";
-                menu.AddItem(new GUIContent(entryName), false, () =>
-                {
-                    AddNodeByType(type, mousePosition);
-                });
-            }
-        }
-        void AddNodeByType(Type nodeType, Vector2 mousePosition)
-        {
-            if (activeStage == null)
-                return;
-
-            Undo.RecordObject(activeStage, "Add Stage Node");
-            Vector2 graphPos = mousePosition - viewOffset;
-            StageNode node = ScriptableObject.CreateInstance(nodeType) as StageNode;
-            if (node == null)
-            {
-                Debug.LogError($"Failed to create node of type {nodeType}");
-                return;
-            }
-
-            node.position = graphPos;
-            node.title = nodeType.Name;
-            node.skipIndex = CurrentSkipValue;
-            node.name = nodeType.Name;
-            node.IsEnabled = true;
-
-            AssetDatabase.AddObjectToAsset(node, activeStage);
-            activeStage.nodes.Add(node);
-            EditorUtility.SetDirty(node);
-            EditorUtility.SetDirty(activeStage);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-
-            Repaint();
-        }
-        #endregion
         #endregion
         private void OnLostFocus()
         {

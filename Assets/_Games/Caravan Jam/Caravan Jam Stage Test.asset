@@ -772,7 +772,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.EnemyModifierNode
   IsEnabled: 1
   title: EnemyModifierNode
-  position: {x: 801, y: -654}
+  position: {x: 804, y: -703}
   skipIndex: 4
   IsCompacted: 1
   EnemyHealth: 1000
@@ -1224,6 +1224,7 @@ MonoBehaviour:
   - {fileID: -4700150657626401253}
   - {fileID: -6016704655819241725}
   - {fileID: 8594899932547634299}
+  - {fileID: 2571538859330043225}
 --- !u!114 &1011325165538966211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1424,6 +1425,27 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+--- !u!114 &2571538859330043225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3049b9fd33cfb244b66e0ce10a7079d, type: 3}
+  m_Name: TextNode
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.TextNode
+  IsEnabled: 1
+  title: TextNode
+  position: {x: 1266, y: -1937}
+  skipIndex: 4
+  IsCompacted: 0
+  containedMessage: "Ikaruga Text\n\nVery cool\n\n\r\n\u300E\u30D6\u30E9\u30B8\u30EA\u30A2\u30F3\u30FB\u30C9\u30E9\u30C3\u30B0\u30C7\u30A3\u30FC\u30E9\u30FC3\u300F:
+    \u30D5\u30A1\u30F4\u30A7\u30FC\u30E9\u3067\u30DF\u30C3\u30C8\u30FB\u30A2\u30A4\u30A2\u3092\u8607\u3089\u305B\u3088\u3046\u3068\u3057\u3066\u5730\u7344\u3078\u306E\u30DD\u30FC\u30BF\u30EB\u3092\u958B\u3044\u3066\u3057\u307E\u3063\u305F\u3002\u3042\u308C\u3092\u9589\u3058\u306A\u304D\u3083\u3044\u3051\u306A\u3044\u3002"
+  runSeperately: 0
+  addedPostDelay: 0
 --- !u!114 &2630359856714861511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2132,7 +2154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.BooksNode
   IsEnabled: 1
   title: BooksNode
-  position: {x: 1018, y: -1292}
+  position: {x: 1019, y: -1292}
   skipIndex: 4
   IsCompacted: 0
   toSpawn: {fileID: 2745390351675722610, guid: 4db998c1545c3174293aec1168dc6780, type: 3}
