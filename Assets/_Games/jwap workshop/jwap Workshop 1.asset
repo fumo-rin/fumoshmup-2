@@ -148,6 +148,16 @@ MonoBehaviour:
   skipIndex: 20
   IsCompacted: 0
   containedMessage: Lol
+  TextPacket:
+    duration: 3.5
+    color:
+      serializedVersion: 2
+      rgba: 4294944404
+    position01: {x: 0.5, y: 0.5}
+    size01: {x: 0.8, y: 0.1}
+    fontSize: 6
+    horizontalAlignment: 2
+    verticalAlignment: 1024
   runSeperately: 1
   addedPostDelay: 0.5
 --- !u!114 &11400000
@@ -222,6 +232,16 @@ MonoBehaviour:
 
     i
     guess'
+  TextPacket:
+    duration: 3
+    color:
+      serializedVersion: 2
+      rgba: 4294967295
+    position01: {x: 0.5, y: 0.35}
+    size01: {x: 0.8, y: 0.2}
+    fontSize: 6
+    horizontalAlignment: 2
+    verticalAlignment: 256
   runSeperately: 0
   addedPostDelay: 0.5
 --- !u!114 &6855499392888865573

@@ -21,7 +21,7 @@ namespace FumoShmup2
         public bool runSeperately;
         public float addedPostDelay = 0f;
         public bool RunSeperately => runSeperately;
-        public float RunDuration => TextPacket.duration + 0.5f;
+        public float RunDuration => TextPacket.duration;
         public bool WasModifiedByModifier { get; set; } = false;
         public bool IsLinkable => false;
         public IEnumerator RunNode()

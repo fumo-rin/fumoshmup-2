@@ -8,6 +8,7 @@ namespace FumoShmup2
     public class ShmupTextBuilderUI : MonoBehaviour
     {
         #region Text Packet
+        [System.Serializable]
         public class textPacket
         {
             public float duration;

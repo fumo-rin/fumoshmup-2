@@ -339,7 +339,7 @@
                     "_prefabPath": "Packages/com.fumorin.tools/Modellen/Asset Ready/Vegetation/Mushrooms/Mushroom.002.prefab",
                     "_frequency": 1.0,
                     "_parentId": 639159346260585793,
-                    "_paletteName": "Palette1",
+                    "_paletteName": "",
                     "_overwriteThumbnailSettings": false,
                     "_includeInThumbnail": true,
                     "_isAsset2D": false
@@ -455,7 +455,7 @@
                     "_prefabPath": "Packages/com.fumorin.tools/Modellen/Asset Ready/Vegetation/Mushrooms/Mushroom.003.prefab",
                     "_frequency": 1.0,
                     "_parentId": 639159346260585793,
-                    "_paletteName": "Palette1",
+                    "_paletteName": "",
                     "_overwriteThumbnailSettings": false,
                     "_includeInThumbnail": true,
                     "_isAsset2D": false
@@ -571,7 +571,7 @@
                     "_prefabPath": "Packages/com.fumorin.tools/Modellen/Asset Ready/Vegetation/Mushrooms/Mushroom.004.prefab",
                     "_frequency": 1.0,
                     "_parentId": 639159346260585793,
-                    "_paletteName": "Palette1",
+                    "_paletteName": "",
                     "_overwriteThumbnailSettings": false,
                     "_includeInThumbnail": true,
                     "_isAsset2D": false
@@ -687,7 +687,7 @@
                     "_prefabPath": "Packages/com.fumorin.tools/Modellen/Asset Ready/Vegetation/Mushrooms/Mushroom.005.prefab",
                     "_frequency": 1.0,
                     "_parentId": 639159346260585793,
-                    "_paletteName": "Palette1",
+                    "_paletteName": "",
                     "_overwriteThumbnailSettings": false,
                     "_includeInThumbnail": true,
                     "_isAsset2D": false
@@ -803,7 +803,7 @@
                     "_prefabPath": "Packages/com.fumorin.tools/Modellen/Asset Ready/Vegetation/Mushrooms/Mushroom.prefab",
                     "_frequency": 1.0,
                     "_parentId": 639159346260585793,
-                    "_paletteName": "Palette1",
+                    "_paletteName": "",
                     "_overwriteThumbnailSettings": false,
                     "_includeInThumbnail": true,
                     "_isAsset2D": false
@@ -957,5 +957,5 @@
         }
     },
     "_hashCode": 1255339297,
-    "_isPinned": true
+    "_isPinned": false
 }

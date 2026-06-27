@@ -24,8 +24,12 @@
     "_maxPreviewCountInEditMode": 200,
     "_unsavedChangesAction": 0,
     "_prefabCountDict": {
-        "_keys": [],
-        "_values": []
+        "_keys": [
+            "61446967f900d2a4fb9012ba50a60e07"
+        ],
+        "_values": [
+            50
+        ]
     },
     "_paletteManager": {
         "_selectedBrushIdx": -1,
@@ -3856,7 +3860,7 @@
             "_origin": {
                 "x": 0.0,
                 "y": 0.0,
-                "z": 0.0
+                "z": 227.3721160888672
             },
             "_rotation": {
                 "x": 0.0,
