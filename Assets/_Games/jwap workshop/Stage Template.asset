@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 402a3f0e7ec535749ac36027c36e1a5c, type: 3}
+  m_Name: Stage Template
+  m_EditorClassIdentifier: Fumoshmup2::FumoShmup2.ShmupNodeStage
+  SkipEntries:
+  - skipName: Section 1
+    skipValue: 20
+    enabled: 1
+  - skipName: Section 2
+    skipValue: 40
+    enabled: 1
+  - skipName: Section 3
+    skipValue: 60
+    enabled: 1
+  - skipName: Section 4
+    skipValue: 80
+    enabled: 1
+  - skipName: Section 5
+    skipValue: 100
+    enabled: 1
+  - skipName: Section 6
+    skipValue: 120
+    enabled: 1
+  <StageScene>k__BackingField: {fileID: 11400000, guid: 9ac2b125f6a81b04ca14a6031c9663e9, type: 2}
+  currentLinkAttempt: {fileID: 0}
+  selectedSkipIndex: -1
+  StageEndDialogue: {fileID: 0}
+  enemyTable:
+  - {fileID: 2745390351675722610, guid: 8718143fc4e6d3c4ab93d4358a188b8e, type: 3}
+  - {fileID: 2745390351675722610, guid: b00c6e794300fd54fb62a4972c9900c9, type: 3}
+  - {fileID: 2745390351675722610, guid: ede0627c388384742943bef27f591048, type: 3}
+  - {fileID: 2745390351675722610, guid: b47fd15425d75be4687ae97d6e688ef8, type: 3}
+  nodes: []
