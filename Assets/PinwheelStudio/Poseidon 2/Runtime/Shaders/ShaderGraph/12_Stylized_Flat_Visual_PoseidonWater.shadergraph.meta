@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 3c1acf00b52c0434b9912943894559a5
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 625f186215c104763be7675aa2d941aa, type: 3}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 357908
+  packageName: Poseidon 2 - Low Poly Water System
+  packageVersion: 2.0.5
+  assetPath: Assets/PinwheelStudio/Poseidon 2/Runtime/Shaders/ShaderGraph/12_Stylized_Flat_Visual_PoseidonWater.shadergraph
+  uploadId: 940258

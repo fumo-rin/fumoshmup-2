@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 1232f4a297f2128449d5381cfd47cce0
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 357908
+  packageName: Poseidon 2 - Low Poly Water System
+  packageVersion: 2.0.5
+  assetPath: Assets/PinwheelStudio/Poseidon 2/Runtime/Scripts/PostFX/BiRP/UnderwaterRendererBirp.cs
+  uploadId: 940258

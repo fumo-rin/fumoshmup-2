@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 179d39c1561d16d4c9be2c51bf9c8129
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 357908
+  packageName: Poseidon 2 - Low Poly Water System
+  packageVersion: 2.0.5
+  assetPath: Assets/PinwheelStudio/Poseidon 2/Runtime/Scripts/Pinwheel.Poseidon.Runtime.asmdef
+  uploadId: 940258

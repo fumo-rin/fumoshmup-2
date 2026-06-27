@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: d52d145ed78d68349b5258334b37dd91
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 357908
+  packageName: Poseidon 2 - Low Poly Water System
+  packageVersion: 2.0.5
+  assetPath: Assets/PinwheelStudio/Poseidon 2/Runtime/Shaders/PostProcessing/UnderwaterBiRP.shader
+  uploadId: 940258

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: b7af06121901bc949870ac3d8171a125
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 357908
+  packageName: Poseidon 2 - Low Poly Water System
+  packageVersion: 2.0.5
+  assetPath: Assets/PinwheelStudio/Poseidon 2/Runtime/Shaders/Internal/SolidColor.shader
+  uploadId: 940258

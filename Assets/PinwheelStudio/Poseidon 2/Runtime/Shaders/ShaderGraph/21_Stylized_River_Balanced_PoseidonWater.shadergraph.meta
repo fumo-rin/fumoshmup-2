@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 79021c459eb356441b3191b69fca0f89
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 625f186215c104763be7675aa2d941aa, type: 3}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 357908
+  packageName: Poseidon 2 - Low Poly Water System
+  packageVersion: 2.0.5
+  assetPath: Assets/PinwheelStudio/Poseidon 2/Runtime/Shaders/ShaderGraph/21_Stylized_River_Balanced_PoseidonWater.shadergraph
+  uploadId: 940258

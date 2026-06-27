@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 1fb020378d3224e48a9c985e74f367b4
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 60072b568d64c40a485e0fc55012dc9f, type: 3}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 357908
+  packageName: Poseidon 2 - Low Poly Water System
+  packageVersion: 2.0.5
+  assetPath: Assets/PinwheelStudio/Poseidon 2/Runtime/Shaders/ShaderGraph/SubGraphs/Wave_Mask_Poseidon.shadersubgraph
+  uploadId: 940258

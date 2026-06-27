@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 6475c569b1d701745953c7e26ea7d7f5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 357908
+  packageName: Poseidon 2 - Low Poly Water System
+  packageVersion: 2.0.5
+  assetPath: Assets/PinwheelStudio/Poseidon 2/Runtime/Scripts/PostFX/BiRP/WetLensRendererBirp.cs
+  uploadId: 940258

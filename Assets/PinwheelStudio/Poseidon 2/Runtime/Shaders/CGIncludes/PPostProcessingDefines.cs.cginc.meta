@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 2cfc30e3c37a2b8419dfd8501b35d56f
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 357908
+  packageName: Poseidon 2 - Low Poly Water System
+  packageVersion: 2.0.5
+  assetPath: Assets/PinwheelStudio/Poseidon 2/Runtime/Shaders/CGIncludes/PPostProcessingDefines.cs.cginc
+  uploadId: 940258

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 3fc9ba7c7bf4193468d2348bfeb25be1
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 357908
+  packageName: Poseidon 2 - Low Poly Water System
+  packageVersion: 2.0.5
+  assetPath: Assets/PinwheelStudio/Poseidon 2/Runtime/Shaders/Internal/CopyTexture.shader
+  uploadId: 940258

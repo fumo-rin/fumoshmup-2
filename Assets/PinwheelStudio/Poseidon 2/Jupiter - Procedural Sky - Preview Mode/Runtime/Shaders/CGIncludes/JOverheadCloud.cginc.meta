@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 806318454a0053e4eb2f11faa88633f6
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 357908
+  packageName: Poseidon 2 - Low Poly Water System
+  packageVersion: 2.0.5
+  assetPath: Assets/PinwheelStudio/Poseidon 2/Jupiter - Procedural Sky - Preview
+    Mode/Runtime/Shaders/CGIncludes/JOverheadCloud.cginc
+  uploadId: 940258

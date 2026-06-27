@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: a6c48c82193e4904ca79d30062fbf9ce
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 60072b568d64c40a485e0fc55012dc9f, type: 3}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 357908
+  packageName: Poseidon 2 - Low Poly Water System
+  packageVersion: 2.0.5
+  assetPath: Assets/PinwheelStudio/Poseidon 2/Runtime/Shaders/ShaderGraph/SubGraphs/MixWaterColor_Poseidon.shadersubgraph
+  uploadId: 940258

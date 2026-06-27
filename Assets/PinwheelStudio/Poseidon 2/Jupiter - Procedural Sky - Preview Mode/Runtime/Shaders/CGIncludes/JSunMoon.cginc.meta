@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: d4a1ce257bb8d5945960c4c9d6cbccb4
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 357908
+  packageName: Poseidon 2 - Low Poly Water System
+  packageVersion: 2.0.5
+  assetPath: Assets/PinwheelStudio/Poseidon 2/Jupiter - Procedural Sky - Preview
+    Mode/Runtime/Shaders/CGIncludes/JSunMoon.cginc
+  uploadId: 940258

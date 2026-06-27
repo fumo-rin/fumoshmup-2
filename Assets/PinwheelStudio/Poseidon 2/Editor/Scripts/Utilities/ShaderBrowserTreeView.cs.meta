@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 7eec9d69f15717342af5c0cb0dd6750e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 357908
+  packageName: Poseidon 2 - Low Poly Water System
+  packageVersion: 2.0.5
+  assetPath: Assets/PinwheelStudio/Poseidon 2/Editor/Scripts/Utilities/ShaderBrowserTreeView.cs
+  uploadId: 940258

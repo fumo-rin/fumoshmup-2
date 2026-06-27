@@ -20,6 +20,7 @@
   <Project Path="Unity.Networking.Transport.csproj" />
   <Project Path="Unity.Timeline.Editor.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="Pinwheel.Poseidon.Runtime.csproj" />
   <Project Path="Unity.VisualStudio.Editor.csproj" />
   <Project Path="Unity.Services.QoS.csproj" />
   <Project Path="rinCore.csproj" />
@@ -70,6 +71,7 @@
   <Project Path="Unity.Services.Leaderboards.Editor.Authoring.csproj" />
   <Project Path="Unity.Collections.csproj" />
   <Project Path="Unity.Burst.Editor.csproj" />
+  <Project Path="Pinwheel.Poseidon.Editor.csproj" />
   <Project Path="Unity.VisualScripting.State.csproj" />
   <Project Path="Unity.Services.Multiplayer.Editor.Matchmaker.Authoring.csproj" />
   <Project Path="Unity.2D.Animation.Editor.csproj" />
@@ -127,6 +129,7 @@
   <Project Path="Unity.Multiplayer.Tools.DependencyInjection.csproj" />
   <Project Path="Unity.Services.Core.Analytics.csproj" />
   <Project Path="andywiecko.BurstTriangulator.csproj" />
+  <Project Path="Unity.EditorCoroutines.Editor.csproj" />
   <Project Path="Unity.Netcode.Editor.csproj" />
   <Project Path="Unity.Splines.csproj" />
   <Project Path="Unity.AI.Navigation.csproj" />
