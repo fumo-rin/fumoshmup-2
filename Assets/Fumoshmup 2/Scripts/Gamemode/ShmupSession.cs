@@ -35,6 +35,7 @@ namespace FumoShmup2
             ShmupStage.WhenSpawnPlayerRequest = ShmupGamemode.SpawnCurrentPlayer; // this is without event tag so it can be = nulled
             SceneLoader.LoadScenePair(next.StageScene, new SceneLoader.SceneLoadSettings()
             {
+                Delay = 0.1f,
                 Payload = () => next.RunStage(0)
             });
             PointItemRunner.WhenPointItemValue = PickupValue;

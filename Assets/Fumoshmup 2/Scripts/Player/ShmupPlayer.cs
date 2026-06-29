@@ -173,11 +173,9 @@ public partial class ShmupPlayer : IHit
                     yield return null;
                     continue;
                 }
-                if (ShmupInput.BombJustPressed)
+                if (ShmupInput.BombJustPressed && PlayerBomb.TryTriggerBomb(this))
                 {
                     cancelled = true;
-                    //session.ChangeResource(ShmupSession.keys.CurrentBombs, -1);
-                    //economy is paid for elsewhere
                 }
 
                 endUnscaled -= Time.unscaledDeltaTime;
@@ -271,7 +269,7 @@ public partial class ShmupPlayer : ShmupUnit
                 }
             }
         }
-        if (bombKey.JustPressed())
+        if (bombKey.JustPressed() && currentHit == null)
         {
             PlayerBomb.TryTriggerBomb(this);
         }
