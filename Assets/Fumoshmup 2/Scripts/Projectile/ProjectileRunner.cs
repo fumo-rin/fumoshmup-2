@@ -4,6 +4,7 @@ using rinCore;
 using TMPro;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System;
 
 namespace FumoShmup2
 {
@@ -117,6 +118,7 @@ namespace FumoShmup2
         #region Gizmos
         private void OnDrawGizmos()
         {
+            /*
             Rect space = ShmupWorldspace.WorldSpace;
             if (space.width <= 0 || space.height <= 0) return;
 
@@ -164,7 +166,7 @@ namespace FumoShmup2
                         }
                     }
                 }
-            }
+            }*/
         }
         #endregion
         public enum CollisionBitmask

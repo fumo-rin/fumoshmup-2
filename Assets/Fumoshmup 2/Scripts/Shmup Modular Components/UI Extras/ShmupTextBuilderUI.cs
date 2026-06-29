@@ -11,14 +11,23 @@ namespace FumoShmup2
         [System.Serializable]
         public class textPacket
         {
+            public float fadeIn = 0.5f;
+            public float fadeOut = 0.5f;
             public float duration;
             public Color32 color;
-            public Vector2 position01;
-            public Vector2 size01;
+
+            public Vector2 a01;
+            public Vector2 b01;
+
             public float fontSize;
 
             public HorizontalAlignmentOptions horizontalAlignment;
             public VerticalAlignmentOptions verticalAlignment;
+            public textPacket()
+            {
+                this.fadeIn = 0.5f;
+                this.fadeOut = 0.5f;
+            }
         }
         #endregion
 
@@ -42,8 +51,6 @@ namespace FumoShmup2
 
             IEnumerator CO_Text(string text, textPacket packet)
             {
-                const float fade = 0.5f;
-
                 TMP_Text clone = Instantiate(instance.cloneable, instance.textSpaceAnchor);
                 RectTransform rt = clone.rectTransform;
                 Rect parentRect = instance.textSpaceAnchor.rect;
@@ -52,16 +59,19 @@ namespace FumoShmup2
                 rt.anchorMax = new Vector2(0.5f, 0.5f);
                 rt.pivot = new Vector2(0.5f, 0.5f);
 
-                rt.anchoredPosition = new Vector2(
-                    (packet.position01.x - 0.5f) * parentRect.width,
-                    (packet.position01.y - 0.5f) * parentRect.height);
+                Vector2 min = Vector2.Min(packet.a01, packet.b01);
+                Vector2 max = Vector2.Max(packet.a01, packet.b01);
 
-                if (packet.size01 != Vector2.zero)
-                {
-                    rt.sizeDelta = new Vector2(
-                        packet.size01.x * parentRect.width,
-                        packet.size01.y * parentRect.height);
-                }
+                Vector2 center = (min + max) * 0.5f;
+                Vector2 size = max - min;
+
+                rt.anchoredPosition = new Vector2(
+                    (center.x - 0.5f) * parentRect.width,
+                    (center.y - 0.5f) * parentRect.height);
+
+                rt.sizeDelta = new Vector2(
+                    size.x * parentRect.width,
+                    size.y * parentRect.height);
 
                 clone.enableAutoSizing = true;
                 clone.fontSizeMax = packet.fontSize;
@@ -74,10 +84,10 @@ namespace FumoShmup2
                 clone.color = packet.color.Opacity(0);
                 clone.gameObject.SetActive(true);
 
-                float entry = fade;
+                float entry = packet.fadeIn;
                 while (entry > 0)
                 {
-                    float lerp01 = entry.MapTo01(fade, 0f, true);
+                    float lerp01 = entry.MapTo01(packet.fadeIn, 0f, true);
 
                     clone.color = clone.color.Opacity(
                         lerp01.MapFrom01(0f, 255f).ToByte());
@@ -90,10 +100,10 @@ namespace FumoShmup2
 
                 yield return packet.duration.WaitForSeconds();
 
-                float exit = fade;
+                float exit = packet.fadeOut;
                 while (exit > 0)
                 {
-                    float lerp01 = exit.MapTo01(fade, 0f, true);
+                    float lerp01 = exit.MapTo01(packet.fadeOut, 0f, true);
 
                     clone.color = clone.color.Opacity(
                         lerp01.MapFrom01(255f, 0f).ToByte());

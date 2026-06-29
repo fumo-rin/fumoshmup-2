@@ -536,6 +536,34 @@ namespace FumoShmup2
                 BossPhaseStallEnd = Time.time + duration;
             }
         }
+        public bool SkipBossPhases(int phaseSkips)
+        {
+            if (!HasPhases || phaseSkips <= 0)
+                return false;
+
+            phaseSkips = phaseSkips.Clamp(0, phases.Count - 1);
+            float targetDamage = 0f;
+            int skipped = 0;
+
+            foreach (var phase in phases)
+            {
+                if (skipped >= phaseSkips)
+                    break;
+
+                targetDamage += phase.phaseHealth;
+                skipped++;
+            }
+
+            targetDamage = Mathf.Min(targetDamage, PhasesTotalHealth);
+            phaseTrackedDamage = targetDamage;
+            StartNewHealth(Mathf.Max(0f, PhasesTotalHealth - phaseTrackedDamage), PhasesTotalHealth);
+
+            CurrentRunningAttack = null;
+            CurrentPhase = null;
+            LastKnownPhase = null;
+            spentPhases.Clear();
+            return true;
+        }
         private bool ShouldExpireBossPhase()
         {
             if (!IsBoss)

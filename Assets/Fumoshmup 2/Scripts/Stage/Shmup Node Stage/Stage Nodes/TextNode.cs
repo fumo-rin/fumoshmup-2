@@ -14,8 +14,8 @@ namespace FumoShmup2
             fontSize = 6,
             horizontalAlignment = TMPro.HorizontalAlignmentOptions.Center,
             verticalAlignment = TMPro.VerticalAlignmentOptions.Middle,
-            position01 = new(0.5f, 0.4f),
-            size01 = new(0.8f, 0.4f)
+            a01 = new(0.2f, 0.4f),
+            b01 = new(0.8f, 0.6f)
         };
 
         public bool runSeperately;
@@ -49,18 +49,18 @@ namespace FumoShmup2
             int index = 0;
             containedMessage = EF_Utility.EF_TextField(Helper_BuildFieldRect(in rect, ref index, 5), "Contained Message", containedMessage, 5);
             index++;
-            TextPacket.position01.x = EF_Utility.EF_Slider(Helper_BuildFieldRect(in rect, ref index, 1), "Center X", TextPacket.position01.x, 0f, 1f);
-            TextPacket.position01.y = EF_Utility.EF_Slider(Helper_BuildFieldRect(in rect, ref index, 1), "Center Y", TextPacket.position01.y, 0f, 1f);
-            TextPacket.size01.x = EF_Utility.EF_Slider(Helper_BuildFieldRect(in rect, ref index, 1), "Size X", TextPacket.size01.x, 0f, 1f);
-            TextPacket.size01.y = EF_Utility.EF_Slider(Helper_BuildFieldRect(in rect, ref index, 1), "Size Y", TextPacket.size01.y, 0f, 1f);
-            TextPacket.duration = EF_Utility.EF_NumberField(Helper_BuildFieldRect(in rect, ref index, 1), "Duration", TextPacket.duration);
-            TextPacket.fontSize = EF_Utility.EF_NumberField(Helper_BuildFieldRect(in rect, ref index, 1), "Font Size", TextPacket.fontSize);
+            TextPacket.a01.x = EF_Utility.EF_NumberField(Helper_BuildFieldRect(in rect, ref index, 1), "A x", TextPacket.a01.x, 0f, 1f);
+            TextPacket.a01.y = EF_Utility.EF_NumberField(Helper_BuildFieldRect(in rect, ref index, 1), "A Y", TextPacket.a01.y, 0f, 1f);
+            TextPacket.b01.x = EF_Utility.EF_NumberField(Helper_BuildFieldRect(in rect, ref index, 1), "B X", TextPacket.b01.x, 0f, 1f);
+            TextPacket.b01.y = EF_Utility.EF_NumberField(Helper_BuildFieldRect(in rect, ref index, 1), "B Y", TextPacket.b01.y, 0f, 1f);
+            TextPacket.duration = EF_Utility.EF_NumberField(Helper_BuildFieldRect(in rect, ref index, 1), "Duration", TextPacket.duration, 0.5f, 20f);
+            TextPacket.fontSize = EF_Utility.EF_NumberField(Helper_BuildFieldRect(in rect, ref index, 1), "Font Size", TextPacket.fontSize, 2f, 72f);
             TextPacket.color = EF_Utility.EF_ColorField(Helper_BuildFieldRect(in rect, ref index, 1), "Color", TextPacket.color);
             TextPacket.horizontalAlignment = EF_Utility.EF_EnumDropdown(Helper_BuildFieldRect(in rect, ref index, 1), "Horizontal Alignment", TextPacket.horizontalAlignment);
             TextPacket.verticalAlignment = EF_Utility.EF_EnumDropdown(Helper_BuildFieldRect(in rect, ref index, 1), "Vertical Alignment", TextPacket.verticalAlignment);
 
             index++;
-            addedPostDelay = EF_Utility.EF_NumberField(Helper_BuildFieldRect(in rect, ref index, 1), "Added Post Delay", addedPostDelay);
+            addedPostDelay = EF_Utility.EF_NumberField(Helper_BuildFieldRect(in rect, ref index, 1), "Added Post Delay", addedPostDelay, 0f, 20f);
             runSeperately = EF_Utility.EF_BoolField(Helper_BuildFieldRect(in rect, ref index, 1), "Run Seperately", runSeperately);
 #endif
         }

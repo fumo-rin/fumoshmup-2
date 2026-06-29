@@ -418,6 +418,7 @@ namespace Caravan
                             input.ReAimWithOptionalTarget(sender.CurrentPosition);
                             if (Single(0f, 9f).Spawn(input, lineProjectile, out Projectile p))
                             {
+                                p.SecondaryVelocity = new(flipped.AsFloat(2f, -2f), 0f);
                                 int number = 1;
                                 yield return TICK.WaitForSeconds(4);
                                 Vector2 position = sender.CurrentPosition + (flipped ? new Vector2(-number.AsFloat(0.2f), 0f) : new Vector2(number.AsFloat(0.2f), 0f));
@@ -428,7 +429,20 @@ namespace Caravan
                                         position = sender.CurrentPosition + (flipped ? new Vector2(-number.AsFloat(0.2f), 0f) : new Vector2(number.AsFloat(0.2f), 0f));
                                         input.SetOrigin(position);
                                         input.SetDirection(p.Position - position);
-                                        Arc(0f, 120f, 7, 9f).Spawn(input, lineProjectile, out _);
+                                        if (Arc(0f, 120f, 4, 9f).Spawn(input, lineProjectile, out iterationList))
+                                        {
+                                            foreach (var item in iterationList)
+                                            {
+                                                item.SecondaryVelocity = new(flipped.AsFloat(2f, -2f), 0f);
+                                            }
+                                        }
+                                        if (Arc(0f, 120f, 3, 4f).Spawn(input, lineProjectile, out iterationList))
+                                        {
+                                            foreach (var item in iterationList)
+                                            {
+                                                item.SecondaryVelocity = new(flipped.AsFloat(2f, -2f), 0f);
+                                            }
+                                        }
                                         yield return TICK.WaitForSeconds();
                                         number++;
                                     }
@@ -459,7 +473,7 @@ namespace Caravan
                     {
                         input.SetMods(new ProjectileModAccelerate(new ProjectileModSettings(0.5f, 0f), 2f, 20f),
                             new ProjectileModAccelerate(new ProjectileModSettings(1f, 1f), 8f, 6f));
-                        input.addedForward = 0.75f;
+                        input.addedForward = 0.65f;
                         input.SetDirection(Vector2.down);
                         float timeDelta = 0f;
                         for (int i = 0; i < 80; i++)

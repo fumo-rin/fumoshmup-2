@@ -55,6 +55,10 @@ namespace FumoShmup2
             {
                 wait = WaitForKill(result);
                 result.SetIframes(1.25f, 90f);
+                if (ShmupPracticeMode.IsOn && ShmupPracticeMode.BossSkip is int skips && skips > 0)
+                {
+                    result.SkipBossPhases(skips);
+                }
             }
             return result != null;
         }

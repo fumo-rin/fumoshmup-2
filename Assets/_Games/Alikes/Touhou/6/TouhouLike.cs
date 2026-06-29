@@ -17,8 +17,9 @@ namespace TouhouLike
                     public ProjectileDefineSO bookProjectile1, bookProjectile2;
                     protected override IEnumerator CO_AttackPayload(ShmupUnit sender, Projectile.InputSettings input)
                     {
-                        input.addedForward = 0.3f;
+                        input.addedForward = 0.55f;
                         var input2 = input.Copy();
+                        input2.addedForward = 0.25f;
                         input.SetMods(new ProjectileModAccelerate(new(0.5f, 0f), 6f, 14f));
 
                         int segments = 16;

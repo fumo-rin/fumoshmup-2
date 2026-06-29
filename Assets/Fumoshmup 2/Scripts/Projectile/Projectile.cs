@@ -3,6 +3,7 @@ using rinCore;
 using System.Collections.Generic;
 using UnityEditor;
 using System.Linq;
+using System.Data;
 
 namespace FumoShmup2
 {
@@ -430,41 +431,36 @@ namespace FumoShmup2
         }
         public static bool SpawnSingle(ProjectileDefineSO define, InputSettings input, SingleSettings settings, out Projectile output)
         {
-            bool spawnedBullet = CreateProjectile(define, input.Sender, input.Origin + input.Direction.ScaleToMagnitude(input.addedForward), input.Direction.normalized.Rotate2D(settings.AddedAngle).Multiply(settings.ProjectileSpeed), input.Faction, input.mods, out Projectile p);
+            Vector2 offset = input.Direction.Rotate2D(settings.AddedAngle).ScaleToMagnitude(input.addedForward);
+            Vector2 Velocity = input.Direction.Rotate2D(settings.AddedAngle).ScaleToMagnitude(settings.ProjectileSpeed);
+
+            bool spawnedBullet = CreateProjectile(define, input.Sender, input.Origin + offset, Velocity, input.Faction, input.mods, out Projectile p);
             output = p;
-            /*if (!spawnedBullet && define != null && define.useFlare)
-            {
-                Vector2 flareDirection = input.Direction.normalized * settings.ProjectileSpeed;
-                ProjectileRunner.Flare(input.Origin + input.Direction.ScaleToMagnitude(input.addedForward), flareDirection, define.FlareColor);
-            }*/
             if (spawnedBullet && input.Flare && p != null && define.useFlare)
             {
-                ProjectileRunner.Flare(p.Position + input.Direction.ScaleToMagnitude(input.addedForward), p.EffectiveVelocity, define.FlareColor);
+                ProjectileRunner.Flare(p.Position + offset, p.EffectiveVelocity, define.FlareColor);
             }
             return spawnedBullet;
         }
         public static bool SpawnArc(ProjectileDefineSO define, InputSettings input, ArcSettings settings, out List<Projectile> output)
         {
             output = new();
+            Vector2 offset;
+            Vector2 rotatedDirection;
+            float angle;
             foreach (var item in settings.ArcInterval.StepFromTo(settings.StartingAngle, settings.EndingAngle))
             {
-                float angle = item * settings.IsReverse.ToFloat(-1f, 1f);
-                bool spawnedBullet = CreateProjectile(define, input.Sender, input.Origin + input.Direction.Rotate2D(angle).ScaleToMagnitude(input.addedForward), input.Direction.Rotate2D(angle).normalized.Multiply(settings.ProjectileSpeed), input.Faction, input.mods, out Projectile p);
+                angle = item * settings.IsReverse.ToFloat(-1f, 1f);
+                rotatedDirection = input.Direction.Rotate2D(angle);
+                offset = rotatedDirection.ScaleToMagnitude(input.addedForward);
+                bool spawnedBullet = CreateProjectile(define, input.Sender, input.Origin + offset, rotatedDirection.normalized.Multiply(settings.ProjectileSpeed), input.Faction, input.mods, out Projectile p);
                 if (!spawnedBullet)
                 {
-                    /*if (define != null && define.useFlare)
-                    {
-                        Vector2 rotatedDir = input.Direction.Rotate2D(item * settings.IsReverse.ToFloat(-1f, 1f)).normalized;
-                        Vector2 flareDirection = rotatedDir * settings.ProjectileSpeed;
-                        Vector2 flareOrigin = input.Origin + rotatedDir.ScaleToMagnitude(input.addedForward);
-                        ProjectileRunner.Flare(flareOrigin, flareDirection, define.FlareColor);
-                    }*/
                     continue;
                 }
                 if (input.Flare && p != null && define.useFlare)
                 {
-                    Vector2 flareDirection = input.Direction.Rotate2D(item * settings.IsReverse.ToFloat(-1f, 1f)).normalized * settings.ProjectileSpeed;
-                    ProjectileRunner.Flare(p.Position, flareDirection, define.FlareColor);
+                    ProjectileRunner.Flare(p.Position, p.EffectiveVelocity, define.FlareColor);
                 }
                 output.Add(p);
             }
@@ -701,7 +697,7 @@ namespace FumoShmup2
         {
             this.damageInfo = damage;
         }
-        private static bool CreateProjectile(ProjectileDefineSO define, ShmupUnit sender, Vector2 position, Vector2 direction, ProjectileFaction faction, List<ProjectileMod> mods, out Projectile p)
+        private static bool CreateProjectile(ProjectileDefineSO define, ShmupUnit sender, Vector2 position, Vector2 velocityDirection, ProjectileFaction faction, List<ProjectileMod> mods, out Projectile p)
         {
             void Cancel(Vector2 position, Vector2 direction)
             {
@@ -721,7 +717,7 @@ namespace FumoShmup2
                 if (ProjectileRunner.SweepLootChance > 0 && RNG.Byte255 < ProjectileRunner.SweepLootChance)
                 {
                     PointItemRunner.SpawnPointItem(position + Random.insideUnitCircle);
-                    Cancel(position, direction);
+                    Cancel(position, velocityDirection);
                 }
                 return false;
             }
@@ -734,7 +730,7 @@ namespace FumoShmup2
                 }
                 if (cancelCondition)
                 {
-                    Cancel(position, direction);
+                    Cancel(position, velocityDirection);
                     return false;
                 }
             }
@@ -743,7 +739,7 @@ namespace FumoShmup2
                 data = define,
                 Position = position,
                 PreviousPosition = position,
-                Velocity = direction,
+                Velocity = velocityDirection,
                 Faction = faction,
                 spawnTime = Time.time,
                 animationOffsetSeconds = (1f / define.animationSpeed) * (define.animationSpreadPercent.RandomPositiveNegativeRange().Multiply(0.01f)),

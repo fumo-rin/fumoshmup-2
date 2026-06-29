@@ -96,7 +96,7 @@ namespace FumoShmup2
             var listOfEnemies = stage.enemyTable;
             toSpawn = EF_ListDropdown(Helper_BuildFieldRect(rect, ref index), "Enemy", listOfEnemies, toSpawn, enemy => enemy != null ? enemy.name : "(Missing)");
 
-            EnemyHealth = EF_NumberField<float>(Helper_BuildFieldRect(rect, ref index), "Enemy Health", EnemyHealth);
+            EnemyHealth = EF_NumberField<float>(Helper_BuildFieldRect(rect, ref index), "Enemy Health", EnemyHealth, 1f, 100000f);
             attackLoops = EF_Slider(Helper_BuildFieldRect(rect, ref index), "Attack Loops", attackLoops, 1, 15);
             attackStall = EF_Slider(Helper_BuildFieldRect(rect, ref index), "Attack Stall time", attackStall, 0.05f, 9f);
             loopAddedDelay = EF_Slider(Helper_BuildFieldRect(rect, ref index), "Delay Between Loops", loopAddedDelay, 0f, 6f);

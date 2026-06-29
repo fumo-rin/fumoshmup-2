@@ -109,8 +109,8 @@ MonoBehaviour:
     - rid: 5849968720848617826
       type: {class: Touhou/EOSD/Stage4/BooksAttack, ns: TouhouLike, asm: Assembly-CSharp}
       data:
-        bookProjectile1: {fileID: 11400000, guid: 4ddc0ca8009530a4cb9220214e791aee, type: 2}
-        bookProjectile2: {fileID: 11400000, guid: edc2538c2296e764eb09efc63e2bcbea, type: 2}
+        bookProjectile1: {fileID: 11400000, guid: ec5127393eed65d4bb8c76934cdf796a, type: 2}
+        bookProjectile2: {fileID: 11400000, guid: bbaefcb56e1df9544b8c97f3f2513c77, type: 2}
 --- !u!114 &-544997264573943689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,12 +149,14 @@ MonoBehaviour:
   IsCompacted: 0
   containedMessage: Lol
   TextPacket:
+    fadeIn: 0.5
+    fadeOut: 0.5
     duration: 3.5
     color:
       serializedVersion: 2
       rgba: 4294944404
-    position01: {x: 0.5, y: 0.5}
-    size01: {x: 0.8, y: 0.1}
+    a01: {x: 0.2, y: 0.5}
+    b01: {x: 0.8, y: 0.6}
     fontSize: 6
     horizontalAlignment: 2
     verticalAlignment: 1024
@@ -233,12 +235,14 @@ MonoBehaviour:
     i
     guess'
   TextPacket:
+    fadeIn: 0.5
+    fadeOut: 0.5
     duration: 3
     color:
       serializedVersion: 2
       rgba: 4294967295
-    position01: {x: 0.5, y: 0.35}
-    size01: {x: 0.8, y: 0.2}
+    a01: {x: 0.2, y: 0}
+    b01: {x: 0.8, y: 0.5}
     fontSize: 6
     horizontalAlignment: 2
     verticalAlignment: 256

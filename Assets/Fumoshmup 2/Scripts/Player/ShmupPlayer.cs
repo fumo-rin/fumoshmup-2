@@ -83,11 +83,27 @@ public partial class ShmupPlayer : IHit
                     lifePool--;
                     session.SetInt(ShmupSession.keys.CurrentLives, lifePool, 0, 6);
                 }
-                yield return 1f.WaitForSeconds();
-                if (!canRespawn)
+
+                IEnumerator Respawn()
                 {
+                    void DefeatText()
+                    {
+                        ShmupTextBuilderUI.CreateText("Defeat!", new()
+                        {
+                            color = ColorHelper.White,
+                            duration = 1.15f,
+                            fontSize = 18,
+                            horizontalAlignment = TMPro.HorizontalAlignmentOptions.Center,
+                            verticalAlignment = TMPro.VerticalAlignmentOptions.Middle,
+                            a01 = new(0.2f, 0.4f),
+                            b01 = new(0.8f, 0.6f),
+                            fadeIn = 0.15f
+                        });
+                    }
+
                     if (session.CanContinue)
                     {
+                        yield return 1f.WaitForSeconds();
                         bool continued = false;
                         void Yes()
                         {
@@ -107,11 +123,18 @@ public partial class ShmupPlayer : IHit
                     }
                     else
                     {
-                        yield return 1.5f.WaitForSeconds();
+                        yield return 0.25f.WaitForSeconds();
+                        DefeatText();
+                        yield return 2f.WaitForSeconds();
                         session.ExitToMenu();
                         yield break;
                     }
                 }
+                if (canRespawn)
+                    yield return 1f.WaitForSeconds();
+                else
+                    yield return Respawn();
+
                 WhenPlayerRespawnFrame?.Invoke();
                 Vector2 v = new Vector2Shmup(0.5f, 0.2f).Vector2Now;
                 manualAliveFlag = true;

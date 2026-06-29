@@ -24,12 +24,8 @@
     "_maxPreviewCountInEditMode": 200,
     "_unsavedChangesAction": 0,
     "_prefabCountDict": {
-        "_keys": [
-            "61446967f900d2a4fb9012ba50a60e07"
-        ],
-        "_values": [
-            50
-        ]
+        "_keys": [],
+        "_values": []
     },
     "_paletteManager": {
         "_selectedBrushIdx": -1,
@@ -3840,15 +3836,15 @@
         "_settings": {
             "_snappingEnabled": false,
             "_snappingOn": {
-                "x": true,
-                "y": true,
+                "x": false,
+                "y": false,
                 "z": false
             },
             "_visibleGrid": false,
             "_gridOn": {
                 "x": false,
-                "y": false,
-                "z": true
+                "y": true,
+                "z": false
             },
             "_lockedGrid": false,
             "_boundsSnapping": false,
@@ -3860,7 +3856,7 @@
             "_origin": {
                 "x": 0.0,
                 "y": 0.0,
-                "z": 227.3721160888672
+                "z": 0.0
             },
             "_rotation": {
                 "x": 0.0,
@@ -3868,8 +3864,8 @@
                 "z": 0.0,
                 "w": 1.0
             },
-            "_showPositionHandle": false,
-            "_showRotationHandle": true,
+            "_showPositionHandle": true,
+            "_showRotationHandle": false,
             "_showScaleHandle": false,
             "_radialGridEnabled": false,
             "_radialStep": 1.0,

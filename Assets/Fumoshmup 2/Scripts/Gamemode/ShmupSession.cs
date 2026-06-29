@@ -32,7 +32,10 @@ namespace FumoShmup2
                 return;
             }
             ShmupStage.WhenSpawnPlayerRequest = ShmupGamemode.SpawnCurrentPlayer; // this is without event tag so it can be = nulled
-            SceneLoader.LoadScenePair(next.StageScene, () => next.RunStage(0), 0.25f);
+            SceneLoader.LoadScenePair(next.StageScene, new SceneLoader.SceneLoadSettings()
+            {
+                Payload = () => next.RunStage(0)
+            });
             PointItemRunner.WhenPointItemValue = PickupValue;
         }
         protected override void WhenEndSession()
@@ -96,7 +99,11 @@ namespace FumoShmup2
                 {
                     if (stage.StageScene != null)
                     {
-                        SceneLoader.LoadScenePair(stage.StageScene, () => RunNext(stage), 0.25f);
+
+                        SceneLoader.LoadScenePair(stage.StageScene, new()
+                        {
+                            Payload = () => RunNext(stage)
+                        });
                     }
                     else
                     {
@@ -115,7 +122,10 @@ namespace FumoShmup2
                 {
                     SubmitScore = true
                 };
-                SceneLoader.LoadScenePair(mainMenuScene, () => ShmupSession.EndSession(end));
+                SceneLoader.LoadScenePair(mainMenuScene, new()
+                {
+                    Payload = () => ShmupSession.EndSession(end)
+                });
             }
         }
     }
@@ -157,7 +167,7 @@ namespace FumoShmup2
         [SerializeField] private string cachedSessionName = "Game Name";
         public string SessionDifficulty = "Ultra";
         public Color32 DifficultyColor = ColorHelper.PastelCyan;
-        public static bool SkipDialogue;
+        public static bool SkipDialogue => ShmupPracticeMode.SkipDialogue;
         public class shmupPlayerResources
         {
             Dictionary<string, int> intTable = new Dictionary<string, int>()
