@@ -1,4 +1,5 @@
 using rinCore;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 namespace FumoShmup2
@@ -99,10 +100,14 @@ namespace FumoShmup2
                 {
                     if (stage.StageScene != null)
                     {
-
                         SceneLoader.LoadScenePair(stage.StageScene, new()
                         {
-                            Payload = () => RunNext(stage)
+                            Payload = () => RunNext(stage),
+                            PostUnloadPayload = () =>
+                            {
+                                Resources.UnloadUnusedAssets();
+                                GC.Collect();
+                            }
                         });
                     }
                     else

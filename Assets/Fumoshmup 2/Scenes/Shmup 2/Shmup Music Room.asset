@@ -13,8 +13,16 @@ MonoBehaviour:
   m_Name: Shmup Music Room
   m_EditorClassIdentifier: rinCore::rinCore.ScenePairSO
   mainScene:
-    sceneAsset: {fileID: 102900000, guid: 06229c7021e093f48a85bf51a66f1556, type: 3}
-    scenePath: Assets/Fumoshmup 2/Scenes/Shmup 2/UI Music Room.unity
+    sceneReference:
+      m_AssetGUID: 06229c7021e093f48a85bf51a66f1556
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 1
   additiveScenes:
-  - sceneAsset: {fileID: 102900000, guid: c6c2c8ae6f331564a8673db61540f340, type: 3}
-    scenePath: Assets/Fumoshmup 2/Scenes/Shmup 2/UI Background.unity
+  - sceneReference:
+      m_AssetGUID: c6c2c8ae6f331564a8673db61540f340
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0

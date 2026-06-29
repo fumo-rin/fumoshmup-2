@@ -13,8 +13,16 @@ MonoBehaviour:
   m_Name: Mario Level Select
   m_EditorClassIdentifier: rinCore::rinCore.ScenePairSO
   mainScene:
-    sceneAsset: {fileID: 102900000, guid: 3300eb3c9cf37f24f8d1478c830bb7d1, type: 3}
-    scenePath: Assets/Fumoshmup 2/Scenes/Shmup 2/Mario Level Select.unity
+    sceneReference:
+      m_AssetGUID: 3300eb3c9cf37f24f8d1478c830bb7d1
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
   additiveScenes:
-  - sceneAsset: {fileID: 102900000, guid: c6c2c8ae6f331564a8673db61540f340, type: 3}
-    scenePath: Assets/Fumoshmup 2/Scenes/Shmup 2/UI Background.unity
+  - sceneReference:
+      m_AssetGUID: c6c2c8ae6f331564a8673db61540f340
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 1

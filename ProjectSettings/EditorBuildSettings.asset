@@ -5,37 +5,37 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Fumoshmup 2/Scenes/Shmup 2/UI Background.unity
     guid: c6c2c8ae6f331564a8673db61540f340
-  - enabled: 1
+  - enabled: 0
     path: Assets/Fumoshmup 2/Scenes/Shmup 2/Mario Level Select.unity
     guid: 3300eb3c9cf37f24f8d1478c830bb7d1
-  - enabled: 1
+  - enabled: 0
     path: Assets/Fumoshmup 2/Scenes/Shmup 2/3D Test.unity
     guid: a02bae1deaaffe045818397b538367f3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Fumoshmup 2/Scenes/Shmup 2/Shmup 2D.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Fumoshmup 2/Scenes/Shmup 2/UI Shmup.unity
     guid: 9a3c78f426bb7ff48888de9eb5b06d77
-  - enabled: 1
+  - enabled: 0
     path: Assets/Fumoshmup 2/Scenes/Shmup 2/UI Leaderboard.unity
     guid: 612652f8496ffb34d9300f9389afe259
-  - enabled: 1
+  - enabled: 0
     path: Assets/Fumoshmup 2/Scenes/Shmup 2/UI Mainmenu.unity
     guid: a8a0f604daafc034cb353c8d0281fba7
-  - enabled: 1
+  - enabled: 0
     path: Assets/Fumoshmup 2/Scenes/Shmup 2/UI Music Room.unity
     guid: 06229c7021e093f48a85bf51a66f1556
-  - enabled: 1
+  - enabled: 0
     path: Assets/Fumoshmup 2/Scenes/Shmup 2/UI Rebinds.unity
     guid: d2391a490b30d844a8d51cec3b5bf9d7
-  - enabled: 1
+  - enabled: 0
     path: Assets/Fumoshmup 2/Scenes/Shmup 2/UI Select Shot.unity
     guid: 82b3c258ad88d0049a2ef6abe18b74fe
-  - enabled: 1
+  - enabled: 0
     path: Assets/Fumoshmup 2/Scenes/Shmup 2/UI Settings.unity
     guid: 72f0278ec2a544f43a8bb524cc029e50
   m_configObjects:
