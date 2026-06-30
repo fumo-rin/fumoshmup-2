@@ -146,7 +146,7 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 1.1.27
+  bundleVersion: 1.1.28
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -882,7 +882,7 @@ PlayerSettings:
   webEnableSubmoduleStrippingCompatibility: 0
   scriptingDefineSymbols:
     Standalone: PWB_URP;UNITY_PIPELINE_URP;LEVELPLAY_DEPENDENCIES_INSTALLED;POSEIDON;POSEIDON_URP;POSEIDON_2_URP;POSEIDON_2
-    WebGL: PWB_URP
+    WebGL: PWB_URP;UNITY_PIPELINE_URP;LEVELPLAY_DEPENDENCIES_INSTALLED;POSEIDON_2_URP;POSEIDON_2
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

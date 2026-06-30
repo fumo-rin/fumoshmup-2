@@ -1,2 +1,2 @@
 Fumoshmup 2=0.2.8
-Not Ultrakill=1.1.27
+Not Ultrakill=1.1.28
