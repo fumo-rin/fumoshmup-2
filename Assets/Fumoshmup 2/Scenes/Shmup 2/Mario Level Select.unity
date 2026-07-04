@@ -6346,7 +6346,7 @@ MonoBehaviour:
       PlayerShot:
         ShotName: Rin TREX
         PlayerEcoOverrides: []
-        PlayerObject: {fileID: 6582323571233060469, guid: 5b4b62c008d74b8499280bc211d27ca2, type: 3}
+        PlayerObject: {fileID: 6582323571233060469, guid: 121e3aa6de0081042829121b3123774e, type: 3}
         UnfocusMover:
           maxSpeed: 9
         FocusMover:

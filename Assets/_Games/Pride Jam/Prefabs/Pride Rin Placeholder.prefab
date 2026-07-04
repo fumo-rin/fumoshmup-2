@@ -281,6 +281,7 @@ Transform:
   - {fileID: 5605103455190948260}
   - {fileID: 5819516446557508107}
   - {fileID: 6454197737020247465}
+  - {fileID: 6952268439420238297}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6582323571233060469
@@ -541,6 +542,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6454197737020247465}
+  - component: {fileID: 5516867322972075612}
   m_Layer: 0
   m_Name: Shot
   m_TagString: Untagged
@@ -563,6 +565,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6333903949812880131}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5516867322972075612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2331969169171806259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f5727e056cd957449ae30ce46644f1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Pride::pride.PrideShottype
+  Dps_Unfocus: 300
+  Dps_Focus: 440
+  Owner: {fileID: 6582323571233060469}
+  ShootState:
+    shootingAction: {fileID: 1864257387097275648, guid: 34edc816a52e4fc4ab2d77bcdba58669, type: 3}
+    focusAction: {fileID: -1145331697551703494, guid: 34edc816a52e4fc4ab2d77bcdba58669, type: 3}
+    powerFireAction: {fileID: -4776179778478946973, guid: 34edc816a52e4fc4ab2d77bcdba58669, type: 3}
+  unfocusProjectile: {fileID: 11400000, guid: 645aaccd5b9ad8c4d8bca44d5664cee9, type: 2}
 --- !u!1 &2616313836424698596
 GameObject:
   m_ObjectHideFlags: 0
@@ -986,6 +1008,59 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.02
+--- !u!1 &6088571558035306226
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6952268439420238297}
+  - component: {fileID: 4146948227970711700}
+  m_Layer: 0
+  m_Name: PrideShotgun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6952268439420238297
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6088571558035306226}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6333903949812880131}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4146948227970711700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6088571558035306226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cbfa197982b6f944b78a3d7bc8d8fb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Pride::pride.PrideShotgun
+  Dps_Unfocus: 200
+  Dps_Focus: 440
+  Owner: {fileID: 6582323571233060469}
+  ShootState:
+    shootingAction: {fileID: 1864257387097275648, guid: 34edc816a52e4fc4ab2d77bcdba58669, type: 3}
+    focusAction: {fileID: -1145331697551703494, guid: 34edc816a52e4fc4ab2d77bcdba58669, type: 3}
+    powerFireAction: {fileID: -4776179778478946973, guid: 34edc816a52e4fc4ab2d77bcdba58669, type: 3}
+  shotgunProj: {fileID: 11400000, guid: 4ddc0ca8009530a4cb9220214e791aee, type: 2}
+  shotgunDamage: 200
 --- !u!1 &8101724605645093878
 GameObject:
   m_ObjectHideFlags: 0

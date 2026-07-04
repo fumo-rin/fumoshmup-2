@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "Quake",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "7c54a8c2-67ec-4a7a-99a3-dd6b076888b7",
+            "actions": [
+                {
+                    "name": "Shoot",
+                    "type": "Button",
+                    "id": "0dcaf600-a740-42dc-8832-bc3b5d755389",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d9cb587f-27a3-4d62-919a-f29ea0d604ab",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
