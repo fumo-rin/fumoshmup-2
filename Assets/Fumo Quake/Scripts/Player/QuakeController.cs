@@ -29,8 +29,11 @@ namespace FumoQuake
             }
         }
         public bool IsAlive { get; set; }
-        public Vector3 CurrentPosition => CurrentPositionNest != null ? CurrentPositionNest.position : transform.position;
-
+        public Vector3 CurrentPosition => CurrentPositionNest != null ? CurrentPositionNest.position : transform == null ? Vector3.zero : transform.position;
+        private void OnEnable()
+        {
+            IFumoUnit.Player = this;
+        }
         private void Update()
         {
             IFumoUnit.Player = this;

@@ -10,11 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Default Local Group
+  m_Name: Quake Scenes
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
-  m_GroupName: Default Local Group
+  m_GroupName: Quake Scenes
   m_GUID: 38fb89cca673e7c498cae2a8fb15eab4
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 01d5e04d93e5fee408263befae74bb07
+    m_Address: Assets/Fumo Quake/Scenes/Quake/Quake Unpacker.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eafd6e59a333b6b418784517c1eaa4f6
+    m_Address: Assets/Fumo Quake/Scenes/Quake/Workshop.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 83601607327bd124f87361e8e40ab17f, type: 2}
   m_SchemaSet:
