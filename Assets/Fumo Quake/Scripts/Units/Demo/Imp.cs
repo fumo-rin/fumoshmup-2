@@ -198,7 +198,7 @@ namespace FumoQuake
         void Targetting(ITargetting target)
         {
             Debug.Log("Target: " + target);
-            if (target != null && Time.time > RandomAttackTime)
+            if (target != null && target.TargetActive && Time.time > RandomAttackTime)
             {
                 Transform t = target.RandomOrderedTargets.First();
 
@@ -207,7 +207,7 @@ namespace FumoQuake
                     Vector3 origin = transform.position + new Vector3(0f, 0.75f, 0f);
                     Ray targetRay = new()
                     {
-                        direction = target.RandomOrderedTargets.First().position - origin,
+                        direction = t.position - origin,
                         origin = origin
                     };
                     gun.TryShootWith(targetRay);

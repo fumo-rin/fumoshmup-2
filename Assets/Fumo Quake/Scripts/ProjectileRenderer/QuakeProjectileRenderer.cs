@@ -144,9 +144,11 @@ namespace FumoQuake
             }
             return false;
         }
+        Vector3 observerPosition;
         private void Update()
         {
-            activeProjectiles.RemoveAll(x => x == null || x.QueueRemoval || Observer == null || x.FinalizedPosition.SquareDistanceToGreaterThan(Observer.position, 150f));
+            if (Observer != null) observerPosition = Observer.transform.position;
+            activeProjectiles.RemoveAll(x => x == null || x.QueueRemoval || x.FinalizedPosition.SquareDistanceToGreaterThan(observerPosition, 150f));
             if (QuakeProjectile.projectileQueue == null)
                 QuakeProjectile.projectileQueue = new();
 

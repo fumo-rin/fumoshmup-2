@@ -9,6 +9,7 @@ namespace FumoQuake
     public interface ITargetting
     {
         static ITargetting StaticTarget;
+        public bool TargetActive { get; }
         public IEnumerable<Transform> RandomOrderedTargets { get; }
     }
     public class QuakeController : MonoBehaviour, IFumoUnit, ITargetting, IQuakeHitable
@@ -49,6 +50,7 @@ namespace FumoQuake
             }
         }
 
+        public bool TargetActive => IsAlive;
 
         private void OnEnable()
         {

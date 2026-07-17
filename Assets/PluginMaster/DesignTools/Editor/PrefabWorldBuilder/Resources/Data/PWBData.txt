@@ -24,8 +24,18 @@
     "_maxPreviewCountInEditMode": 200,
     "_unsavedChangesAction": 0,
     "_prefabCountDict": {
-        "_keys": [],
-        "_values": []
+        "_keys": [
+            "a5a5681b42e636c4084061be4bdce277",
+            "bde8b53000607b14c8ac73cd0ad7df19",
+            "dc79cc6be2683484f9a178335b5ac0c9",
+            "0b9c8a4749467d9488615319b22acbac"
+        ],
+        "_values": [
+            7,
+            1,
+            3,
+            24
+        ]
     },
     "_paletteManager": {
         "_selectedBrushIdx": -1,
@@ -33,7 +43,7 @@
         "_viewList": false,
         "_showTabsInMultipleRows": false,
         "_iconSize": 64,
-        "_selectedPaletteId": -1
+        "_selectedPaletteId": -8584172960077427374
     },
     "_floorManager": {
         "_profileKeys": [
@@ -3856,7 +3866,7 @@
             "_origin": {
                 "x": 0.0,
                 "y": 0.0,
-                "z": 0.0
+                "z": 10.919458389282227
             },
             "_rotation": {
                 "x": 0.0,

@@ -1,0 +1,1068 @@
+{
+    "_version": "4.12.0",
+    "_name": "Q env",
+    "_id": -8584172959803082687,
+    "_hexId": "88DEE42C886C7841",
+    "_brushes": [
+        {
+            "_id": 639199150610555906,
+            "_surfaceDistance": 0.0,
+            "_randomSurfaceDistance": false,
+            "_randomSurfaceDistanceRange": {
+                "_v1": -0.004999999888241291,
+                "_v2": 0.004999999888241291,
+                "_min": -0.004999999888241291,
+                "_max": 0.004999999888241291
+            },
+            "_embedInSurface": false,
+            "_embedAtPivotHeight": false,
+            "_localPositionOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "_rotateToTheSurface": true,
+            "_eulerOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "_addRandomRotation": false,
+            "_rotationFactor": 90.0,
+            "_rotateInMultiples": false,
+            "_randomEulerOffset": {
+                "x": {
+                    "_v1": 0.0,
+                    "_v2": 0.0,
+                    "_min": 0.0,
+                    "_max": 0.0
+                },
+                "y": {
+                    "_v1": 0.0,
+                    "_v2": 0.0,
+                    "_min": 0.0,
+                    "_max": 0.0
+                },
+                "z": {
+                    "_v1": 0.0,
+                    "_v2": 0.0,
+                    "_min": 0.0,
+                    "_max": 0.0
+                }
+            },
+            "_alwaysOrientUp": false,
+            "_separateScaleAxes": false,
+            "_scaleMultiplier": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "_randomScaleMultiplier": false,
+            "_randomScaleMultiplierRange": {
+                "x": {
+                    "_v1": 1.0,
+                    "_v2": 1.0,
+                    "_min": 1.0,
+                    "_max": 1.0
+                },
+                "y": {
+                    "_v1": 1.0,
+                    "_v2": 1.0,
+                    "_min": 1.0,
+                    "_max": 1.0
+                },
+                "z": {
+                    "_v1": 1.0,
+                    "_v2": 1.0,
+                    "_min": 1.0,
+                    "_max": 1.0
+                }
+            },
+            "_flipX": 0,
+            "_flipY": 0,
+            "_thumbnailSettings": {
+                "_backgroudColor": {
+                    "r": 0.5,
+                    "g": 0.5,
+                    "b": 0.5,
+                    "a": 1.0
+                },
+                "_lightEuler": {
+                    "x": 130.0,
+                    "y": -165.0
+                },
+                "_lightColor": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0,
+                    "a": 1.0
+                },
+                "_lightIntensity": 1.0,
+                "_zoom": 1.0,
+                "_targetEuler": {
+                    "x": 0.0,
+                    "y": 125.0,
+                    "z": 0.0
+                },
+                "_targetOffset": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "_useCustomImage": false
+            },
+            "_name": "Quake Spotlight",
+            "_items": [
+                {
+                    "_id": 639199150610566195,
+                    "_surfaceDistance": 0.0,
+                    "_randomSurfaceDistance": false,
+                    "_randomSurfaceDistanceRange": {
+                        "_v1": -0.004999999888241291,
+                        "_v2": 0.004999999888241291,
+                        "_min": -0.004999999888241291,
+                        "_max": 0.004999999888241291
+                    },
+                    "_embedInSurface": false,
+                    "_embedAtPivotHeight": false,
+                    "_localPositionOffset": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "_rotateToTheSurface": true,
+                    "_eulerOffset": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "_addRandomRotation": false,
+                    "_rotationFactor": 90.0,
+                    "_rotateInMultiples": false,
+                    "_randomEulerOffset": {
+                        "x": {
+                            "_v1": 0.0,
+                            "_v2": 0.0,
+                            "_min": 0.0,
+                            "_max": 0.0
+                        },
+                        "y": {
+                            "_v1": 0.0,
+                            "_v2": 0.0,
+                            "_min": 0.0,
+                            "_max": 0.0
+                        },
+                        "z": {
+                            "_v1": 0.0,
+                            "_v2": 0.0,
+                            "_min": 0.0,
+                            "_max": 0.0
+                        }
+                    },
+                    "_alwaysOrientUp": false,
+                    "_separateScaleAxes": false,
+                    "_scaleMultiplier": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "_randomScaleMultiplier": false,
+                    "_randomScaleMultiplierRange": {
+                        "x": {
+                            "_v1": 1.0,
+                            "_v2": 1.0,
+                            "_min": 1.0,
+                            "_max": 1.0
+                        },
+                        "y": {
+                            "_v1": 1.0,
+                            "_v2": 1.0,
+                            "_min": 1.0,
+                            "_max": 1.0
+                        },
+                        "z": {
+                            "_v1": 1.0,
+                            "_v2": 1.0,
+                            "_min": 1.0,
+                            "_max": 1.0
+                        }
+                    },
+                    "_flipX": 0,
+                    "_flipY": 0,
+                    "_thumbnailSettings": {
+                        "_backgroudColor": {
+                            "r": 0.5,
+                            "g": 0.5,
+                            "b": 0.5,
+                            "a": 1.0
+                        },
+                        "_lightEuler": {
+                            "x": 130.0,
+                            "y": -165.0
+                        },
+                        "_lightColor": {
+                            "r": 1.0,
+                            "g": 1.0,
+                            "b": 1.0,
+                            "a": 1.0
+                        },
+                        "_lightIntensity": 1.0,
+                        "_zoom": 1.0,
+                        "_targetEuler": {
+                            "x": 0.0,
+                            "y": 125.0,
+                            "z": 0.0
+                        },
+                        "_targetOffset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "_useCustomImage": false
+                    },
+                    "_overwriteSettings": false,
+                    "_guid": "a5a5681b42e636c4084061be4bdce277",
+                    "_prefabPath": "Assets/Fumo Quake/Prefabs/ENV/Quake Spotlight.prefab",
+                    "_frequency": 1.0,
+                    "_parentId": 639199150610555906,
+                    "_paletteName": "",
+                    "_overwriteThumbnailSettings": false,
+                    "_includeInThumbnail": true,
+                    "_isAsset2D": false
+                }
+            ],
+            "_frequencyMode": 0,
+            "_pattern": "1...",
+            "_restartPatternForEachStroke": true
+        },
+        {
+            "_id": 639199151846933760,
+            "_surfaceDistance": 0.0,
+            "_randomSurfaceDistance": false,
+            "_randomSurfaceDistanceRange": {
+                "_v1": -0.004999999888241291,
+                "_v2": 0.004999999888241291,
+                "_min": -0.004999999888241291,
+                "_max": 0.004999999888241291
+            },
+            "_embedInSurface": false,
+            "_embedAtPivotHeight": false,
+            "_localPositionOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "_rotateToTheSurface": true,
+            "_eulerOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "_addRandomRotation": false,
+            "_rotationFactor": 90.0,
+            "_rotateInMultiples": false,
+            "_randomEulerOffset": {
+                "x": {
+                    "_v1": 0.0,
+                    "_v2": 0.0,
+                    "_min": 0.0,
+                    "_max": 0.0
+                },
+                "y": {
+                    "_v1": 0.0,
+                    "_v2": 0.0,
+                    "_min": 0.0,
+                    "_max": 0.0
+                },
+                "z": {
+                    "_v1": 0.0,
+                    "_v2": 0.0,
+                    "_min": 0.0,
+                    "_max": 0.0
+                }
+            },
+            "_alwaysOrientUp": false,
+            "_separateScaleAxes": false,
+            "_scaleMultiplier": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "_randomScaleMultiplier": false,
+            "_randomScaleMultiplierRange": {
+                "x": {
+                    "_v1": 1.0,
+                    "_v2": 1.0,
+                    "_min": 1.0,
+                    "_max": 1.0
+                },
+                "y": {
+                    "_v1": 1.0,
+                    "_v2": 1.0,
+                    "_min": 1.0,
+                    "_max": 1.0
+                },
+                "z": {
+                    "_v1": 1.0,
+                    "_v2": 1.0,
+                    "_min": 1.0,
+                    "_max": 1.0
+                }
+            },
+            "_flipX": 0,
+            "_flipY": 0,
+            "_thumbnailSettings": {
+                "_backgroudColor": {
+                    "r": 0.5,
+                    "g": 0.5,
+                    "b": 0.5,
+                    "a": 1.0
+                },
+                "_lightEuler": {
+                    "x": 130.0,
+                    "y": -165.0
+                },
+                "_lightColor": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0,
+                    "a": 1.0
+                },
+                "_lightIntensity": 1.0,
+                "_zoom": 1.0,
+                "_targetEuler": {
+                    "x": 0.0,
+                    "y": 125.0,
+                    "z": 0.0
+                },
+                "_targetOffset": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "_useCustomImage": false
+            },
+            "_name": "Quake Spotlight BEEG",
+            "_items": [
+                {
+                    "_id": 639199151846933761,
+                    "_surfaceDistance": 0.0,
+                    "_randomSurfaceDistance": false,
+                    "_randomSurfaceDistanceRange": {
+                        "_v1": -0.004999999888241291,
+                        "_v2": 0.004999999888241291,
+                        "_min": -0.004999999888241291,
+                        "_max": 0.004999999888241291
+                    },
+                    "_embedInSurface": false,
+                    "_embedAtPivotHeight": false,
+                    "_localPositionOffset": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "_rotateToTheSurface": true,
+                    "_eulerOffset": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "_addRandomRotation": false,
+                    "_rotationFactor": 90.0,
+                    "_rotateInMultiples": false,
+                    "_randomEulerOffset": {
+                        "x": {
+                            "_v1": 0.0,
+                            "_v2": 0.0,
+                            "_min": 0.0,
+                            "_max": 0.0
+                        },
+                        "y": {
+                            "_v1": 0.0,
+                            "_v2": 0.0,
+                            "_min": 0.0,
+                            "_max": 0.0
+                        },
+                        "z": {
+                            "_v1": 0.0,
+                            "_v2": 0.0,
+                            "_min": 0.0,
+                            "_max": 0.0
+                        }
+                    },
+                    "_alwaysOrientUp": false,
+                    "_separateScaleAxes": false,
+                    "_scaleMultiplier": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "_randomScaleMultiplier": false,
+                    "_randomScaleMultiplierRange": {
+                        "x": {
+                            "_v1": 1.0,
+                            "_v2": 1.0,
+                            "_min": 1.0,
+                            "_max": 1.0
+                        },
+                        "y": {
+                            "_v1": 1.0,
+                            "_v2": 1.0,
+                            "_min": 1.0,
+                            "_max": 1.0
+                        },
+                        "z": {
+                            "_v1": 1.0,
+                            "_v2": 1.0,
+                            "_min": 1.0,
+                            "_max": 1.0
+                        }
+                    },
+                    "_flipX": 0,
+                    "_flipY": 0,
+                    "_thumbnailSettings": {
+                        "_backgroudColor": {
+                            "r": 0.5,
+                            "g": 0.5,
+                            "b": 0.5,
+                            "a": 1.0
+                        },
+                        "_lightEuler": {
+                            "x": 130.0,
+                            "y": -165.0
+                        },
+                        "_lightColor": {
+                            "r": 1.0,
+                            "g": 1.0,
+                            "b": 1.0,
+                            "a": 1.0
+                        },
+                        "_lightIntensity": 1.0,
+                        "_zoom": 1.0,
+                        "_targetEuler": {
+                            "x": 0.0,
+                            "y": 125.0,
+                            "z": 0.0
+                        },
+                        "_targetOffset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "_useCustomImage": false
+                    },
+                    "_overwriteSettings": false,
+                    "_guid": "bde8b53000607b14c8ac73cd0ad7df19",
+                    "_prefabPath": "Assets/Fumo Quake/Prefabs/ENV/Quake Spotlight BEEG.prefab",
+                    "_frequency": 1.0,
+                    "_parentId": 639199151846933760,
+                    "_paletteName": "",
+                    "_overwriteThumbnailSettings": false,
+                    "_includeInThumbnail": true,
+                    "_isAsset2D": false
+                }
+            ],
+            "_frequencyMode": 0,
+            "_pattern": "1...",
+            "_restartPatternForEachStroke": true
+        },
+        {
+            "_id": 639199181612136895,
+            "_surfaceDistance": 0.0,
+            "_randomSurfaceDistance": false,
+            "_randomSurfaceDistanceRange": {
+                "_v1": -0.004999999888241291,
+                "_v2": 0.004999999888241291,
+                "_min": -0.004999999888241291,
+                "_max": 0.004999999888241291
+            },
+            "_embedInSurface": false,
+            "_embedAtPivotHeight": false,
+            "_localPositionOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "_rotateToTheSurface": true,
+            "_eulerOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "_addRandomRotation": false,
+            "_rotationFactor": 90.0,
+            "_rotateInMultiples": false,
+            "_randomEulerOffset": {
+                "x": {
+                    "_v1": 0.0,
+                    "_v2": 0.0,
+                    "_min": 0.0,
+                    "_max": 0.0
+                },
+                "y": {
+                    "_v1": 0.0,
+                    "_v2": 0.0,
+                    "_min": 0.0,
+                    "_max": 0.0
+                },
+                "z": {
+                    "_v1": 0.0,
+                    "_v2": 0.0,
+                    "_min": 0.0,
+                    "_max": 0.0
+                }
+            },
+            "_alwaysOrientUp": false,
+            "_separateScaleAxes": false,
+            "_scaleMultiplier": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "_randomScaleMultiplier": false,
+            "_randomScaleMultiplierRange": {
+                "x": {
+                    "_v1": 1.0,
+                    "_v2": 1.0,
+                    "_min": 1.0,
+                    "_max": 1.0
+                },
+                "y": {
+                    "_v1": 1.0,
+                    "_v2": 1.0,
+                    "_min": 1.0,
+                    "_max": 1.0
+                },
+                "z": {
+                    "_v1": 1.0,
+                    "_v2": 1.0,
+                    "_min": 1.0,
+                    "_max": 1.0
+                }
+            },
+            "_flipX": 0,
+            "_flipY": 0,
+            "_thumbnailSettings": {
+                "_backgroudColor": {
+                    "r": 0.5,
+                    "g": 0.5,
+                    "b": 0.5,
+                    "a": 1.0
+                },
+                "_lightEuler": {
+                    "x": 130.0,
+                    "y": -165.0
+                },
+                "_lightColor": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0,
+                    "a": 1.0
+                },
+                "_lightIntensity": 1.0,
+                "_zoom": 1.0,
+                "_targetEuler": {
+                    "x": 0.0,
+                    "y": 125.0,
+                    "z": 0.0
+                },
+                "_targetOffset": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "_useCustomImage": false
+            },
+            "_name": "Barrel",
+            "_items": [
+                {
+                    "_id": 639199181612136896,
+                    "_surfaceDistance": 0.0,
+                    "_randomSurfaceDistance": false,
+                    "_randomSurfaceDistanceRange": {
+                        "_v1": -0.004999999888241291,
+                        "_v2": 0.004999999888241291,
+                        "_min": -0.004999999888241291,
+                        "_max": 0.004999999888241291
+                    },
+                    "_embedInSurface": false,
+                    "_embedAtPivotHeight": false,
+                    "_localPositionOffset": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "_rotateToTheSurface": true,
+                    "_eulerOffset": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "_addRandomRotation": false,
+                    "_rotationFactor": 90.0,
+                    "_rotateInMultiples": false,
+                    "_randomEulerOffset": {
+                        "x": {
+                            "_v1": 0.0,
+                            "_v2": 0.0,
+                            "_min": 0.0,
+                            "_max": 0.0
+                        },
+                        "y": {
+                            "_v1": 0.0,
+                            "_v2": 0.0,
+                            "_min": 0.0,
+                            "_max": 0.0
+                        },
+                        "z": {
+                            "_v1": 0.0,
+                            "_v2": 0.0,
+                            "_min": 0.0,
+                            "_max": 0.0
+                        }
+                    },
+                    "_alwaysOrientUp": false,
+                    "_separateScaleAxes": false,
+                    "_scaleMultiplier": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "_randomScaleMultiplier": false,
+                    "_randomScaleMultiplierRange": {
+                        "x": {
+                            "_v1": 1.0,
+                            "_v2": 1.0,
+                            "_min": 1.0,
+                            "_max": 1.0
+                        },
+                        "y": {
+                            "_v1": 1.0,
+                            "_v2": 1.0,
+                            "_min": 1.0,
+                            "_max": 1.0
+                        },
+                        "z": {
+                            "_v1": 1.0,
+                            "_v2": 1.0,
+                            "_min": 1.0,
+                            "_max": 1.0
+                        }
+                    },
+                    "_flipX": 0,
+                    "_flipY": 0,
+                    "_thumbnailSettings": {
+                        "_backgroudColor": {
+                            "r": 0.5,
+                            "g": 0.5,
+                            "b": 0.5,
+                            "a": 1.0
+                        },
+                        "_lightEuler": {
+                            "x": 130.0,
+                            "y": -165.0
+                        },
+                        "_lightColor": {
+                            "r": 1.0,
+                            "g": 1.0,
+                            "b": 1.0,
+                            "a": 1.0
+                        },
+                        "_lightIntensity": 1.0,
+                        "_zoom": 1.0,
+                        "_targetEuler": {
+                            "x": 0.0,
+                            "y": 125.0,
+                            "z": 0.0
+                        },
+                        "_targetOffset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "_useCustomImage": false
+                    },
+                    "_overwriteSettings": false,
+                    "_guid": "dc79cc6be2683484f9a178335b5ac0c9",
+                    "_prefabPath": "Packages/com.fumorin.tools/Modellen/Asset Ready/Objects/Barrels/Barrel.prefab",
+                    "_frequency": 1.0,
+                    "_parentId": 639199181612136895,
+                    "_paletteName": "Q env",
+                    "_overwriteThumbnailSettings": false,
+                    "_includeInThumbnail": true,
+                    "_isAsset2D": false
+                }
+            ],
+            "_frequencyMode": 0,
+            "_pattern": "1...",
+            "_restartPatternForEachStroke": true
+        },
+        {
+            "_id": 639199181632556772,
+            "_surfaceDistance": 0.0,
+            "_randomSurfaceDistance": false,
+            "_randomSurfaceDistanceRange": {
+                "_v1": -0.004999999888241291,
+                "_v2": 0.004999999888241291,
+                "_min": -0.004999999888241291,
+                "_max": 0.004999999888241291
+            },
+            "_embedInSurface": false,
+            "_embedAtPivotHeight": false,
+            "_localPositionOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "_rotateToTheSurface": true,
+            "_eulerOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "_addRandomRotation": false,
+            "_rotationFactor": 90.0,
+            "_rotateInMultiples": false,
+            "_randomEulerOffset": {
+                "x": {
+                    "_v1": 0.0,
+                    "_v2": 0.0,
+                    "_min": 0.0,
+                    "_max": 0.0
+                },
+                "y": {
+                    "_v1": 0.0,
+                    "_v2": 0.0,
+                    "_min": 0.0,
+                    "_max": 0.0
+                },
+                "z": {
+                    "_v1": 0.0,
+                    "_v2": 0.0,
+                    "_min": 0.0,
+                    "_max": 0.0
+                }
+            },
+            "_alwaysOrientUp": false,
+            "_separateScaleAxes": false,
+            "_scaleMultiplier": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "_randomScaleMultiplier": false,
+            "_randomScaleMultiplierRange": {
+                "x": {
+                    "_v1": 1.0,
+                    "_v2": 1.0,
+                    "_min": 1.0,
+                    "_max": 1.0
+                },
+                "y": {
+                    "_v1": 1.0,
+                    "_v2": 1.0,
+                    "_min": 1.0,
+                    "_max": 1.0
+                },
+                "z": {
+                    "_v1": 1.0,
+                    "_v2": 1.0,
+                    "_min": 1.0,
+                    "_max": 1.0
+                }
+            },
+            "_flipX": 0,
+            "_flipY": 0,
+            "_thumbnailSettings": {
+                "_backgroudColor": {
+                    "r": 0.5,
+                    "g": 0.5,
+                    "b": 0.5,
+                    "a": 1.0
+                },
+                "_lightEuler": {
+                    "x": 130.0,
+                    "y": -165.0
+                },
+                "_lightColor": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0,
+                    "a": 1.0
+                },
+                "_lightIntensity": 1.0,
+                "_zoom": 1.0,
+                "_targetEuler": {
+                    "x": 0.0,
+                    "y": 125.0,
+                    "z": 0.0
+                },
+                "_targetOffset": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "_useCustomImage": false
+            },
+            "_name": "Pillar_1 (1)",
+            "_items": [
+                {
+                    "_id": 639199181632556773,
+                    "_surfaceDistance": 0.0,
+                    "_randomSurfaceDistance": false,
+                    "_randomSurfaceDistanceRange": {
+                        "_v1": -0.004999999888241291,
+                        "_v2": 0.004999999888241291,
+                        "_min": -0.004999999888241291,
+                        "_max": 0.004999999888241291
+                    },
+                    "_embedInSurface": false,
+                    "_embedAtPivotHeight": false,
+                    "_localPositionOffset": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "_rotateToTheSurface": true,
+                    "_eulerOffset": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "_addRandomRotation": false,
+                    "_rotationFactor": 90.0,
+                    "_rotateInMultiples": false,
+                    "_randomEulerOffset": {
+                        "x": {
+                            "_v1": 0.0,
+                            "_v2": 0.0,
+                            "_min": 0.0,
+                            "_max": 0.0
+                        },
+                        "y": {
+                            "_v1": 0.0,
+                            "_v2": 0.0,
+                            "_min": 0.0,
+                            "_max": 0.0
+                        },
+                        "z": {
+                            "_v1": 0.0,
+                            "_v2": 0.0,
+                            "_min": 0.0,
+                            "_max": 0.0
+                        }
+                    },
+                    "_alwaysOrientUp": false,
+                    "_separateScaleAxes": false,
+                    "_scaleMultiplier": {
+                        "x": 1.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "_randomScaleMultiplier": false,
+                    "_randomScaleMultiplierRange": {
+                        "x": {
+                            "_v1": 1.0,
+                            "_v2": 1.0,
+                            "_min": 1.0,
+                            "_max": 1.0
+                        },
+                        "y": {
+                            "_v1": 1.0,
+                            "_v2": 1.0,
+                            "_min": 1.0,
+                            "_max": 1.0
+                        },
+                        "z": {
+                            "_v1": 1.0,
+                            "_v2": 1.0,
+                            "_min": 1.0,
+                            "_max": 1.0
+                        }
+                    },
+                    "_flipX": 0,
+                    "_flipY": 0,
+                    "_thumbnailSettings": {
+                        "_backgroudColor": {
+                            "r": 0.5,
+                            "g": 0.5,
+                            "b": 0.5,
+                            "a": 1.0
+                        },
+                        "_lightEuler": {
+                            "x": 130.0,
+                            "y": -165.0
+                        },
+                        "_lightColor": {
+                            "r": 1.0,
+                            "g": 1.0,
+                            "b": 1.0,
+                            "a": 1.0
+                        },
+                        "_lightIntensity": 1.0,
+                        "_zoom": 1.0,
+                        "_targetEuler": {
+                            "x": 0.0,
+                            "y": 125.0,
+                            "z": 0.0
+                        },
+                        "_targetOffset": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "_useCustomImage": false
+                    },
+                    "_overwriteSettings": false,
+                    "_guid": "fcddac88faf5aef45810dd3ebcafbda1",
+                    "_prefabPath": "Packages/com.fumorin.tools/Modellen/Asset Ready/Objects/Pillar_1 (1).prefab",
+                    "_frequency": 1.0,
+                    "_parentId": 639199181632556772,
+                    "_paletteName": "Q env",
+                    "_overwriteThumbnailSettings": false,
+                    "_includeInThumbnail": true,
+                    "_isAsset2D": false
+                }
+            ],
+            "_frequencyMode": 0,
+            "_pattern": "1...",
+            "_restartPatternForEachStroke": true
+        }
+    ],
+    "_brushCreationSettings": {
+        "_includeSubfolders": true,
+        "_addLabelsToDroppedPrefabs": false,
+        "_labelsCSV": "",
+        "_defaultBrushSettings": {
+            "_id": -1,
+            "_surfaceDistance": 0.0,
+            "_randomSurfaceDistance": false,
+            "_randomSurfaceDistanceRange": {
+                "_v1": -0.004999999888241291,
+                "_v2": 0.004999999888241291,
+                "_min": -0.004999999888241291,
+                "_max": 0.004999999888241291
+            },
+            "_embedInSurface": false,
+            "_embedAtPivotHeight": false,
+            "_localPositionOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "_rotateToTheSurface": true,
+            "_eulerOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "_addRandomRotation": false,
+            "_rotationFactor": 90.0,
+            "_rotateInMultiples": false,
+            "_randomEulerOffset": {
+                "x": {
+                    "_v1": 0.0,
+                    "_v2": 0.0,
+                    "_min": 0.0,
+                    "_max": 0.0
+                },
+                "y": {
+                    "_v1": 0.0,
+                    "_v2": 0.0,
+                    "_min": 0.0,
+                    "_max": 0.0
+                },
+                "z": {
+                    "_v1": 0.0,
+                    "_v2": 0.0,
+                    "_min": 0.0,
+                    "_max": 0.0
+                }
+            },
+            "_alwaysOrientUp": false,
+            "_separateScaleAxes": false,
+            "_scaleMultiplier": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "_randomScaleMultiplier": false,
+            "_randomScaleMultiplierRange": {
+                "x": {
+                    "_v1": 1.0,
+                    "_v2": 1.0,
+                    "_min": 1.0,
+                    "_max": 1.0
+                },
+                "y": {
+                    "_v1": 1.0,
+                    "_v2": 1.0,
+                    "_min": 1.0,
+                    "_max": 1.0
+                },
+                "z": {
+                    "_v1": 1.0,
+                    "_v2": 1.0,
+                    "_min": 1.0,
+                    "_max": 1.0
+                }
+            },
+            "_flipX": 0,
+            "_flipY": 0,
+            "_thumbnailSettings": {
+                "_backgroudColor": {
+                    "r": 0.5,
+                    "g": 0.5,
+                    "b": 0.5,
+                    "a": 1.0
+                },
+                "_lightEuler": {
+                    "x": 130.0,
+                    "y": -165.0
+                },
+                "_lightColor": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0,
+                    "a": 1.0
+                },
+                "_lightIntensity": 1.0,
+                "_zoom": 1.0,
+                "_targetEuler": {
+                    "x": 0.0,
+                    "y": 125.0,
+                    "z": 0.0
+                },
+                "_targetOffset": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "_useCustomImage": false
+            }
+        },
+        "_defaultThumbnailSettings": {
+            "_backgroudColor": {
+                "r": 0.5,
+                "g": 0.5,
+                "b": 0.5,
+                "a": 1.0
+            },
+            "_lightEuler": {
+                "x": 130.0,
+                "y": -165.0
+            },
+            "_lightColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "_lightIntensity": 1.0,
+            "_zoom": 1.0,
+            "_targetEuler": {
+                "x": 0.0,
+                "y": 125.0,
+                "z": 0.0
+            },
+            "_targetOffset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "_useCustomImage": false
+        }
+    },
+    "_hashCode": 801711330,
+    "_isPinned": true
+}
