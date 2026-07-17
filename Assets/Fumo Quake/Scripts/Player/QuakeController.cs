@@ -11,12 +11,16 @@ namespace FumoQuake
         static ITargetting StaticTarget;
         public IEnumerable<Transform> RandomOrderedTargets { get; }
     }
-    public class QuakeController : MonoBehaviour, IFumoUnit, ITargetting
+    public class QuakeController : MonoBehaviour, IFumoUnit, ITargetting, IQuakeHitable
     {
+        public GameObject unitGameObject => gameObject;
+        public GameObject hitGameObject => unitGameObject;
+        float currentHealth = 10f;
         [SerializeField] QuakeDude quakeMover;
         [SerializeField] Transform CurrentPositionNest;
         [SerializeField] List<Transform> EnemyTargets = new();
         [SerializeField] InputActionReference shootAction;
+        [SerializeField] WeaponsController weaponsHandler;
         [SerializeField] LayerMask hitscan;
         public IEnumerable<Transform> RandomOrderedTargets
         {
@@ -29,40 +33,68 @@ namespace FumoQuake
             }
         }
         public bool IsAlive { get; set; }
-        public Vector3 CurrentPosition => CurrentPositionNest != null ? CurrentPositionNest.position : transform == null ? Vector3.zero : transform.position;
+        public Vector3 CurrentPosition
+        {
+            get
+            {
+                if (CurrentPositionNest != null)
+                {
+                    return CurrentPositionNest.position;
+                }
+                if (this == null)
+                {
+                    return Vector3.zero;
+                }
+                return transform.position;
+            }
+        }
+
+
         private void OnEnable()
         {
             IFumoUnit.Player = this;
+            QuakeProjectileRenderer.Observer = transform;
         }
         private void Update()
         {
             IFumoUnit.Player = this;
             IsAlive = true;
             ITargetting.StaticTarget = this;
-            if (shootAction.JustPressed())
+            if (shootAction.IsPressedRaw() && weaponsHandler != null)
             {
-                IEnumerator CO_Burst(int count)
+                Ray r = weaponsHandler.IsProjectileWeapon ? quakeMover.ProjectileShootRay : quakeMover.CameraRay;
+                if (Physics.Raycast(quakeMover.CameraRay, out RaycastHit hit, 4f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
                 {
-                    while (shootAction.IsPressedRaw())
-                    {
-                        Ray r = quakeMover.CameraRay;
-                        if (Physics.Raycast(r, out RaycastHit hit, 20f, hitscan, QueryTriggerInteraction.Ignore))
-                        {
-                            if (!hit.transform.TryGetComponent(out IFumoUnit f) && hit.collider is Collider c)
-                            {
-                                c.AddImpactVelocity(new Impact(hit, r, 1.65f));
-                            }
-                        }
-                        yield return 0.08f.WaitForSeconds();
-                    }
+                    float distance = (hit.point - r.origin).magnitude;
+                    float lerp01 = distance.MapTo01(0f, 4f);
+                    r = RinHelper.RayLerp(quakeMover.CameraRay, quakeMover.ProjectileShootRay, lerp01);
                 }
-                StartCoroutine(CO_Burst(3));
+                weaponsHandler.TryShootWith(r);
             }
         }
         private void OnDisable()
         {
             ITargetting.StaticTarget = null;
             IsAlive = false;
+        }
+
+        public void Hit(IQuakeHitable.HitPacket packet)
+        {
+            bool AliveCheck()
+            {
+                if (currentHealth <= 0f)
+                {
+                    IsAlive = false;
+                    return false;
+                }
+                IsAlive = true;
+                return true;
+            }
+            currentHealth -= packet.Damage;
+            if (!AliveCheck())
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

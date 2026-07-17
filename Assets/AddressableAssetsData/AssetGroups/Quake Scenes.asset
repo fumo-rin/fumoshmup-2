@@ -20,8 +20,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e75c699d11223c94b8e0f3d9d79d65ab
+    m_Address: Assets/Fumo Quake/Scenes/Quake/Main/Bootstrapper.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: eafd6e59a333b6b418784517c1eaa4f6
     m_Address: Assets/Fumo Quake/Scenes/Quake/Workshop.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f6077efe5f8f2cf469972b2823f8efbc
+    m_Address: Assets/Fumo Quake/Scenes/Quake/Main/Quake main Menu.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

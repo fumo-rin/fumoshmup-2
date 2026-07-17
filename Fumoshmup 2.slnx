@@ -111,6 +111,7 @@
   <Project Path="Unity.Multiplayer.Tools.NetVis.Editor.UI.csproj" />
   <Project Path="Unity.Addressables.csproj" />
   <Project Path="Unity.Services.Authentication.PlayerAccounts.Editor.csproj" />
+  <Project Path="FumoQuake.csproj" />
   <Project Path="Unity.Services.Core.Telemetry.csproj" />
   <Project Path="QFSW.QC.Suggestors.csproj" />
   <Project Path="Unity.Settings.Editor.csproj" />
@@ -180,7 +181,6 @@
   <Project Path="Unity.Services.Core.Environments.Internal.csproj" />
   <Project Path="Unity.Services.Core.Threading.csproj" />
   <Project Path="Unity.Services.Authentication.Editor.Shared.csproj" />
-  <Project Path="FumoQuake.csproj" />
   <Project Path="Unity.Netcode.PackageChecker.Editor.csproj" />
   <Project Path="TaskList.csproj" />
   <Project Path="CaravanJam.csproj" />

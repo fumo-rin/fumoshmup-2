@@ -422,7 +422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9106ec666f6da4e4786a93200f4cbcad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingScene: {fileID: 11400000, guid: 19db1e1ce44d0cc4b8bb0833d92ee217, type: 2}
+  startingScene: {fileID: 11400000, guid: 1d5053d31d0cd634b986de274eb561ef, type: 2}
   loadingScreen: {fileID: 1979510323339408330}
   fadingImage: {fileID: 7503892526529089318}
   loadingScreenText: {fileID: 2040586258248089734}

@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1557950977835320923
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3812671860732943193}
+  m_Layer: 3
+  m_Name: Projectile Pivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3812671860732943193
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1557950977835320923}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.0064923638, y: 0.00000043213362, z: -0.0025208162, w: 0.9999758}
+  m_LocalPosition: {x: 0, y: -0.58, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8548529468576564111}
+  m_LocalEulerAnglesHint: {x: -0.744, y: 0.002, z: -0.289}
 --- !u!1 &1570463370498407107
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,10 +40,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8686522486198557375}
+  - component: {fileID: 6042425727787767365}
   - component: {fileID: 6740695995016855003}
   - component: {fileID: 3215627415013197841}
   - component: {fileID: 5389854354229885213}
-  - component: {fileID: 6042425727787767365}
   m_Layer: 3
   m_Name: Quake Player
   m_TagString: Untagged
@@ -36,9 +67,30 @@ Transform:
   - {fileID: 212589871684071929}
   - {fileID: 8548529468576564111}
   - {fileID: 4386989211689963085}
-  - {fileID: 3877393099381861893}
+  - {fileID: 3969877984076805448}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6042425727787767365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570463370498407107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7ceda7bac90cf84388ce5beb9604a23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FumoQuake::FumoQuake.QuakeController
+  quakeMover: {fileID: 6740695995016855003}
+  CurrentPositionNest: {fileID: 8686522486198557375}
+  EnemyTargets:
+  - {fileID: 7641917527624356522}
+  shootAction: {fileID: -8039365320775711174, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
+  weaponsHandler: {fileID: 2063526057073105151}
+  hitscan:
+    serializedVersion: 2
+    m_Bits: 833
 --- !u!114 &6740695995016855003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55,7 +107,7 @@ MonoBehaviour:
   m:
     viewSocket: {fileID: 8548529468576564111}
     settings:
-      MaxSpeed: 7.5
+      MaxSpeed: 8
       Acceleration: 10
       Friction: 6
       StopSpeed: 2.5
@@ -63,6 +115,8 @@ MonoBehaviour:
       MaxOverspeed: 12
   rb: {fileID: 3215627415013197841}
   cameraPivot: {fileID: 8548529468576564111}
+  projectilePivot: {fileID: 3812671860732943193}
+  cameraRoll: {fileID: 8548529468576564111}
   ground:
     box: {fileID: 5389854354229885213}
     groundMask:
@@ -118,26 +172,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8, y: 1.6, z: 0.8}
   m_Center: {x: 0, y: 0.8, z: 0}
---- !u!114 &6042425727787767365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1570463370498407107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7ceda7bac90cf84388ce5beb9604a23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: FumoQuake::FumoQuake.QuakeController
-  quakeMover: {fileID: 6740695995016855003}
-  CurrentPositionNest: {fileID: 8686522486198557375}
-  EnemyTargets:
-  - {fileID: 7641917527624356522}
-  shootAction: {fileID: -8039365320775711174, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
-  hitscan:
-    serializedVersion: 2
-    m_Bits: 833
 --- !u!1 &2426134611266195953
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,7 +200,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3877393099381861893}
   m_Father: {fileID: 8548529468576564111}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3449505012569063336
@@ -198,6 +233,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3812671860732943193}
   - {fileID: 4960802815363340175}
   m_Father: {fileID: 8686522486198557375}
   m_LocalEulerAnglesHint: {x: 0, y: 21.22, z: 0}
@@ -227,12 +263,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3967847695857141062}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0.18412185, z: -0, w: 0.9829035}
+  m_LocalPosition: {x: 0.094, y: 0.011999726, z: -0.241}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8686522486198557375}
+  m_Father: {fileID: 4960802815363340175}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &3825242285951504006
 Light:
@@ -356,7 +392,7 @@ Transform:
   m_GameObject: {fileID: 4631322452301112383}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.18412185, z: -0, w: 0.9829035}
-  m_LocalPosition: {x: -0.0036194802, y: 1.3500004, z: -0.009321983}
+  m_LocalPosition: {x: -0.0036201477, y: 1.3500001, z: -0.009319305}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -449,6 +485,69 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineRotateWithFollowTarget
   Damping: 0.1
+--- !u!1 &4799299115226399972
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3969877984076805448}
+  - component: {fileID: 2063526057073105151}
+  m_Layer: 3
+  m_Name: Player Weapon Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3969877984076805448
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4799299115226399972}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8686522486198557375}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2063526057073105151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4799299115226399972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f347eaa6dc78b2140915a5fd0817dd23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FumoQuake::FumoQuake.WeaponsController
+  <CurrentWeapon>k__BackingField:
+    rid: 4883943022865154495
+  references:
+    version: 2
+    RefIds:
+    - rid: 4883943022865154495
+      type: {class: PlayerGuns/PlayerShotgun, ns: FumoQuake, asm: FumoQuake}
+      data:
+        GunSound: {fileID: 11400000, guid: a186b7d45393b824598739cfd254423a, type: 2}
+        <OwnerFaction>k__BackingField: 5
+        WeaponShootLockTime: 1.35
+        WeaponShootSwapLockDuration: 0.8
+        shotgun:
+          pellets: 14
+          damageTotal: 280
+        hitMask:
+          serializedVersion: 2
+          m_Bits: 833
+        hitDistance: 85
 --- !u!1 &7195209760917353906
 GameObject:
   m_ObjectHideFlags: 0
