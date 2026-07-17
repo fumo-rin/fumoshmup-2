@@ -13,6 +13,12 @@ using UnityEditor;
 
 namespace FumoQuake
 {
+    public interface IGunAmmo
+    {
+        public int RemainingAmmo { get; set; }
+        public int MaxAmmo { get; }
+        public int StartingAmmo { get; }
+    }
     public interface IQuakeShooter
     {
         public struct WeaponLock
@@ -57,7 +63,7 @@ namespace FumoQuake
             CurrentWeapon = g;
         }
         public bool ValidWeapon => CurrentWeapon != null;
-        IQuakeShooter.WeaponLock weaponLockTiming = new();
+        public IQuakeShooter.WeaponLock weaponLockTiming = new();
         public float RandomAggressionTimeAfterLock(float min, float max) => weaponLockTiming.NextShootTime + RNG.FloatRange(min, max);
         public bool TryShootWith(BaseGun item, Ray r)
         {

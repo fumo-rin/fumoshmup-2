@@ -10,7 +10,13 @@ namespace FumoQuake
     public partial class PlayerGuns
     {
         [System.Serializable]
-        public class PlayerShotgun : BaseGun, IQuakeShooter
+        public struct GunAmmo
+        {
+            public int Remaining;
+            public int MaxAmmo;
+        }
+        [System.Serializable]
+        public class PlayerShotgun : BaseGun, IQuakeShooter, IGunAmmo
         {
             [System.Serializable]
             public struct ShotgunData
@@ -22,6 +28,27 @@ namespace FumoQuake
             [SerializeField] LayerMask hitMask;
             [SerializeField] float hitDistance;
             public override bool IsProjectileWeapon => false;
+
+            [SerializeField]
+            GunAmmo gunAmmo = new()
+            {
+                MaxAmmo = 100,
+                Remaining = 40
+            };
+            public int RemainingAmmo
+            {
+                get
+                {
+                    return gunAmmo.Remaining;
+                }
+                set
+                {
+                    gunAmmo.Remaining = value;
+                }
+            }
+            public int MaxAmmo => gunAmmo.MaxAmmo;
+            public int StartingAmmo => 40;
+
             public void Shoot(ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {
                 GunSound.Play(ray.origin);
@@ -54,7 +81,7 @@ namespace FumoQuake
             }
         }
         [System.Serializable]
-        public class NailGun : BaseGun, IQuakeShooter
+        public class NailGun : BaseGun, IQuakeShooter, IGunAmmo
         {
             [System.Serializable]
             public struct NailGunData
@@ -63,6 +90,25 @@ namespace FumoQuake
                 public float pelletDamage;
             }
             public NailGunData data;
+            [SerializeField]
+            GunAmmo gunAmmo = new()
+            {
+                MaxAmmo = 200,
+                Remaining = 80
+            };
+            public int RemainingAmmo
+            {
+                get
+                {
+                    return gunAmmo.Remaining;
+                }
+                set
+                {
+                    gunAmmo.Remaining = value;
+                }
+            }
+            public int MaxAmmo => gunAmmo.MaxAmmo;
+            public int StartingAmmo => 80;
             public override bool IsProjectileWeapon => true;
             public void Shoot(ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {

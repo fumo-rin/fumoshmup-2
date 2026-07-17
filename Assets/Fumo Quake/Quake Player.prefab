@@ -87,7 +87,7 @@ MonoBehaviour:
   EnemyTargets:
   - {fileID: 7641917527624356522}
   shootAction: {fileID: -8039365320775711174, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
-  weaponsHandler: {fileID: 2063526057073105151}
+  weaponsHandler: {fileID: 2838138961765269834}
   hitscan:
     serializedVersion: 2
     m_Bits: 833
@@ -122,6 +122,7 @@ MonoBehaviour:
     groundMask:
       serializedVersion: 2
       m_Bits: 833
+  jumpHUUH: {fileID: 11400000, guid: d093f77cc9fdea54f9d290714d0191de, type: 2}
   sensitivity: 1000
   jumpAction: {fileID: -8127241540473978368, guid: 34edc816a52e4fc4ab2d77bcdba58669, type: 3}
 --- !u!54 &3215627415013197841
@@ -494,7 +495,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3969877984076805448}
-  - component: {fileID: 2063526057073105151}
+  - component: {fileID: 2838138961765269834}
   m_Layer: 3
   m_Name: Player Weapon Controller
   m_TagString: Untagged
@@ -517,7 +518,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8686522486198557375}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2063526057073105151
+--- !u!114 &2838138961765269834
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -526,28 +527,65 @@ MonoBehaviour:
   m_GameObject: {fileID: 4799299115226399972}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f347eaa6dc78b2140915a5fd0817dd23, type: 3}
+  m_Script: {fileID: 11500000, guid: 19c736ec59a20f040aa629db1aafb19d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: FumoQuake::FumoQuake.WeaponsController
+  m_EditorClassIdentifier: FumoQuake::FumoQuake.PlayerWeaponsController
   <CurrentWeapon>k__BackingField:
-    rid: 4883943022865154495
+    rid: -2
+  orderedSelectBinds:
+  - {fileID: 7001370188194373053, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
+  - {fileID: 7918676487483149130, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
+  - {fileID: 3515717914964872173, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
+  - {fileID: 6654901787114958540, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
+  - {fileID: 5156956874734435587, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
+  - {fileID: -4406308715983901271, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
+  <Gun1>k__BackingField:
+    rid: 4883943095207198856
+  <Gun2>k__BackingField:
+    rid: 4883943095207198857
+  <Gun3>k__BackingField:
+    rid: -2
+  <Gun4>k__BackingField:
+    rid: -2
+  <Gun5>k__BackingField:
+    rid: -2
+  <Gun6>k__BackingField:
+    rid: -2
   references:
     version: 2
     RefIds:
-    - rid: 4883943022865154495
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 4883943095207198856
       type: {class: PlayerGuns/PlayerShotgun, ns: FumoQuake, asm: FumoQuake}
       data:
         GunSound: {fileID: 11400000, guid: a186b7d45393b824598739cfd254423a, type: 2}
         <OwnerFaction>k__BackingField: 5
         WeaponShootLockTime: 1.35
-        WeaponShootSwapLockDuration: 0.8
+        WeaponShootSwapLockDuration: 0.85
         shotgun:
-          pellets: 14
-          damageTotal: 280
+          pellets: 12
+          damageTotal: 150
         hitMask:
           serializedVersion: 2
           m_Bits: 833
         hitDistance: 85
+        gunAmmo:
+          Remaining: 40
+          MaxAmmo: 100
+    - rid: 4883943095207198857
+      type: {class: PlayerGuns/NailGun, ns: FumoQuake, asm: FumoQuake}
+      data:
+        GunSound: {fileID: 11400000, guid: c2fda4274eb6a504a8687206eaec6c4e, type: 2}
+        <OwnerFaction>k__BackingField: 5
+        WeaponShootLockTime: 0.06
+        WeaponShootSwapLockDuration: 0.02
+        data:
+          projectileIndex: 0
+          pelletDamage: 15
+        gunAmmo:
+          Remaining: 80
+          MaxAmmo: 200
 --- !u!1 &7195209760917353906
 GameObject:
   m_ObjectHideFlags: 0

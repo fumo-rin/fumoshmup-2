@@ -16,7 +16,7 @@ namespace FumoQuake
     {
         public GameObject unitGameObject => gameObject;
         public GameObject hitGameObject => unitGameObject;
-        float currentHealth = 10f;
+        float currentHealth = 100f;
         [SerializeField] QuakeDude quakeMover;
         [SerializeField] Transform CurrentPositionNest;
         [SerializeField] List<Transform> EnemyTargets = new();

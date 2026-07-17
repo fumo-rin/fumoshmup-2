@@ -197,7 +197,6 @@ namespace FumoQuake
         }
         void Targetting(ITargetting target)
         {
-            Debug.Log("Target: " + target);
             if (target != null && target.TargetActive && Time.time > RandomAttackTime)
             {
                 Transform t = target.RandomOrderedTargets.First();
