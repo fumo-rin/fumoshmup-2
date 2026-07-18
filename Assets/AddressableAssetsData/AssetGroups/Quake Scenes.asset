@@ -20,6 +20,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6e9706b2635d4a04e862e76e0b2d1808
+    m_Address: Assets/Fumo Quake/Scenes/Quake/ToweryQuake.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 85b93bc33b50c5a47b60ce23fb99c97c
     m_Address: Assets/Fumo Quake/Scenes/Quake/Main/Quake Level Selector.unity
     m_ReadOnly: 0

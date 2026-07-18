@@ -1,0 +1,459 @@
+{
+	"connections": [
+		{
+			"from": "beehive",
+			"from_port": 0,
+			"to": "blend2",
+			"to_port": 1
+		},
+		{
+			"from": "mesh",
+			"from_port": 0,
+			"to": "blend2",
+			"to_port": 0
+		},
+		{
+			"from": "shard_fbm",
+			"from_port": 0,
+			"to": "colorize_2",
+			"to_port": 0
+		},
+		{
+			"from": "colorize_2",
+			"from_port": 0,
+			"to": "blend2_2",
+			"to_port": 1
+		},
+		{
+			"from": "blend2_2",
+			"from_port": 0,
+			"to": "blend2_3",
+			"to_port": 1
+		},
+		{
+			"from": "fbm4",
+			"from_port": 0,
+			"to": "colorize_3",
+			"to_port": 0
+		},
+		{
+			"from": "fbm4_2",
+			"from_port": 0,
+			"to": "colorize_4",
+			"to_port": 0
+		},
+		{
+			"from": "colorize_4",
+			"from_port": 0,
+			"to": "blend2_4",
+			"to_port": 1
+		},
+		{
+			"from": "colorize_3",
+			"from_port": 0,
+			"to": "blend2_4",
+			"to_port": 0
+		},
+		{
+			"from": "blend2_4",
+			"from_port": 0,
+			"to": "blend2_3",
+			"to_port": 0
+		},
+		{
+			"from": "colorize",
+			"from_port": 0,
+			"to": "blend2_2",
+			"to_port": 0
+		},
+		{
+			"from": "blend2_3",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 0
+		},
+		{
+			"from": "beehive",
+			"from_port": 1,
+			"to": "fill_to_gradient",
+			"to_port": 0
+		},
+		{
+			"from": "blend2",
+			"from_port": 0,
+			"to": "blend2_5",
+			"to_port": 0
+		},
+		{
+			"from": "fill_to_gradient",
+			"from_port": 0,
+			"to": "blend2_5",
+			"to_port": 1
+		},
+		{
+			"from": "blend2_5",
+			"from_port": 0,
+			"to": "colorize",
+			"to_port": 0
+		}
+	],
+	"label": "Graph",
+	"longdesc": "",
+	"name": "@Node@181104",
+	"node_position": {
+		"x": 0.0,
+		"y": 0.0
+	},
+	"nodes": [
+		{
+			"export_last_target": "Unity/URP",
+			"export_paths": {
+				"Unity/URP": "E:/Users/jwap/Documents/UnityProjects/fumoshmup/fumoshmup-2/Assets/Fumo Quake/Material/metalthingy"
+			},
+			"name": "Material",
+			"node_position": {
+				"x": 78.5737915039063,
+				"y": 45.9546051025391
+			},
+			"parameters": {
+				"albedo_color": {
+					"a": 1.0,
+					"b": 1.0,
+					"g": 1.0,
+					"r": 1.0,
+					"type": "Color"
+				},
+				"ao": 1.0,
+				"depth_scale": 0.5,
+				"emission_energy": 1.0,
+				"flags_transparent": true,
+				"metallic": 1.0,
+				"normal": 1.0,
+				"roughness": 1.0,
+				"size": 11,
+				"sss": 1.0
+			},
+			"seed_int": 0,
+			"type": "material"
+		},
+		{
+			"name": "mesh",
+			"node_position": {
+				"x": -1160.50830078125,
+				"y": -81.1487731933594
+			},
+			"parameters": {
+				"diagonal": false,
+				"shape": 0.0,
+				"tiling": 29.0
+			},
+			"seed_int": 0,
+			"type": "mesh"
+		},
+		{
+			"name": "beehive",
+			"node_position": {
+				"x": -1185.78930664063,
+				"y": 38.2396583557129
+			},
+			"parameters": {
+				"sx": 64.0,
+				"sy": 58.0
+			},
+			"seed_int": 0,
+			"type": "beehive2"
+		},
+		{
+			"generic_size": 1,
+			"name": "blend2",
+			"node_position": {
+				"x": -916.144714355469,
+				"y": -68.5950622558594
+			},
+			"parameters": {
+				"amount1": 0.25,
+				"blend_type1": 0.0
+			},
+			"seed_int": 0,
+			"type": "blend2"
+		},
+		{
+			"name": "colorize",
+			"node_position": {
+				"x": -662.04541015625,
+				"y": 162.785125732422
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1.0,
+							"b": 0.20367431640625,
+							"g": 0.241660118103027,
+							"pos": 0.240963862492488,
+							"r": 0.27734375
+						},
+						{
+							"a": 1.0,
+							"b": 0.63671875,
+							"g": 0.63671875,
+							"pos": 0.961358877328726,
+							"r": 0.63671875
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"seed_int": 0,
+			"type": "colorize"
+		},
+		{
+			"generic_size": 1,
+			"name": "blend2_2",
+			"node_position": {
+				"x": -521.5,
+				"y": 209.0
+			},
+			"parameters": {
+				"amount1": 1.0,
+				"blend_type1": 4
+			},
+			"seed_int": 0,
+			"type": "blend2"
+		},
+		{
+			"name": "shard_fbm",
+			"node_position": {
+				"x": -850.5,
+				"y": 346.0
+			},
+			"parameters": {
+				"folds": -1.0,
+				"iter": 8.0,
+				"off": 0.0,
+				"per": 0.28,
+				"sharp": 0.7,
+				"sx": 27.0,
+				"sy": 31.0
+			},
+			"seed_int": 0,
+			"type": "shard_fbm"
+		},
+		{
+			"name": "colorize_2",
+			"node_position": {
+				"x": -617.5,
+				"y": 327.0
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1.0,
+							"b": 0.584503173828125,
+							"g": 0.638037145137787,
+							"pos": 0.0769230769230769,
+							"r": 0.69921875
+						},
+						{
+							"a": 1.0,
+							"b": 0.50775146484375,
+							"g": 0.50775146484375,
+							"pos": 0.461538461538462,
+							"r": 0.55078125
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"seed_int": 0,
+			"type": "colorize"
+		},
+		{
+			"generic_size": 1,
+			"name": "blend2_3",
+			"node_position": {
+				"x": -253.5,
+				"y": 312.950988769531
+			},
+			"parameters": {
+				"amount1": 0.5,
+				"blend_type1": 6
+			},
+			"seed_int": 0,
+			"type": "blend2"
+		},
+		{
+			"name": "fbm4",
+			"node_position": {
+				"x": -864.5,
+				"y": 614.950988769531
+			},
+			"parameters": {
+				"folds": 0.0,
+				"iterations": 5.0,
+				"lacunarity": 2.0,
+				"noise": 11,
+				"offset": 0.0,
+				"persistence": 0.5,
+				"scale_x": 7.0,
+				"scale_y": 7.0
+			},
+			"seed_int": 0,
+			"type": "fbm4"
+		},
+		{
+			"name": "colorize_3",
+			"node_position": {
+				"x": -583.5,
+				"y": 615.950988769531
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1.0,
+							"b": 0.555770874023438,
+							"g": 0.645178556442261,
+							"pos": 0.346153846153846,
+							"r": 0.66796875
+						},
+						{
+							"a": 1.0,
+							"b": 0.288818359375,
+							"g": 0.352865219116211,
+							"pos": 0.519230769230769,
+							"r": 0.35546875
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"seed_int": 0,
+			"type": "colorize"
+		},
+		{
+			"generic_size": 1,
+			"name": "blend2_4",
+			"node_position": {
+				"x": -431.5,
+				"y": 600.950988769531
+			},
+			"parameters": {
+				"amount1": 0.25,
+				"blend_type1": 12
+			},
+			"seed_int": 0,
+			"type": "blend2"
+		},
+		{
+			"name": "fbm4_2",
+			"node_position": {
+				"x": -839.5,
+				"y": 877.950988769531
+			},
+			"parameters": {
+				"folds": 0.0,
+				"iterations": 5.0,
+				"lacunarity": 2.0,
+				"noise": 3,
+				"offset": 0.0,
+				"persistence": 0.5,
+				"scale_x": 7.0,
+				"scale_y": 7.0
+			},
+			"seed_int": 0,
+			"type": "fbm4"
+		},
+		{
+			"name": "colorize_4",
+			"node_position": {
+				"x": -571.5,
+				"y": 774.950988769531
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1.0,
+							"b": 0.124496459960938,
+							"g": 0.147062420845032,
+							"pos": 0.326923076923077,
+							"r": 0.16015625
+						},
+						{
+							"a": 1.0,
+							"b": 1.0,
+							"g": 1.0,
+							"pos": 0.730769230769231,
+							"r": 1.0
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"seed_int": 0,
+			"type": "colorize"
+		},
+		{
+			"name": "fill_to_gradient",
+			"node_position": {
+				"x": -921.414001464844,
+				"y": 125.446746826172
+			},
+			"parameters": {
+				"grad": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1.0,
+							"b": 0.0,
+							"g": 0.0,
+							"pos": 0.0,
+							"r": 0.0
+						},
+						{
+							"a": 1.0,
+							"b": 1.0,
+							"g": 1.0,
+							"pos": 1.0,
+							"r": 1.0
+						}
+					],
+					"type": "Gradient"
+				},
+				"layers": 1.0,
+				"mode": 0.0,
+				"r_offset": 0.0,
+				"r_rotate": 0.0,
+				"rotate": 257.85
+			},
+			"seed_int": 0,
+			"type": "fill_to_gradient2"
+		},
+		{
+			"generic_size": 1,
+			"name": "blend2_5",
+			"node_position": {
+				"x": -700.752807617188,
+				"y": 5.61200761795044
+			},
+			"parameters": {
+				"amount1": 0.5,
+				"blend_type1": 12
+			},
+			"seed_int": 0,
+			"type": "blend2"
+		}
+	],
+	"parameters": {
+
+	},
+	"seed_int": 0,
+	"shortdesc": "",
+	"type": "graph"
+}

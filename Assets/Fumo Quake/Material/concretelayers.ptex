@@ -1,0 +1,360 @@
+{
+	"connections": [
+		{
+			"from": "colorize_2",
+			"from_port": 0,
+			"to": "blend2",
+			"to_port": 0
+		},
+		{
+			"from": "blend2",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 0
+		},
+		{
+			"from": "scratches",
+			"from_port": 0,
+			"to": "blend2_2",
+			"to_port": 1
+		},
+		{
+			"from": "blend2_2",
+			"from_port": 0,
+			"to": "colorize_2",
+			"to_port": 0
+		},
+		{
+			"from": "fbm4",
+			"from_port": 0,
+			"to": "colorize_3",
+			"to_port": 0
+		},
+		{
+			"from": "colorize_3",
+			"from_port": 0,
+			"to": "blend2_2",
+			"to_port": 0
+		},
+		{
+			"from": "bricks",
+			"from_port": 1,
+			"to": "fill_to_gradient",
+			"to_port": 0
+		},
+		{
+			"from": "fill_to_gradient",
+			"from_port": 0,
+			"to": "blend2",
+			"to_port": 1
+		},
+		{
+			"from": "bricks",
+			"from_port": 1,
+			"to": "fill_to_random_grey",
+			"to_port": 0
+		},
+		{
+			"from": "fill_to_random_grey",
+			"from_port": 0,
+			"to": "math",
+			"to_port": 0
+		},
+		{
+			"from": "math",
+			"from_port": 0,
+			"to": "fbm4",
+			"to_port": 0
+		}
+	],
+	"label": "Graph",
+	"longdesc": "",
+	"name": "@Node@36985",
+	"node_position": {
+		"x": 0.0,
+		"y": 0.0
+	},
+	"nodes": [
+		{
+			"export_last_target": "Unity/URP",
+			"export_paths": {
+				"Unity/URP": "E:/Users/jwap/Documents/UnityProjects/fumoshmup/fumoshmup-2/Assets/Fumo Quake/Material/scratchyconcrete"
+			},
+			"name": "Material",
+			"node_position": {
+				"x": -84.2966613769531,
+				"y": 29.8280506134033
+			},
+			"parameters": {
+				"albedo_color": {
+					"a": 1.0,
+					"b": 1.0,
+					"g": 1.0,
+					"r": 1.0,
+					"type": "Color"
+				},
+				"ao": 1.0,
+				"depth_scale": 0.5,
+				"emission_energy": 1.0,
+				"flags_transparent": false,
+				"metallic": 0.0,
+				"normal": 1.0,
+				"roughness": 1.0,
+				"size": 11,
+				"sss": 1.0
+			},
+			"seed_int": 0,
+			"type": "material"
+		},
+		{
+			"generic_size": 1,
+			"name": "blend2",
+			"node_position": {
+				"x": -769.280578613281,
+				"y": 412.885101318359
+			},
+			"parameters": {
+				"amount1": 0.57,
+				"blend_type1": 2
+			},
+			"seed_int": 0,
+			"type": "blend2"
+		},
+		{
+			"name": "fbm4",
+			"node_position": {
+				"x": -1450.66687011719,
+				"y": 574.80224609375
+			},
+			"parameters": {
+				"folds": 0.0,
+				"iterations": 5.0,
+				"lacunarity": 2.0,
+				"noise": 2,
+				"offset": 0.0,
+				"persistence": 0.5,
+				"scale_x": 5.0,
+				"scale_y": 5.0
+			},
+			"seed_int": 0,
+			"type": "fbm4"
+		},
+		{
+			"name": "colorize_2",
+			"node_position": {
+				"x": -1006.98400878906,
+				"y": 547.592651367188
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1.0,
+							"b": 0.746246337890625,
+							"g": 0.769826173782349,
+							"pos": 0.0573589618389423,
+							"r": 0.7734375
+						},
+						{
+							"a": 1.0,
+							"b": 0.68359375,
+							"g": 0.68359375,
+							"pos": 0.797743577223558,
+							"r": 0.68359375
+						},
+						{
+							"a": 1.0,
+							"b": 0.75750732421875,
+							"g": 0.76953125,
+							"pos": 0.836205115685096,
+							"r": 0.766055583953857
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"seed_int": 0,
+			"type": "colorize"
+		},
+		{
+			"name": "scratches",
+			"node_position": {
+				"x": -1297.59790039063,
+				"y": 826.713684082031
+			},
+			"parameters": {
+				"angle": -1.0,
+				"layers": 7.0,
+				"length": 0.29,
+				"randomness": 0.36,
+				"waviness": 0.52,
+				"width": 0.18
+			},
+			"seed_int": 0,
+			"type": "scratches"
+		},
+		{
+			"generic_size": 1,
+			"name": "blend2_2",
+			"node_position": {
+				"x": -1068.90563964844,
+				"y": 707.535949707031
+			},
+			"parameters": {
+				"amount1": 0.38,
+				"blend_type1": 11
+			},
+			"seed_int": 0,
+			"type": "blend2"
+		},
+		{
+			"name": "colorize_3",
+			"node_position": {
+				"x": -1232.37243652344,
+				"y": 618.957885742188
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1.0,
+							"b": 0.0,
+							"g": 0.0,
+							"pos": 0.457816490760216,
+							"r": 0.0
+						},
+						{
+							"a": 1.0,
+							"b": 1.0,
+							"g": 1.0,
+							"pos": 0.496278029221755,
+							"r": 1.0
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"seed_int": 0,
+			"type": "colorize"
+		},
+		{
+			"name": "bricks",
+			"node_position": {
+				"x": -1359.67724609375,
+				"y": 135.653289794922
+			},
+			"parameters": {
+				"bevel": 0.19,
+				"columns": 5.0,
+				"corner": 0.3,
+				"mortar": 0.0,
+				"pattern": 0.0,
+				"repeat": 1.0,
+				"round": 0.0,
+				"row_offset": 1.0,
+				"rows": 20.0
+			},
+			"seed_int": 0,
+			"type": "bricks3"
+		},
+		{
+			"name": "fill_to_gradient",
+			"node_position": {
+				"x": -1060.79113769531,
+				"y": 227.776306152344
+			},
+			"parameters": {
+				"grad": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1.0,
+							"b": 0.2421875,
+							"g": 0.143739700317383,
+							"pos": 0.0,
+							"r": 0.1021728515625
+						},
+						{
+							"a": 1.0,
+							"b": 0.68359375,
+							"g": 0.68359375,
+							"pos": 0.14389490198206,
+							"r": 0.68359375
+						},
+						{
+							"a": 1.0,
+							"b": 0.73828125,
+							"g": 0.73828125,
+							"pos": 0.695627848307292,
+							"r": 0.73828125
+						},
+						{
+							"a": 1.0,
+							"b": 0.859375,
+							"g": 0.859375,
+							"pos": 0.704887107566551,
+							"r": 0.859375
+						},
+						{
+							"a": 1.0,
+							"b": 0.62890625,
+							"g": 0.62890625,
+							"pos": 0.774331552010995,
+							"r": 0.62890625
+						},
+						{
+							"a": 1.0,
+							"b": 0.265625,
+							"g": 0.199307918548584,
+							"pos": 0.819820827907986,
+							"r": 0.16082763671875
+						}
+					],
+					"type": "Gradient"
+				},
+				"layers": 1.0,
+				"mode": 0,
+				"r_offset": 0.0,
+				"r_rotate": 0.0,
+				"rotate": 270.0
+			},
+			"seed_int": 0,
+			"type": "fill_to_gradient2"
+		},
+		{
+			"name": "fill_to_random_grey",
+			"node_position": {
+				"x": -1373.93566894531,
+				"y": 444.849212646484
+			},
+			"parameters": {
+				"edgecolor": 1.0
+			},
+			"seed_int": 0,
+			"type": "fill_to_random_grey2"
+		},
+		{
+			"name": "math",
+			"node_position": {
+				"x": -1170.04516601563,
+				"y": 436.291595458984
+			},
+			"parameters": {
+				"clamp": false,
+				"default_in1": 0.0,
+				"default_in2": 1.84,
+				"op": 2
+			},
+			"seed_int": 0,
+			"type": "math"
+		}
+	],
+	"parameters": {
+
+	},
+	"seed_int": 0,
+	"shortdesc": "",
+	"type": "graph"
+}

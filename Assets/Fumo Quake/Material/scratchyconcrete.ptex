@@ -1,0 +1,286 @@
+{
+	"connections": [
+		{
+			"from": "weave_random",
+			"from_port": 0,
+			"to": "colorize",
+			"to_port": 0
+		},
+		{
+			"from": "colorize",
+			"from_port": 0,
+			"to": "blend2",
+			"to_port": 1
+		},
+		{
+			"from": "colorize_2",
+			"from_port": 0,
+			"to": "blend2",
+			"to_port": 0
+		},
+		{
+			"from": "blend2",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 0
+		},
+		{
+			"from": "scratches",
+			"from_port": 0,
+			"to": "blend2_2",
+			"to_port": 1
+		},
+		{
+			"from": "blend2_2",
+			"from_port": 0,
+			"to": "colorize_2",
+			"to_port": 0
+		},
+		{
+			"from": "fbm4",
+			"from_port": 0,
+			"to": "colorize_3",
+			"to_port": 0
+		},
+		{
+			"from": "colorize_3",
+			"from_port": 0,
+			"to": "blend2_2",
+			"to_port": 0
+		}
+	],
+	"label": "Graph",
+	"longdesc": "",
+	"name": "@Node@36985",
+	"node_position": {
+		"x": 0.0,
+		"y": 0.0
+	},
+	"nodes": [
+		{
+			"export_last_target": "Unity/URP",
+			"export_paths": {
+				"Unity/URP": "E:/Users/jwap/Documents/UnityProjects/fumoshmup/fumoshmup-2/Assets/Fumo Quake/Material/scratchyconcrete"
+			},
+			"name": "Material",
+			"node_position": {
+				"x": 0.0,
+				"y": 0.0
+			},
+			"parameters": {
+				"albedo_color": {
+					"a": 1.0,
+					"b": 1.0,
+					"g": 1.0,
+					"r": 1.0,
+					"type": "Color"
+				},
+				"ao": 1.0,
+				"depth_scale": 0.5,
+				"emission_energy": 1.0,
+				"flags_transparent": true,
+				"metallic": 0.0,
+				"normal": 1.0,
+				"roughness": 1.0,
+				"size": 11,
+				"sss": 1.0
+			},
+			"seed_int": 0,
+			"type": "material"
+		},
+		{
+			"name": "weave_random",
+			"node_position": {
+				"x": -806.9501953125,
+				"y": -79.1445922851563
+			},
+			"parameters": {
+				"random": 0.31,
+				"scale_x": 10.0,
+				"scale_y": 10.0,
+				"stitch": 2.0,
+				"width_x": 0.9,
+				"width_y": 0.9
+			},
+			"seed_int": 0,
+			"type": "weave_random"
+		},
+		{
+			"name": "colorize",
+			"node_position": {
+				"x": -541.523620605469,
+				"y": -158.918167114258
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1.0,
+							"b": 1.0,
+							"g": 1.0,
+							"pos": 0.431057269756611,
+							"r": 1.0
+						},
+						{
+							"a": 1.0,
+							"b": 1.0,
+							"g": 1.0,
+							"pos": 0.623364962064303,
+							"r": 1.0
+						},
+						{
+							"a": 1.0,
+							"b": 0.078125,
+							"g": 0.078125,
+							"pos": 0.767595731295072,
+							"r": 0.078125
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"seed_int": 0,
+			"type": "colorize"
+		},
+		{
+			"generic_size": 1,
+			"name": "blend2",
+			"node_position": {
+				"x": -359.991058349609,
+				"y": 23.8839530944824
+			},
+			"parameters": {
+				"amount1": 0.08,
+				"blend_type1": 11
+			},
+			"seed_int": 0,
+			"type": "blend2"
+		},
+		{
+			"name": "fbm4",
+			"node_position": {
+				"x": -1014.13977050781,
+				"y": 175.365600585938
+			},
+			"parameters": {
+				"folds": 0.0,
+				"iterations": 5.0,
+				"lacunarity": 2.0,
+				"noise": 2,
+				"offset": 0.0,
+				"persistence": 0.5,
+				"scale_x": 2.0,
+				"scale_y": 2.0
+			},
+			"seed_int": 0,
+			"type": "fbm4"
+		},
+		{
+			"name": "colorize_2",
+			"node_position": {
+				"x": -570.456848144531,
+				"y": 148.156036376953
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1.0,
+							"b": 0.8046875,
+							"g": 0.8046875,
+							"pos": 0.0573589601589523,
+							"r": 0.8046875
+						},
+						{
+							"a": 1.0,
+							"b": 0.68359375,
+							"g": 0.68359375,
+							"pos": 0.797743586183504,
+							"r": 0.68359375
+						},
+						{
+							"a": 1.0,
+							"b": 0.83984375,
+							"g": 0.83984375,
+							"pos": 0.836205111205123,
+							"r": 0.83984375
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"seed_int": 0,
+			"type": "colorize"
+		},
+		{
+			"name": "scratches",
+			"node_position": {
+				"x": -861.07080078125,
+				"y": 427.277069091797
+			},
+			"parameters": {
+				"angle": -1.0,
+				"layers": 7.0,
+				"length": 0.42,
+				"randomness": 0.36,
+				"waviness": 0.52,
+				"width": 0.25
+			},
+			"seed_int": 0,
+			"type": "scratches"
+		},
+		{
+			"generic_size": 1,
+			"name": "blend2_2",
+			"node_position": {
+				"x": -632.378479003906,
+				"y": 308.099365234375
+			},
+			"parameters": {
+				"amount1": 0.38,
+				"blend_type1": 11
+			},
+			"seed_int": 0,
+			"type": "blend2"
+		},
+		{
+			"name": "colorize_3",
+			"node_position": {
+				"x": -795.84521484375,
+				"y": 219.521270751953
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1.0,
+							"b": 0.0,
+							"g": 0.0,
+							"pos": 0.416894766000601,
+							"r": 0.0
+						},
+						{
+							"a": 1.0,
+							"b": 1.0,
+							"g": 1.0,
+							"pos": 0.459058321439303,
+							"r": 1.0
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"seed_int": 0,
+			"type": "colorize"
+		}
+	],
+	"parameters": {
+
+	},
+	"seed_int": 0,
+	"shortdesc": "",
+	"type": "graph"
+}
