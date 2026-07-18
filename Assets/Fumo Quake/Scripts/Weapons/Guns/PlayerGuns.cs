@@ -69,6 +69,7 @@ namespace FumoQuake
             public int StartingAmmo => 40;
             public int AmmoCost => 1;
             public IGunFireMode.Mode ClickMode => IGunFireMode.Mode.Click;
+            public string TextName => "Shotgun";
             public void Shoot(WeaponsController runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {
                 if (runner.GetRecoilHandler(out PlayerWeaponsController recoil))
@@ -161,6 +162,7 @@ namespace FumoQuake
             public int StartingAmmo => 5;
             public int AmmoCost => 1;
             public IGunFireMode.Mode ClickMode => IGunFireMode.Mode.Click;
+            public string TextName => "Pistol";
             public void Shoot(WeaponsController runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {
                 if (runner.GetRecoilHandler(out PlayerWeaponsController recoil))
@@ -213,7 +215,7 @@ namespace FumoQuake
             }
         }
         [System.Serializable]
-        public class NailGun : BaseGun, IQuakeShooter, IGunAmmo, IGunFireMode
+        public class NailGun : BaseGun, IQuakeShooter, IGunAmmo, IGunFireMode, IQuakeTextName
         {
             [System.Serializable]
             public struct NailGunData
@@ -244,6 +246,9 @@ namespace FumoQuake
             public int AmmoCost => 1;
             public override bool IsProjectileWeapon => true;
             public IGunFireMode.Mode ClickMode => IGunFireMode.Mode.Hold;
+
+            public string TextName => "Nail Gun";
+
             public void Shoot(WeaponsController runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {
                 if (runner.GetRecoilHandler(out PlayerWeaponsController recoil))

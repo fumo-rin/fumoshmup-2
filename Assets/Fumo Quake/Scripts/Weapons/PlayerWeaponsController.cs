@@ -42,6 +42,7 @@ namespace FumoQuake
                 }
                 return;
             }
+            QuakeTextInfoUI.AddText("You Gots " + (item is IQuakeTextName n ? n.TextName : "Item"));
             item.IsLocked = false;
         }
         IEnumerable<BaseGun> startingLoadout
