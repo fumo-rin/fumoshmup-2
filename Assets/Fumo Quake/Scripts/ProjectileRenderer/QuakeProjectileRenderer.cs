@@ -145,6 +145,7 @@ namespace FumoQuake
             return false;
         }
         Vector3 observerPosition;
+        List<Vector3> particlePositions = new();
         private void Update()
         {
             if (Observer != null) observerPosition = Observer.transform.position;
@@ -157,10 +158,9 @@ namespace FumoQuake
                 activeProjectiles.Add(projectile);
             }
             QuakeProjectile.projectileQueue.Clear();
-
             for (int i = 0; i < particleIndex.Count; i++)
             {
-                List<Vector3> positions = new();
+                particlePositions.Clear();
                 IEnumerable<QuakeProjectile> iteration = activeProjectiles.Where(x => x.Channel == i);
                 foreach (var proj in iteration)
                 {
@@ -175,10 +175,10 @@ namespace FumoQuake
                             hit.Hit(proj.HitPacket);
                         }
                     }
-                    positions.Add(proj.FinalizedPosition);
+                    particlePositions.Add(proj.FinalizedPosition);
                 }
                 ParticleSystem ps = particleIndex[i];
-                ps.RenderAnimatedPoints_3D(positions, 2f, true);
+                ps.RenderAnimatedPoints_3D(particlePositions, 2f, true);
 
             }
         }
