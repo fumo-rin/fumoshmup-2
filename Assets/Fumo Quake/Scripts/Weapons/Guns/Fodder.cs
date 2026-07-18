@@ -1,5 +1,6 @@
 using UnityEngine;
 using rinCore;
+using System.Collections.Generic;
 
 namespace FumoQuake
 {
@@ -13,12 +14,13 @@ namespace FumoQuake
             {
                 public int projectileIndex;
                 public int pellets;
-                public float damageTotal;
+                [SerializeField] List<float> pelletRandomDamage;
                 public float projectileSpeed;
+                public float RandomDamage => pelletRandomDamage.RandomResult() is float f && f > 0f ? f : 10f;
             }
             public ShotgunData shotgun;
             public override bool IsProjectileWeapon => true;
-            public void Shoot(MonoBehaviour runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
+            public void Shoot(WeaponsController runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {
                 GunSound.Play(ray.origin);
                 for (int i = 0; i < shotgun.pellets.Max(1); i++)
@@ -30,7 +32,7 @@ namespace FumoQuake
                     if (p != null)
                     {
                         p.Channel = shotgun.projectileIndex;
-                        p.Damage = shotgun.damageTotal / shotgun.pellets.Max(1);
+                        p.Damage = shotgun.RandomDamage;
                     }
                 }
                 SetNewLockTimes(ref weaponLock);
@@ -44,13 +46,14 @@ namespace FumoQuake
             {
                 public int projectileIndex;
                 public int pellets;
-                public float damageTotal;
+                [SerializeField] List<float> pelletRandomDamage;
                 public float baseProjectileSpeed;
                 public float maxProjectileSpeed;
+                public float RandomDamage => pelletRandomDamage.RandomResult() is float f && f > 0f ? f : 10f;
             }
             public LinegunData linegun;
             public override bool IsProjectileWeapon => true;
-            public void Shoot(MonoBehaviour runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
+            public void Shoot(WeaponsController runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {
                 float diffProjectileSpeed = (linegun.maxProjectileSpeed - linegun.baseProjectileSpeed) / linegun.pellets;
                 GunSound.Play(ray.origin);
@@ -63,7 +66,7 @@ namespace FumoQuake
                     if (p != null)
                     {
                         p.Channel = linegun.projectileIndex;
-                        p.Damage = linegun.damageTotal / linegun.pellets.Max(1);
+                        p.Damage = linegun.RandomDamage;
                     }
                 }
                 SetNewLockTimes(ref weaponLock);

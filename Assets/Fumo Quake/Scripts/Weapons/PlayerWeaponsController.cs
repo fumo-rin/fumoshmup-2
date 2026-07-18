@@ -8,7 +8,18 @@ using System.Collections;
 
 namespace FumoQuake
 {
-    public class PlayerWeaponsController : WeaponsController
+    #region Recoil
+    public partial class PlayerWeaponsController
+    {
+        [SerializeField] QuakeDude recoilTarget;
+        [SerializeField] float maxRecoil = 55f;
+        public void AddRecoil(float amount)
+        {
+            recoilTarget.AddRecoil(amount, maxRecoil);
+        }
+    }
+    #endregion
+    public partial class PlayerWeaponsController : WeaponsController
     {
         [SerializeField] List<InputActionReference> orderedSelectBinds = new();
         [field: SerializeReference, ManagedReferencePicker] public BaseGun Gun1 { get; protected set; }
@@ -70,7 +81,7 @@ namespace FumoQuake
             }
         }
         [Initialize(10)]
-        private static void ResetWeaponState()
+        public static void ResetWeaponState()
         {
             ShouldInitialize = true;
             LastWeaponSelection = 0;
@@ -163,6 +174,7 @@ namespace FumoQuake
                 LastWeaponSelection = queuedSelection;
                 queuedSelection = -1;
                 SwapToWeapon(selectedGun);
+                weaponLockTiming.NextShootTime = Time.time + .125f;
             }
         }
 

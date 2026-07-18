@@ -69,8 +69,12 @@ namespace FumoQuake
             public int StartingAmmo => 40;
             public int AmmoCost => 1;
             public IGunFireMode.Mode ClickMode => IGunFireMode.Mode.Click;
-            public void Shoot(MonoBehaviour runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
+            public void Shoot(WeaponsController runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {
+                if (runner.GetRecoilHandler(out PlayerWeaponsController recoil))
+                {
+                    recoil.AddRecoil(18f);
+                }
                 GunSound.Play(ray.origin);
                 float pelletDamage = shotgun.damageTotal / shotgun.pellets.Max(1);
                 for (int i = 0; i < shotgun.pellets.Max(1); i++)
@@ -139,13 +143,17 @@ namespace FumoQuake
             public int StartingAmmo => 5;
             public int AmmoCost => 1;
             public IGunFireMode.Mode ClickMode => IGunFireMode.Mode.Click;
-            public void Shoot(MonoBehaviour runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
+            public void Shoot(WeaponsController runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {
+                if (runner.GetRecoilHandler(out PlayerWeaponsController recoil))
+                {
+                    recoil.AddRecoil(5.5f);
+                }
                 SetNewLockTimes(ref weaponLock);
+                GunSound.Play(ray.origin);
                 LastShootTime = Time.time;
                 for (int i = 0; i < data.pelletCount; i++)
                 {
-                    GunSound.Play(ray.origin);
                     Ray r = RinHelper.RayDot(ray, 0.0005f);
                     QuakeProjectile.CreateProjectile(new() { Direction = r.direction, Faction = OwnerFaction, Origin = r.origin, Speed = 25f },
                         out QuakeProjectile p);
@@ -200,8 +208,12 @@ namespace FumoQuake
             public int AmmoCost => 1;
             public override bool IsProjectileWeapon => true;
             public IGunFireMode.Mode ClickMode => IGunFireMode.Mode.Hold;
-            public void Shoot(MonoBehaviour runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
+            public void Shoot(WeaponsController runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {
+                if (runner.GetRecoilHandler(out PlayerWeaponsController recoil))
+                {
+                    recoil.AddRecoil(1.45f);
+                }
                 GunSound.Play(ray.origin);
                 Ray r = RinHelper.RayDot(ray, 0.00035f);
                 QuakeProjectile.CreateProjectile(new() { Direction = r.direction, Faction = OwnerFaction, Origin = r.origin, Speed = 72f },

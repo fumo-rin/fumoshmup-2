@@ -217,7 +217,10 @@ MonoBehaviour:
         linegun:
           projectileIndex: 2
           pellets: 4
-          damageTotal: 30
+          pelletRandomDamage:
+          - 5
+          - 10
+          - 15
           baseProjectileSpeed: 17
           maxProjectileSpeed: 22
 --- !u!1 &7246698655696649836

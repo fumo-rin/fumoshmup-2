@@ -36,7 +36,7 @@ namespace FumoQuake
             public bool CanShoot => Time.time >= NextShootTime;
             public bool CanSwapWeapon => Time.time >= WeaponSwapLockTime;
         }
-        public void Shoot(MonoBehaviour runner, ref WeaponLock weaponLock, Ray ray);
+        public void Shoot(WeaponsController runner, ref WeaponLock weaponLock, Ray ray);
     }
     public abstract class BaseGun
     {
@@ -66,6 +66,13 @@ namespace FumoQuake
     }
     public class WeaponsController : MonoBehaviour
     {
+        public bool GetRecoilHandler(out PlayerWeaponsController recoil)
+        {
+            recoil = null;
+            if (this is PlayerWeaponsController pwc)
+                recoil = pwc;
+            return recoil != null;
+        }
         [field: SerializeReference, ManagedReferencePicker] public BaseGun CurrentWeapon { get; protected set; }
         public bool IsProjectileWeapon => CurrentWeapon == null ? false : CurrentWeapon.IsProjectileWeapon;
         public void AssignWeapon(BaseGun g)

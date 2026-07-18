@@ -269,7 +269,10 @@ namespace FumoQuake
         void Think(IFumoUnit targetUnit, float dt)
         {
             if (Stalled)
+            {
+                navigation.StopMovement();
                 return;
+            }
 
             if (Time.time > nextScanTime)
             {
@@ -314,7 +317,7 @@ namespace FumoQuake
             if (target != null && target.TargetActive && Time.time > RandomAttackTime)
             {
                 Transform t = target.RandomOrderedTargets.First();
-
+                float targetDistance = t.transform.position.DistanceTo(CurrentPosition);
                 if (gun != null)
                 {
                     Vector3 origin = transform.position + new Vector3(0f, 0.75f, 0f);
@@ -323,8 +326,30 @@ namespace FumoQuake
                         direction = t.position - origin,
                         origin = origin
                     };
-                    gun.TryShootWith(targetRay);
-                    RandomAttackTime = gun.RandomAggressionTimeAfterLock(0.6f, 1.25f);
+                    float stallTime = 0.5f;
+                    if (targetDistance < 5f)
+                    {
+                        stallTime = 0.15f;
+                        RandomAttackTime = gun.RandomAggressionTimeAfterLock(0.4f, 0.8f);
+                    }
+                    else if (targetDistance < 12f)
+                    {
+                        RandomAttackTime = gun.RandomAggressionTimeAfterLock(0.8f, 1.35f);
+                    }
+                    else if (targetDistance < 22f)
+                    {
+                        stallTime = 0f;
+                        RandomAttackTime = gun.RandomAggressionTimeAfterLock(1.35f, 1.85f);
+                    }
+                    else
+                    {
+                        stallTime = 0f;
+                        RandomAttackTime = gun.RandomAggressionTimeAfterLock(0.3f, 0.6f);
+                    }
+                    if (gun.TryShootWith(targetRay) && stallTime > 0f)
+                    {
+                        StallTimeEnd = stallTime + Time.time;
+                    }
                 }
             }
         }

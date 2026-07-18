@@ -217,7 +217,10 @@ MonoBehaviour:
         shotgun:
           projectileIndex: 2
           pellets: 3
-          damageTotal: 40
+          pelletRandomDamage:
+          - 6
+          - 9
+          - 12
           projectileSpeed: 17
 --- !u!1 &7246698655696649836
 GameObject:

@@ -9,7 +9,18 @@ namespace FumoQuake
         [SerializeField] private Slider healthSlider;
         private const float MAX_HEALTH = 100f;
         public float Health100 => QuakeController.StoredHealth ?? 100f;
-        public int Health20Step => Health100.MapTo01(0f, MAX_HEALTH).MapFrom01(0, 20).ToInt();
+        public int Health20Step
+        {
+            get
+            {
+                float currentHealth = QuakeController.StoredHealth ?? 100f;
+                if (currentHealth <= 0f) return 0;
+                if (currentHealth >= MAX_HEALTH) return 20;
+                float percentage = currentHealth / MAX_HEALTH;
+                int innerStep = Mathf.CeilToInt(percentage * 18f);
+                return innerStep;
+            }
+        }
         private void LateUpdate()
         {
             healthSlider.SetValuesInt(Health20Step, 20, 0, false);

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 namespace FumoQuake
 {
@@ -102,25 +103,55 @@ namespace FumoQuake
             IsAlive = false;
         }
 
+        Coroutine HitFlash;
+        [SerializeField] Volume hitVolume;
+        [SerializeField] ACWrapper hitSound;
+        float iframeHighestDamage;
         public void Hit(IQuakeHitable.HitPacket packet)
         {
-            bool AliveCheck()
-            {
-                if (currentHealth <= 0f)
-                {
-                    IsAlive = false;
-                    return false;
-                }
-                IsAlive = true;
-                return true;
-            }
+            if (packet.Damage <= 0f || (packet.Damage <= iframeHighestDamage && HitFlash != null))
+                return;
 
-            currentHealth -= packet.Damage;
-            StoredHealth = currentHealth;
-            if (!AliveCheck())
+            float processedDamage = 0f;
+            if (HitFlash == null)
             {
+                hitVolume.weight = 1f;
+                HitFlash = StartCoroutine(CO_HitflashIframes(0.35f));
+                iframeHighestDamage = packet.Damage;
+                processedDamage = packet.Damage;
+            }
+            else
+            {
+                processedDamage = packet.Damage - iframeHighestDamage;
+                iframeHighestDamage = packet.Damage;
+            }
+            hitSound.Play(CurrentPosition);
+
+            currentHealth -= processedDamage;
+            StoredHealth = currentHealth;
+
+            if (currentHealth <= 0f)
+            {
+                IsAlive = false;
                 Destroy(gameObject);
             }
+            else
+            {
+                IsAlive = true;
+            }
+        }
+        private IEnumerator CO_HitflashIframes(float duration)
+        {
+            float remaining = duration;
+            while (remaining > 0f)
+            {
+                hitVolume.weight = remaining / duration;
+                remaining -= Time.deltaTime;
+                yield return null;
+            }
+            HitFlash = null;
+            hitVolume.weight = 0f;
+            iframeHighestDamage = 0f;
         }
     }
 }
