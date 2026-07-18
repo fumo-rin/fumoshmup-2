@@ -184,6 +184,15 @@ namespace FumoQuake
                         p.Damage = data.pelletDamage;
                         p.GravityMod = 0f;
                         p.Sender = runner.GetComponent<ITargetting>() is ITargetting sender ? sender : null;
+                        p.HitAction += (QuakeProjectile.HitActionResult hitResult) =>
+                        {
+                            if (hitResult == QuakeProjectile.HitActionResult.IHit)
+                                Mugshot.SetMood(new(0.5f)
+                                {
+                                    mood = Mugshot.Mood.Excited,
+                                    priority = 50,
+                                });
+                        };
                     }
                 }
             }
@@ -266,6 +275,15 @@ namespace FumoQuake
                     p.Damage = data.pelletDamage;
                     p.GravityMod = 0.5f;
                     p.Sender = runner.GetComponent<ITargetting>() is ITargetting sender ? sender : null;
+                    p.HitAction += (QuakeProjectile.HitActionResult hitResult) =>
+                    {
+                        if (hitResult == QuakeProjectile.HitActionResult.IHit)
+                            Mugshot.SetMood(new(0.5f)
+                            {
+                                mood = Mugshot.Mood.Excited,
+                                priority = 50,
+                            });
+                    };
                 }
                 SetNewLockTimes(ref weaponLock);
             }

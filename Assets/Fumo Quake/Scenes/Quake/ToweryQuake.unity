@@ -35492,7 +35492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04a7cc4e1f142142a0886137d551831, type: 3}
   m_Name: 
   m_EditorClassIdentifier: rinCore::rinCore.DynamicNavMeshProvider
-  dynamicNavMesh: {fileID: 955586903}
+  dynamicNavMesh: {fileID: 0}
   staticNavMesh: {fileID: 955586903}
   updateMoveThreshold: 10
 --- !u!1001 &969398499

@@ -1,4 +1,5 @@
 using rinCore;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,13 @@ namespace FumoQuake
     }
     public class QuakeProjectile
     {
+        public enum HitActionResult
+        {
+            None = 0,
+            Terrain = 10,
+            IHit = 20,
+        }
+        public Action<HitActionResult> HitAction;
         public float SpawnTime;
         public float GravityMod = 0f;
         public float maxGravityRampingDuration = 3f;
@@ -55,6 +63,7 @@ namespace FumoQuake
         {
             p = new QuakeProjectile()
             {
+                HitAction = null,
                 SpawnTime = Time.time,
                 maxGravityRampingDuration = 3f,
                 Channel = 0,
@@ -137,8 +146,10 @@ namespace FumoQuake
                 if (hit.transform.TryGetComponent(out IQuakeHitable target) || hit.transform.root.TryGetComponent(out target))
                 {
                     hitable = target;
+                    proj.HitAction?.Invoke(QuakeProjectile.HitActionResult.IHit);
                     return true;
                 }
+                proj.HitAction?.Invoke(QuakeProjectile.HitActionResult.Terrain);
                 return true;
             }
             else
