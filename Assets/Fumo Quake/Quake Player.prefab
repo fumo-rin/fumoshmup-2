@@ -392,8 +392,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4631322452301112383}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.18412185, z: -0, w: 0.9829035}
-  m_LocalPosition: {x: -0.0036201477, y: 1.3500001, z: -0.009319305}
+  m_LocalRotation: {x: -0, y: 0.18412185, z: -0, w: 0.9829035}
+  m_LocalPosition: {x: -0.0036201477, y: 1.3499999, z: -0.00932312}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -540,11 +540,11 @@ MonoBehaviour:
   - {fileID: 5156956874734435587, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
   - {fileID: -4406308715983901271, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
   <Gun1>k__BackingField:
-    rid: 4883943095207198856
+    rid: 4883943095207198925
   <Gun2>k__BackingField:
-    rid: 4883943095207198857
+    rid: 4883943095207198926
   <Gun3>k__BackingField:
-    rid: -2
+    rid: 4883943095207198927
   <Gun4>k__BackingField:
     rid: -2
   <Gun5>k__BackingField:
@@ -556,30 +556,47 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 4883943095207198856
+    - rid: 4883943095207198925
+      type: {class: PlayerGuns/PlayerPistol, ns: FumoQuake, asm: FumoQuake}
+      data:
+        GunSound: {fileID: 11400000, guid: d093f77cc9fdea54f9d290714d0191de, type: 2}
+        <OwnerFaction>k__BackingField: 5
+        WeaponShootLockTime: 0.1
+        WeaponShootSwapLockDuration: 0.05
+        IsLocked: 0
+        data:
+          projectileIndex: 0
+          pelletDamage: 15
+          pelletCount: 3
+        gunAmmo:
+          Remaining: 5
+          MaxAmmo: 5
+    - rid: 4883943095207198926
       type: {class: PlayerGuns/PlayerShotgun, ns: FumoQuake, asm: FumoQuake}
       data:
         GunSound: {fileID: 11400000, guid: a186b7d45393b824598739cfd254423a, type: 2}
         <OwnerFaction>k__BackingField: 5
-        WeaponShootLockTime: 1.35
-        WeaponShootSwapLockDuration: 0.85
+        WeaponShootLockTime: 0.6
+        WeaponShootSwapLockDuration: 0.35
+        IsLocked: 0
         shotgun:
-          pellets: 12
-          damageTotal: 150
+          pellets: 7
+          damageTotal: 105
         hitMask:
           serializedVersion: 2
-          m_Bits: 833
-        hitDistance: 85
+          m_Bits: 897
+        hitDistance: 45
         gunAmmo:
-          Remaining: 40
+          Remaining: 20
           MaxAmmo: 100
-    - rid: 4883943095207198857
+    - rid: 4883943095207198927
       type: {class: PlayerGuns/NailGun, ns: FumoQuake, asm: FumoQuake}
       data:
         GunSound: {fileID: 11400000, guid: c2fda4274eb6a504a8687206eaec6c4e, type: 2}
         <OwnerFaction>k__BackingField: 5
         WeaponShootLockTime: 0.06
-        WeaponShootSwapLockDuration: 0.02
+        WeaponShootSwapLockDuration: 0.05
+        IsLocked: 1
         data:
           projectileIndex: 0
           pelletDamage: 15

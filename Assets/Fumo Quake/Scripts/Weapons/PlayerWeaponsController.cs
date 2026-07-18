@@ -15,6 +15,7 @@ namespace FumoQuake
         [field: SerializeReference, ManagedReferencePicker] public BaseGun Gun4 { get; protected set; }
         [field: SerializeReference, ManagedReferencePicker] public BaseGun Gun5 { get; protected set; }
         [field: SerializeReference, ManagedReferencePicker] public BaseGun Gun6 { get; protected set; }
+
         IEnumerable<BaseGun> startingLoadout
         {
             get
@@ -27,31 +28,83 @@ namespace FumoQuake
                 yield return Gun6;
             }
         }
+        IEnumerable<BaseGun> gunsWithAmmo
+        {
+            get
+            {
+                foreach (var item in currentLoadout)
+                {
+                    if (item == null || item.IsLocked) continue;
+
+                    if (item is not IGunAmmo ammo || ammo.RemainingAmmo > 0)
+                        yield return item;
+                }
+            }
+        }
+
+        [Initialize(10)]
+        private static void ResetWeaponState()
+        {
+            ShouldInitialize = true;
+            LastWeaponSelection = 0;
+            currentLoadout = null;
+        }
+
+        public bool TryGetWeaponWithAmmo(out BaseGun gun)
+        {
+            gun = gunsWithAmmo.FirstOrDefault();
+            return gun != null;
+        }
+
         static List<BaseGun> currentLoadout;
         static bool ShouldInitialize;
         int queuedSelection = -1;
         float clickTime;
+        static int LastWeaponSelection = 0;
 
         private void Awake()
         {
             if (ShouldInitialize || currentLoadout == null)
             {
                 currentLoadout = new();
-                List<BaseGun> loadout = new();
                 foreach (var item in startingLoadout)
                 {
-                    if (item == null) continue;
+                    if (item == null)
+                    {
+                        currentLoadout.Add(null);
+                        continue;
+                    }
 
                     string json = JsonUtility.ToJson(item);
                     BaseGun clonedGun = (BaseGun)JsonUtility.FromJson(json, item.GetType());
-
                     currentLoadout.Add(clonedGun);
                 }
+                ShouldInitialize = false;
             }
         }
 
+        private void Start()
+        {
+            clickTime = Time.time;
+            queuedSelection = LastWeaponSelection.Clamp(0, 5);
+        }
         private void Update()
         {
+            foreach (var item in currentLoadout.Where(x => x != null && !x.IsLocked))
+            {
+                if (item is IGunUpdate update)
+                {
+                    update.Update(Time.deltaTime);
+                }
+            }
+            if (CurrentWeapon is IGunAmmo currentAmmo && currentAmmo.RemainingAmmo <= 0)
+            {
+                if (TryGetWeaponWithAmmo(out BaseGun fallbackGun) && CurrentWeapon != fallbackGun)
+                {
+                    SwapToWeapon(fallbackGun);
+                }
+            }
+
             if (Time.time > clickTime + 1.25f)
                 queuedSelection = -1;
 
@@ -66,31 +119,37 @@ namespace FumoQuake
                 }
                 iteration++;
             }
+
             bool canSwap = weaponLockTiming.CanSwapWeapon;
             if (canSwap && queuedSelection >= 0 && CanSelect(queuedSelection, out BaseGun selectedGun))
             {
+                LastWeaponSelection = queuedSelection;
                 queuedSelection = -1;
-                weaponLockTiming.WeaponSwapLockTime = Time.time + 0.125f;
-                weaponLockTiming.NextShootTime = Time.time + 0.125f;
-                CurrentWeapon = selectedGun;
+                SwapToWeapon(selectedGun);
             }
         }
+
+        private void SwapToWeapon(BaseGun targetWeapon)
+        {
+            weaponLockTiming.WeaponSwapLockTime = weaponLockTiming.WeaponSwapLockTime.Max(Time.time + 0.125f);
+            weaponLockTiming.NextShootTime = weaponLockTiming.NextShootTime.Max(Time.time + 0.125f);
+            CurrentWeapon = targetWeapon;
+        }
+
         bool CanSelect(int value, out BaseGun selection)
         {
             selection = null;
-            bool selectionValid = false;
-            if (startingLoadout.ToList().TryGetIndex(value, out selection))
+            if (currentLoadout.TryGetIndex(value, out selection) && selection != null)
             {
-                if (selection is not IGunAmmo g)
-                {
-                    selectionValid = true;
-                }
-                else
-                {
-                    selectionValid = g.RemainingAmmo > 0;
-                }
+                if (selection.IsLocked)
+                    return false;
+
+                if (selection is IGunAmmo g)
+                    return g.RemainingAmmo > 0;
+
+                return true;
             }
-            return selectionValid;
+            return false;
         }
     }
 }

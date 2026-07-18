@@ -18,7 +18,7 @@ namespace FumoQuake
             }
             public ShotgunData shotgun;
             public override bool IsProjectileWeapon => true;
-            public void Shoot(ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
+            public void Shoot(MonoBehaviour runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {
                 GunSound.Play(ray.origin);
                 for (int i = 0; i < shotgun.pellets.Max(1); i++)

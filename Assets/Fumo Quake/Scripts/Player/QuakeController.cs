@@ -62,16 +62,27 @@ namespace FumoQuake
             IFumoUnit.Player = this;
             IsAlive = true;
             ITargetting.StaticTarget = this;
-            if (shootAction.IsPressedRaw() && weaponsHandler != null)
+            if (weaponsHandler is WeaponsController c && c != null)
             {
-                Ray r = weaponsHandler.IsProjectileWeapon ? quakeMover.ProjectileShootRay : quakeMover.CameraRay;
-                if (Physics.Raycast(quakeMover.CameraRay, out RaycastHit hit, 4f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
+                bool shooting = shootAction.IsPressedRaw();
+                if (c.CurrentWeapon != null && c.CurrentWeapon is IGunFireMode mode)
                 {
-                    float distance = (hit.point - r.origin).magnitude;
-                    float lerp01 = distance.MapTo01(0f, 4f);
-                    r = RinHelper.RayLerp(quakeMover.CameraRay, quakeMover.ProjectileShootRay, lerp01);
+                    if (mode.ClickMode == IGunFireMode.Mode.Click)
+                    {
+                        shooting = !shootAction.PressedLongerThan(0.03f) && shootAction.IsPressedRaw();
+                    }
                 }
-                weaponsHandler.TryShootWith(r);
+                if (shooting)
+                {
+                    Ray r = weaponsHandler.IsProjectileWeapon ? quakeMover.ProjectileShootRay : quakeMover.CameraRay;
+                    if (Physics.Raycast(quakeMover.CameraRay, out RaycastHit hit, 4f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
+                    {
+                        float distance = (hit.point - r.origin).magnitude;
+                        float lerp01 = distance.MapTo01(0f, 4f);
+                        r = RinHelper.RayLerp(quakeMover.CameraRay, quakeMover.ProjectileShootRay, lerp01);
+                    }
+                    weaponsHandler.TryShootWith(r);
+                }
             }
         }
         private void OnDisable()

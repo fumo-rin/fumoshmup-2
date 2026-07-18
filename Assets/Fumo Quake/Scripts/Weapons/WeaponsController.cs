@@ -18,6 +18,13 @@ namespace FumoQuake
         public int RemainingAmmo { get; set; }
         public int MaxAmmo { get; }
         public int StartingAmmo { get; }
+        public int AmmoCost { get; }
+        public int SpendAmmo()
+        {
+            RemainingAmmo -= AmmoCost;
+            return RemainingAmmo;
+        }
+        public bool HasAmmo => RemainingAmmo > 0;
     }
     public interface IQuakeShooter
     {
@@ -28,7 +35,7 @@ namespace FumoQuake
             public bool CanShoot => Time.time >= NextShootTime;
             public bool CanSwapWeapon => Time.time >= WeaponSwapLockTime;
         }
-        public void Shoot(ref WeaponLock weaponLock, Ray ray);
+        public void Shoot(MonoBehaviour runner, ref WeaponLock weaponLock, Ray ray);
     }
     public abstract class BaseGun
     {
@@ -53,6 +60,7 @@ namespace FumoQuake
             weaponLock.NextShootTime = weaponLock.NextShootTime.Max(Time.time + WeaponShootLockTime);
             weaponLock.WeaponSwapLockTime = weaponLock.WeaponSwapLockTime.Max(Time.time + WeaponShootSwapLockDuration);
         }
+        public bool IsLocked = false;
     }
     public class WeaponsController : MonoBehaviour
     {
@@ -77,7 +85,25 @@ namespace FumoQuake
             }
             if (item is IQuakeShooter gun)
             {
-                gun.Shoot(ref weaponLockTiming, r);
+                if (this is PlayerWeaponsController p && gun is IGunAmmo ammo)
+                {
+                    if (ammo.HasAmmo)
+                    {
+                        gun.Shoot(this, ref weaponLockTiming, r);
+                        ammo.SpendAmmo();
+                    }
+                    else
+                    {
+                        if (p.TryGetWeaponWithAmmo(out BaseGun gunWithAmmo))
+                        {
+                            p.AssignWeapon(gunWithAmmo);
+                        }
+                    }
+                }
+                else
+                {
+                    gun.Shoot(this, ref weaponLockTiming, r);
+                }
             }
             return true;
         }
