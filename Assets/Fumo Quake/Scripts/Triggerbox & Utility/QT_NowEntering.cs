@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace FumoQuake
 {
+    [SelectionBase]
     public class QT_NowEntering : QT_Base
     {
         [SerializeField] string ZoneName;
@@ -25,6 +26,8 @@ namespace FumoQuake
         [SerializeField] public bool DestroyOnCollect;
         private void OnTriggerEnter(Collider other)
         {
+            if (SceneLoader.IsLoading || Time.timeScale == 0)
+                return;
             if (other.transform.TryGetComponent(out IFumoUnit f) && (f.IsPlayer || !OnlyFindPlayer))
             {
                 WhenTriggerEnter(other, f);

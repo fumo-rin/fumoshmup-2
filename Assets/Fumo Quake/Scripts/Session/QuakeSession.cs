@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace FumoQuake
 {
+    [System.Serializable]
     public class QuakeSession : GameSession
     {
         [SerializeField] ScenePairSO mainMenu;
@@ -15,9 +16,11 @@ namespace FumoQuake
         }
         protected override void WhenStartSession()
         {
+            QuakeController.StoredHealth = null;
             PlayerWeaponsController.ResetWeaponState();
             Queue<ScenePairSO> levels = new(levelSequence);
             levelQueue = levels;
+            NextLevelOrMenu();
         }
         public static void NextLevelOrMenu()
         {

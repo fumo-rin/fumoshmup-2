@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace FumoQuake
 {
+    [SelectionBase]
     public class QT_WeaponUnlock : QT_Base
     {
         enum UnlockItem

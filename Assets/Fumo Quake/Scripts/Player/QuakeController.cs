@@ -34,6 +34,18 @@ namespace FumoQuake
             }
             StoredHealth = currentHealth;
             IsAlive = true;
+            SceneLoader.WhenFinishedLoadingAdditives += FetchSpawnPoint;
+        }
+        private void FetchSpawnPoint()
+        {
+            if (QU_SpawnPoint.LoadSpawnpoint(out QU_SpawnPoint selection))
+            {
+                SnapTo(selection.transform);
+            }
+        }
+        private void OnDestroy()
+        {
+            SceneLoader.WhenFinishedLoadingAdditives -= FetchSpawnPoint;
         }
         public IEnumerable<Transform> RandomOrderedTargets
         {
@@ -71,6 +83,8 @@ namespace FumoQuake
         }
         private void Update()
         {
+            currentHealth += Time.deltaTime * 3f;
+            currentHealth = currentHealth.Clamp(-1, 100f);
             IFumoUnit.Player = this;
             IsAlive = true;
             ITargetting.StaticTarget = this;
@@ -152,6 +166,23 @@ namespace FumoQuake
             HitFlash = null;
             hitVolume.weight = 0f;
             iframeHighestDamage = 0f;
+        }
+
+        public void SnapTo(Vector3 v, Vector3? offset = null)
+        {
+            Vector3 realOffset = offset ?? new Vector3(0f, 0.25f, 0f);
+            transform.position = v + realOffset;
+        }
+        public void SnapTo(Transform t)
+        {
+            Vector3 target = t.position;
+            if (Physics.Raycast(new Ray(t.transform.position, Vector3.down), out RaycastHit hit, 0.75f))
+            {
+                target = hit.point;
+            }
+            SnapTo(target, Vector3.zero);
+            quakeMover.MatchLook(t);
+            quakeMover.ResetVelocity();
         }
     }
 }

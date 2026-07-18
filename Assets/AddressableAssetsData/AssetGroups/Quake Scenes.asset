@@ -20,6 +20,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9b682f6c1579274478c5ad7d9dba52ec
+    m_Address: Assets/Fumo Quake/Scenes/Quake/Test Quake World Level Sequence Test.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e75c699d11223c94b8e0f3d9d79d65ab
     m_Address: Assets/Fumo Quake/Scenes/Quake/Main/Bootstrapper.unity
     m_ReadOnly: 0

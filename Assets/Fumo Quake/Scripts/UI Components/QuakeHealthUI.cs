@@ -13,7 +13,7 @@ namespace FumoQuake
         {
             get
             {
-                float currentHealth = QuakeController.StoredHealth ?? 100f;
+                float currentHealth = Health100;
                 if (currentHealth <= 0f) return 0;
                 if (currentHealth >= MAX_HEALTH) return 20;
                 float percentage = currentHealth / MAX_HEALTH;

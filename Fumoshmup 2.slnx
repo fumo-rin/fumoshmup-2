@@ -93,6 +93,7 @@
   <Project Path="Unity.2D.Tilemap.Extras.Editor.csproj" />
   <Project Path="Unity.Services.Deployment.csproj" />
   <Project Path="Boxophobic.Utils.Editor.csproj" />
+  <Project Path="FumoQuake.csproj" />
   <Project Path="Pride.csproj" />
   <Project Path="Unity.FilmInternalUtilities.Editor.csproj" />
   <Project Path="Unity.Collections.CodeGen.csproj" />
@@ -111,7 +112,6 @@
   <Project Path="Unity.Multiplayer.Tools.NetVis.Editor.UI.csproj" />
   <Project Path="Unity.Addressables.csproj" />
   <Project Path="Unity.Services.Authentication.PlayerAccounts.Editor.csproj" />
-  <Project Path="FumoQuake.csproj" />
   <Project Path="Unity.Services.Core.Telemetry.csproj" />
   <Project Path="QFSW.QC.Suggestors.csproj" />
   <Project Path="Unity.Settings.Editor.csproj" />

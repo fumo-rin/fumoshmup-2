@@ -8,7 +8,8 @@ using System.Collections.Generic;
 using UnityEngine.UIElements;
 namespace FumoQuake
 {
-    public abstract class QuakeEnemy : MonoBehaviour
+    [SelectionBase]
+    public abstract class QuakeEnemy : MonoBehaviour, IFumoUnit
     {
         #region Targetting
         Coroutine loseTarget;
@@ -256,6 +257,9 @@ namespace FumoQuake
         protected float nextPathTick;
         public bool IsAlive { get; set; } = true;
         public Vector3 CurrentPosition => transform.position;
+
+        public GameObject unitGameObject => gameObject;
+
         protected abstract void WhenThink(ITargetting target, IFumoUnit targetUnit, float dt);
         protected void Pathing(ref float pathTick, Action<IFumoUnit> a, IFumoUnit target)
         {
@@ -294,6 +298,14 @@ namespace FumoQuake
             }
 
             WhenThink(this.target, targetUnit, dt);
+        }
+        public void SnapTo(Vector3 v, Vector3? offset = null)
+        {
+            transform.position = v + new Vector3(0f, 0.25f, 0f);
+        }
+        public void SnapTo(Transform t)
+        {
+            SnapTo(t.position);
         }
     }
     public class Imp : QuakeEnemy, IQuakeHitable
