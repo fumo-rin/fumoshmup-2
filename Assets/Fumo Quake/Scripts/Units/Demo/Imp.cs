@@ -174,10 +174,11 @@ namespace FumoQuake
                 return;
             }
 
-            Vector3 targetPos = other.CurrentPosition;
+            Vector3 awayFrom = transform.position - other.CurrentPosition;
+            Vector3 targetPos = transform.position + awayFrom.normalized * 5f;
             if (navigation.Nav.TryProjectToNavmesh(targetPos, out Vector3 navPos, 5f))
             {
-                navigation.SetNewTarget(-navPos);
+                navigation.SetNewTarget(navPos);
                 lastKnownTarget = navPos;
             }
         }
