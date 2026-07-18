@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Linq;
+using System;
+using System.Collections;
 
 namespace FumoQuake
 {
@@ -41,7 +43,18 @@ namespace FumoQuake
                 }
             }
         }
-
+        public static IEnumerable<KeyValuePair<int, BaseGun>> LoadoutSnapshot
+        {
+            get
+            {
+                foreach (var item in currentLoadout)
+                {
+                    if (item == null || item.IsLocked) continue;
+                    int index = GetWeaponIndex(item);
+                    yield return new(index, item);
+                }
+            }
+        }
         [Initialize(10)]
         private static void ResetWeaponState()
         {
@@ -62,6 +75,16 @@ namespace FumoQuake
         float clickTime;
         static int LastWeaponSelection = 0;
 
+        public static Action<int, BaseGun> WhenWeaponSelection;
+        public static int GetWeaponIndex(BaseGun item)
+        {
+            for (int i = 0; i < currentLoadout.Count; i++)
+            {
+                if (item == currentLoadout[i])
+                    return i;
+            }
+            return 0;
+        }
         private void Awake()
         {
             if (ShouldInitialize || currentLoadout == null)
@@ -134,6 +157,8 @@ namespace FumoQuake
             weaponLockTiming.WeaponSwapLockTime = weaponLockTiming.WeaponSwapLockTime.Max(Time.time + 0.125f);
             weaponLockTiming.NextShootTime = weaponLockTiming.NextShootTime.Max(Time.time + 0.125f);
             CurrentWeapon = targetWeapon;
+            int index = GetWeaponIndex(targetWeapon);
+            WhenWeaponSelection?.Invoke(index, targetWeapon);
         }
 
         bool CanSelect(int value, out BaseGun selection)

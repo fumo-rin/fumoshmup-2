@@ -16,6 +16,7 @@ namespace FumoQuake
     public interface IGunAmmo
     {
         public int RemainingAmmo { get; set; }
+        public float AmmoPercent01 => RemainingAmmo.AsFloat() / MaxAmmo.AsFloat();
         public int MaxAmmo { get; }
         public int StartingAmmo { get; }
         public int AmmoCost { get; }
@@ -50,6 +51,7 @@ namespace FumoQuake
         }
 
         #endregion
+        [SerializeField] public Sprite optionalIconUI;
         [SerializeField] protected ACWrapper GunSound;
         public abstract bool IsProjectileWeapon { get; }
         [field: SerializeField] public QuakeFaction OwnerFaction { get; protected set; } = QuakeFaction.Player;

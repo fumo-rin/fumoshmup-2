@@ -393,7 +393,7 @@ Transform:
   m_GameObject: {fileID: 4631322452301112383}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.18412185, z: -0, w: 0.9829035}
-  m_LocalPosition: {x: -0.0036201477, y: 1.3499999, z: -0.00932312}
+  m_LocalPosition: {x: -0.0036201477, y: 1.3499999, z: -0.0093250275}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -559,6 +559,7 @@ MonoBehaviour:
     - rid: 4883943095207198925
       type: {class: PlayerGuns/PlayerPistol, ns: FumoQuake, asm: FumoQuake}
       data:
+        optionalIconUI: {fileID: 277609417, guid: 8dd8a682209e1f541a7e0280a99455a9, type: 3}
         GunSound: {fileID: 11400000, guid: d093f77cc9fdea54f9d290714d0191de, type: 2}
         <OwnerFaction>k__BackingField: 5
         WeaponShootLockTime: 0.1
@@ -574,6 +575,7 @@ MonoBehaviour:
     - rid: 4883943095207198926
       type: {class: PlayerGuns/PlayerShotgun, ns: FumoQuake, asm: FumoQuake}
       data:
+        optionalIconUI: {fileID: 21300000, guid: 451439503679c12459733a2d1bc16418, type: 3}
         GunSound: {fileID: 11400000, guid: a186b7d45393b824598739cfd254423a, type: 2}
         <OwnerFaction>k__BackingField: 5
         WeaponShootLockTime: 0.6
@@ -592,6 +594,7 @@ MonoBehaviour:
     - rid: 4883943095207198927
       type: {class: PlayerGuns/NailGun, ns: FumoQuake, asm: FumoQuake}
       data:
+        optionalIconUI: {fileID: 21300000, guid: 352725f78c9dfc448acf3ba8be58c42e, type: 3}
         GunSound: {fileID: 11400000, guid: c2fda4274eb6a504a8687206eaec6c4e, type: 2}
         <OwnerFaction>k__BackingField: 5
         WeaponShootLockTime: 0.06

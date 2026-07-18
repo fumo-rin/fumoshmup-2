@@ -16,13 +16,24 @@ namespace FumoQuake
     {
         public GameObject unitGameObject => gameObject;
         public GameObject hitGameObject => unitGameObject;
-        float currentHealth = 100f;
+        float currentHealth;
+        public static float? StoredHealth;
         [SerializeField] QuakeDude quakeMover;
         [SerializeField] Transform CurrentPositionNest;
         [SerializeField] List<Transform> EnemyTargets = new();
         [SerializeField] InputActionReference shootAction;
         [SerializeField] WeaponsController weaponsHandler;
         [SerializeField] LayerMask hitscan;
+        private void Start()
+        {
+            currentHealth = StoredHealth ?? 100f;
+            if (currentHealth <= 0)
+            {
+                currentHealth = 100f;
+            }
+            StoredHealth = currentHealth;
+            IsAlive = true;
+        }
         public IEnumerable<Transform> RandomOrderedTargets
         {
             get
@@ -103,7 +114,9 @@ namespace FumoQuake
                 IsAlive = true;
                 return true;
             }
+
             currentHealth -= packet.Damage;
+            StoredHealth = currentHealth;
             if (!AliveCheck())
             {
                 Destroy(gameObject);
