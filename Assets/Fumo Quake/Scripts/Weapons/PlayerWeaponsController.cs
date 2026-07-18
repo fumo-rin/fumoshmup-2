@@ -18,6 +18,20 @@ namespace FumoQuake
         [field: SerializeReference, ManagedReferencePicker] public BaseGun Gun5 { get; protected set; }
         [field: SerializeReference, ManagedReferencePicker] public BaseGun Gun6 { get; protected set; }
 
+        public static void Unlock(int index)
+        {
+            var item = currentLoadout[index % currentLoadout.Count()];
+            if (!item.IsLocked)
+            {
+                if (item is IGunAmmo ammo)
+                {
+                    ammo.RemainingAmmo += ammo.MaxAmmo.AsFloat(0.2f).Floor().ToInt();
+                    ammo.RemainingAmmo = ammo.MaxAmmo.Min(ammo.RemainingAmmo);
+                }
+                return;
+            }
+            item.IsLocked = false;
+        }
         IEnumerable<BaseGun> startingLoadout
         {
             get
@@ -49,7 +63,7 @@ namespace FumoQuake
             {
                 foreach (var item in currentLoadout)
                 {
-                    if (item == null || item.IsLocked) continue;
+                    if (item == null) continue;
                     int index = GetWeaponIndex(item);
                     yield return new(index, item);
                 }

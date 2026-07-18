@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
+    path: Assets/Fumo Quake/Scenes/Quake/Main/Bootstrapper.unity
+    guid: e75c699d11223c94b8e0f3d9d79d65ab
+  - enabled: 0
     path: Assets/Fumoshmup 2/Scenes/Shmup 2/UI Background.unity
     guid: c6c2c8ae6f331564a8673db61540f340
   - enabled: 0

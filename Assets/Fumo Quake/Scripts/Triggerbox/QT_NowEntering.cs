@@ -22,11 +22,14 @@ namespace FumoQuake
     public abstract class QT_Base : MonoBehaviour
     {
         [SerializeField] public bool OnlyFindPlayer;
+        [SerializeField] public bool DestroyOnCollect;
         private void OnTriggerEnter(Collider other)
         {
             if (other.transform.TryGetComponent(out IFumoUnit f) && (f.IsPlayer || !OnlyFindPlayer))
             {
                 WhenTriggerEnter(other, f);
+                if (DestroyOnCollect)
+                    Destroy(gameObject);
             }
         }
         protected abstract void WhenTriggerEnter(Collider other, IFumoUnit unit);

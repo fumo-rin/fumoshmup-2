@@ -122,7 +122,7 @@ MonoBehaviour:
     groundMask:
       serializedVersion: 2
       m_Bits: 833
-  jumpHUUH: {fileID: 11400000, guid: d093f77cc9fdea54f9d290714d0191de, type: 2}
+  jumpHUUH: {fileID: 11400000, guid: ab29a47f6978ac842ae1899d7e9c2456, type: 2}
   sensitivity: 1000
   jumpAction: {fileID: -8127241540473978368, guid: 34edc816a52e4fc4ab2d77bcdba58669, type: 3}
 --- !u!54 &3215627415013197841
