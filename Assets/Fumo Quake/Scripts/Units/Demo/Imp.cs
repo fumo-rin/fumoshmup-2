@@ -108,6 +108,26 @@ namespace FumoQuake
             navigation.SetNewTarget(navPos);
             lastKnownTarget = navPos;
         }
+        protected void Path_AwayFrom(IFumoUnit other)
+        {
+            if (other == null || !other.IsAlive)
+            {
+                if (navigation.Nav.HasDestination)
+                    return;
+                if (navigation.Nav.TryProjectToNavmesh(lastKnownTarget + RNG.SeededRandomInsideUnitSphere * 3f, out Vector3 celebration, 5f))
+                {
+                    navigation.SetNewTarget(celebration);
+                }
+                return;
+            }
+            
+            Vector3 targetPos = other.CurrentPosition;
+            if (navigation.Nav.TryProjectToNavmesh(targetPos, out Vector3 navPos, 5f))
+            {
+                navigation.SetNewTarget(-navPos);
+                lastKnownTarget = navPos;
+            }
+        }
         #endregion
         [SerializeField] protected BoxCollider box;
         public BoxCollider UnitCollider => box;
