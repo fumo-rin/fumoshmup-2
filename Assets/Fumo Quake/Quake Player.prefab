@@ -630,7 +630,7 @@ MonoBehaviour:
     - rid: 4883943095207198925
       type: {class: PlayerGuns/PlayerPistol, ns: FumoQuake, asm: FumoQuake}
       data:
-        optionalIconUI: {fileID: 277609417, guid: 8dd8a682209e1f541a7e0280a99455a9, type: 3}
+        optionalIconUI: {fileID: 21300000, guid: 56e6240a9108ea54187e0b427087b5af, type: 3}
         GunSound: {fileID: 11400000, guid: d093f77cc9fdea54f9d290714d0191de, type: 2}
         <OwnerFaction>k__BackingField: 5
         WeaponShootLockTime: 0.1

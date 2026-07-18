@@ -148,7 +148,7 @@ namespace FumoQuake
                 {
                     while (delay > 0f)
                     {
-                        delay -= Time.unscaledDeltaTime;
+                        delay -= Time.deltaTime;
                         yield return null;
                     }
                     GameSession.EndSession(new()

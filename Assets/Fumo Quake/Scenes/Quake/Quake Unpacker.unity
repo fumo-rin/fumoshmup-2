@@ -10910,10 +10910,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: rinCore::rinCore.Mugshot
   playerImagesUI:
-    Idle: {fileID: 21300000, guid: bd85ef4c36c12624085319245f904441, type: 3}
-    Excited: {fileID: 21300000, guid: 9e40e73060dc65f40b158b6a076fcc91, type: 3}
-    LookLeft: {fileID: 21300000, guid: 3e7ecbe31b8da4940b88248c4f28b107, type: 3}
-    LookRight: {fileID: 21300000, guid: cfc32ce673cc10749abd3fe38c535e30, type: 3}
+    Idle: {fileID: 21300000, guid: a439ef34bc6107c4890ae41aa5febb59, type: 3}
+    Excited: {fileID: 21300000, guid: 6bdc80df87876b2408b8c47cb162e18c, type: 3}
+    LookLeft: {fileID: 21300000, guid: 33904949d44489d48bc6c94bd82eaa45, type: 3}
+    LookRight: {fileID: 21300000, guid: 818b26b445d472b42961b75c4d716bcb, type: 3}
   PlayerFaceDrawer: {fileID: 1727790249}
 --- !u!1 &643840224
 GameObject:
@@ -22753,8 +22753,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -270.9, y: -230}
-  m_SizeDelta: {x: 140, y: 140}
+  m_AnchoredPosition: {x: -263.1, y: -208.02}
+  m_SizeDelta: {x: 183.96, y: 183.96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1727790249
 MonoBehaviour:
@@ -22776,7 +22776,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9e40e73060dc65f40b158b6a076fcc91, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6bdc80df87876b2408b8c47cb162e18c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
