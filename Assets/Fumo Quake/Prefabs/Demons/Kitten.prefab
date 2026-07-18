@@ -100,6 +100,12 @@ MonoBehaviour:
       m_Bits: 585
     <distance>k__BackingField: 35
     TI: 1
+  friendScan:
+    mask:
+      serializedVersion: 2
+      m_Bits: 833
+    <distance>k__BackingField: 35
+    TI: 1
   WalkingAnimator: {fileID: 72077356284108178}
   WalkingAnimStringKey: WALKVELOCITY
   gun: {fileID: 8650356048947724936}
@@ -202,10 +208,12 @@ MonoBehaviour:
     - rid: 4883943022865154498
       type: {class: Fodder/ProjectileShotgun, ns: FumoQuake, asm: FumoQuake}
       data:
+        optionalIconUI: {fileID: 0}
         GunSound: {fileID: 11400000, guid: dc5879a9afc24fc48b28c28a33271566, type: 2}
         <OwnerFaction>k__BackingField: 1
         WeaponShootLockTime: 0.45
         WeaponShootSwapLockDuration: 0.05
+        IsLocked: 0
         shotgun:
           projectileIndex: 2
           pellets: 3

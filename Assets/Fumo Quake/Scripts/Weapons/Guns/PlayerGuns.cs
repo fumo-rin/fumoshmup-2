@@ -93,7 +93,8 @@ namespace FumoQuake
                         hitable.Hit(new()
                         {
                             Damage = pelletDamage,
-                            HitPoint = hit.point
+                            HitPoint = hit.point,
+                            Sender = runner.GetComponent<ITargetting>() is ITargetting sender ? sender : null,
                         });
                     }
                 }
@@ -154,6 +155,7 @@ namespace FumoQuake
                         p.Channel = data.projectileIndex;
                         p.Damage = data.pelletDamage;
                         p.GravityMod = 0f;
+                        p.Sender = runner.GetComponent<ITargetting>() is ITargetting sender ? sender : null;
                     }
                 }
             }
@@ -210,6 +212,7 @@ namespace FumoQuake
                     p.Channel = data.projectileIndex;
                     p.Damage = data.pelletDamage;
                     p.GravityMod = 0.5f;
+                    p.Sender = runner.GetComponent<ITargetting>() is ITargetting sender ? sender : null;
                 }
                 SetNewLockTimes(ref weaponLock);
             }

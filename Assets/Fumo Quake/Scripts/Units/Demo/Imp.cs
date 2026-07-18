@@ -4,6 +4,8 @@ using System.Linq;
 using System;
 using UnityEngine.AI;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.UIElements;
 namespace FumoQuake
 {
     public abstract class QuakeEnemy : MonoBehaviour
@@ -31,13 +33,57 @@ namespace FumoQuake
         #endregion
         #region Vision
         [SerializeField] RinRaycast scan;
+        [SerializeField] RinRaycast friendScan;
+        public bool Action_DamageAlert(IQuakeHitable.HitPacket packet)
+        {
+            if (packet.Sender == null)
+            {
+                return false;
+            }
+            return Action_AlertAndLockTarget(AliveEnemies, packet.Sender);
+        }
+        public bool Action_AlertAndLockTarget(IEnumerable<QuakeEnemy> others, ITargetting target)
+        {
+            if (target == null)
+                return false;
+            Action_LockTarget(target, 5f);
+            bool anyAlerted = false;
+            foreach (var item in others.Where(x => x.target == null && x.CurrentPosition.SquareDistanceToLessThan(CurrentPosition, scan.distance)))
+            {
+                float distance = item.box.bounds.center.DistanceTo(box.bounds.center);
+                Ray r = new()
+                {
+                    direction = (item.box.bounds.center - box.bounds.center).ScaleToMagnitude(distance),
+                    origin = box.bounds.center
+                };
+                if (Physics.Raycast(r, out RaycastHit hit, distance, friendScan.mask))
+                {
+                    QuakeEnemy other = hit.collider.GetComponentInParent<QuakeEnemy>();
+                    if (other != null)
+                    {
+                        Debug.DrawLine(r.origin, hit.point, ColorHelper.PastelCyan, 0.5f);
+                        other.Action_LockTarget(target, 5f);
+                        anyAlerted = true;
+                    }
+                    else
+                    {
+                        Debug.DrawLine(r.origin, hit.point, ColorHelper.Gray1, 0.5f);
+                    }
+                }
+            }
+            return anyAlerted;
+        }
         public bool CanSee<T>(Vector3 target, float distance, out T other)
         {
+            other = default;
+            if (target.SquareDistanceToGreaterThan(transform.position, distance))
+                return false;
             Vector3 center = box.bounds.center;
             Ray r = new(center, (target - center).ScaleToMagnitude(scan.distance));
             if (Physics.Raycast(r, out RaycastHit hit, distance, scan.mask))
             {
                 other = hit.collider.GetComponentInParent<T>();
+                Debug.DrawLine(r.origin, hit.point, other != null ? ColorHelper.PastelGreen : ColorHelper.PastelRed, 0.5f);
                 return other != null;
             }
             other = default;
@@ -120,12 +166,41 @@ namespace FumoQuake
                 }
                 return;
             }
-            
+
             Vector3 targetPos = other.CurrentPosition;
             if (navigation.Nav.TryProjectToNavmesh(targetPos, out Vector3 navPos, 5f))
             {
                 navigation.SetNewTarget(-navPos);
                 lastKnownTarget = navPos;
+            }
+        }
+        #endregion
+        #region Alive Enemies Lookup
+        static HashSet<QuakeEnemy> aliveEnemiesLookup;
+        IEnumerable<QuakeEnemy> AliveEnemies
+        {
+            get
+            {
+                if (aliveEnemiesLookup == null)
+                    yield break;
+                foreach (var item in aliveEnemiesLookup.ToList())
+                {
+                    yield return item;
+                }
+            }
+        }
+        private static void MaintainAlive(QuakeEnemy e, bool state)
+        {
+            if (aliveEnemiesLookup == null) aliveEnemiesLookup = new();
+            aliveEnemiesLookup.RemoveWhere(x => x == null);
+            switch (state)
+            {
+                case true:
+                    aliveEnemiesLookup.Add(e);
+                    break;
+                default:
+                    aliveEnemiesLookup.Remove(e);
+                    break;
             }
         }
         #endregion
@@ -135,6 +210,7 @@ namespace FumoQuake
         [SerializeField] protected RunnableObjectNavigator navigation;
         protected ITargetting target;
         protected Vector3 Origin;
+        protected float nextScanTime;
         private void Awake()
         {
             Origin = transform.position;
@@ -151,11 +227,13 @@ namespace FumoQuake
         private void OnEnable()
         {
             WhenEnable();
+            MaintainAlive(this, true);
         }
         protected abstract void WhenEnable();
         private void OnDisable()
         {
             WhenDisable();
+            MaintainAlive(this, false);
         }
         protected abstract void WhenDisable();
         private void Update()
@@ -193,11 +271,23 @@ namespace FumoQuake
             if (Stalled)
                 return;
 
-            ITargetting visibleTarget = null;
-            if (targetUnit != null &&
-                CanSee(targetUnit.CurrentPosition, scan.distance, out visibleTarget))
+            if (Time.time > nextScanTime)
             {
-                Action_LockTarget(visibleTarget, 5f);
+                ITargetting visibleTarget = null;
+                if (targetUnit != null &&
+                    CanSee(targetUnit.CurrentPosition, scan.distance, out visibleTarget))
+                {
+                    Action_AlertAndLockTarget(AliveEnemies, visibleTarget);
+                    //this sets this.target.
+                    //it always scans and if it finds the constant player(IFumoUnit)
+                    //it will start chasing the ITargetting it finds.
+                }
+                nextScanTime = Time.time + 0.5f;
+
+                if (this.target == null && visibleTarget == null)
+                {
+                    navigation.SetNewTarget(Origin);
+                }
             }
 
             WhenThink(this.target, targetUnit, dt);
@@ -210,6 +300,10 @@ namespace FumoQuake
         {
             float damageTaken = packet.Damage.Clamp(0f, CurrentHealth);
             CurrentHealth -= damageTaken;
+            if (damageTaken > 0f)
+            {
+                Action_DamageAlert(packet);
+            }
             if (CurrentHealth < 0f + Mathf.Epsilon)
             {
                 Destroy(gameObject);
@@ -236,14 +330,13 @@ namespace FumoQuake
         }
         protected override void WhenThink(ITargetting target, IFumoUnit targetUnit, float dt)
         {
-            bool targetTooFar = targetUnit != null && targetUnit.CurrentPosition.SquareDistanceToGreaterThan(transform.position, 35f);
-            if (targetTooFar)
-                return;
+            bool hasChaseTarget = targetUnit != null && target != null;
 
-            if (targetUnit != null)
+            if (hasChaseTarget)
                 Pathing(ref nextPathTick, Path_DirectlyTowards, targetUnit);
+
             Targetting(target);
-            if (navigation.Nav.HasDestination && navigation.rb.linearVelocity.Y(0f).magnitude.Absolute() < 2f && grounded.IsGrounded)
+            if (hasChaseTarget && navigation.Nav.HasDestination && navigation.rb.linearVelocity.Y(0f).magnitude.Absolute() < 2f && grounded.IsGrounded)
             {
                 navigation.rb.linearVelocity = new Vector3(0f, 4f, 0f) + RNG.SeededRandomInsideUnitSphere;
             }

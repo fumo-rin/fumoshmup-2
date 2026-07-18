@@ -24,6 +24,7 @@ namespace FumoQuake
         public Vector3 _currentPosition;
         public Vector3 _positionOffset;
         public Vector3 _projectileVelocity;
+        public ITargetting Sender;
         public Vector3 FinalizedPosition => _currentPosition + _positionOffset;
         private Vector3 GravityVelocity => (GravityMod != 0f ? (Vector3.down.ScaleToMagnitude(9.81f * GravityMod.Multiply(Time.time - SpawnTime).Clamp(0f, maxGravityRampingDuration))) : Vector3.zero);
         public Vector3 EffectiveVelocity => _projectileVelocity + GravityVelocity;
@@ -41,6 +42,7 @@ namespace FumoQuake
         {
             Damage = Damage,
             HitPoint = FinalizedPosition,
+            Sender = Sender
         };
         public struct SingleProjectilePacket
         {
@@ -76,6 +78,7 @@ namespace FumoQuake
         {
             public Vector3 HitPoint;
             public float Damage;
+            public ITargetting Sender;
         }
         public void Hit(HitPacket packet);
     }

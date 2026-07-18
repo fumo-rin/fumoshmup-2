@@ -100,6 +100,12 @@ MonoBehaviour:
       m_Bits: 585
     <distance>k__BackingField: 40
     TI: 1
+  friendScan:
+    mask:
+      serializedVersion: 2
+      m_Bits: 833
+    <distance>k__BackingField: 40
+    TI: 1
   WalkingAnimator: {fileID: 72077356284108178}
   WalkingAnimStringKey: WALKVELOCITY
   gun: {fileID: 8650356048947724936}
