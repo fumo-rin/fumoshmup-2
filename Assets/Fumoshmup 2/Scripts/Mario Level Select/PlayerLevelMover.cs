@@ -46,7 +46,7 @@ namespace FumoShmup2
         }
         private void Update()
         {
-            if (moveAction.ReadRawVector2() is Vector2 v && v != Vector2.zero && current == null)
+            if (moveAction.ReadRawVector2(true) is Vector2 v && v != Vector2.zero && current == null)
             {
                 if (MarioLevelSelectItem.TryGetDirection(v, out MarioLevelSelectItem result))
                 {

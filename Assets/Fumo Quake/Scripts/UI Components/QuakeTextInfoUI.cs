@@ -1,3 +1,4 @@
+using rinCore;
 using TMPro;
 using UnityEngine;
 

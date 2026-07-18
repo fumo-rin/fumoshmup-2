@@ -8,7 +8,6 @@ namespace FumoQuake
     [System.Serializable]
     public class QuakeSession : GameSession
     {
-        [SerializeField] ScenePairSO mainMenu;
         [SerializeField] public List<ScenePairSO> levelSequence = new();
         static Queue<ScenePairSO> levelQueue;
         public bool submitScore;
@@ -19,7 +18,7 @@ namespace FumoQuake
         }
         protected override void WhenEndSession()
         {
-            SceneLoader.LoadScenePair(mainMenu);
+
         }
         protected override void WhenStartSession()
         {
@@ -50,6 +49,7 @@ namespace FumoQuake
                 {
                     SubmitScore = QuakeSession.CurrentAs(out QuakeSession ses) && ses.submitScore
                 });
+                SceneLoader.MainMenu();
             }
         }
     }

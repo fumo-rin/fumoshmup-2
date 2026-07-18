@@ -126,6 +126,7 @@ MonoBehaviour:
     m_Bits: 833
   hitVolume: {fileID: 4391357742412293561}
   hitSound: {fileID: 11400000, guid: 9d9984bb7f8437c47b2358c6a9068c05, type: 2}
+  mainMenu: {fileID: 11400000, guid: 1d5053d31d0cd634b986de274eb561ef, type: 2}
 --- !u!114 &6740695995016855003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,7 +159,7 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 833
   jumpHUUH: {fileID: 11400000, guid: ab29a47f6978ac842ae1899d7e9c2456, type: 2}
-  sensitivity: 1000
+  sensitivity: 0.1
   jumpAction: {fileID: -6836382308972316003, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
 --- !u!54 &3215627415013197841
 Rigidbody:

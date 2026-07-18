@@ -927,7 +927,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: FumoQuake::FumoQuake.QuakeLevelSelectorBuilder
   levelCollection:
   - {fileID: 11400000, guid: 19db1e1ce44d0cc4b8bb0833d92ee217, type: 2}
-  - {fileID: 11400000, guid: d216e24889f2c64499373edf7a06f574, type: 2}
   - {fileID: 11400000, guid: b96a453ce472fcb41af9b8e963cc15ce, type: 2}
   template: {fileID: 45596797}
 --- !u!4 &1113518237

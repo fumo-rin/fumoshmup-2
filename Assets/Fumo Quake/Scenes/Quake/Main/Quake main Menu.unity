@@ -411,7 +411,6 @@ MonoBehaviour:
       RawExtrasScore: 0
       HighScore: 0
       ScoreDivisor: 100
-    mainMenu: {fileID: 11400000, guid: 1d5053d31d0cd634b986de274eb561ef, type: 2}
     levelSequence:
     - {fileID: 11400000, guid: 19db1e1ce44d0cc4b8bb0833d92ee217, type: 2}
     - {fileID: 11400000, guid: d216e24889f2c64499373edf7a06f574, type: 2}

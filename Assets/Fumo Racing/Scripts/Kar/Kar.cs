@@ -21,7 +21,7 @@ public class Kar : MonoBehaviour
     }
     void RunCar()
     {
-        Vector2 input = moveAction.ReadRawVector2();
+        Vector2 input = moveAction.ReadRawVector2(true);
         if (input.x.Absolute() < 0.2f)
             input.x = 0f;
 

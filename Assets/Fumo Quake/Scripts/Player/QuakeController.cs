@@ -118,6 +118,7 @@ namespace FumoQuake
         Coroutine HitFlash;
         [SerializeField] Volume hitVolume;
         [SerializeField] ACWrapper hitSound;
+        [SerializeField] ScenePairSO mainMenu;
         float iframeHighestDamage;
         public void Hit(IQuakeHitable.HitPacket packet)
         {
@@ -144,19 +145,14 @@ namespace FumoQuake
 
             if (currentHealth <= 0f)
             {
-                IEnumerator CO_EndAfter(float delay = 1.25f)
+                SceneLoader.LoadScenePair(mainMenu, new()
                 {
-                    while (delay > 0f)
-                    {
-                        delay -= Time.deltaTime;
-                        yield return null;
-                    }
-                    GameSession.EndSession(new()
+                    Delay = 1.25f,
+                    Payload = () => GameSession.EndSession(new()
                     {
                         SubmitScore = true
-                    });
-                }
-                CO_EndAfter(1.25f).RunRoutine();
+                    })
+                });
                 IsAlive = false;
                 Destroy(gameObject);
             }

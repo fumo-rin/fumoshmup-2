@@ -35,8 +35,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e75c699d11223c94b8e0f3d9d79d65ab
-    m_Address: Assets/Fumo Quake/Scenes/Quake/Main/Bootstrapper.unity
+  - m_GUID: e38101d94b9df614399b7cf48d4f256a
+    m_Address: Assets/Fumo Quake/Scenes/Quake/Unload Prevention.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
