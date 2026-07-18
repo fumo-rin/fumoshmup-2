@@ -1,4 +1,6 @@
 using rinCore;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 namespace FumoQuake
@@ -9,7 +11,7 @@ namespace FumoQuake
         [SerializeField] string ZoneName;
         [SerializeField] GameXYTextDisplay.textPacket textPacket;
         static QT_NowEntering lastTouched;
-        private void Awake()
+        protected override void WhenAwake()
         {
             lastTouched = null;
         }
@@ -24,6 +26,20 @@ namespace FumoQuake
     {
         [SerializeField] public bool OnlyFindPlayer;
         [SerializeField] public bool DestroyOnCollect;
+        [SerializeField] public List<Renderer> VisibleRenderers = new();
+        protected abstract void WhenAwake();
+        private void Awake()
+        {
+            foreach (var renderer in transform.GetComponentsInChildren<Renderer>())
+            {
+                renderer.enabled = false;
+            }
+            foreach (var item in VisibleRenderers)
+            {
+                item.enabled = true;
+            }
+            WhenAwake();
+        }
         private void OnTriggerEnter(Collider other)
         {
             if (SceneLoader.IsLoading || Time.timeScale == 0)

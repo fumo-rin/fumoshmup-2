@@ -100,6 +100,7 @@ Transform:
   - {fileID: 8548529468576564111}
   - {fileID: 4386989211689963085}
   - {fileID: 821054667041917808}
+  - {fileID: 1061321889770726516}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6042425727787767365
@@ -158,7 +159,7 @@ MonoBehaviour:
       m_Bits: 833
   jumpHUUH: {fileID: 11400000, guid: ab29a47f6978ac842ae1899d7e9c2456, type: 2}
   sensitivity: 1000
-  jumpAction: {fileID: -8127241540473978368, guid: 34edc816a52e4fc4ab2d77bcdba58669, type: 3}
+  jumpAction: {fileID: -6836382308972316003, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
 --- !u!54 &3215627415013197841
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -788,6 +789,59 @@ MonoBehaviour:
   blendDistance: 0
   weight: 0
   sharedProfile: {fileID: 11400000, guid: ea083e087eda8b441bf9c25f37158d37, type: 2}
+--- !u!1 &7904961127066443835
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1061321889770726516}
+  - component: {fileID: 5370422441120076747}
+  m_Layer: 0
+  m_Name: Rebinds
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1061321889770726516
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7904961127066443835}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 53.92, y: -2.04, z: 21.53}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8686522486198557375}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5370422441120076747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7904961127066443835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c4fc8386cba2ed43bbc92b1a91e6480, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: rinCore::rinCore.RebindsLoader
+  inputActions:
+  - {fileID: -6836382308972316003, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
+  - {fileID: -8039365320775711174, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
+  - {fileID: 7001370188194373053, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
+  - {fileID: 5156956874734435587, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
+  - {fileID: 3515717914964872173, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
+  - {fileID: -4406308715983901271, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
+  - {fileID: 6654901787114958540, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
+  - {fileID: 7918676487483149130, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
 --- !u!1 &8199310646014138502
 GameObject:
   m_ObjectHideFlags: 0

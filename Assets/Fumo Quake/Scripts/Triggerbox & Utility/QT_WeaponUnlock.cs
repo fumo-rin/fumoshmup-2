@@ -16,6 +16,10 @@ namespace FumoQuake
             RailGun = 5,
         }
         [SerializeField] UnlockItem unlock;
+        protected override void WhenAwake()
+        {
+
+        }
         protected override void WhenTriggerEnter(Collider other, IFumoUnit unit)
         {
             PlayerWeaponsController.Unlock((int)unlock);

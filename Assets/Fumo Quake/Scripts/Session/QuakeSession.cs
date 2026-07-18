@@ -1,5 +1,6 @@
 using rinCore;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace FumoQuake
@@ -8,8 +9,14 @@ namespace FumoQuake
     public class QuakeSession : GameSession
     {
         [SerializeField] ScenePairSO mainMenu;
-        [SerializeField] List<ScenePairSO> levelSequence = new();
+        [SerializeField] public List<ScenePairSO> levelSequence = new();
         static Queue<ScenePairSO> levelQueue;
+        public bool submitScore;
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetStatics()
+        {
+            levelQueue = null;
+        }
         protected override void WhenEndSession()
         {
             SceneLoader.LoadScenePair(mainMenu);
@@ -18,7 +25,15 @@ namespace FumoQuake
         {
             QuakeController.StoredHealth = null;
             PlayerWeaponsController.ResetWeaponState();
-            Queue<ScenePairSO> levels = new(levelSequence);
+            Queue<ScenePairSO> levels = new();
+            foreach (var item in levelSequence)
+            {
+                levels.Enqueue(item);
+            }
+            foreach (ScenePairSO level in levels)
+            {
+                Debug.Log("Session Levels : " + level.name);
+            }
             levelQueue = levels;
             NextLevelOrMenu();
         }
@@ -33,7 +48,7 @@ namespace FumoQuake
             {
                 EndSession(new()
                 {
-                    SubmitScore = true
+                    SubmitScore = QuakeSession.CurrentAs(out QuakeSession ses) && ses.submitScore
                 });
             }
         }

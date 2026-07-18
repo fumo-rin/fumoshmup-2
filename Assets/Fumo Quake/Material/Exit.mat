@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Quake Particle 5
+  m_Name: Exit
   m_Shader: {fileID: -6465566751694194690, guid: a548f59471390ac4fb08686ab33c3b67, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -111,7 +111,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _Emission: 5
+    - _Emission: 1
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
@@ -139,7 +139,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _EmissionTint: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionTint: {r: 2.608238, g: 2.013332, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

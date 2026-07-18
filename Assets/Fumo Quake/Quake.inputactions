@@ -14,6 +14,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "d758b23a-8da7-4ff5-a97f-e799be3adcf9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -27,6 +36,39 @@
                     "action": "Shoot",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7dfe9069-43d2-432c-bc0d-6bfd3aebb85b",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7cb2971a-3032-4015-b2db-1774c02ecd0c",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b927485c-a222-46fb-9f9f-420306132abc",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -35,7 +77,7 @@
             "id": "ec668a7c-2ce8-42b8-9b6b-0bb55192da47",
             "actions": [
                 {
-                    "name": "1",
+                    "name": "Blaster",
                     "type": "Button",
                     "id": "dd4f5a60-d2c0-453a-a6bf-e7ec1ec0fe93",
                     "expectedControlType": "",
@@ -44,7 +86,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "2",
+                    "name": "Shotgun",
                     "type": "Button",
                     "id": "37056a06-39a5-45bb-897c-c54df5ca4dc0",
                     "expectedControlType": "",
@@ -53,7 +95,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "3",
+                    "name": "Nailgun",
                     "type": "Button",
                     "id": "1727839e-39e4-4e7c-89bd-fc9940e7873b",
                     "expectedControlType": "",
@@ -62,7 +104,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "4",
+                    "name": "Rocket Launcher",
                     "type": "Button",
                     "id": "ea476521-8532-4b2f-b739-eace6b32b33e",
                     "expectedControlType": "",
@@ -71,7 +113,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "5",
+                    "name": "Gay Laser From Hell",
                     "type": "Button",
                     "id": "f19e1806-d9ee-4411-89d0-7908feb08824",
                     "expectedControlType": "",
@@ -80,7 +122,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "6",
+                    "name": "Railgun",
                     "type": "Button",
                     "id": "a1f69dc8-39f8-487d-a7e4-f3caf51dd1bf",
                     "expectedControlType": "",
@@ -97,18 +139,40 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "1",
+                    "action": "Blaster",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "28cef3e1-2cb6-4cf8-bd29-fa3e9063bc38",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Blaster",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "09b6b9c0-92c3-49fa-9fd4-bac2047bfb49",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shotgun",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "6a45e82d-11b5-457f-86f0-c4e5d8aaed5e",
-                    "path": "<Keyboard>/2",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "2",
+                    "action": "Shotgun",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -119,7 +183,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "3",
+                    "action": "Nailgun",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d72a5c99-ba21-4494-a4cb-a6e849e6a468",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Nailgun",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -130,7 +205,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "4",
+                    "action": "Rocket Launcher",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "554acb4a-2da3-45be-a693-c8c9a61f2747",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rocket Launcher",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -141,7 +227,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "5",
+                    "action": "Gay Laser From Hell",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "510fc257-386c-4343-a490-9253912df85d",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Gay Laser From Hell",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -152,7 +249,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "6",
+                    "action": "Railgun",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ff970c75-730d-4efe-9d3c-da38fd597f3b",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Railgun",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

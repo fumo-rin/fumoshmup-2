@@ -167,14 +167,14 @@ namespace FumoQuake
             {
                 if (runner.GetRecoilHandler(out PlayerWeaponsController recoil))
                 {
-                    recoil.AddRecoil(5.5f);
+                    recoil.AddRecoil(1.9f);
                 }
                 SetNewLockTimes(ref weaponLock);
                 GunSound.Play(ray.origin);
                 LastShootTime = Time.time;
                 for (int i = 0; i < data.pelletCount; i++)
                 {
-                    Ray r = RinHelper.RayDot(ray, 0.0005f);
+                    Ray r = RinHelper.RayDot(ray, 0.0003f);
                     QuakeProjectile.CreateProjectile(new() { Direction = r.direction, Faction = OwnerFaction, Origin = r.origin, Speed = 25f },
                         out QuakeProjectile p);
 
@@ -253,7 +253,7 @@ namespace FumoQuake
             {
                 if (runner.GetRecoilHandler(out PlayerWeaponsController recoil))
                 {
-                    recoil.AddRecoil(1.45f);
+                    recoil.AddRecoil(2.25f);
                 }
                 GunSound.Play(ray.origin);
                 Ray r = RinHelper.RayDot(ray, 0.00035f);

@@ -14,6 +14,13 @@ namespace FumoQuake
             Debug.Log("Starting : " + transform.name);
             randomSpawns.Add(this);
         }
+        private void Awake()
+        {
+            foreach (var item in transform.GetComponentsInChildren<Renderer>())
+            {
+                item.enabled = false;
+            }
+        }
         private void OnDisable()
         {
             randomSpawns.Remove(this);
