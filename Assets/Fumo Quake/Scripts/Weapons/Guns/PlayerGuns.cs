@@ -104,6 +104,24 @@ namespace FumoQuake
                 }
                 SetNewLockTimes(ref weaponLock);
             }
+
+            public override BaseGun Clone()
+            {
+                return new PlayerShotgun()
+                {
+                    WeaponShootLockTime = WeaponShootLockTime,
+                    gunAmmo = gunAmmo,
+                    GunSound = GunSound,
+                    hitDistance = hitDistance,
+                    hitMask = hitMask,
+                    IsLocked = IsLocked,
+                    optionalIconUI = optionalIconUI,
+                    OwnerFaction = OwnerFaction,
+                    RemainingAmmo = RemainingAmmo,
+                    shotgun = shotgun,
+                    WeaponShootSwapLockDuration = WeaponShootSwapLockDuration
+                };
+            }
         }
 
         [System.Serializable]
@@ -175,6 +193,24 @@ namespace FumoQuake
                     nextAmmoGenTime = Time.time + 0.125f;
                 }
             }
+
+            public override BaseGun Clone()
+            {
+                return new PlayerPistol()
+                {
+                    WeaponShootLockTime = WeaponShootLockTime,
+                    gunAmmo = gunAmmo,
+                    GunSound = GunSound,
+                    nextAmmoGenTime = nextAmmoGenTime,
+                    LastShootTime = LastShootTime,
+                    data = data,
+                    IsLocked = IsLocked,
+                    optionalIconUI = optionalIconUI,
+                    OwnerFaction = OwnerFaction,
+                    RemainingAmmo = RemainingAmmo,
+                    WeaponShootSwapLockDuration = WeaponShootSwapLockDuration
+                };
+            }
         }
         [System.Serializable]
         public class NailGun : BaseGun, IQuakeShooter, IGunAmmo, IGunFireMode
@@ -228,6 +264,19 @@ namespace FumoQuake
                 }
                 SetNewLockTimes(ref weaponLock);
             }
+
+            public override BaseGun Clone() => new NailGun()
+            {
+                WeaponShootLockTime = WeaponShootLockTime,
+                data = data,
+                gunAmmo = gunAmmo,
+                GunSound = GunSound,
+                IsLocked = IsLocked,
+                optionalIconUI = optionalIconUI,
+                OwnerFaction = OwnerFaction,
+                RemainingAmmo = RemainingAmmo,
+                WeaponShootSwapLockDuration = WeaponShootSwapLockDuration,
+            };
         }
     }
 }

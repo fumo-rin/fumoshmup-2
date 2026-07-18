@@ -74,6 +74,12 @@ namespace FumoQuake
             }
             return anyAlerted;
         }
+        public bool CanSeeTarget(ITargetting target)
+        {
+            if (target == null)
+                return false;
+            return CanSee(target.RandomOrderedTargets.OrderByRandom().FirstOrDefault().position, scan.distance, out ITargetting result) && result != null;
+        }
         public bool CanSee<T>(Vector3 target, float distance, out T other)
         {
             other = default;
@@ -330,7 +336,7 @@ namespace FumoQuake
             {
                 Transform t = target.RandomOrderedTargets.First();
                 float targetDistance = t.transform.position.DistanceTo(CurrentPosition);
-                if (gun != null)
+                if (gun != null && !Stalled)
                 {
                     Vector3 origin = transform.position + new Vector3(0f, 0.75f, 0f);
                     Ray targetRay = new()
@@ -338,30 +344,42 @@ namespace FumoQuake
                         direction = t.position - origin,
                         origin = origin
                     };
-                    float stallTime = 0.5f;
-                    if (targetDistance < 5f)
+                    void ShootLoop(bool canSee)
                     {
-                        stallTime = 0.15f;
-                        RandomAttackTime = gun.RandomAggressionTimeAfterLock(0.4f, 0.8f);
+                        float stallduration = 0.5f;
+                        StallCalculation(ref stallduration);
+                        void StallCalculation(ref float stallTime)
+                        {
+                            if (targetDistance < 5f)
+                            {
+                                stallTime = 0.15f;
+                                RandomAttackTime = gun.RandomAggressionTimeAfterLock(0.4f, 0.8f);
+                            }
+                            else if (targetDistance < 12f)
+                            {
+                                RandomAttackTime = gun.RandomAggressionTimeAfterLock(0.8f, 1.35f);
+                            }
+                            else if (targetDistance < 22f)
+                            {
+                                stallTime = 0f;
+                                RandomAttackTime = gun.RandomAggressionTimeAfterLock(1.35f, 1.85f);
+                            }
+                            else
+                            {
+                                stallTime = 0f;
+                                RandomAttackTime = gun.RandomAggressionTimeAfterLock(0.3f, 0.6f);
+                            }
+                        }
+                        if (!canSee)
+                        {
+                            gun.weaponLockTiming.Stall(RNG.FloatRange(0.15f, 0.35f));
+                        }
+                        if (gun.TryShootWith(targetRay) && stallduration > 0f)
+                        {
+                            StallTimeEnd = stallduration + Time.time;
+                        }
                     }
-                    else if (targetDistance < 12f)
-                    {
-                        RandomAttackTime = gun.RandomAggressionTimeAfterLock(0.8f, 1.35f);
-                    }
-                    else if (targetDistance < 22f)
-                    {
-                        stallTime = 0f;
-                        RandomAttackTime = gun.RandomAggressionTimeAfterLock(1.35f, 1.85f);
-                    }
-                    else
-                    {
-                        stallTime = 0f;
-                        RandomAttackTime = gun.RandomAggressionTimeAfterLock(0.3f, 0.6f);
-                    }
-                    if (gun.TryShootWith(targetRay) && stallTime > 0f)
-                    {
-                        StallTimeEnd = stallTime + Time.time;
-                    }
+                    ShootLoop(CanSeeTarget(target));
                 }
             }
         }

@@ -37,6 +37,20 @@ namespace FumoQuake
                 }
                 SetNewLockTimes(ref weaponLock);
             }
+
+            public override BaseGun Clone()
+            {
+                return new ProjectileShotgun()
+                {
+                    GunSound = GunSound,
+                    WeaponShootLockTime = WeaponShootLockTime,
+                    IsLocked = IsLocked,
+                    optionalIconUI = optionalIconUI,
+                    OwnerFaction = OwnerFaction,
+                    shotgun = shotgun,
+                    WeaponShootSwapLockDuration = WeaponShootSwapLockDuration,
+                };
+            }
         }
         [System.Serializable]
         public class ProjectileLinegun : BaseGun, IQuakeShooter
@@ -70,6 +84,20 @@ namespace FumoQuake
                     }
                 }
                 SetNewLockTimes(ref weaponLock);
+            }
+
+            public override BaseGun Clone()
+            {
+                return new ProjectileLinegun()
+                {
+                    GunSound = GunSound,
+                    WeaponShootLockTime = WeaponShootLockTime,
+                    IsLocked = IsLocked,
+                    optionalIconUI = optionalIconUI,
+                    OwnerFaction = OwnerFaction,
+                    linegun = linegun,
+                    WeaponShootSwapLockDuration = WeaponShootSwapLockDuration,
+                };
             }
         }
     }

@@ -35,11 +35,17 @@ namespace FumoQuake
             public float WeaponSwapLockTime;
             public bool CanShoot => Time.time >= NextShootTime;
             public bool CanSwapWeapon => Time.time >= WeaponSwapLockTime;
+            public void Stall(float time)
+            {
+                NextShootTime = (time + Time.time).Max(NextShootTime);
+                WeaponSwapLockTime = (time + Time.time).Max(WeaponSwapLockTime);
+            }
         }
         public void Shoot(WeaponsController runner, ref WeaponLock weaponLock, Ray ray);
     }
     public abstract class BaseGun
     {
+        public abstract BaseGun Clone();
         #region Hitscan Actions
         protected void Knockback(RinRaycast cast, RaycastHit hit, float damage)
         {

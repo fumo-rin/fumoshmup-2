@@ -83,8 +83,6 @@ namespace FumoQuake
         }
         private void Update()
         {
-            currentHealth += Time.deltaTime * 3f;
-            currentHealth = currentHealth.Clamp(-1, 100f);
             IFumoUnit.Player = this;
             IsAlive = true;
             ITargetting.StaticTarget = this;
@@ -146,6 +144,19 @@ namespace FumoQuake
 
             if (currentHealth <= 0f)
             {
+                IEnumerator CO_EndAfter(float delay = 1.25f)
+                {
+                    while (delay > 0f)
+                    {
+                        delay -= Time.unscaledDeltaTime;
+                        yield return null;
+                    }
+                    GameSession.EndSession(new()
+                    {
+                        SubmitScore = true
+                    });
+                }
+                CO_EndAfter(1.25f).RunRoutine();
                 IsAlive = false;
                 Destroy(gameObject);
             }

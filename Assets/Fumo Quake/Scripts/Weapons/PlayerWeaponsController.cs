@@ -37,7 +37,8 @@ namespace FumoQuake
                 if (item is IGunAmmo ammo)
                 {
                     ammo.RemainingAmmo += ammo.MaxAmmo.AsFloat(0.2f).Floor().ToInt();
-                    ammo.RemainingAmmo = ammo.MaxAmmo.Min(ammo.RemainingAmmo);
+                    int min = ammo.MaxAmmo.MultiplyAndFloor(0.5f);
+                    ammo.RemainingAmmo = ammo.RemainingAmmo.Clamp(min, ammo.MaxAmmo);
                 }
                 return;
             }
@@ -123,9 +124,7 @@ namespace FumoQuake
                         continue;
                     }
 
-                    string json = JsonUtility.ToJson(item);
-                    BaseGun clonedGun = (BaseGun)JsonUtility.FromJson(json, item.GetType());
-                    currentLoadout.Add(clonedGun);
+                    currentLoadout.Add(item.Clone());
                 }
                 ShouldInitialize = false;
             }
