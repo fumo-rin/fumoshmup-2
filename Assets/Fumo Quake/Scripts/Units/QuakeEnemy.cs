@@ -272,6 +272,8 @@ namespace FumoQuake
         protected abstract void WhenDisable();
         private void Update()
         {
+            if (GeneralManager.IsPaused || SceneLoader.IsLoading)
+                return;
             IFumoUnit targetUnit = IFumoUnit.Player;
 
             Think(targetUnit, Time.deltaTime);

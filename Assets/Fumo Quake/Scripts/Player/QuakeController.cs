@@ -1,3 +1,4 @@
+using Mono.CSharp;
 using rinCore;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,8 +16,47 @@ namespace FumoQuake
         public IEnumerable<Transform> RandomOrderedTargets { get; }
         public Vector3 FirstTargetPosition => RandomOrderedTargets.First().position;
     }
-    public class QuakeController : MonoBehaviour, IFumoUnit, ITargetting, IQuakeHitable
+    #region Portal
+    public partial class QuakeController
     {
+        [SerializeField] ParticleSystem portalParticleTemplate;
+        public static void ActivateEnemyNestWithPortalEffect(Transform t, float delay)
+        {
+            if (instance == null)
+            {
+                return;
+            }
+            instance.StartCoroutine(CO_PortalActivation(t, delay, instance.portalParticleTemplate));
+            IEnumerator CO_PortalActivation(Transform nest, float delay, ParticleSystem ps)
+            {
+                for (int i = 0; i < nest.childCount; i++)
+                {
+                    var g = Instantiate(ps, nest.GetChild(i).transform.position, Quaternion.identity);
+                    g.Play();
+                    Destroy(g.gameObject, delay);
+                }
+                yield return delay.WaitForSeconds();
+                IEnumerable<QuakeEnemy> enemies(Transform nest)
+                {
+                    for (int i = 0; i < nest.childCount; i++)
+                    {
+                        if (i > nest.childCount)
+                            break;
+                        yield return nest.GetChild(i).GetComponent<QuakeEnemy>() is QuakeEnemy q ? q : null;
+                    }
+                }
+                nest.gameObject.SetActive(true);
+                foreach (var portaledEnemy in enemies(nest))
+                {
+                    portaledEnemy.gameObject.SetActive(true);
+                }
+            }
+        }
+    }
+    #endregion
+    public partial class QuakeController : MonoBehaviour, IFumoUnit, ITargetting, IQuakeHitable
+    {
+        static QuakeController instance;
         public Rigidbody UnitRB => quakeMover.rb;
         public GameObject unitGameObject => gameObject;
         public GameObject hitGameObject => unitGameObject;
@@ -28,6 +68,10 @@ namespace FumoQuake
         [SerializeField] InputActionReference shootAction;
         [SerializeField] WeaponsController weaponsHandler;
         [SerializeField] LayerMask hitscan;
+        private void Awake()
+        {
+            instance = this;
+        }
         private void Start()
         {
             currentHealth = StoredHealth ?? 100f;
