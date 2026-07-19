@@ -151,7 +151,7 @@ namespace FumoQuake
             {
                 if (item is IGunUpdate update)
                 {
-                    update.Update(Time.deltaTime);
+                    update.Update(this, Time.deltaTime);
                 }
             }
             if (CurrentWeapon is IGunAmmo currentAmmo && currentAmmo.RemainingAmmo <= 0)

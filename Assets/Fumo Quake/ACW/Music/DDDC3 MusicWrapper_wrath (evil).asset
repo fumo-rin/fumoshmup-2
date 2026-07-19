@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9376c3e930513a47b7f77626dbe3390, type: 3}
   m_Name: DDDC3 MusicWrapper_wrath (evil)
   m_EditorClassIdentifier: rinCore::rinCore.MusicWrapper
-  bpm: 207
+  bpm: 192
   TrackName: wrath (evil)
-  musicClip: {fileID: 8300000, guid: bd797f11fb8648d4fb84bda4cd24cb87, type: 3}
+  musicClip: {fileID: 8300000, guid: b3bf677f74748f046b911bc9108c235b, type: 3}
   clipVolume: 1
   <dontReplaceSelf>k__BackingField: 1

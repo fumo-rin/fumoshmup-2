@@ -9,7 +9,7 @@ namespace FumoQuake
 {
     public interface IGunUpdate
     {
-        public void Update(float dt);
+        public void Update(WeaponsController runner, float dt);
     }
     public interface IGunFireMode
     {
@@ -196,7 +196,7 @@ namespace FumoQuake
                     }
                 }
             }
-            public void Update(float dt)
+            public void Update(WeaponsController runner, float dt)
             {
                 if (AmmoTick)
                 {
@@ -377,9 +377,9 @@ namespace FumoQuake
                 RemainingAmmo = RemainingAmmo,
                 WeaponShootSwapLockDuration = WeaponShootSwapLockDuration,
             };
-            public void Update(float dt)
+            public void Update(WeaponsController runner, float dt)
             {
-                if (!data.shootAction.IsPressed() || RemainingAmmo <= 0f)
+                if (!data.shootAction.IsPressed() || RemainingAmmo <= 0f || runner.CurrentWeapon != this)
                 {
                     data.LGSound.Stop();
                     data.lr.positionCount = 0;
@@ -478,12 +478,12 @@ namespace FumoQuake
 
                             if (item.transform.GetComponent<Collider>() is Collider c)
                             {
-                                c.AddImpactVelocity(new(point, (point - p.FinalizedPosition), 7f + 15f * lerp01));
+                                c.AddImpactVelocity(new(point, (point - p.FinalizedPosition), 7f + (4f * lerp01)));
                             }
 
                             float damage = data.rocketDamage * 0.5f + (0f.LerpUnclamped(data.rocketDamage, lerp01));
                             if (hit.IsPlayer)
-                                damage *= .35f;
+                                damage = 4f + 0f.LerpUnclamped(14f, lerp01);
                             hit.Hit(new()
                             {
                                 Damage = damage,
