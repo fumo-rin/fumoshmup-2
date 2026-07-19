@@ -301,5 +301,190 @@ namespace FumoQuake
                 WeaponShootSwapLockDuration = WeaponShootSwapLockDuration,
             };
         }
+        [System.Serializable]
+        public class LightningGun : BaseGun, IQuakeShooter, IGunAmmo, IGunFireMode, IQuakeTextName, IGunUpdate
+        {
+            [System.Serializable]
+            public struct LG
+            {
+                public AudioSource LGSound;
+                public InputActionReference shootAction;
+                public LineRenderer lr;
+                public float DPS;
+                public LayerMask hitLayer;
+            }
+            public LG data;
+            [SerializeField]
+            GunAmmo gunAmmo = new()
+            {
+                MaxAmmo = 600,
+                Remaining = 600
+            };
+            public int RemainingAmmo
+            {
+                get
+                {
+                    return gunAmmo.Remaining;
+                }
+                set
+                {
+                    gunAmmo.Remaining = value;
+                }
+            }
+            public int MaxAmmo => gunAmmo.MaxAmmo;
+            public int StartingAmmo => 600;
+            public int AmmoCost => 1;
+            public override bool IsProjectileWeapon => true;
+            public IGunFireMode.Mode ClickMode => IGunFireMode.Mode.Hold;
+            public string TextName => "Nail Gun";
+            public void Shoot(WeaponsController runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
+            {
+                data.LGSound.Play();
+                data.LGSound.loop = true;
+                Ray r = ray;
+                Vector3 endPoint = r.origin + r.direction.ScaleToMagnitude(50f);
+                SetNewLockTimes(ref weaponLock);
+                if (Physics.Raycast(r, out RaycastHit hit, 50f, data.hitLayer, QueryTriggerInteraction.Ignore))
+                {
+                    endPoint = hit.point;
+                    QuakeProjectileRenderer.ProjHitEffect(hit);
+                    if (hit.transform.TryGetComponent(out IQuakeHitable hitable))
+                    {
+                        hitable.Hit(new()
+                        {
+                            Damage = data.DPS * WeaponShootLockTime,
+                            HitPoint = hit.point,
+                            Sender = runner.GetComponent<ITargetting>() is ITargetting sender ? sender : null
+                        });
+                    }
+                }
+                data.lr.positionCount = 2;
+                data.lr.SetPositions(new[] { ray.origin, endPoint });
+                data.lr.enabled = true;
+            }
+
+            public override BaseGun Clone() => new LightningGun()
+            {
+                WeaponShootLockTime = WeaponShootLockTime,
+                data = data,
+                gunAmmo = gunAmmo,
+                GunSound = GunSound,
+                IsLocked = IsLocked,
+                optionalIconUI = optionalIconUI,
+                OwnerFaction = OwnerFaction,
+                RemainingAmmo = RemainingAmmo,
+                WeaponShootSwapLockDuration = WeaponShootSwapLockDuration,
+            };
+            public void Update(float dt)
+            {
+                if (!data.shootAction.IsPressed() || RemainingAmmo <= 0f)
+                {
+                    data.LGSound.Stop();
+                    data.lr.positionCount = 0;
+                    data.lr.enabled = false;
+                }
+            }
+        }
+        [System.Serializable]
+        public class RocketLauncher : BaseGun, IQuakeShooter, IGunAmmo, IGunFireMode, IQuakeTextName
+        {
+            public override bool IsProjectileWeapon => true;
+            public GunAmmo gunAmmo;
+            public int RemainingAmmo
+            {
+                get
+                {
+                    return gunAmmo.Remaining;
+                }
+                set
+                {
+                    gunAmmo.Remaining = value;
+                }
+            }
+            [System.Serializable]
+            public struct GunData
+            {
+                public int projectileIndex;
+                public float projectileSpeed;
+                public float rocketDamage;
+                public float splashSize;
+            }
+            public GunData data;
+            public int MaxAmmo => 30;
+            public int StartingAmmo => 12;
+            public int AmmoCost => 1;
+            public IGunFireMode.Mode ClickMode => IGunFireMode.Mode.Hold;
+            public string TextName => "Rocket Gun";
+            public override BaseGun Clone()
+            {
+                return new RocketLauncher()
+                {
+                    WeaponShootLockTime = WeaponShootLockTime,
+                    gunAmmo = gunAmmo,
+                    GunSound = GunSound,
+                    IsLocked = IsLocked,
+                    optionalIconUI = optionalIconUI,
+                    OwnerFaction = OwnerFaction,
+                    RemainingAmmo = RemainingAmmo,
+                    WeaponShootSwapLockDuration = WeaponShootSwapLockDuration,
+                    data = data,
+                };
+            }
+            public void Shoot(WeaponsController runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
+            {
+                if (runner.GetRecoilHandler(out PlayerWeaponsController recoil))
+                {
+                    recoil.AddRecoil(11f);
+                }
+                SetNewLockTimes(ref weaponLock);
+                GunSound.Play(ray.origin);
+
+                Ray r = RinHelper.RayDot(ray, 0.0003f);
+                QuakeProjectile.CreateProjectile(new() { Direction = r.direction, Faction = OwnerFaction, Origin = r.origin, Speed = 26f },
+                    out QuakeProjectile p);
+
+                if (p != null)
+                {
+                    p._projectileVelocity += new Vector3(0f, 3f, 0f);
+                    p.Channel = data.projectileIndex;
+                    p.Damage = data.rocketDamage;
+                    p.GravityMod = 0.65f;
+                    p.Sender = runner.GetComponent<ITargetting>() is ITargetting sender ? sender : null;
+                    p.HitAction += (QuakeProjectile.HitActionResult hitResult) =>
+                    {
+                        if (hitResult == QuakeProjectile.HitActionResult.IHit)
+                            Mugshot.SetMood(new(0.5f)
+                            {
+                                mood = Mugshot.Mood.Excited,
+                                priority = 50,
+                            });
+
+                        GeneralManager.FunnyExplosion(new()
+                        {
+                            is3d = true,
+                            playSound = true,
+                            position = p.FinalizedPosition,
+                            scale = 1.75f
+                        });
+                        foreach (var item in Physics.OverlapSphere(p.FinalizedPosition, data.splashSize))
+                        {
+                            if (item.transform.GetComponentInParent<IQuakeHitable>() is not IQuakeHitable hit)
+                                continue;
+                            float lerp01 = p.FinalizedPosition.DistanceTo(item.ClosestPoint(p.FinalizedPosition)).MapTo01(4f, 0f);
+
+                            float damage = data.rocketDamage * 0.5f + (0f.LerpUnclamped(data.rocketDamage, lerp01));
+                            if (hit.IsPlayer)
+                                damage *= .35f;
+                            hit.Hit(new()
+                            {
+                                Damage = damage,
+                                HitPoint = item.ClosestPoint(p.FinalizedPosition),
+                                Sender = p.Sender
+                            });
+                        }
+                    };
+                }
+            }
+        }
     }
 }

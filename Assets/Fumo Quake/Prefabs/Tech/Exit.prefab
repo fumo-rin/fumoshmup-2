@@ -127,4 +127,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: FumoQuake::FumoQuake.QT_NextLevel
   OnlyFindPlayer: 1
   DestroyOnCollect: 0
-  HiddenRenderers: []
+  VisibleRenderers:
+  - {fileID: 5349151174941806976}

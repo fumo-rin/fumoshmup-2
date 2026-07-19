@@ -83,6 +83,7 @@ namespace FumoQuake
     public interface IQuakeHitable
     {
         public GameObject hitGameObject { get; }
+        public bool IsPlayer => hitGameObject.TryGetComponent(out IFumoUnit u) && u.IsPlayer;
         public struct HitPacket
         {
             public Vector3 HitPoint;
