@@ -822,6 +822,7 @@ MonoBehaviour:
   levelCollection:
   - {fileID: 11400000, guid: 19db1e1ce44d0cc4b8bb0833d92ee217, type: 2}
   - {fileID: 11400000, guid: b96a453ce472fcb41af9b8e963cc15ce, type: 2}
+  - {fileID: 11400000, guid: 85b89b8fb49a906448c005badd0fbd2c, type: 2}
   template: {fileID: 45596797}
 --- !u!4 &1113518237
 Transform:
@@ -851,6 +852,7 @@ GameObject:
   - component: {fileID: 1266375397}
   - component: {fileID: 1266375396}
   - component: {fileID: 1266375399}
+  - component: {fileID: 1266375400}
   m_Layer: 5
   m_Name: Button (4)
   m_TagString: Untagged
@@ -973,6 +975,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: rinCore::rinCore.PreventEventSystemUnselect
   SelectWhenEnabled: 1
+--- !u!114 &1266375400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1266375393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a68542cab944b774987038600b8f95b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: rinCore::rinCore.FumoMenuSceneButton
+  sceneToLoad: {fileID: 11400000, guid: 1d5053d31d0cd634b986de274eb561ef, type: 2}
+  EndSession: 0
 --- !u!1 &1331252791
 GameObject:
   m_ObjectHideFlags: 0

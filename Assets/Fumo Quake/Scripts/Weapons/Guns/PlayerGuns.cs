@@ -356,8 +356,15 @@ namespace FumoQuake
                             HitPoint = hit.point,
                             Sender = runner.GetComponent<ITargetting>() is ITargetting sender ? sender : null
                         });
+
+                        Mugshot.SetMood(new Mugshot.MoodEntry(0.35f)
+                        {
+                            mood = Mugshot.Mood.Excited,
+                            priority = 50,
+                        });
                     }
                     if (hit.collider is Collider c) c.AddImpactVelocity(new Impact(hit, r, 0.35f));
+
                 }
                 ray.origin = ray.origin + new Vector3(0f, -0.5f, 0f);
                 data.lr.positionCount = 2;
@@ -468,12 +475,10 @@ namespace FumoQuake
                             position = p.FinalizedPosition,
                             scale = 1.75f
                         });
+                        bool hitSomething = false;
                         foreach (var item in Physics.OverlapSphere(p.FinalizedPosition, data.splashSize))
                         {
-                            if (item.transform.GetComponentInParent<IQuakeHitable>() is not IQuakeHitable hit)
-                                continue;
-
-                            Vector3 point = item.ClosestPoint(p.FinalizedPosition);
+                            Vector3 point = item.ClosestPointOnBounds(p.FinalizedPosition);
                             float lerp01 = p.FinalizedPosition.DistanceTo(point).MapTo01(4f, 0f);
 
                             if (item.transform.GetComponent<Collider>() is Collider c)
@@ -481,6 +486,9 @@ namespace FumoQuake
                                 c.AddImpactVelocity(new(point, (point - p.FinalizedPosition), 7f + (4f * lerp01)));
                             }
 
+                            if (item.transform.GetComponentInParent<IQuakeHitable>() is not IQuakeHitable hit)
+                                continue;
+                            hitSomething = true;
                             float damage = data.rocketDamage * 0.5f + (0f.LerpUnclamped(data.rocketDamage, lerp01));
                             if (hit.IsPlayer)
                                 damage = 4f + 0f.LerpUnclamped(14f, lerp01);
@@ -489,6 +497,14 @@ namespace FumoQuake
                                 Damage = damage,
                                 HitPoint = item.ClosestPoint(p.FinalizedPosition),
                                 Sender = p.Sender
+                            });
+                        }
+                        if (hitSomething)
+                        {
+                            Mugshot.SetMood(new Mugshot.MoodEntry(1.35f)
+                            {
+                                mood = Mugshot.Mood.Excited,
+                                priority = 50,
                             });
                         }
                     };
