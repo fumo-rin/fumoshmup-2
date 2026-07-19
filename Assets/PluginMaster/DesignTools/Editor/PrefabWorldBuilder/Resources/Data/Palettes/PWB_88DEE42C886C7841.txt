@@ -737,7 +737,7 @@
                     "_max": 0.0
                 }
             },
-            "_alwaysOrientUp": false,
+            "_alwaysOrientUp": true,
             "_separateScaleAxes": false,
             "_scaleMultiplier": {
                 "x": 1.0,
@@ -788,7 +788,7 @@
                 "_zoom": 1.0,
                 "_targetEuler": {
                     "x": 0.0,
-                    "y": 125.0,
+                    "y": 126.0,
                     "z": 0.0
                 },
                 "_targetOffset": {
@@ -1139,7 +1139,7 @@
                     "_prefabPath": "Assets/Fumo Quake/Prefabs/Tech/Spawnpoint.prefab",
                     "_frequency": 1.0,
                     "_parentId": 639200679259118823,
-                    "_paletteName": "Q env",
+                    "_paletteName": "",
                     "_overwriteThumbnailSettings": false,
                     "_includeInThumbnail": true,
                     "_isAsset2D": true
