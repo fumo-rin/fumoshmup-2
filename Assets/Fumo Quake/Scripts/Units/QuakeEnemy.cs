@@ -8,6 +8,10 @@ using UnityEngine.AI;
 
 namespace FumoQuake
 {
+    public interface IStrafe
+    {
+        public bool TryStrafe(ref Vector3 velocity, ITargetting target);
+    }
     [SelectionBase]
     public abstract class QuakeEnemy : MonoBehaviour, IFumoUnit
     {
@@ -35,6 +39,12 @@ namespace FumoQuake
         #region Vision
         [SerializeField] RinRaycast scan;
         [SerializeField] RinRaycast friendScan;
+        public Vector3 Center => box.bounds.center;
+        public Ray TargetRay(Vector3 other) => new()
+        {
+            direction = other - Center,
+            origin = Center
+        };
         public bool Action_DamageAlert(IQuakeHitable.HitPacket packet)
         {
             if (packet.Sender == null)
@@ -122,7 +132,7 @@ namespace FumoQuake
         public float StartingHealth { get; private set; }
         #endregion
         #region Pathfinding Algo
-        Vector3 lastKnownTarget;
+        public Vector3 lastKnownTarget;
         protected void Path_DirectlyTowards(IFumoUnit other)
         {
             if (other == null || !other.IsAlive)
@@ -215,7 +225,7 @@ namespace FumoQuake
         [SerializeField] protected BoxCollider box;
         public BoxCollider UnitCollider => box;
         [SerializeField] protected QGrounded grounded;
-        [SerializeField] protected RunnableObjectNavigator navigation;
+        [SerializeField] public RunnableObjectNavigator navigation;
         protected ITargetting target;
         protected Vector3 Origin;
         protected float nextScanTime;
@@ -276,6 +286,15 @@ namespace FumoQuake
             }
             pathTick = (Time.time.Max(pathTick)) + 0.1f;
             a?.Invoke(target);
+        }
+        protected void Pathing(ref float pathTick, Action<QuakeEnemy, IFumoUnit> a, IFumoUnit target)
+        {
+            if (Time.time < pathTick)
+            {
+                return;
+            }
+            pathTick = (Time.time.Max(pathTick)) + 0.1f;
+            a?.Invoke(this, target);
         }
         void Think(IFumoUnit targetUnit, float dt)
         {

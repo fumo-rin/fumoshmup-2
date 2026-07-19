@@ -1,6 +1,7 @@
 using rinCore;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
@@ -12,6 +13,7 @@ namespace FumoQuake
         static ITargetting StaticTarget;
         public bool TargetActive { get; }
         public IEnumerable<Transform> RandomOrderedTargets { get; }
+        public Vector3 FirstTargetPosition => RandomOrderedTargets.First().position;
     }
     public class QuakeController : MonoBehaviour, IFumoUnit, ITargetting, IQuakeHitable
     {

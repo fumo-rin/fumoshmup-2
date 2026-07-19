@@ -6,9 +6,18 @@ using UnityEngine.AI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UIElements;
+using NUnit.Framework;
 namespace FumoQuake
 {
-    public class Imp : QuakeEnemy, IQuakeHitable
+    public partial class Imp : IStrafe
+    {
+        [SerializeField] private StrafeController strafeSystem = new();
+        public bool TryStrafe(ref Vector3 velocity, ITargetting target)
+        {
+            return strafeSystem.TryRunStrafe(transform, ref velocity, target);
+        }
+    }
+    public partial class Imp : QuakeEnemy, IQuakeHitable
     {
         public GameObject hitGameObject => gameObject;
         public void Hit(IQuakeHitable.HitPacket packet)
@@ -82,7 +91,7 @@ namespace FumoQuake
             bool hasChaseTarget = targetUnit != null && target != null;
 
             if (hasChaseTarget)
-                Pathing(ref nextPathTick, Path_DirectlyTowards, targetUnit);
+                Pathing(ref nextPathTick, strafeSystem.Path_TryStrafeThenPathTowards, targetUnit);
 
             Targetting(target);
             if (hasChaseTarget && navigation.Nav.HasDestination && navigation.rb.linearVelocity.Y(0f).magnitude.Absolute() < 2f && grounded.IsGrounded)

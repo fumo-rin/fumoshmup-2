@@ -110,6 +110,7 @@ MonoBehaviour:
   WalkingAnimStringKey: WALKVELOCITY
   gun: {fileID: 8650356048947724936}
   CurrentHealth: 100
+  lastKnownTarget: {x: 0, y: 0, z: 0}
   box: {fileID: 8917979159809400363}
   grounded:
     box: {fileID: 8917979159809400363}
@@ -117,6 +118,26 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 585
   navigation: {fileID: 6088834311880531775}
+  strafeSystem:
+    profiles:
+    - maxDistance: 5
+      strafeAngle: 120
+      flipMin: 0.65
+      flipMax: 1.65
+      nextFlipTime: 0
+      currentDirectionSign: 0
+    - maxDistance: 9
+      strafeAngle: 150
+      flipMin: 0.6
+      flipMax: 0.6
+      nextFlipTime: 0
+      currentDirectionSign: 0
+    - maxDistance: 15
+      strafeAngle: 25
+      flipMin: 1.8
+      flipMax: 2.8
+      nextFlipTime: 0
+      currentDirectionSign: 0
 --- !u!114 &6088834311880531775
 MonoBehaviour:
   m_ObjectHideFlags: 0

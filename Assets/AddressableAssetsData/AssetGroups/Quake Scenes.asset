@@ -32,6 +32,7 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 93ba4878677dfe54f9cc33c8dba747dd
     m_Address: Assets/Fumo Quake/Scenes/Quake/Quake Worldcup Horde.unity
+    m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9b682f6c1579274478c5ad7d9dba52ec
