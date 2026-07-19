@@ -84,7 +84,7 @@ namespace FumoQuake
             }
             return anyAlerted;
         }
-        public bool CanSeeTarget(ITargetting target)
+        public bool CanSee(ITargetting target)
         {
             if (target == null)
                 return false;
@@ -133,7 +133,7 @@ namespace FumoQuake
         #endregion
         #region Pathfinding Algo
         public Vector3 lastKnownTarget;
-        protected void Path_DirectlyTowards(IFumoUnit other)
+        public void Path_DirectlyTowards(IFumoUnit other)
         {
             if (other == null || !other.IsAlive)
             {
@@ -147,7 +147,8 @@ namespace FumoQuake
             }
 
             Vector3 targetPos = other.CurrentPosition;
-            bool PathTowards = other.IsAlive && other.CurrentPosition.SquareDistanceToGreaterThan(transform.position, 3f);
+            bool PathTowards = (other.IsAlive && other.CurrentPosition.SquareDistanceToGreaterThan(transform.position, 3f)) ||
+                other.IsAlive && other is ITargetting target && !CanSee(target);
 
             if (!PathTowards)
             {
@@ -171,7 +172,7 @@ namespace FumoQuake
             navigation.SetNewTarget(navPos);
             lastKnownTarget = navPos;
         }
-        protected void Path_AwayFrom(IFumoUnit other)
+        public void Path_AwayFrom(IFumoUnit other)
         {
             if (other == null || !other.IsAlive)
             {
@@ -224,6 +225,7 @@ namespace FumoQuake
         #endregion
         [SerializeField] protected BoxCollider box;
         public BoxCollider UnitCollider => box;
+        public Rigidbody UnitRB => navigation.rb;
         [SerializeField] protected QGrounded grounded;
         [SerializeField] public RunnableObjectNavigator navigation;
         protected ITargetting target;
@@ -237,7 +239,10 @@ namespace FumoQuake
         protected abstract void WhenAwake();
         private void Start()
         {
-            RandomAttackTime = gun.RandomAggressionTimeAfterLock(0.6f, 1.25f);
+            if (gun != null)
+            {
+                RandomAttackTime = gun.RandomAggressionTimeAfterLock(0.6f, 1.25f);
+            }
             WhenStart();
             StartingHealth = CurrentHealth;
         }
@@ -256,15 +261,18 @@ namespace FumoQuake
         protected abstract void WhenDisable();
         private void Update()
         {
-
             IFumoUnit targetUnit = IFumoUnit.Player;
 
             Think(targetUnit, Time.deltaTime);
 
             Vector3 anim_Velocity = navigation.LastFrameMoveVelocity;
-            if (!navigation.HasPath)
+            if (!navigation.HasPath && grounded.IsGrounded)
             {
                 anim_Velocity = Vector3.zero;
+            }
+            else if (!grounded.IsGrounded)
+            {
+                anim_Velocity = new Vector3(UnitRB.linearVelocity.x, 0f, UnitRB.linearVelocity.z);
             }
             CurrentWalkingAnimationVelocity_WithSideEffects = anim_Velocity;
         }

@@ -28,7 +28,7 @@ namespace FumoQuake
         [field: SerializeReference, ManagedReferencePicker] public BaseGun Gun4 { get; protected set; }
         [field: SerializeReference, ManagedReferencePicker] public BaseGun Gun5 { get; protected set; }
         [field: SerializeReference, ManagedReferencePicker] public BaseGun Gun6 { get; protected set; }
-
+        BaseGun forSelected_PreviousWeapon;
         public static bool UnlockPickup(int index)
         {
             var item = currentLoadout[index % currentLoadout.Count()];
@@ -189,11 +189,34 @@ namespace FumoQuake
 
         private void SwapToWeapon(BaseGun targetWeapon)
         {
+            forSelected_PreviousWeapon = CurrentWeapon;
+
             weaponLockTiming.WeaponSwapLockTime = weaponLockTiming.WeaponSwapLockTime.Max(Time.time + 0.125f);
             weaponLockTiming.NextShootTime = weaponLockTiming.NextShootTime.Max(Time.time + 0.125f);
             CurrentWeapon = targetWeapon;
-            int index = GetWeaponIndex(targetWeapon);
-            WhenWeaponSelection?.Invoke(index, targetWeapon);
+
+            bool swapped = forSelected_PreviousWeapon != CurrentWeapon;
+            forSelected_PreviousWeapon = CurrentWeapon;
+            if (swapped)
+            {
+                int index = GetWeaponIndex(targetWeapon);
+                WhenWeaponSelection?.Invoke(index, targetWeapon);
+                if (targetWeapon != null && targetWeapon is IQuakeTextName n)
+                {
+                    GameXYTextDisplay.CreateText(n.TextName, new()
+                    {
+                        a01 = new(0.2f, 0.1f),
+                        b01 = new(0.8f, 0.2f),
+                        color = ColorHelper.White,
+                        duration = 1.25f,
+                        fadeIn = 0f,
+                        fadeOut = 0.1f,
+                        fontSize = 22f,
+                        horizontalAlignment = TMPro.HorizontalAlignmentOptions.Center,
+                        verticalAlignment = TMPro.VerticalAlignmentOptions.Bottom
+                    }, "Player Weapon Selection");
+                }
+            }
         }
 
         bool CanSelect(int value, out BaseGun selection)

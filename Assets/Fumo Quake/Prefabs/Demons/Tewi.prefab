@@ -54,13 +54,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5291885350590689793}
-  - component: {fileID: 5976487000038940522}
+  - component: {fileID: 5785673433018217039}
   - component: {fileID: 6088834311880531775}
   - component: {fileID: 3945740244485393898}
   - component: {fileID: 8917979159809400363}
-  - component: {fileID: 8650356048947724936}
   m_Layer: 8
-  m_Name: Grunglo
+  m_Name: Tewi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,7 +81,7 @@ Transform:
   - {fileID: 2744720069306685460}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5976487000038940522
+--- !u!114 &5785673433018217039
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,33 +90,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 6458174862732137157}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61399a2a98bf2bd4dae18a0657c016cf, type: 3}
+  m_Script: {fileID: 11500000, guid: ac24a648f897b5643a494ab7e5fc0e1f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: FumoQuake::FumoQuake.Coward
+  m_EditorClassIdentifier: FumoQuake::FumoQuake.Tewi
   scan:
     mask:
       serializedVersion: 2
       m_Bits: 585
-    <distance>k__BackingField: 40
+    <distance>k__BackingField: 60
     TI: 1
   friendScan:
     mask:
       serializedVersion: 2
       m_Bits: 833
-    <distance>k__BackingField: 40
+    <distance>k__BackingField: 60
     TI: 1
   WalkingAnimator: {fileID: 72077356284108178}
   WalkingAnimStringKey: WALKVELOCITY
-  gun: {fileID: 8650356048947724936}
-  CurrentHealth: 100
+  gun: {fileID: 0}
+  CurrentHealth: 40
   lastKnownTarget: {x: 0, y: 0, z: 0}
   box: {fileID: 8917979159809400363}
   grounded:
     box: {fileID: 8917979159809400363}
     groundMask:
       serializedVersion: 2
-      m_Bits: 585
+      m_Bits: 841
   navigation: {fileID: 6088834311880531775}
+  boing: {fileID: 11400000, guid: 4ac843b329622d049ac9ed233f0e87d4, type: 2}
 --- !u!114 &6088834311880531775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,10 +133,11 @@ MonoBehaviour:
   rb: {fileID: 3945740244485393898}
   boxCollider: {fileID: 8917979159809400363}
   nav:
+    isEnabled: 1
     waypointTolerance: 0.8
     destinationTolerance: 1
     stuckThresholdDuration: 0.75
-  moveSpeed: 4.5
+  moveSpeed: 8
   stopBrakingSpeed: 40
   autoRepath: 1
   repathDistance: 2
@@ -149,7 +150,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6458174862732137157}
   serializedVersion: 5
-  m_Mass: 50
+  m_Mass: 250
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -189,41 +190,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &8650356048947724936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6458174862732137157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f347eaa6dc78b2140915a5fd0817dd23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: FumoQuake::FumoQuake.WeaponsController
-  <CurrentWeapon>k__BackingField:
-    rid: 6698477031310229633
-  references:
-    version: 2
-    RefIds:
-    - rid: 6698477031310229633
-      type: {class: Fodder/ProjectileLinegun, ns: FumoQuake, asm: FumoQuake}
-      data:
-        optionalIconUI: {fileID: 0}
-        GunSound: {fileID: 11400000, guid: b25339d669b460f4abe2e61740479f47, type: 2}
-        <OwnerFaction>k__BackingField: 1
-        WeaponShootLockTime: 0.45
-        WeaponShootSwapLockDuration: 0.05
-        IsLocked: 0
-        linegun:
-          projectileIndex: 2
-          pellets: 4
-          pelletRandomDamage:
-          - 5
-          - 10
-          - 15
-          baseProjectileSpeed: 17
-          maxProjectileSpeed: 22
 --- !u!1 &7246698655696649836
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,8 +216,8 @@ Transform:
   m_GameObject: {fileID: 7246698655696649836}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.061095, y: 0.374, z: 0}
-  m_LocalScale: {x: 1.1131887, y: 1.1131887, z: 2.7829716}
+  m_LocalPosition: {x: 0, y: 0.624, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5588142596043676485}
@@ -279,7 +245,7 @@ SpriteRenderer:
   m_SmallMeshCulling: 1
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 129
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 2990ab5081df3d04ca70b92b711f7b8c, type: 2}
@@ -305,8 +271,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 7d08653a9e99c9343a974b81361063ce, type: 3}
-  m_Color: {r: 1, g: 0.8503309, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 5c7a04af83415df49a40a8dd0191af76, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

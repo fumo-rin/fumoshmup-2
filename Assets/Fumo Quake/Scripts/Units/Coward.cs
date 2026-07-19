@@ -71,7 +71,7 @@ namespace FumoQuake
                             StallTimeEnd = stallduration + Time.time;
                         }
                     }
-                    ShootLoop(CanSeeTarget(target));
+                    ShootLoop(CanSee(target));
                 }
             }
         }

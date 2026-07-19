@@ -15,15 +15,15 @@ namespace FumoQuake
             public float strafeAngle;
             public float flipMin;
             public float flipMax;
+            public float wallScanDistance;
             [HideInInspector] public float nextFlipTime;
             [HideInInspector] public float currentDirectionSign;
         }
         public List<StrafeProfile> profiles = new()
             {
-                new StrafeProfile { maxDistance = 6f,  strafeAngle = 90f, flipMin = 0.2f, flipMax = 0.5f },
-                new StrafeProfile { maxDistance = 15f, strafeAngle = 80f, flipMin = 0.5f, flipMax = 1.0f }
+                new StrafeProfile { maxDistance = 6f,  strafeAngle = 90f, flipMin = 0.2f, flipMax = 0.5f, wallScanDistance = 2.75f },
+                new StrafeProfile { maxDistance = 15f, strafeAngle = 80f, flipMin = 0.5f, flipMax = 1.0f, wallScanDistance = 2.75f }
             };
-        private const float WALL_CHECK_DIST = 1.25f;
         public void Path_TryStrafeThenPathTowards(QuakeEnemy e, IFumoUnit other)
         {
             if (other == null || !other.IsAlive)
@@ -36,7 +36,8 @@ namespace FumoQuake
                 return;
             }
 
-            if (other is ITargetting targetedInstance && e is IStrafe strafe)
+            bool planarFail = (other.CurrentPosition.y - e.CurrentPosition.y).Absolute() > 3f;
+            if (!planarFail && other is ITargetting targetedInstance && e is IStrafe strafe)
             {
                 Vector3 strafeDirection = Vector3.zero;
 
@@ -51,28 +52,7 @@ namespace FumoQuake
                     }
                 }
             }
-            Vector3 targetPos = other.CurrentPosition;
-            bool PathTowards = other.IsAlive && other.CurrentPosition.SquareDistanceToGreaterThan(e.transform.position, 3f);
-
-            if (!PathTowards)
-            {
-                e.navigation.Nav.StopPath();
-                return;
-            }
-            if (!e.navigation.Nav.TryProjectToNavmesh(targetPos, out Vector3 navPos, 5f))
-            {
-                if (NavMesh.FindClosestEdge(targetPos, out NavMeshHit hit, NavMesh.AllAreas))
-                {
-                    navPos = hit.position;
-                }
-                else
-                {
-                    e.navigation.Nav.StopPath();
-                    return;
-                }
-            }
-            e.navigation.SetNewTarget(navPos);
-            e.lastKnownTarget = navPos;
+            e.Path_DirectlyTowards(other);
         }
         public bool TryRunStrafe(Transform origin, ref Vector3 velocity, ITargetting target)
         {
@@ -100,13 +80,13 @@ namespace FumoQuake
             Vector3 finalStrafeDirection = (Quaternion.Euler(0f, finalAngle, 0f) * forwardDir).normalized;
 
             Vector3 rayOrigin = origin.position + new Vector3(0f, 0.5f, 0f);
-            if (Physics.Raycast(rayOrigin, finalStrafeDirection, WALL_CHECK_DIST, ~0, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(rayOrigin, finalStrafeDirection, profile.wallScanDistance, ~0, QueryTriggerInteraction.Ignore))
             {
                 profile.currentDirectionSign *= -1f;
                 finalAngle = profile.strafeAngle * profile.currentDirectionSign;
                 finalStrafeDirection = (Quaternion.Euler(0f, finalAngle, 0f) * forwardDir).normalized;
 
-                if (Physics.Raycast(rayOrigin, finalStrafeDirection, WALL_CHECK_DIST, ~0, QueryTriggerInteraction.Ignore))
+                if (Physics.Raycast(rayOrigin, finalStrafeDirection, profile.wallScanDistance, ~0, QueryTriggerInteraction.Ignore))
                 {
                     return false;
                 }

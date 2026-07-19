@@ -35,7 +35,7 @@ namespace FumoQuake
             }
         }
         [System.Serializable]
-        public class PlayerShotgun : BaseGun, IQuakeShooter, IGunAmmo, IGunFireMode
+        public class PlayerShotgun : BaseGun, IQuakeShooter, IGunAmmo, IGunFireMode, IQuakeTextName
         {
             [System.Serializable]
             public struct ShotgunData
@@ -126,7 +126,7 @@ namespace FumoQuake
         }
 
         [System.Serializable]
-        public class PlayerPistol : BaseGun, IQuakeShooter, IGunAmmo, IGunFireMode, IGunUpdate
+        public class PlayerPistol : BaseGun, IQuakeShooter, IGunAmmo, IGunFireMode, IGunUpdate, IQuakeTextName
         {
             [System.Serializable]
             public struct GunData

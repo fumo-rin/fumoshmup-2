@@ -124,18 +124,21 @@ MonoBehaviour:
       strafeAngle: 120
       flipMin: 0.65
       flipMax: 1.65
+      wallScanDistance: 0
       nextFlipTime: 0
       currentDirectionSign: 0
     - maxDistance: 9
       strafeAngle: 150
       flipMin: 0.6
       flipMax: 0.6
+      wallScanDistance: 0
       nextFlipTime: 0
       currentDirectionSign: 0
     - maxDistance: 15
       strafeAngle: 25
       flipMin: 1.8
       flipMax: 2.8
+      wallScanDistance: 0
       nextFlipTime: 0
       currentDirectionSign: 0
 --- !u!114 &6088834311880531775
@@ -156,7 +159,7 @@ MonoBehaviour:
     waypointTolerance: 0.8
     destinationTolerance: 1
     stuckThresholdDuration: 0.75
-  moveSpeed: 5
+  moveSpeed: 6.5
   stopBrakingSpeed: 40
   autoRepath: 1
   repathDistance: 2

@@ -17,6 +17,7 @@ namespace FumoQuake
     }
     public class QuakeController : MonoBehaviour, IFumoUnit, ITargetting, IQuakeHitable
     {
+        public Rigidbody UnitRB => quakeMover.rb;
         public GameObject unitGameObject => gameObject;
         public GameObject hitGameObject => unitGameObject;
         float currentHealth;
