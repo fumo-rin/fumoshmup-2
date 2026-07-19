@@ -33,7 +33,13 @@
             "ed62c8aee6cfc694bbb10bbe529c313c",
             "c878935b5767b354fa52a2cb948850fa",
             "78bb2bf6bbf9749408709608836679c1",
-            "27a4c9aef46ccac40b8349b3aa46af17"
+            "27a4c9aef46ccac40b8349b3aa46af17",
+            "6953c35fad46ba54fad6c9ee143d26e1",
+            "4db74a13d0046d14cabae43be979dea4",
+            "942679633f0f11943ad11c8dbb1885fb",
+            "ff38c8fe173969243a0f1a4877e4de85",
+            "78048fd255c890b47985cfacff769a29",
+            "232712ff39a89874296807e078cb8717"
         ],
         "_values": [
             7,
@@ -44,7 +50,13 @@
             1,
             11,
             6,
-            5
+            5,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
         ]
     },
     "_paletteManager": {
@@ -53,7 +65,7 @@
         "_viewList": false,
         "_showTabsInMultipleRows": false,
         "_iconSize": 64,
-        "_selectedPaletteId": -8584172960077427374
+        "_selectedPaletteId": -8584172960226430086
     },
     "_floorManager": {
         "_profileKeys": [
@@ -3876,7 +3888,7 @@
             "_origin": {
                 "x": 0.0,
                 "y": 0.0,
-                "z": -4.916381359100342
+                "z": 28.537750244140626
             },
             "_rotation": {
                 "x": 0.0,

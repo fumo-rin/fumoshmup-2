@@ -84,6 +84,20 @@ namespace FumoQuake
         public Rigidbody UnitRB => quakeMover.rb;
         public GameObject unitGameObject => gameObject;
         public GameObject hitGameObject => unitGameObject;
+        public float HealthWithSideEffects
+        {
+            get
+            {
+                return StoredHealth ?? 100;
+            }
+            set
+            {
+                const float MAXHEALTH = 100f;
+                currentHealth = value.Clamp(0f, MAXHEALTH);
+                StoredHealth = value.Clamp(0f, MAXHEALTH);
+
+            }
+        }
         float currentHealth;
         public static float? StoredHealth;
         [SerializeField] QuakeDude quakeMover;

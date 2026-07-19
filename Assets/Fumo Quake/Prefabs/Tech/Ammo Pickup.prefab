@@ -259,10 +259,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6486060522028163239}
-  - component: {fileID: 6112978635947677437}
   - component: {fileID: 3574199320348421268}
+  - component: {fileID: -7898206982911709915}
   m_Layer: 0
-  m_Name: Gun Pickup
+  m_Name: Ammo Pickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -285,23 +285,6 @@ Transform:
   - {fileID: 3215294621337445857}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6112978635947677437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9040651433473290552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad46782d998569a4abfbcd90acaabd0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: FumoQuake::FumoQuake.QT_WeaponUnlock
-  OnlyFindPlayer: 1
-  DestroyOnCollect: 1
-  VisibleRenderers:
-  - {fileID: 3241135070097729021}
-  unlock: 2
 --- !u!65 &3574199320348421268
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -323,3 +306,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &-7898206982911709915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9040651433473290552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a1d774436261742bf67254f3082aab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FumoQuake::FumoQuake.QT_PickupAmmo
+  OnlyFindPlayer: 1
+  DestroyOnCollect: 1
+  VisibleRenderers:
+  - {fileID: 3241135070097729021}
+  unlock: 0
