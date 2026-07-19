@@ -10,10 +10,11 @@ namespace FumoQuake
         {
 
         }
-        protected override void WhenTriggerEnter(Collider other, IFumoUnit unit)
+        protected override bool WhenTriggerEnter(Collider other, IFumoUnit unit)
         {
             other.transform.position += new Vector3(0f, 100f, 0);
             QuakeSession.NextLevelOrMenu();
+            return true;
         }
     }
 }

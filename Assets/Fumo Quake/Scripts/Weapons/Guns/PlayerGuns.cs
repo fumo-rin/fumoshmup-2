@@ -334,12 +334,12 @@ namespace FumoQuake
             public int MaxAmmo => gunAmmo.MaxAmmo;
             public int StartingAmmo => 600;
             public int AmmoCost => 1;
-            public override bool IsProjectileWeapon => true;
+            public override bool IsProjectileWeapon => false;
             public IGunFireMode.Mode ClickMode => IGunFireMode.Mode.Hold;
-            public string TextName => "Nail Gun";
+            public string TextName => "Gay Laser from Hell";
             public void Shoot(WeaponsController runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {
-                data.LGSound.Play();
+                if (!data.LGSound.isPlaying) data.LGSound.Play();
                 data.LGSound.loop = true;
                 Ray r = ray;
                 Vector3 endPoint = r.origin + r.direction.ScaleToMagnitude(50f);
@@ -357,7 +357,9 @@ namespace FumoQuake
                             Sender = runner.GetComponent<ITargetting>() is ITargetting sender ? sender : null
                         });
                     }
+                    if (hit.collider is Collider c) c.AddImpactVelocity(new Impact(hit, r, 0.35f));
                 }
+                ray.origin = ray.origin + new Vector3(0f, -0.5f, 0f);
                 data.lr.positionCount = 2;
                 data.lr.SetPositions(new[] { ray.origin, endPoint });
                 data.lr.enabled = true;
@@ -470,7 +472,14 @@ namespace FumoQuake
                         {
                             if (item.transform.GetComponentInParent<IQuakeHitable>() is not IQuakeHitable hit)
                                 continue;
-                            float lerp01 = p.FinalizedPosition.DistanceTo(item.ClosestPoint(p.FinalizedPosition)).MapTo01(4f, 0f);
+
+                            Vector3 point = item.ClosestPoint(p.FinalizedPosition);
+                            float lerp01 = p.FinalizedPosition.DistanceTo(point).MapTo01(4f, 0f);
+
+                            if (item.transform.GetComponent<Collider>() is Collider c)
+                            {
+                                c.AddImpactVelocity(new(point, (point - p.FinalizedPosition), 7f + 15f * lerp01));
+                            }
 
                             float damage = data.rocketDamage * 0.5f + (0f.LerpUnclamped(data.rocketDamage, lerp01));
                             if (hit.IsPlayer)

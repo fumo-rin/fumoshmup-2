@@ -29,21 +29,30 @@ namespace FumoQuake
         [field: SerializeReference, ManagedReferencePicker] public BaseGun Gun5 { get; protected set; }
         [field: SerializeReference, ManagedReferencePicker] public BaseGun Gun6 { get; protected set; }
 
-        public static void Unlock(int index)
+        public static bool UnlockPickup(int index)
         {
             var item = currentLoadout[index % currentLoadout.Count()];
             if (!item.IsLocked)
             {
+                float delta = 0f;
                 if (item is IGunAmmo ammo)
                 {
+                    float prev = ammo.RemainingAmmo;
                     ammo.RemainingAmmo += ammo.MaxAmmo.AsFloat(0.2f).Floor().ToInt();
                     int min = ammo.MaxAmmo.MultiplyAndFloor(0.5f);
                     ammo.RemainingAmmo = ammo.RemainingAmmo.Clamp(min, ammo.MaxAmmo);
+                    delta = ammo.RemainingAmmo - prev;
                 }
-                return;
+                if (delta > 0f)
+                {
+                    QuakeTextInfoUI.AddText("You Gots " + (item is IQuakeTextName n2 ? n2.TextName + " ammo" : "Item"));
+                    return true;
+                }
+                return false;
             }
             QuakeTextInfoUI.AddText("You Gots " + (item is IQuakeTextName n ? n.TextName : "Item"));
             item.IsLocked = false;
+            return true;
         }
         IEnumerable<BaseGun> startingLoadout
         {

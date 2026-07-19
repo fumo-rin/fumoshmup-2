@@ -4,8 +4,9 @@ using UnityEngine;
 namespace FumoQuake
 {
     [SelectionBase]
-    public class QT_WeaponUnlock : QT_Base
+    public class QT_WeaponUnlock : QT_Base, IHierarchyComponentColor
     {
+
         enum UnlockItem
         {
             Blaster = 0,
@@ -16,13 +17,16 @@ namespace FumoQuake
             RailGun = 5,
         }
         [SerializeField] UnlockItem unlock;
+
+        public Color LabelColor => ColorHelper.PastelBlue.Opacity(50);
+
         protected override void WhenAwake()
         {
 
         }
-        protected override void WhenTriggerEnter(Collider other, IFumoUnit unit)
+        protected override bool WhenTriggerEnter(Collider other, IFumoUnit unit)
         {
-            PlayerWeaponsController.Unlock((int)unlock);
+            return PlayerWeaponsController.UnlockPickup((int)unlock);
         }
     }
 }

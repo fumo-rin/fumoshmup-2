@@ -15,11 +15,12 @@ namespace FumoQuake
         {
             lastTouched = null;
         }
-        protected override void WhenTriggerEnter(Collider other, IFumoUnit unit)
+        protected override bool WhenTriggerEnter(Collider other, IFumoUnit unit)
         {
             if (lastTouched != this)
                 GameXYTextDisplay.CreateText("Now Entering####".ReplaceLineBreaks("##") + ZoneName, textPacket);
             lastTouched = this;
+            return true;
         }
     }
     public abstract class QT_Base : MonoBehaviour
@@ -46,11 +47,11 @@ namespace FumoQuake
                 return;
             if (other.transform.TryGetComponent(out IFumoUnit f) && (f.IsPlayer || !OnlyFindPlayer))
             {
-                WhenTriggerEnter(other, f);
-                if (DestroyOnCollect)
+                bool pickup = WhenTriggerEnter(other, f);
+                if (pickup && DestroyOnCollect)
                     Destroy(gameObject);
             }
         }
-        protected abstract void WhenTriggerEnter(Collider other, IFumoUnit unit);
+        protected abstract bool WhenTriggerEnter(Collider other, IFumoUnit unit);
     }
 }
