@@ -20,35 +20,59 @@ namespace FumoQuake
     public partial class QuakeController
     {
         [SerializeField] ParticleSystem portalParticleTemplate;
+
         public static void ActivateEnemyNestWithPortalEffect(Transform t, float delay)
         {
             if (instance == null)
             {
                 return;
             }
+
             instance.StartCoroutine(CO_PortalActivation(t, delay, instance.portalParticleTemplate));
+
             IEnumerator CO_PortalActivation(Transform nest, float delay, ParticleSystem ps)
             {
+                yield return delay.WaitForSeconds();
+
+                if (nest == null) yield break;
                 for (int i = 0; i < nest.childCount; i++)
                 {
-                    var g = Instantiate(ps, nest.GetChild(i).transform.position, Quaternion.identity);
-                    g.Play();
-                    Destroy(g.gameObject, delay);
-                }
-                yield return delay.WaitForSeconds();
-                IEnumerable<QuakeEnemy> enemies(Transform nest)
-                {
-                    for (int i = 0; i < nest.childCount; i++)
+                    GameObject g = nest.GetChild(i).gameObject;
+                    if (g != null)
                     {
-                        if (i > nest.childCount)
-                            break;
-                        yield return nest.GetChild(i).GetComponent<QuakeEnemy>() is QuakeEnemy q ? q : null;
+                        g.SetActive(false);
                     }
                 }
                 nest.gameObject.SetActive(true);
-                foreach (var portaledEnemy in enemies(nest))
+
+                float psDuration = 0f;
+
+                if (ps != null)
                 {
-                    portaledEnemy.gameObject.SetActive(true);
+                    psDuration = ps.main.duration;
+                    for (int i = 0; i < nest.childCount; i++)
+                    {
+                        QuakeEnemy child = nest.GetChild(i).GetComponent<QuakeEnemy>();
+                        if (child == null)
+                            continue;
+
+                        var g = Instantiate(ps, Vector3.up * 0.5f + child.Center, Quaternion.identity);
+                        g.Play();
+                        Destroy(g.gameObject, psDuration);
+                    }
+                }
+                if (psDuration > 0f)
+                {
+                    yield return psDuration.WaitForSeconds();
+                }
+
+                for (int i = 0; i < nest.childCount; i++)
+                {
+                    GameObject child = nest.GetChild(i).gameObject;
+                    if (child == null)
+                        continue;
+
+                    child.gameObject.SetActive(true);
                 }
             }
         }

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -234,6 +235,29 @@ namespace FumoQuake
             }
         }
         #endregion
+        #region QDT
+        public static void TriggerQDT(QuakeEnemy e)
+        {
+            if (e == null)
+                return;
+            foreach (var item in e.GetComponentsInChildren<IQuakeDeathTrigger>())
+            {
+                if (item == null)
+                {
+                    continue;
+                }
+                item.Run(e);
+            }
+        }
+        public void Kill(Action extras = null)
+        {
+            IsAlive = false;
+            extras?.Invoke();
+            TriggerQDT(this);
+            TriggerKillParticle();
+            Destroy(gameObject);
+        }
+        #endregion
         [SerializeField] protected BoxCollider box;
         public BoxCollider UnitCollider => box;
         public Rigidbody UnitRB => navigation.rb;
@@ -242,6 +266,7 @@ namespace FumoQuake
         protected ITargetting target;
         protected Vector3 Origin;
         protected float nextScanTime;
+        public float SpawnTime { get; private set; }
         private void Awake()
         {
             Origin = transform.position;
@@ -262,6 +287,7 @@ namespace FumoQuake
         {
             WhenEnable();
             MaintainAlive(this, true);
+            SpawnTime = Time.time;
         }
         protected abstract void WhenEnable();
         private void OnDisable()
@@ -276,7 +302,8 @@ namespace FumoQuake
                 return;
             IFumoUnit targetUnit = IFumoUnit.Player;
 
-            Think(targetUnit, Time.deltaTime);
+            if (Time.time > SpawnTime + 0.5f)
+                Think(targetUnit, Time.deltaTime);
 
             Vector3 anim_Velocity = navigation.LastFrameMoveVelocity;
             if (!navigation.HasPath && grounded.IsGrounded)

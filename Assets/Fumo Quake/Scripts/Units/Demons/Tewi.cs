@@ -44,7 +44,7 @@ namespace FumoQuake
 
                 if (UnitRB != null)
                 {
-                    Vector3 flatDir = (targetImpactPoint - CurrentPosition).Y(0f).ScaleToMagnitude(RNG.FloatRange(8f, 10f));
+                    Vector3 flatDir = (targetImpactPoint - CurrentPosition).Y(0f).ScaleToMagnitude(RNG.FloatRange(10f, 13f));
                     Vector3 jumpVelocity = flatDir + new Vector3(0f, RNG.FloatRange(5.5f, 8f), 0f);
 
                     navigation.Nav.StopPath();
@@ -168,16 +168,16 @@ namespace FumoQuake
             }
             if (CurrentHealth < 0f + Mathf.Epsilon && IsAlive)
             {
-                Destroy(gameObject);
-                TriggerKillParticle();
-                GeneralManager.FunnyExplosion(new()
+                Kill(() =>
                 {
-                    is3d = true,
-                    playSound = false,
-                    position = Center,
-                    scale = 0.75f
+                    GeneralManager.FunnyExplosion(new()
+                    {
+                        is3d = true,
+                        playSound = false,
+                        position = Center,
+                        scale = 0.75f
+                    });
                 });
-                IsAlive = false;
             }
         }
 

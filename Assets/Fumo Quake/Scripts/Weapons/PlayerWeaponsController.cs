@@ -5,6 +5,12 @@ using UnityEngine.InputSystem;
 using System.Linq;
 using System;
 using System.Collections;
+using UnityEngine.SocialPlatforms;
+using Mono.CSharp.Linq;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
+using UnityEditor;
+using UnityEngine.UIElements;
+using WebSocketSharp;
 
 namespace FumoQuake
 {
@@ -28,6 +34,7 @@ namespace FumoQuake
         [field: SerializeReference, ManagedReferencePicker] public BaseGun Gun4 { get; protected set; }
         [field: SerializeReference, ManagedReferencePicker] public BaseGun Gun5 { get; protected set; }
         [field: SerializeReference, ManagedReferencePicker] public BaseGun Gun6 { get; protected set; }
+        [SerializeField] List<GameObject> gunModelNests = new();
         BaseGun forSelected_PreviousWeapon;
         public static bool UnlockPickup(int index)
         {
@@ -186,7 +193,7 @@ namespace FumoQuake
                 weaponLockTiming.NextShootTime = Time.time + .125f;
             }
         }
-
+        Coroutine runningSwap = null;
         private void SwapToWeapon(BaseGun targetWeapon)
         {
             forSelected_PreviousWeapon = CurrentWeapon;
@@ -216,6 +223,66 @@ namespace FumoQuake
                         verticalAlignment = TMPro.VerticalAlignmentOptions.Bottom
                     }, "Player Weapon Selection");
                 }
+
+
+                IEnumerator CO_Swap(int index)
+                {
+                    Vector3 topPos = Vector3.zero;
+                    Vector3 botPos = new Vector3(0f, -0.2f, 0f);
+
+                    Quaternion topRot = Quaternion.identity;
+                    Quaternion botRot = Quaternion.Euler(30f, 0f, 20f);
+
+                    float halfTime = 0.07f;
+                    float elapsed = 0f;
+
+                    while (elapsed < halfTime)
+                    {
+                        float t = Mathf.SmoothStep(0f, 1f, elapsed / halfTime);
+                        for (int i = 0; i < gunModelNests.Count; i++)
+                        {
+                            var item = gunModelNests[i];
+                            if (item == null) continue;
+
+                            item.transform.localPosition = Vector3.Lerp(topPos, botPos, t);
+                            item.transform.localRotation = Quaternion.Slerp(topRot, botRot, t);
+                        }
+                        elapsed += Time.deltaTime;
+                        yield return null;
+                    }
+                    for (int i = 0; i < gunModelNests.Count; i++)
+                    {
+                        if (gunModelNests[i] != null)
+                            gunModelNests[i].SetActive(i == index);
+                    }
+                    elapsed = 0f;
+                    while (elapsed < halfTime)
+                    {
+                        float t = Mathf.SmoothStep(0f, 1f, elapsed / halfTime);
+                        for (int i = 0; i < gunModelNests.Count; i++)
+                        {
+                            var item = gunModelNests[i];
+                            if (item == null) continue;
+
+                            item.transform.localPosition = Vector3.Lerp(botPos, topPos, t);
+                            item.transform.localRotation = Quaternion.Slerp(botRot, topRot, t);
+                        }
+                        elapsed += Time.deltaTime;
+                        yield return null;
+                    }
+                    for (int i = 0; i < gunModelNests.Count; i++)
+                    {
+                        if (gunModelNests[i] == null) continue;
+                        gunModelNests[i].transform.localPosition = topPos;
+                        gunModelNests[i].transform.localRotation = topRot;
+                    }
+                }
+
+                if (runningSwap != null)
+                {
+                    StopCoroutine(runningSwap);
+                }
+                runningSwap = StartCoroutine(CO_Swap(index));
             }
         }
 

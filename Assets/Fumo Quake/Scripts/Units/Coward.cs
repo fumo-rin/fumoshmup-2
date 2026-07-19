@@ -19,9 +19,7 @@ namespace FumoQuake
             }
             if (CurrentHealth < 0f + Mathf.Epsilon && IsAlive)
             {
-                IsAlive = false;
-                Destroy(gameObject);
-                TriggerKillParticle();
+                Kill();
             }
         }
         void Targetting(ITargetting target)
