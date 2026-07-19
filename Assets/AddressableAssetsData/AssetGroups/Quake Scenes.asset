@@ -20,6 +20,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 18e4cfa202427c240ab324d96a8092fc
+    m_Address: Assets/Fumo Quake/Scenes/Quake/Yuri Forest.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6e9706b2635d4a04e862e76e0b2d1808
     m_Address: Assets/Fumo Quake/Scenes/Quake/ToweryQuake.unity
     m_ReadOnly: 0

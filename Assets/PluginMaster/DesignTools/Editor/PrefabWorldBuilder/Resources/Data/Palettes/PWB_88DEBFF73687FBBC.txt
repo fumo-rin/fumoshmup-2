@@ -261,10 +261,10 @@
             "_rotateInMultiples": false,
             "_randomEulerOffset": {
                 "x": {
-                    "_v1": -30.0,
-                    "_v2": 30.0,
-                    "_min": -30.0,
-                    "_max": 30.0
+                    "_v1": -10.0,
+                    "_v2": 10.0,
+                    "_min": -10.0,
+                    "_max": 10.0
                 },
                 "y": {
                     "_v1": 0.0,
@@ -273,10 +273,10 @@
                     "_max": 0.0
                 },
                 "z": {
-                    "_v1": -30.0,
-                    "_v2": 30.0,
-                    "_min": -30.0,
-                    "_max": 30.0
+                    "_v1": -10.0,
+                    "_v2": 10.0,
+                    "_min": -10.0,
+                    "_max": 10.0
                 }
             },
             "_alwaysOrientUp": false,
@@ -2055,7 +2055,7 @@
                     "_prefabPath": "Packages/com.fumorin.tools/Modellen/Asset Ready/Objects/Barrels/Barrel.prefab",
                     "_frequency": 1.0,
                     "_parentId": 639159520704503340,
-                    "_paletteName": "Palette",
+                    "_paletteName": "",
                     "_overwriteThumbnailSettings": false,
                     "_includeInThumbnail": true,
                     "_isAsset2D": false
