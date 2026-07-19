@@ -178,6 +178,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcfc67ac076f87249a59f8a548ee74ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: rinCore::rinCore.QuakeDude
+  <ground>k__BackingField:
+    box: {fileID: 5389854354229885213}
+    groundMask:
+      serializedVersion: 2
+      m_Bits: 833
+    iceTag: Ice
+    ForcedIcePhysicsEndTime: 0
   stairClimber: {fileID: 5389854354229885213}
   m:
     viewSocket: {fileID: 8548529468576564111}
@@ -192,13 +199,10 @@ MonoBehaviour:
   cameraPivot: {fileID: 8548529468576564111}
   projectilePivot: {fileID: 3812671860732943193}
   cameraRoll: {fileID: 8548529468576564111}
-  ground:
-    box: {fileID: 5389854354229885213}
-    groundMask:
-      serializedVersion: 2
-      m_Bits: 833
   jumpHUUH: {fileID: 11400000, guid: ab29a47f6978ac842ae1899d7e9c2456, type: 2}
   sensitivity: 0.1
+  sensitivtySlider: {fileID: 0}
+  sensText: {fileID: 0}
   jumpAction: {fileID: -6836382308972316003, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
 --- !u!54 &3215627415013197841
 Rigidbody:

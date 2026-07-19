@@ -1427,7 +1427,8 @@
                     "EditorOnly",
                     "MainCamera",
                     "Player",
-                    "GameController"
+                    "GameController",
+                    "Ice"
                 ],
                 "_slopeFilter": {
                     "_v1": 0.0,
@@ -3161,7 +3162,8 @@
                     "EditorOnly",
                     "MainCamera",
                     "Player",
-                    "GameController"
+                    "GameController",
+                    "Ice"
                 ]
             }
         ],
