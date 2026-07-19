@@ -93,8 +93,14 @@ namespace FumoQuake
             set
             {
                 const float MAXHEALTH = 100f;
+                float delta = currentHealth;
                 currentHealth = value.Clamp(0f, MAXHEALTH);
                 StoredHealth = value.Clamp(0f, MAXHEALTH);
+                delta = currentHealth - delta;
+                if (delta >= 1f)
+                {
+                    QuakeTextInfoUI.AddText("You Gots " + delta.ToString("F0") + " Health");
+                }
 
             }
         }

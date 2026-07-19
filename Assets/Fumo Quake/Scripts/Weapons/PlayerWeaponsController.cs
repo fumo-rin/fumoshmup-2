@@ -45,7 +45,7 @@ namespace FumoQuake
             {
                 if (AwardAmmo(index, 0.2f, out float delta) && delta >= 1f)
                 {
-                    QuakeTextInfoUI.AddText("You Gots " + delta.ToString("F0") + (item is IQuakeTextName n2 ? n2.TextName + " ammo" : "Item"));
+                    QuakeTextInfoUI.AddText("You Gots " + delta.ToString("F0") + " " + (item is IQuakeTextName n2 ? n2.TextName + " ammo" : "Item"));
                     return true;
                 }
                 return false;
@@ -64,6 +64,8 @@ namespace FumoQuake
                 ammo.RemainingAmmo += ammo.MaxAmmo.AsFloat(amount01).Floor().ToInt();
                 ammo.RemainingAmmo = ammo.RemainingAmmo.Clamp(0, ammo.MaxAmmo);
                 delta = ammo.RemainingAmmo - prev;
+
+                QuakeTextInfoUI.AddText("You Gots " + delta.ToString("F0") + " " + (item is IQuakeTextName n2 ? n2.TextName + " ammo" : "Item"));
                 return true;
             }
             return false;
