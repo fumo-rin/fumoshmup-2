@@ -15,6 +15,17 @@ namespace FumoQuake
     [SelectionBase]
     public abstract class QuakeEnemy : MonoBehaviour, IFumoUnit
     {
+        [SerializeField] ParticleSystem killParticleTemplate;
+        protected void TriggerKillParticle()
+        {
+            if (killParticleTemplate != null)
+            {
+                Vector3 pos = Center.LerpUnclamped(transform.position, 0.5f);
+                var item = Instantiate(killParticleTemplate, pos, Quaternion.identity);
+                item.Play();
+                Destroy(item.gameObject, 1f);
+            }
+        }
         #region Targetting
         Coroutine loseTarget;
         public void Action_LockTarget(ITargetting newTarget, float duration)

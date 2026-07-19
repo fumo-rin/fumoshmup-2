@@ -7,7 +7,7 @@ namespace FumoQuake
     public class Coward : QuakeEnemy, IQuakeHitable
     {
         float fleeDistance = 20f;
-        
+
         public GameObject hitGameObject => gameObject;
         public void Hit(IQuakeHitable.HitPacket packet)
         {
@@ -17,9 +17,11 @@ namespace FumoQuake
             {
                 Action_DamageAlert(packet);
             }
-            if (CurrentHealth < 0f + Mathf.Epsilon)
+            if (CurrentHealth < 0f + Mathf.Epsilon && IsAlive)
             {
+                IsAlive = false;
                 Destroy(gameObject);
+                TriggerKillParticle();
             }
         }
         void Targetting(ITargetting target)
