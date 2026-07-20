@@ -249,6 +249,7 @@ namespace FumoQuake
                 item.Run(e);
             }
         }
+        public static Action<QuakeEnemy> WhenEnemyKilled;
         public void Kill(Action extras = null)
         {
             IsAlive = false;
@@ -256,6 +257,7 @@ namespace FumoQuake
             TriggerQDT(this);
             TriggerKillParticle();
             Destroy(gameObject);
+            WhenEnemyKilled?.Invoke(this);
         }
         #endregion
         [SerializeField] protected BoxCollider box;

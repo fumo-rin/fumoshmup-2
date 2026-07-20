@@ -10,15 +10,32 @@ namespace FumoQuake
     {
         [SerializeField] public List<ScenePairSO> levelSequence = new();
         Dictionary<QuakeKeyItems, bool> levelItems = new();
-        public static bool HasItem(QuakeKeyItems item) =>
-            CurrentAs(out QuakeSession ses) &&
+        Dictionary<QuakeKeyItems, float> ItemWarnTime = new();
+        public static bool HasItem(QuakeKeyItems item)
+        {
+            bool hasItem = CurrentAs(out QuakeSession ses) &&
             ses.levelItems != null &&
             ses.levelItems.TryGetValue(item, out bool v) &&
             v;
-        public static bool AwardItem(QuakeKeyItems item) =>
-            CurrentAs(out QuakeSession ses) &&
+
+            bool warned = !ses.ItemWarnTime.TryGetValue(item, out float warnTime) || Time.time > warnTime + 3f;
+            if (!hasItem && !warned)
+            {
+                QuakeTextInfoUI.AddText("Needs that " + item.ToSpacedString().Humanize());
+                ses.ItemWarnTime[item] = Time.time;
+            }
+            return hasItem;
+        }
+        public static bool AwardItem(QuakeKeyItems item)
+        {
+            bool success = CurrentAs(out QuakeSession ses) &&
             !ses.levelItems.TryGetValue(item, out _) &&
             ses.levelItems.TryAdd(item, true);
+
+            QuakeTextInfoUI.AddText("You Gots that " + item.ToSpacedString().Humanize());
+
+            return success;
+        }
 
         static Queue<ScenePairSO> levelQueue;
         public bool submitScore;

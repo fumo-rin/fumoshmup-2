@@ -47,7 +47,7 @@
             20,
             40,
             13,
-            1,
+            2,
             11,
             6,
             5,
@@ -65,7 +65,7 @@
         "_viewList": false,
         "_showTabsInMultipleRows": false,
         "_iconSize": 64,
-        "_selectedPaletteId": -8584172960226430086
+        "_selectedPaletteId": -8584172959803082687
     },
     "_floorManager": {
         "_profileKeys": [
@@ -3888,9 +3888,9 @@
                 "z": 1.0
             },
             "_origin": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 28.537750244140626
+                "x": -43.0099983215332,
+                "y": 2.009999990463257,
+                "z": -163.65194702148438
             },
             "_rotation": {
                 "x": 0.0,
