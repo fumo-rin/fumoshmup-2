@@ -184,7 +184,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3796011506830200140}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.127, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -259,8 +259,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6486060522028163239}
-  - component: {fileID: 3574199320348421268}
   - component: {fileID: 1616094184978580112}
+  - component: {fileID: 3574199320348421268}
   m_Layer: 0
   m_Name: Health Pickup
   m_TagString: Untagged
@@ -285,6 +285,23 @@ Transform:
   - {fileID: 3215294621337445857}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1616094184978580112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9040651433473290552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f43f03c295757846b258b013ccec36e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FumoQuake::FumoQuake.QT_PickupHealth
+  successSound: {fileID: 11400000, guid: 5e1dfadb02fe36f47bc09f0daee1ac66, type: 2}
+  OnlyFindPlayer: 1
+  DestroyOnCollect: 1
+  VisibleRenderers:
+  - {fileID: 3241135070097729021}
 --- !u!65 &3574199320348421268
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -306,20 +323,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &1616094184978580112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9040651433473290552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f43f03c295757846b258b013ccec36e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: FumoQuake::FumoQuake.QT_PickupHealth
-  successSound: {fileID: 11400000, guid: 5e1dfadb02fe36f47bc09f0daee1ac66, type: 2}
-  OnlyFindPlayer: 1
-  DestroyOnCollect: 1
-  VisibleRenderers:
-  - {fileID: 3241135070097729021}

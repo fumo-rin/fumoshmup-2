@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8776356043214970656}
+  - component: {fileID: 5584256812231816104}
   - component: {fileID: 1723968367237915483}
   - component: {fileID: 3701468370777001931}
   - component: {fileID: 5349151174941806976}
-  - component: {fileID: 5584256812231816104}
   m_Layer: 0
   m_Name: Kill Requirement Door
   m_TagString: Untagged
@@ -35,6 +35,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0.486, y: -90.075, z: 2.288}
+--- !u!114 &5584256812231816104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5040947755514663628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad0883e7a01000948bcea2d0025564fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FumoQuake::FumoQuake.QU_EnemyConditionalDoor
+  Door:
+  - {fileID: 5040947755514663628}
+  RequiredKilledEnemies: []
 --- !u!65 &1723968367237915483
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -113,18 +128,3 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5584256812231816104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5040947755514663628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad0883e7a01000948bcea2d0025564fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: FumoQuake::FumoQuake.QU_EnemyConditionalDoor
-  Door:
-  - {fileID: 5040947755514663628}
-  RequiredKilledEnemies: []

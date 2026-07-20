@@ -40,7 +40,8 @@
             "ff38c8fe173969243a0f1a4877e4de85",
             "78048fd255c890b47985cfacff769a29",
             "232712ff39a89874296807e078cb8717",
-            "d0621d256714c9b47956baf5fef6fca0"
+            "d0621d256714c9b47956baf5fef6fca0",
+            "6915cd7a5de1b4143abca30a9dd21107"
         ],
         "_values": [
             7,
@@ -57,12 +58,13 @@
             2,
             2,
             2,
-            2,
+            4,
+            3,
             1
         ]
     },
     "_paletteManager": {
-        "_selectedBrushIdx": -1,
+        "_selectedBrushIdx": 14,
         "_showBrushName": false,
         "_viewList": false,
         "_showTabsInMultipleRows": false,
@@ -3892,7 +3894,7 @@
             "_origin": {
                 "x": -43.0099983215332,
                 "y": 2.009999990463257,
-                "z": 22.194581985473634
+                "z": -176.5354461669922
             },
             "_rotation": {
                 "x": 0.0,

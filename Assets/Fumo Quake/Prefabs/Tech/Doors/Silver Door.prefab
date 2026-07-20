@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8776356043214970656}
   - component: {fileID: 1723968367237915483}
+  - component: {fileID: 6980926378520383726}
   - component: {fileID: 3701468370777001931}
   - component: {fileID: 5349151174941806976}
   - component: {fileID: 5707999575995981319}
-  - component: {fileID: 6980926378520383726}
   m_Layer: 8
   m_Name: Silver Door
   m_TagString: Untagged
@@ -57,6 +57,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6980926378520383726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5040947755514663628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c1d2ae9f4201b4e8defbe92926749f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FumoQuake::FumoQuake.QT_KeyItemDoor
+  successSound: {fileID: 0}
+  OnlyFindPlayer: 1
+  DestroyOnCollect: 0
+  VisibleRenderers:
+  - {fileID: 5349151174941806976}
+  RequiredItem: 0
+  doorItems:
+  - {fileID: 5040947755514663628}
+  explosion: 0
+  DoorOpeningMode: 0
 --- !u!33 &3701468370777001931
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -135,25 +157,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.2, y: 1.2, z: 1.2}
   m_Center: {x: 0, y: 0, z: -0.0000009536743}
---- !u!114 &6980926378520383726
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5040947755514663628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17c1d2ae9f4201b4e8defbe92926749f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: FumoQuake::FumoQuake.QT_KeyItemDoor
-  successSound: {fileID: 0}
-  OnlyFindPlayer: 1
-  DestroyOnCollect: 0
-  VisibleRenderers:
-  - {fileID: 5349151174941806976}
-  RequiredItem: 0
-  doorItems:
-  - {fileID: 5040947755514663628}
-  explosion: 0
-  DoorOpeningMode: 0
