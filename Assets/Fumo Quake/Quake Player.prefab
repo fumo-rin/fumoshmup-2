@@ -134,6 +134,7 @@ Transform:
   - {fileID: 821054667041917808}
   - {fileID: 1061321889770726516}
   - {fileID: 1676850447467439196}
+  - {fileID: 2532861290350314764}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6042425727787767365
@@ -616,7 +617,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 4143214190847053575, guid: 2d90163c4095a0a4283cc9766c8294e4, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 535c7d01242c8734da33043420a4625d, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 0.15
   Loop: 1
@@ -999,7 +1000,7 @@ MonoBehaviour:
   <Gun5>k__BackingField:
     rid: 4883943119261270582
   <Gun6>k__BackingField:
-    rid: -2
+    rid: 5524686839044374899
   gunModelNests:
   - {fileID: 424450436642017536}
   - {fileID: 8679983945414321914}
@@ -1070,7 +1071,7 @@ MonoBehaviour:
         <OwnerFaction>k__BackingField: 5
         WeaponShootLockTime: 0.65
         WeaponShootSwapLockDuration: 0.55
-        IsLocked: 0
+        IsLocked: 1
         gunAmmo:
           Remaining: 12
           MaxAmmo: 30
@@ -1087,7 +1088,7 @@ MonoBehaviour:
         <OwnerFaction>k__BackingField: 5
         WeaponShootLockTime: 0.02
         WeaponShootSwapLockDuration: 0.02
-        IsLocked: 0
+        IsLocked: 1
         data:
           LGSound: {fileID: 1481672658885231434}
           shootAction: {fileID: -8039365320775711174, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
@@ -1099,6 +1100,24 @@ MonoBehaviour:
         gunAmmo:
           Remaining: 500
           MaxAmmo: 500
+    - rid: 5524686839044374899
+      type: {class: PlayerGuns/RailGun, ns: FumoQuake, asm: FumoQuake}
+      data:
+        optionalIconUI: {fileID: 21300000, guid: c4f1169092563234c9fcccddf112f49a, type: 3}
+        GunSound: {fileID: 11400000, guid: a186b7d45393b824598739cfd254423a, type: 2}
+        <OwnerFaction>k__BackingField: 5
+        WeaponShootLockTime: 1.15
+        WeaponShootSwapLockDuration: 0.55
+        IsLocked: 0
+        data:
+          railgunPs: {fileID: 1803074876302985065}
+          ShotDamage: 175
+          hitLayer:
+            serializedVersion: 2
+            m_Bits: 833
+        gunAmmo:
+          Remaining: 8
+          MaxAmmo: 20
 --- !u!1 &4870980219163727071
 GameObject:
   m_ObjectHideFlags: 0
@@ -1755,6 +1774,73 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 01ab66c827a6aa54ca85dbcc6dd00457, type: 3}
   m_PrefabInstance: {fileID: 2591484564828129130}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2952758144723494973
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8686522486198557375}
+    m_Modifications:
+    - target: {fileID: 854780198947237169, guid: 1c45bb658bdcfa6438fbf8c3e8c4cef6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -57.667
+      objectReference: {fileID: 0}
+    - target: {fileID: 854780198947237169, guid: 1c45bb658bdcfa6438fbf8c3e8c4cef6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.99976
+      objectReference: {fileID: 0}
+    - target: {fileID: 854780198947237169, guid: 1c45bb658bdcfa6438fbf8c3e8c4cef6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -138.3262
+      objectReference: {fileID: 0}
+    - target: {fileID: 854780198947237169, guid: 1c45bb658bdcfa6438fbf8c3e8c4cef6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 854780198947237169, guid: 1c45bb658bdcfa6438fbf8c3e8c4cef6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 854780198947237169, guid: 1c45bb658bdcfa6438fbf8c3e8c4cef6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 854780198947237169, guid: 1c45bb658bdcfa6438fbf8c3e8c4cef6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 854780198947237169, guid: 1c45bb658bdcfa6438fbf8c3e8c4cef6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 854780198947237169, guid: 1c45bb658bdcfa6438fbf8c3e8c4cef6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 854780198947237169, guid: 1c45bb658bdcfa6438fbf8c3e8c4cef6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6329539196740881889, guid: 1c45bb658bdcfa6438fbf8c3e8c4cef6, type: 3}
+      propertyPath: m_Name
+      value: Railgun
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1c45bb658bdcfa6438fbf8c3e8c4cef6, type: 3}
+--- !u!198 &1803074876302985065 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3602742191582752596, guid: 1c45bb658bdcfa6438fbf8c3e8c4cef6, type: 3}
+  m_PrefabInstance: {fileID: 2952758144723494973}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2532861290350314764 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 854780198947237169, guid: 1c45bb658bdcfa6438fbf8c3e8c4cef6, type: 3}
+  m_PrefabInstance: {fileID: 2952758144723494973}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3766142269531881735
 PrefabInstance:
