@@ -22514,9 +22514,89 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 125908631570551506, guid: 1095575c14472b245acf9042937f16ff, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 125908631570551506, guid: 1095575c14472b245acf9042937f16ff, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 125908631570551506, guid: 1095575c14472b245acf9042937f16ff, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.0407
+      objectReference: {fileID: 0}
+    - target: {fileID: 125908631570551506, guid: 1095575c14472b245acf9042937f16ff, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.0497
+      objectReference: {fileID: 0}
+    - target: {fileID: 125908631570551506, guid: 1095575c14472b245acf9042937f16ff, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.1387
+      objectReference: {fileID: 0}
+    - target: {fileID: 125908631570551506, guid: 1095575c14472b245acf9042937f16ff, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.4514878
+      objectReference: {fileID: 0}
+    - target: {fileID: 125908631570551506, guid: 1095575c14472b245acf9042937f16ff, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5442048
+      objectReference: {fileID: 0}
+    - target: {fileID: 125908631570551506, guid: 1095575c14472b245acf9042937f16ff, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5442048
+      objectReference: {fileID: 0}
+    - target: {fileID: 125908631570551506, guid: 1095575c14472b245acf9042937f16ff, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.4514878
+      objectReference: {fileID: 0}
+    - target: {fileID: 125908631570551506, guid: 1095575c14472b245acf9042937f16ff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 280.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 125908631570551506, guid: 1095575c14472b245acf9042937f16ff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 125908631570551506, guid: 1095575c14472b245acf9042937f16ff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 1570463370498407107, guid: 1095575c14472b245acf9042937f16ff, type: 3}
       propertyPath: m_Name
       value: Quake Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2899679865175679637, guid: 1095575c14472b245acf9042937f16ff, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2899679865175679637, guid: 1095575c14472b245acf9042937f16ff, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2899679865175679637, guid: 1095575c14472b245acf9042937f16ff, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2899679865175679637, guid: 1095575c14472b245acf9042937f16ff, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.91441107
+      objectReference: {fileID: 0}
+    - target: {fileID: 2899679865175679637, guid: 1095575c14472b245acf9042937f16ff, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.4047869
+      objectReference: {fileID: 0}
+    - target: {fileID: 2899679865175679637, guid: 1095575c14472b245acf9042937f16ff, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.00000008940696
+      objectReference: {fileID: 0}
+    - target: {fileID: 2899679865175679637, guid: 1095575c14472b245acf9042937f16ff, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2899679865175679637, guid: 1095575c14472b245acf9042937f16ff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 47.756
       objectReference: {fileID: 0}
     - target: {fileID: 6042425727787767365, guid: 1095575c14472b245acf9042937f16ff, type: 3}
       propertyPath: portalParticleTemplate

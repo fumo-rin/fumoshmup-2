@@ -16,6 +16,42 @@ namespace FumoQuake
         public IEnumerable<Transform> RandomOrderedTargets { get; }
         public Vector3 FirstTargetPosition => RandomOrderedTargets.First().position;
     }
+    #region Object Follower
+    public partial class QuakeController
+    {
+        [System.Serializable]
+        public struct followItem
+        {
+            public Transform writer, reader;
+        }
+        [SerializeField]
+        List<followItem> followItems = new();
+        void StartFollowItems()
+        {
+            StartCoroutine(CO_Run());
+            IEnumerator CO_Run()
+            {
+                while (gameObject.activeInHierarchy)
+                {
+                    foreach (var item in followItems)
+                    {
+                        item.reader.SetParent(null);
+                    }
+                    foreach (var item in followItems)
+                    {
+                        if (item.writer == null || item.reader == null)
+                        {
+                            continue;
+                        }
+                        item.reader.position = item.writer.position;
+                        item.reader.rotation = item.writer.rotation;
+                    }
+                    yield return null;
+                }
+            }
+        }
+    }
+    #endregion
     #region Portal
     public partial class QuakeController
     {

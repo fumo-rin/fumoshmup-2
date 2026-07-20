@@ -39,7 +39,8 @@
             "942679633f0f11943ad11c8dbb1885fb",
             "ff38c8fe173969243a0f1a4877e4de85",
             "78048fd255c890b47985cfacff769a29",
-            "232712ff39a89874296807e078cb8717"
+            "232712ff39a89874296807e078cb8717",
+            "d0621d256714c9b47956baf5fef6fca0"
         ],
         "_values": [
             7,
@@ -56,7 +57,8 @@
             2,
             2,
             2,
-            2
+            2,
+            1
         ]
     },
     "_paletteManager": {
@@ -65,7 +67,7 @@
         "_viewList": false,
         "_showTabsInMultipleRows": false,
         "_iconSize": 64,
-        "_selectedPaletteId": -8584172959803082687
+        "_selectedPaletteId": -8584172960226430086
     },
     "_floorManager": {
         "_profileKeys": [
@@ -3890,7 +3892,7 @@
             "_origin": {
                 "x": -43.0099983215332,
                 "y": 2.009999990463257,
-                "z": -163.65194702148438
+                "z": 22.194581985473634
             },
             "_rotation": {
                 "x": 0.0,
@@ -3898,8 +3900,8 @@
                 "z": 0.0,
                 "w": 1.0
             },
-            "_showPositionHandle": true,
-            "_showRotationHandle": false,
+            "_showPositionHandle": false,
+            "_showRotationHandle": true,
             "_showScaleHandle": false,
             "_radialGridEnabled": false,
             "_radialStep": 1.0,

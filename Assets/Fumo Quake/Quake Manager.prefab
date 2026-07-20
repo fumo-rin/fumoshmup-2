@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Loading: 0%'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 0}
-  m_sharedMaterial: {fileID: -8885995462406905172, guid: 078860d05e5f0494da2095df30196ac9, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 03257285d91a15644bbde245679893a5, type: 2}
+  m_sharedMaterial: {fileID: -5168588728303864837, guid: 03257285d91a15644bbde245679893a5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1979510323339408330
@@ -281,7 +281,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 31.769165, y: 0}
+  m_SizeDelta: {x: 349.34583, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7839284370731453315
 CanvasRenderer:
@@ -311,7 +311,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 51caff3994009c94da535ebc7b314e4f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 68d807b1d9ad09d499c26e2700bae8f4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -422,7 +422,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9106ec666f6da4e4786a93200f4cbcad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingScene: {fileID: 11400000, guid: 1d5053d31d0cd634b986de274eb561ef, type: 2}
+  editorStartingScene: {fileID: 11400000, guid: e9c99deb955ffb447bed46abfe484e4b, type: 2}
+  buildStartingScene: {fileID: 11400000, guid: e9c99deb955ffb447bed46abfe484e4b, type: 2}
+  LoadStartingSceneInBuild: 0
   loadingScreen: {fileID: 1979510323339408330}
   fadingImage: {fileID: 7503892526529089318}
   loadingScreenText: {fileID: 2040586258248089734}
@@ -453,6 +455,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 210b2b9d9248b03429b22eb1e9e33dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: rinCore::rinCore.AudioEngine
+  effectsMixers: []
+  musicMixers: []
+  dialogueMixers: []
   Source3DSingle: {fileID: 9090212008379670610}
   Source2DSingle: {fileID: 8229709369203078601}
   Source2DSingleNondirectional: {fileID: 7310151143046109300}

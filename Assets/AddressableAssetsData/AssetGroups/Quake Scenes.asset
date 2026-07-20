@@ -25,6 +25,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 509711b6d19967541b89b49a8c1a4808
+    m_Address: Assets/Fumo Quake/Scenes/Quake/Main/Quake Cutscene.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6e9706b2635d4a04e862e76e0b2d1808
     m_Address: Assets/Fumo Quake/Scenes/Quake/ToweryQuake.unity
     m_ReadOnly: 0
@@ -37,11 +42,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 93ba4878677dfe54f9cc33c8dba747dd
     m_Address: Assets/Fumo Quake/Scenes/Quake/Quake Worldcup Horde.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9b682f6c1579274478c5ad7d9dba52ec
-    m_Address: Assets/Fumo Quake/Scenes/Quake/Test Quake World Level Sequence Test.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
