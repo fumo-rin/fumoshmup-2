@@ -15,8 +15,8 @@ MonoBehaviour:
   SoundName: Shot 2
   soundVolume: 1
   <soundClips>k__BackingField:
-  - clip: {fileID: 8300000, guid: 3dded834c29e0474daca64d6d8bf3c4c, type: 3}
-    PitchVariancePercent: 5
+  - clip: {fileID: 8300000, guid: ef21ab109f3f70948bd76cbd87b208de, type: 3}
+    PitchVariancePercent: 0
     PitchOrigin: 1
     Volume: 1
     Muted: 0

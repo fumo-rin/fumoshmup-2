@@ -5,13 +5,6 @@ using UnityEngine.InputSystem;
 using System.Linq;
 using System;
 using System.Collections;
-using UnityEngine.SocialPlatforms;
-using Mono.CSharp.Linq;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
-using UnityEditor;
-using UnityEngine.UIElements;
-using WebSocketSharp;
-
 namespace FumoQuake
 {
     #region Recoil
@@ -65,8 +58,10 @@ namespace FumoQuake
                 ammo.RemainingAmmo = ammo.RemainingAmmo.Clamp(0, ammo.MaxAmmo);
                 delta = ammo.RemainingAmmo - prev;
 
-                QuakeTextInfoUI.AddText("You Gots " + delta.ToString("F0") + " " + (item is IQuakeTextName n2 ? n2.TextName + " ammo" : "Item"));
-                return true;
+                bool pickup = delta >= 1;
+                if (pickup)
+                    QuakeTextInfoUI.AddText("You Gots " + delta.ToString("F0") + " " + (item is IQuakeTextName n2 ? n2.TextName + " ammo" : "Item"));
+                return pickup;
             }
             return false;
         }

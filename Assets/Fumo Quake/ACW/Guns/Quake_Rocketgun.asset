@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: Quake_Rocketgun
   m_EditorClassIdentifier: rinCore::RinCore.ACWrapper
   SoundName: Rocket Gun
-  soundVolume: 0.972
+  soundVolume: 1
   <soundClips>k__BackingField:
   - clip: {fileID: 8300000, guid: 2790318f3fcf86b40adadb459f6f7af2, type: 3}
     PitchVariancePercent: 25.6
     PitchOrigin: 0.68
-    Volume: 0.505
+    Volume: 0.613
     Muted: 0
   - clip: {fileID: 8300000, guid: 9c87854e8c57b63478dfce5a4d1ab854, type: 3}
     PitchVariancePercent: 23.9
     PitchOrigin: 1.35
-    Volume: 0.548
+    Volume: 0.765
     Muted: 0
   - clip: {fileID: 8300000, guid: e777f11669564d748afec8130a516656, type: 3}
     PitchVariancePercent: 23.1

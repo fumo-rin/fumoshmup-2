@@ -21,7 +21,15 @@ namespace FumoQuake
             {
                 pair
             };
-            levelName.text = pair.name;
+            levelName.text = pair.name.PrettyName(new()
+            {
+                PostNaturalCapitals = false,
+                PreserveNumbers = true,
+                PreserveUnderscore = false,
+                PreserveBrackets = false,
+                RemoveSpaces = false,
+                SpaceByCapitals = false
+            }).ReplaceLineBreaks("#");
         }
     }
 }

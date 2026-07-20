@@ -22,7 +22,8 @@ namespace FumoQuake
         public GameObject hitGameObject => gameObject;
         public void Hit(IQuakeHitable.HitPacket packet)
         {
-            float damageTaken = packet.Damage.Clamp(0f, CurrentHealth);
+            float processed = packet.Damage.Multiply(QuakeSession.IsQuadDamage ? 9f : 1f);
+            float damageTaken = processed.Clamp(0f, CurrentHealth);
             CurrentHealth -= damageTaken;
             if (damageTaken > 0f)
             {

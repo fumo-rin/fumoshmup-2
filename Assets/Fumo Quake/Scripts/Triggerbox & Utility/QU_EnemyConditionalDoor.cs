@@ -23,6 +23,10 @@ namespace FumoQuake
         {
             QuakeEnemy.WhenEnemyKilled -= CheckKilledEnemy;
         }
+        private void OnTriggerEnter(Collider other)
+        {
+            QuakeTextInfoUI.AddText("You most Destroy the enamies to pass!");
+        }
         private void CheckKilledEnemy(QuakeEnemy e)
         {
             LiveList.Remove(e);

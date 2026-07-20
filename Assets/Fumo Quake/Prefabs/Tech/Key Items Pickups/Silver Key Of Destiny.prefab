@@ -12,6 +12,14 @@ PrefabInstance:
       propertyPath: successSound
       value: 
       objectReference: {fileID: 11400000, guid: 3ae8a827d64185748b3846199fdc93ff, type: 2}
+    - target: {fileID: 3241135070097729021, guid: 8383ef575f8cb9449b41cf05902da335, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1574088473, guid: d447dbc57bc4d2744869dfd4a06044ea, type: 3}
+    - target: {fileID: 3796011506830200140, guid: 8383ef575f8cb9449b41cf05902da335, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6486060522028163239, guid: 8383ef575f8cb9449b41cf05902da335, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

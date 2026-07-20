@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Quake_Nailgun
   m_EditorClassIdentifier: rinCore::RinCore.ACWrapper
   SoundName: Shot 2
-  soundVolume: 1
+  soundVolume: 0.71
   <soundClips>k__BackingField:
   - clip: {fileID: 8300000, guid: c1541bed0c1f59d4795403791122f00f, type: 3}
     PitchVariancePercent: 4.5

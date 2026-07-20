@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 944081383, guid: 8dd8a682209e1f541a7e0280a99455a9, type: 3}
+  m_Sprite: {fileID: 1454622328, guid: d447dbc57bc4d2744869dfd4a06044ea, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -175,7 +175,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1317681890275372451
 Transform:
   m_ObjectHideFlags: 0
@@ -297,7 +297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f43f03c295757846b258b013ccec36e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: FumoQuake::FumoQuake.QT_PickupHealth
-  successSound: {fileID: 11400000, guid: 5e1dfadb02fe36f47bc09f0daee1ac66, type: 2}
+  successSound: {fileID: 11400000, guid: da9365a92084495459d7b279277ffc53, type: 2}
   OnlyFindPlayer: 1
   DestroyOnCollect: 1
   VisibleRenderers:

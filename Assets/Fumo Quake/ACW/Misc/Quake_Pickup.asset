@@ -15,10 +15,15 @@ MonoBehaviour:
   SoundName: Shot 2
   soundVolume: 1
   <soundClips>k__BackingField:
-  - clip: {fileID: 8300000, guid: 489431fd15a519d4fa668b0df467b625, type: 3}
-    PitchVariancePercent: 5
-    PitchOrigin: 1
-    Volume: 1
+  - clip: {fileID: 8300000, guid: cb5e1e4d891123248b32ea5acb2b79c9, type: 3}
+    PitchVariancePercent: 14.7
+    PitchOrigin: 0.86
+    Volume: 0.577
+    Muted: 0
+  - clip: {fileID: 8300000, guid: e95cb558a87364741a1823a9429291b0, type: 3}
+    PitchVariancePercent: 10
+    PitchOrigin: 1.72
+    Volume: 0.061
     Muted: 0
   <soundMode>k__BackingField: 30
   <singleRepeatLockoutTime>k__BackingField: 0.001

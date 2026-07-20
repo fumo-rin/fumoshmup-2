@@ -1,3 +1,4 @@
+using rinCore;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,8 +8,9 @@ namespace FumoQuake
     {
         public void Run(QuakeEnemy sender);
     }
-    public class QDT_ActivateEnemyNest : MonoBehaviour, IQuakeDeathTrigger
+    public class QDT_ActivateEnemyNest : MonoBehaviour, IQuakeDeathTrigger, IHierarchyComponentColor
     {
+        public Color LabelColor => ColorHelper.PastelOrange.Opacity(50);
         [SerializeField] List<Transform> activationNests = new();
         [SerializeField, Range(0.25f, 5f)] float delay = 0.25f;
         public void Run(QuakeEnemy sender)

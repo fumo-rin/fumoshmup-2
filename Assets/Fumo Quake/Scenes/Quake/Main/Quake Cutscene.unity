@@ -170,7 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -453,7 +453,7 @@ MonoBehaviour:
   cutsceneViewer: {fileID: 1331252793}
   items:
   - cutsceneImage: {fileID: 21300000, guid: eeb3eb9b5d141764286dccd32d5dd877, type: 3}
-    textDisplay: text 1
+    textDisplay: A Devius Trikster is on the move...
     textPacket:
       fadeIn: 0.5
       fadeOut: 0.5
@@ -461,13 +461,13 @@ MonoBehaviour:
       color:
         serializedVersion: 2
         rgba: 4294967295
-      a01: {x: 0.2, y: 0.3}
-      b01: {x: 0.8, y: 0.5}
-      fontSize: 16
+      a01: {x: 0, y: 0}
+      b01: {x: 1, y: 0.3}
+      fontSize: 24
       horizontalAlignment: 2
       verticalAlignment: 256
   - cutsceneImage: {fileID: 21300000, guid: ecb0fefbd8b5f814fab222025f9a41b9, type: 3}
-    textDisplay: tet 2
+    textDisplay: She has acquainted with the lokals.##Teeming up, with the strongest
     textPacket:
       fadeIn: 0.5
       fadeOut: 0.5
@@ -475,13 +475,13 @@ MonoBehaviour:
       color:
         serializedVersion: 2
         rgba: 4294967295
-      a01: {x: 0.2, y: 0.3}
-      b01: {x: 0.8, y: 0.5}
-      fontSize: 16
+      a01: {x: 0, y: 0}
+      b01: {x: 1, y: 0.3}
+      fontSize: 24
       horizontalAlignment: 2
       verticalAlignment: 256
   - cutsceneImage: {fileID: 21300000, guid: 79a881b02dd07f44b9481f75b752023a, type: 3}
-    textDisplay: ttt t3 t3t3
+    textDisplay: Destroying properpty.##Steeling from the lokals.
     textPacket:
       fadeIn: 0.5
       fadeOut: 0.5
@@ -489,13 +489,13 @@ MonoBehaviour:
       color:
         serializedVersion: 2
         rgba: 4294967295
-      a01: {x: 0.2, y: 0.3}
-      b01: {x: 0.8, y: 0.5}
-      fontSize: 16
+      a01: {x: 0, y: 0}
+      b01: {x: 1, y: 0.3}
+      fontSize: 24
       horizontalAlignment: 2
       verticalAlignment: 256
   - cutsceneImage: {fileID: 21300000, guid: 4d5fc67c1c7eecd4bb14ae0a006b607c, type: 3}
-    textDisplay: t444444 444
+    textDisplay: It make Rumia so Upset####it open a portal to makai.
     textPacket:
       fadeIn: 0.5
       fadeOut: 0.5
@@ -503,9 +503,38 @@ MonoBehaviour:
       color:
         serializedVersion: 2
         rgba: 4294967295
-      a01: {x: 0.2, y: 0.3}
-      b01: {x: 0.8, y: 0.5}
-      fontSize: 16
+      a01: {x: 0, y: 0}
+      b01: {x: 1, y: 0.3}
+      fontSize: 24
+      horizontalAlignment: 2
+      verticalAlignment: 256
+  - cutsceneImage: {fileID: 0}
+    textDisplay: As the Srine maden##it is your dooty to seddle this unrest.
+    textPacket:
+      fadeIn: 0.5
+      fadeOut: 0.5
+      duration: 3.25
+      color:
+        serializedVersion: 2
+        rgba: 4294967295
+      a01: {x: 0, y: 0}
+      b01: {x: 1, y: 0.3}
+      fontSize: 24
+      horizontalAlignment: 2
+      verticalAlignment: 256
+  - cutsceneImage: {fileID: 0}
+    textDisplay: Go Collect Steaks##and win the heart of your beloved (Rumia)####Rip
+      and tere, until it is done.
+    textPacket:
+      fadeIn: 0.5
+      fadeOut: 0.5
+      duration: 3.25
+      color:
+        serializedVersion: 2
+        rgba: 4294967295
+      a01: {x: 0, y: 0}
+      b01: {x: 1, y: 1}
+      fontSize: 24
       horizontalAlignment: 2
       verticalAlignment: 256
   nextScene: {fileID: 11400000, guid: 1d5053d31d0cd634b986de274eb561ef, type: 2}
@@ -755,6 +784,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1140116092}
   - {fileID: 1331252792}
   - {fileID: 438153656}
   - {fileID: 2010544130}
@@ -765,6 +795,96 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1140116091
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1140116092}
+  - component: {fileID: 1140116095}
+  - component: {fileID: 1140116094}
+  - component: {fileID: 1140116093}
+  m_Layer: 5
+  m_Name: Back
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1140116092
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140116091}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1057983347}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1140116093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140116091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.AspectRatioFitter
+  m_AspectMode: 0
+  m_AspectRatio: 2.1528661
+--- !u!114 &1140116094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140116091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1140116095
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140116091}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1249362784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -931,7 +1051,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.AspectRatioFitter
   m_AspectMode: 0
-  m_AspectRatio: 1.4366198
+  m_AspectRatio: 2.1528661
 --- !u!1 &1471223858
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,6 +1199,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2010544130}
   - component: {fileID: 2010544131}
+  - component: {fileID: 2010544132}
   m_Layer: 5
   m_Name: Text Popup
   m_TagString: Untagged
@@ -1120,6 +1241,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: rinCore::rinCore.GameXYTextDisplay
   cloneable: {fileID: 314009148}
   textSpaceAnchor: {fileID: 2010544130}
+--- !u!225 &2010544132
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2010544129}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

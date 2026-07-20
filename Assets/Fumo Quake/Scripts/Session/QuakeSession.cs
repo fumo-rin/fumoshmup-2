@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using rinCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,6 +13,8 @@ namespace FumoQuake
         [SerializeField] public List<ScenePairSO> LevelSequence = new();
         [SerializeField] public bool submitScore;
         public int currentLevelIndex = 0;
+        [NonSerialized] public static float quadDamageEndTime;
+        public static bool IsQuadDamage => Time.time < quadDamageEndTime;
 
         Dictionary<QuakeKeyItems, bool> levelItems = new();
         Dictionary<QuakeKeyItems, float> ItemWarnTime = new();
@@ -57,12 +61,10 @@ namespace FumoQuake
                 return false;
             }
 
-            // Prefer explicitly passed list over instance list to avoid scene-unload stripping
             List<ScenePairSO> activeList = (sequence != null && sequence.Count > 0)
                 ? sequence
                 : ses.LevelSequence;
 
-            // Sanity check: filter out any destroyed Unity C++ objects ("fake nulls")
             if (activeList != null)
             {
                 activeList = activeList.Where(s => s != null).ToList();
@@ -75,12 +77,10 @@ namespace FumoQuake
                 return false;
             }
 
-            // Check if we have remaining levels
             if (ses.currentLevelIndex < activeList.Count)
             {
                 ScenePairSO nextPair = activeList[ses.currentLevelIndex];
 
-                // Native Unity object check
                 if (nextPair == null)
                 {
                     Debug.LogError($"[QuakeSession] Level at index {ses.currentLevelIndex} is NULL/Destroyed! Skipping...");
@@ -92,9 +92,6 @@ namespace FumoQuake
                 int nextIndex = ses.currentLevelIndex + 1;
 
                 Debug.Log($"[QuakeSession] Loading Level [{loadedIndex + 1}/{activeList.Count}]: {nextPair.name}");
-
-                // CRITICAL FIX: Lock 'activeList' into closure memory. 
-                // Unloading the previous scene cannot destroy this variable reference.
                 List<ScenePairSO> persistentList = activeList;
 
                 SceneLoader.LoadScenePair(nextPair, new SceneLoader.SceneLoadSettings()
@@ -103,11 +100,11 @@ namespace FumoQuake
                     {
                         if (CurrentAs(out QuakeSession activeSes))
                         {
-                            // Restore list & index into the active session instance in the new scene
                             activeSes.LevelSequence = persistentList;
                             activeSes.currentLevelIndex = nextIndex;
                             activeSes.levelItems = new();
                             activeSes.ItemWarnTime = new();
+                            quadDamageEndTime = 0f;
 
                             Debug.Log($"[QuakeSession Payload] Restored level list ({activeSes.LevelSequence.Count} items). Next Index: {activeSes.currentLevelIndex}");
                         }
@@ -150,9 +147,27 @@ namespace FumoQuake
         {
             if (!CurrentAs(out QuakeSession ses) || ses.levelItems == null) return false;
 
-            bool success = !ses.levelItems.TryGetValue(item, out _) && ses.levelItems.TryAdd(item, true);
-            QuakeTextInfoUI.AddText("You Gots that " + item.ToSpacedString().Humanize());
-
+            bool success = false;
+            switch (item)
+            {
+                case QuakeKeyItems.SilverKeyOfDestiny:
+                    success = !ses.levelItems.TryGetValue(item, out _) && ses.levelItems.TryAdd(item, true);
+                    QuakeTextInfoUI.AddText("You Gots that " + item.ToSpacedString().Humanize());
+                    break;
+                case QuakeKeyItems.GoldenTicketKey:
+                    success = !ses.levelItems.TryGetValue(item, out _) && ses.levelItems.TryAdd(item, true);
+                    QuakeTextInfoUI.AddText("You Gots that " + item.ToSpacedString().Humanize());
+                    break;
+                case QuakeKeyItems.QuadDamage:
+                    success = true;
+                    QuakeTextInfoUI.AddText("Gots Chirumiru! 9x Damage BABYYYYYYYYYYYYYYYYYYYYYY");
+                    quadDamageEndTime = Time.time + 15f;
+                    break;
+                default:
+                    success = !ses.levelItems.TryGetValue(item, out _) && ses.levelItems.TryAdd(item, true);
+                    QuakeTextInfoUI.AddText("You Gots that " + item.ToSpacedString().Humanize());
+                    break;
+            }
             return success;
         }
         #endregion

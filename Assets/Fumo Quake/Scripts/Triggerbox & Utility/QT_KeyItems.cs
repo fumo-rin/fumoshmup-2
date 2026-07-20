@@ -7,6 +7,7 @@ namespace FumoQuake
     {
         SilverKeyOfDestiny,
         GoldenTicketKey,
+        QuadDamage
     }
     public class QT_KeyItems : QT_Base
     {

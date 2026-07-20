@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DDDC3 MusicWrapper_shitdealer_001
   m_EditorClassIdentifier: rinCore::rinCore.MusicWrapper
   bpm: 120
-  TrackName: shitdealer_001
-  musicClip: {fileID: 8300000, guid: 5f8b48eabc5ab59419c8f47eced325e8, type: 3}
+  TrackName: shit dealer
+  musicClip: {fileID: 8300000, guid: aa71016d47783a74eae330a4f228503f, type: 3}
   clipVolume: 1
   <dontReplaceSelf>k__BackingField: 1

@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: unlock
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3241135070097729021, guid: 3e61f1affb5209d41b06f5f495733998, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 904870363, guid: d447dbc57bc4d2744869dfd4a06044ea, type: 3}
     - target: {fileID: 6486060522028163239, guid: 3e61f1affb5209d41b06f5f495733998, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -50,6 +54,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6486060522028163239, guid: 3e61f1affb5209d41b06f5f495733998, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7033850311230513733, guid: 3e61f1affb5209d41b06f5f495733998, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9040651433473290552, guid: 3e61f1affb5209d41b06f5f495733998, type: 3}

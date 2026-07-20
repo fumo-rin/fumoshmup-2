@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DDDC3 MusicWrapper_TOUHOUDEALER_01
   m_EditorClassIdentifier: rinCore::rinCore.MusicWrapper
   bpm: 120
-  TrackName: TOUHOUDEALER_01
-  musicClip: {fileID: 8300000, guid: a0f4f46f36bb91448aaa94ccac4b514a, type: 3}
+  TrackName: TOUHOU DEALER
+  musicClip: {fileID: 8300000, guid: e7a7c2c303191534ba72a1202fb9c8f1, type: 3}
   clipVolume: 1
   <dontReplaceSelf>k__BackingField: 1

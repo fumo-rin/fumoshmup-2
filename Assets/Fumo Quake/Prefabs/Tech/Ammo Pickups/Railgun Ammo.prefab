@@ -24,6 +24,14 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
+    - target: {fileID: 3241135070097729021, guid: 3e61f1affb5209d41b06f5f495733998, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -246895682, guid: d447dbc57bc4d2744869dfd4a06044ea, type: 3}
+    - target: {fileID: 3796011506830200140, guid: 3e61f1affb5209d41b06f5f495733998, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6486060522028163239, guid: 3e61f1affb5209d41b06f5f495733998, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
