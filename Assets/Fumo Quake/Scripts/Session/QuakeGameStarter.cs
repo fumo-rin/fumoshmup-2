@@ -5,7 +5,7 @@ namespace FumoQuake
 {
     public class QuakeGameStarter : rinCore.FumoStartGameButton, IHierarchyComponentColor
     {
-        [SerializeField] QuakeSession session;
+        [SerializeField] public QuakeSession session;
         public Color LabelColor => ColorHelper.PastelBlue.Opacity(50);
 
         protected override string LeaderboardKey => session.LeaderboardKey;

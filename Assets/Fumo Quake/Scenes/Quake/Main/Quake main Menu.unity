@@ -411,12 +411,13 @@ MonoBehaviour:
       RawExtrasScore: 0
       HighScore: 0
       ScoreDivisor: 100
-    levelSequence:
+    LevelSequence:
     - {fileID: 11400000, guid: 19db1e1ce44d0cc4b8bb0833d92ee217, type: 2}
     - {fileID: 11400000, guid: b96a453ce472fcb41af9b8e963cc15ce, type: 2}
     - {fileID: 11400000, guid: 85b89b8fb49a906448c005badd0fbd2c, type: 2}
     - {fileID: 11400000, guid: c802fafc92a6c4f4eac6cb8fd9177f3e, type: 2}
     submitScore: 0
+    currentLevelIndex: 0
 --- !u!1 &51867838
 GameObject:
   m_ObjectHideFlags: 0

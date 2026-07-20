@@ -13,22 +13,10 @@ MonoBehaviour:
   m_Name: Quake Main Menu
   m_EditorClassIdentifier: rinCore::rinCore.ScenePairSO
   mainScene:
-    sceneReference:
-      m_AssetGUID: f6077efe5f8f2cf469972b2823f8efbc
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
+    sceneAsset: {fileID: 102900000, guid: f6077efe5f8f2cf469972b2823f8efbc, type: 3}
+    scenePath: Assets/Fumo Quake/Scenes/Quake/Main/Quake main Menu.unity
   additiveScenes:
-  - sceneReference:
-      m_AssetGUID: e38101d94b9df614399b7cf48d4f256a
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-  - sceneReference:
-      m_AssetGUID: 3841338a6e565194e928094cd64a6d9e
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
+  - sceneAsset: {fileID: 102900000, guid: 3841338a6e565194e928094cd64a6d9e, type: 3}
+    scenePath: Assets/Fumo Quake/Scenes/Quake/Main/Quake UI Background.unity
+  - sceneAsset: {fileID: 102900000, guid: e38101d94b9df614399b7cf48d4f256a, type: 3}
+    scenePath: Assets/Fumo Quake/Scenes/Quake/Quake Event System Bootstrapper.unity

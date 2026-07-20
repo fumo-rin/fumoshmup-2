@@ -14,12 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
   m_GroupName: Packed Assets
   m_GUID: e35ce77aafb2bef4d80a03af8ffaa0a3
-  m_SerializeEntries:
-  - m_GUID: 3841338a6e565194e928094cd64a6d9e
-    m_Address: Assets/Fumo Quake/Scenes/Quake/Main/Quake UI Background.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 83601607327bd124f87361e8e40ab17f, type: 2}
   m_SchemaSet:

@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b5e29520f984e419ac6da7a9f8f900, type: 3}
   m_Name: Quake
   m_EditorClassIdentifier: rinCore::ScenePackSO
+  bootstrapperScene:
+    sceneAsset: {fileID: 102900000, guid: e75c699d11223c94b8e0f3d9d79d65ab, type: 3}
+    scenePath: Assets/Fumo Quake/Scenes/Quake/Main/Bootstrapper.unity
   scenePairSOFolders:
   - {fileID: 102900000, guid: 1a4c6cfa619e1e045bf002453058524f, type: 3}

@@ -397,8 +397,9 @@ MonoBehaviour:
       RawExtrasScore: 0
       HighScore: 0
       ScoreDivisor: 100
-    levelSequence: []
+    LevelSequence: []
     submitScore: 0
+    currentLevelIndex: 0
   levelName: {fileID: 1601311302}
 --- !u!1 &320251930
 GameObject:

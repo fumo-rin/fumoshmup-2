@@ -69,7 +69,7 @@ namespace FumoQuake
             public int StartingAmmo => 40;
             public int AmmoCost => 1;
             public IGunFireMode.Mode ClickMode => IGunFireMode.Mode.Click;
-            public string TextName => "Shotgun";
+            public string TextName => "Shotguns";
             public void Shoot(WeaponsController runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {
                 if (runner.GetRecoilHandler(out PlayerWeaponsController recoil))

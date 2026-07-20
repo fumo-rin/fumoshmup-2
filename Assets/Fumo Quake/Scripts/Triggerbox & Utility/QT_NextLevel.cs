@@ -14,9 +14,16 @@ namespace FumoQuake
         {
             if (SceneLoader.IsLoading)
                 return false;
-            Destroy(this);
             other.transform.position += new Vector3(0f, 100f, 0);
-            QuakeSession.NextLevelOrMenu();
+            bool success;
+            if (success = QuakeSession.NextLevelOrMenu())
+            {
+                Destroy(this);
+            }
+            else
+            {
+                Debug.LogError("yuh..");
+            }
             return true;
         }
     }

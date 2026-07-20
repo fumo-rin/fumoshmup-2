@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Exit
+  m_Name: Exit 1
   m_Shader: {fileID: -6465566751694194690, guid: eae478b44fd2d0043a1b427368ab0ec9, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0

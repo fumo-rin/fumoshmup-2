@@ -1,4 +1,5 @@
 using rinCore;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ namespace FumoQuake
         }
         public void SetLevel(rinCore.ScenePairSO pair)
         {
-            session.levelSequence = new()
+            session.LevelSequence = new()
             {
                 pair
             };
