@@ -318,6 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f43f03c295757846b258b013ccec36e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: FumoQuake::FumoQuake.QT_PickupHealth
+  successSound: {fileID: 11400000, guid: 5e1dfadb02fe36f47bc09f0daee1ac66, type: 2}
   OnlyFindPlayer: 1
   DestroyOnCollect: 1
   VisibleRenderers:

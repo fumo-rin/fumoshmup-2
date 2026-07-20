@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad885e95a7077aa44989249e14dfc86e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: FumoQuake::FumoQuake.QT_NextLevel
+  successSound: {fileID: 0}
   OnlyFindPlayer: 1
   DestroyOnCollect: 0
   VisibleRenderers:

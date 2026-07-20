@@ -9,6 +9,17 @@ namespace FumoQuake
     public class QuakeSession : GameSession
     {
         [SerializeField] public List<ScenePairSO> levelSequence = new();
+        Dictionary<QuakeKeyItems, bool> levelItems = new();
+        public static bool HasItem(QuakeKeyItems item) =>
+            CurrentAs(out QuakeSession ses) &&
+            ses.levelItems != null &&
+            ses.levelItems.TryGetValue(item, out bool v) &&
+            v;
+        public static bool AwardItem(QuakeKeyItems item) =>
+            CurrentAs(out QuakeSession ses) &&
+            !ses.levelItems.TryGetValue(item, out _) &&
+            ses.levelItems.TryAdd(item, true);
+
         static Queue<ScenePairSO> levelQueue;
         public bool submitScore;
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
@@ -42,6 +53,10 @@ namespace FumoQuake
             if (next != null)
             {
                 SceneLoader.LoadScenePair(next, null);
+                if (CurrentAs(out QuakeSession ses))
+                {
+                    ses.levelItems = new();
+                }
             }
             else
             {

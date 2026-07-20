@@ -25,6 +25,7 @@ namespace FumoQuake
     }
     public abstract class QT_Base : MonoBehaviour
     {
+        [SerializeField] ACWrapper successSound;
         [SerializeField] public bool OnlyFindPlayer;
         [SerializeField] public bool DestroyOnCollect;
         [SerializeField] public List<Renderer> VisibleRenderers = new();
@@ -50,6 +51,10 @@ namespace FumoQuake
                 bool pickup = WhenTriggerEnter(other, f);
                 if (pickup && DestroyOnCollect)
                     Destroy(gameObject);
+                if (pickup)
+                {
+                    successSound.Play(transform.position);
+                }
             }
         }
         protected abstract bool WhenTriggerEnter(Collider other, IFumoUnit unit);
