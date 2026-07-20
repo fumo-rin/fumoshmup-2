@@ -12,6 +12,9 @@ namespace FumoQuake
         }
         protected override bool WhenTriggerEnter(Collider other, IFumoUnit unit)
         {
+            if (SceneLoader.IsLoading)
+                return false;
+            Destroy(this);
             other.transform.position += new Vector3(0f, 100f, 0);
             QuakeSession.NextLevelOrMenu();
             return true;
