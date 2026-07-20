@@ -518,10 +518,10 @@ MonoBehaviour:
         serializedVersion: 2
         rgba: 4294967295
       a01: {x: 0, y: 0}
-      b01: {x: 1, y: 0.3}
+      b01: {x: 1, y: 1}
       fontSize: 24
       horizontalAlignment: 2
-      verticalAlignment: 256
+      verticalAlignment: 512
   - cutsceneImage: {fileID: 0}
     textDisplay: Go Collect Steaks##and win the heart of your beloved (Rumia)####Rip
       and tere, until it is done.
@@ -536,7 +536,7 @@ MonoBehaviour:
       b01: {x: 1, y: 1}
       fontSize: 24
       horizontalAlignment: 2
-      verticalAlignment: 256
+      verticalAlignment: 512
   nextScene: {fileID: 11400000, guid: 1d5053d31d0cd634b986de274eb561ef, type: 2}
   skipButton: {fileID: 782985247}
   initialDelay: 0
@@ -846,7 +846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.AspectRatioFitter
   m_AspectMode: 0
-  m_AspectRatio: 2.1528661
+  m_AspectRatio: 1.4366198
 --- !u!114 &1140116094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1051,7 +1051,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.AspectRatioFitter
   m_AspectMode: 0
-  m_AspectRatio: 2.1528661
+  m_AspectRatio: 1.4366198
 --- !u!1 &1471223858
 GameObject:
   m_ObjectHideFlags: 0
