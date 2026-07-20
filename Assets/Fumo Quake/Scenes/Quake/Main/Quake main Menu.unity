@@ -413,7 +413,9 @@ MonoBehaviour:
       ScoreDivisor: 100
     levelSequence:
     - {fileID: 11400000, guid: 19db1e1ce44d0cc4b8bb0833d92ee217, type: 2}
-    - {fileID: 11400000, guid: d216e24889f2c64499373edf7a06f574, type: 2}
+    - {fileID: 11400000, guid: b96a453ce472fcb41af9b8e963cc15ce, type: 2}
+    - {fileID: 11400000, guid: 85b89b8fb49a906448c005badd0fbd2c, type: 2}
+    - {fileID: 11400000, guid: c802fafc92a6c4f4eac6cb8fd9177f3e, type: 2}
     submitScore: 0
 --- !u!1 &51867838
 GameObject:
@@ -1072,13 +1074,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 862240505}
   - {fileID: 703446720}
   - {fileID: 1981588176}
   - {fileID: 2075641540}
   - {fileID: 672942736}
   - {fileID: 697222160}
   - {fileID: 293528386}
+  - {fileID: 862240505}
   m_Father: {fileID: 1057983347}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}

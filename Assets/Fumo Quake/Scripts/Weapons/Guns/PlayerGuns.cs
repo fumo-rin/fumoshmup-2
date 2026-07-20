@@ -330,7 +330,7 @@ namespace FumoQuake
             public int StartingAmmo => 12;
             public int AmmoCost => 1;
             public IGunFireMode.Mode ClickMode => IGunFireMode.Mode.Hold;
-            public string TextName => "Rocket Gun";
+            public string TextName => "Rockets Gun";
             public override BaseGun Clone()
             {
                 return new RocketLauncher()
