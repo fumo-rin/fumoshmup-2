@@ -119,6 +119,8 @@ MonoBehaviour:
     groundMask:
       serializedVersion: 2
       m_Bits: 585
+    iceTag: Ice
+    ForcedIcePhysicsEndTime: 0
   navigation: {fileID: 6088834311880531775}
 --- !u!114 &6088834311880531775
 MonoBehaviour:
@@ -140,7 +142,7 @@ MonoBehaviour:
     destinationTolerance: 1
     stuckThresholdDuration: 0.75
   moveSpeed: 4.5
-  stopBrakingSpeed: 40
+  Acceleration: 40
   autoRepath: 1
   repathDistance: 2
   repathRateLimit: 0.25
@@ -282,7 +284,7 @@ SpriteRenderer:
   m_SmallMeshCulling: 1
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 129
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 2990ab5081df3d04ca70b92b711f7b8c, type: 2}
