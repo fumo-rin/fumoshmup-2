@@ -20,14 +20,14 @@ namespace FumoQuake
             }
             public ShotgunData shotgun;
             public override bool IsProjectileWeapon => true;
-            public void Shoot(WeaponsController runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
+            public void Shoot(WeaponsController runner, ITargetting sender, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {
                 GunSound.Play(ray.origin);
                 for (int i = 0; i < shotgun.pellets.Max(1); i++)
                 {
                     Ray r = RinHelper.RayDot(ray, 0.03f);
                     QuakeProjectile.CreateProjectile(new() { Direction = r.direction, Faction = OwnerFaction, Origin = r.origin, Speed = shotgun.projectileSpeed },
-                        out QuakeProjectile p);
+                        sender, out QuakeProjectile p);
 
                     if (p != null)
                     {
@@ -67,7 +67,7 @@ namespace FumoQuake
             }
             public LinegunData linegun;
             public override bool IsProjectileWeapon => true;
-            public void Shoot(WeaponsController runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
+            public void Shoot(WeaponsController runner, ITargetting sender, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {
                 float diffProjectileSpeed = (linegun.maxProjectileSpeed - linegun.baseProjectileSpeed) / linegun.pellets;
                 GunSound.Play(ray.origin);
@@ -75,7 +75,7 @@ namespace FumoQuake
                 for (int i = 0; i < linegun.pellets.Max(1); i++)
                 {
                     QuakeProjectile.CreateProjectile(new() { Direction = r.direction, Faction = OwnerFaction, Origin = r.origin, Speed = linegun.baseProjectileSpeed + i * diffProjectileSpeed },
-                        out QuakeProjectile p);
+                        sender, out QuakeProjectile p);
 
                     if (p != null)
                     {

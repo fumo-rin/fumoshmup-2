@@ -77,6 +77,15 @@
             "id": "ec668a7c-2ce8-42b8-9b6b-0bb55192da47",
             "actions": [
                 {
+                    "name": "Weapon Scroll",
+                    "type": "Value",
+                    "id": "ae2862f5-7bf7-47f4-991d-f280b939a30a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Blaster",
                     "type": "Button",
                     "id": "dd4f5a60-d2c0-453a-a6bf-e7ec1ec0fe93",
@@ -261,6 +270,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Railgun",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ca982f1a-8f88-4a15-991d-56ecc62a7e1d",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Weapon Scroll",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

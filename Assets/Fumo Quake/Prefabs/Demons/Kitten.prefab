@@ -119,6 +119,8 @@ MonoBehaviour:
     groundMask:
       serializedVersion: 2
       m_Bits: 585
+    iceTag: Ice
+    ForcedIcePhysicsEndTime: 0
   navigation: {fileID: 6088834311880531775}
   strafeSystem:
     profiles:
@@ -163,7 +165,7 @@ MonoBehaviour:
     destinationTolerance: 1
     stuckThresholdDuration: 0.75
   moveSpeed: 6.5
-  stopBrakingSpeed: 40
+  Acceleration: 40
   autoRepath: 1
   repathDistance: 2
   repathRateLimit: 0.25
@@ -227,6 +229,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f347eaa6dc78b2140915a5fd0817dd23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: FumoQuake::FumoQuake.WeaponsController
+  Sender:
+    target: {fileID: 840586574125068547}
   <CurrentWeapon>k__BackingField:
     rid: 4883943022865154498
   references:

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3620972817065902063}
   - component: {fileID: 7553313358088418559}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
@@ -55,7 +55,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7542456200399919297}
   - component: {fileID: 6830758501992473059}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

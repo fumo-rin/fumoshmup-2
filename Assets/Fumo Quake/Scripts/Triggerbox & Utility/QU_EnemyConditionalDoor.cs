@@ -5,15 +5,21 @@ using UnityEngine;
 
 namespace FumoQuake
 {
-    public class QU_EnemyConditionalDoor : MonoBehaviour
+    public class QU_EnemyConditionalDoor : QT_Base
     {
         [SerializeField]
         List<GameObject> Door = new();
         [SerializeField] List<QuakeEnemy> RequiredKilledEnemies = new();
         HashSet<QuakeEnemy> LiveList = new();
-        private void Start()
+        protected override void WhenAwake()
         {
             LiveList = RequiredKilledEnemies.ToHashSet();
+        }
+
+        protected override bool WhenTriggerEnter(Collider other, IFumoUnit unit)
+        {
+            QuakeTextInfoUI.AddText("You most Destroy the enamies to pass!");
+            return true;
         }
         private void OnEnable()
         {
@@ -22,10 +28,6 @@ namespace FumoQuake
         private void OnDestroy()
         {
             QuakeEnemy.WhenEnemyKilled -= CheckKilledEnemy;
-        }
-        private void OnTriggerEnter(Collider other)
-        {
-            QuakeTextInfoUI.AddText("You most Destroy the enamies to pass!");
         }
         private void CheckKilledEnemy(QuakeEnemy e)
         {

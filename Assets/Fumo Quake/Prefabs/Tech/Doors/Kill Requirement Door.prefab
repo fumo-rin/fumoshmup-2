@@ -48,6 +48,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad0883e7a01000948bcea2d0025564fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: FumoQuake::FumoQuake.QU_EnemyConditionalDoor
+  successSound: {fileID: 0}
+  OnlyFindPlayer: 1
+  DestroyOnCollect: 0
+  VisibleRenderers:
+  - {fileID: 5349151174941806976}
   Door:
   - {fileID: 5040947755514663628}
   RequiredKilledEnemies: []

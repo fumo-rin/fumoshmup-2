@@ -206,6 +206,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f347eaa6dc78b2140915a5fd0817dd23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: FumoQuake::FumoQuake.WeaponsController
+  Sender:
+    target: {fileID: 5976487000038940522}
   <CurrentWeapon>k__BackingField:
     rid: 6698477031310229633
   references:

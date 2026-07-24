@@ -16,7 +16,5 @@ MonoBehaviour:
     sceneAsset: {fileID: 102900000, guid: 93ba4878677dfe54f9cc33c8dba747dd, type: 3}
     scenePath: Assets/Fumo Quake/Scenes/Quake/Quake Worldcup Horde.unity
   additiveScenes:
-  - sceneAsset: {fileID: 102900000, guid: e38101d94b9df614399b7cf48d4f256a, type: 3}
-    scenePath: Assets/Fumo Quake/Scenes/Quake/Quake Event System Bootstrapper.unity
   - sceneAsset: {fileID: 102900000, guid: 01d5e04d93e5fee408263befae74bb07, type: 3}
     scenePath: Assets/Fumo Quake/Scenes/Quake/Quake Unpacker.unity

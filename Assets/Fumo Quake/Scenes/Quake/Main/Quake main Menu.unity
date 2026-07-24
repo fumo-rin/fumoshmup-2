@@ -417,6 +417,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 85b89b8fb49a906448c005badd0fbd2c, type: 2}
     - {fileID: 11400000, guid: c802fafc92a6c4f4eac6cb8fd9177f3e, type: 2}
     - {fileID: 11400000, guid: 07dbca707d218b64f9474058f65ff2c5, type: 2}
+    AllowShotgunStarting: 1
     submitScore: 0
     currentLevelIndex: 0
 --- !u!1 &51867838

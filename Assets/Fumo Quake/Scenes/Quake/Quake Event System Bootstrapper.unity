@@ -219,6 +219,10 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 4153926310
       objectReference: {fileID: 0}
+    - target: {fileID: 7500892005311287717, guid: 1af3722cc6f662244ace4eaa3e182953, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

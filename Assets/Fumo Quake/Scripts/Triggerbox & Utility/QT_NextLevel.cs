@@ -16,7 +16,7 @@ namespace FumoQuake
                 return false;
             other.transform.position += new Vector3(0f, 100f, 0);
             bool success;
-            if (success = QuakeSession.NextLevelOrMenu())
+            if (success = QuakeSession.CurrentAs(out QuakeSession ses) && ses.NextLevelOrMenu())
             {
                 Destroy(this);
             }

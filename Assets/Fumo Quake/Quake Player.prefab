@@ -60,7 +60,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3877393099381861893}
   m_Father: {fileID: 8548529468576564111}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1084603261917309693
@@ -180,6 +181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7ceda7bac90cf84388ce5beb9604a23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: FumoQuake::FumoQuake.QuakeController
+  detachedObjects:
+  - {fileID: 4631322452301112383}
   followItems:
   - writer: {fileID: 422096695168895918}
     reader: {fileID: 4960802815363340175}
@@ -220,6 +223,7 @@ MonoBehaviour:
       m_Bits: 833
     iceTag: Ice
     ForcedIcePhysicsEndTime: 0
+    ForcedGroundedEndTime: 0
   stairClimber: {fileID: 5389854354229885213}
   m:
     viewSocket: {fileID: 8548529468576564111}
@@ -377,8 +381,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3877393099381861893}
+  m_Children: []
   m_Father: {fileID: 8548529468576564111}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3449505012569063336
@@ -474,12 +477,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3967847695857141062}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.094, y: 0.011999726, z: -0.241}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.09400177, y: 0.011999726, z: -0.24099922}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4960802815363340175}
+  m_Father: {fileID: 422096695168895918}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &3825242285951504006
 Light:
@@ -959,7 +962,7 @@ MonoBehaviour:
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
   TargetOffset: {x: 0, y: 0, z: 0}
-  Damping: {x: 0, y: 0, z: 0}
+  Damping: {x: 0, y: 0.1, z: 0}
   Lookahead:
     Enabled: 0
     Time: 0
@@ -1033,6 +1036,7 @@ MonoBehaviour:
   - {fileID: 6654901787114958540, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
   - {fileID: 5156956874734435587, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
   - {fileID: -4406308715983901271, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
+  weaponScrollInput: {fileID: 2702401617090986085, guid: 43ef4745693327e4ab4b7ee045b40c3f, type: 3}
   <Gun1>k__BackingField:
     rid: 4883943095207198925
   <Gun2>k__BackingField:

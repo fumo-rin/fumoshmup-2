@@ -3,14 +3,11 @@ using UnityEngine.InputSystem;
 using rinCore;
 using System.Collections;
 using System.Linq;
-using System;
 using System.Collections.Generic;
-
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-
 namespace FumoQuake
 {
     public interface IGunAmmo
@@ -41,7 +38,7 @@ namespace FumoQuake
                 WeaponSwapLockTime = (time + Time.time).Max(WeaponSwapLockTime);
             }
         }
-        public void Shoot(WeaponsController runner, ref WeaponLock weaponLock, Ray ray);
+        public void Shoot(WeaponsController runner, ITargetting sender, ref WeaponLock weaponLock, Ray ray);
     }
     public abstract class BaseGun
     {
@@ -88,7 +85,7 @@ namespace FumoQuake
         public bool ValidWeapon => CurrentWeapon != null;
         public IQuakeShooter.WeaponLock weaponLockTiming = new();
         public float RandomAggressionTimeAfterLock(float min, float max) => weaponLockTiming.NextShootTime + RNG.FloatRange(min, max);
-        public bool TryShootWith(BaseGun item, Ray r)
+        public bool TryShootWith(BaseGun item, ITargetting sender, Ray r)
         {
             if (item == null || !ValidWeapon)
             {
@@ -104,7 +101,7 @@ namespace FumoQuake
                 {
                     if (ammo.HasAmmo)
                     {
-                        gun.Shoot(this, ref weaponLockTiming, r);
+                        gun.Shoot(this, sender, ref weaponLockTiming, r);
                         ammo.SpendAmmo();
                     }
                     else
@@ -117,14 +114,14 @@ namespace FumoQuake
                 }
                 else
                 {
-                    gun.Shoot(this, ref weaponLockTiming, r);
+                    gun.Shoot(this, sender, ref weaponLockTiming, r);
                 }
             }
             return true;
         }
-        public bool TryShootWith(Ray r)
+        public bool TryShootWith(ITargetting sender, Ray r)
         {
-            return TryShootWith(CurrentWeapon, r);
+            return TryShootWith(CurrentWeapon, sender, r);
         }
     }
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3701468370777001931}
   - component: {fileID: 5349151174941806976}
   - component: {fileID: 5707999575995981319}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Golden Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9181127850973375025}
   - component: {fileID: 3241135070097729021}
   - component: {fileID: 8006439394034353564}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Rotation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3215294621337445857}
   - component: {fileID: 4887380862202303154}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Nest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1317681890275372451}
   - component: {fileID: 7033850311230513733}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Debug Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 6486060522028163239}
   - component: {fileID: 6112978635947677437}
   - component: {fileID: 3574199320348421268}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Gun Pickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}

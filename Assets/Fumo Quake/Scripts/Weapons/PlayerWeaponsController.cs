@@ -21,6 +21,7 @@ namespace FumoQuake
     public partial class PlayerWeaponsController : WeaponsController
     {
         [SerializeField] List<InputActionReference> orderedSelectBinds = new();
+        [SerializeField] InputActionReference weaponScrollInput;
         [field: SerializeReference, ManagedReferencePicker] public BaseGun Gun1 { get; protected set; }
         [field: SerializeReference, ManagedReferencePicker] public BaseGun Gun2 { get; protected set; }
         [field: SerializeReference, ManagedReferencePicker] public BaseGun Gun3 { get; protected set; }
@@ -60,7 +61,7 @@ namespace FumoQuake
 
                 bool pickup = delta >= 1;
                 if (pickup)
-                    QuakeTextInfoUI.AddText("You Gots " + delta.ToString("F0") + " " + (item is IQuakeTextName n2 ? n2.TextName + " ammo" : "Item"));
+                    QuakeTextInfoUI.AddText("You Gots the " + delta.ToString("F0") + " " + (item is IQuakeTextName n2 ? n2.TextName + " ammo" : "Item"));
                 return pickup;
             }
             return false;
@@ -176,16 +177,30 @@ namespace FumoQuake
             if (Time.time > clickTime + 1.25f)
                 queuedSelection = -1;
 
-            int iteration = 0;
-            foreach (var item in orderedSelectBinds)
+            if (weaponScrollInput != null && weaponScrollInput.ReadRawVector2(false) is Vector2 v && v.y != 0f)
             {
-                if (item.JustPressed())
+                int direction = v.y.SignInt();
+                int startingIndex = queuedSelection >= 0 ? queuedSelection : LastWeaponSelection;
+
+                if (TryGetNextValidWeaponIndex(startingIndex, direction, out int nextIndex))
                 {
-                    queuedSelection = iteration;
+                    queuedSelection = nextIndex;
                     clickTime = Time.time;
-                    break;
                 }
-                iteration++;
+            }
+            else
+            {
+                int iteration = 0;
+                foreach (var item in orderedSelectBinds)
+                {
+                    if (item.JustPressed())
+                    {
+                        queuedSelection = iteration;
+                        clickTime = Time.time;
+                        break;
+                    }
+                    iteration++;
+                }
             }
 
             bool canSwap = weaponLockTiming.CanSwapWeapon;
@@ -196,6 +211,24 @@ namespace FumoQuake
                 SwapToWeapon(selectedGun);
                 weaponLockTiming.NextShootTime = Time.time + .125f;
             }
+        }
+        private bool TryGetNextValidWeaponIndex(int startIndex, int direction, out int validIndex)
+        {
+            validIndex = startIndex;
+            if (currentLoadout == null || currentLoadout.Count == 0)
+                return false;
+            int totalCount = currentLoadout.Count;
+            int currentIndex = startIndex;
+            for (int i = 0; i < totalCount; i++)
+            {
+                currentIndex = (currentIndex + direction + totalCount) % totalCount;
+                if (CanSelect(currentIndex, out _))
+                {
+                    validIndex = currentIndex;
+                    return true;
+                }
+            }
+            return false;
         }
         Coroutine runningSwap = null;
         private void SwapToWeapon(BaseGun targetWeapon)
@@ -289,7 +322,6 @@ namespace FumoQuake
                 runningSwap = StartCoroutine(CO_Swap(index));
             }
         }
-
         bool CanSelect(int value, out BaseGun selection)
         {
             selection = null;

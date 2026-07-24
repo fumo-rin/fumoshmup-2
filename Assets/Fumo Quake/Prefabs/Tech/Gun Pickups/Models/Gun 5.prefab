@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 289237258654773286}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Gun 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,6 +100,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: -4714817154256824709, guid: 0a14c500897da1f478e790db62acf1cb, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: -1253996098385199550, guid: 0a14c500897da1f478e790db62acf1cb, type: 3}
       propertyPath: m_LocalScale.x
       value: 4
@@ -116,6 +120,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: goheylaser_001 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0a14c500897da1f478e790db62acf1cb, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1321698360760406216, guid: 0a14c500897da1f478e790db62acf1cb, type: 3}
       propertyPath: m_LocalScale.x
       value: 4
@@ -139,6 +147,14 @@ PrefabInstance:
     - target: {fileID: 3316992658331686828, guid: 0a14c500897da1f478e790db62acf1cb, type: 3}
       propertyPath: m_LocalScale.z
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5148817236446094103, guid: 0a14c500897da1f478e790db62acf1cb, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8821623529969584324, guid: 0a14c500897da1f478e790db62acf1cb, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -3840361553397645466, guid: 0a14c500897da1f478e790db62acf1cb, type: 3}

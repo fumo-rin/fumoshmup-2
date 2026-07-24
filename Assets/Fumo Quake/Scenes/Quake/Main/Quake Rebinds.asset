@@ -18,5 +18,3 @@ MonoBehaviour:
   additiveScenes:
   - sceneAsset: {fileID: 102900000, guid: 3841338a6e565194e928094cd64a6d9e, type: 3}
     scenePath: Assets/Fumo Quake/Scenes/Quake/Main/Quake UI Background.unity
-  - sceneAsset: {fileID: 102900000, guid: e38101d94b9df614399b7cf48d4f256a, type: 3}
-    scenePath: Assets/Fumo Quake/Scenes/Quake/Quake Event System Bootstrapper.unity

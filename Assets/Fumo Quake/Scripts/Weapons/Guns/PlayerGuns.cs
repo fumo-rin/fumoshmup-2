@@ -70,7 +70,7 @@ namespace FumoQuake
             public int AmmoCost => 1;
             public IGunFireMode.Mode ClickMode => IGunFireMode.Mode.Click;
             public string TextName => "Shotguns";
-            public void Shoot(WeaponsController runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
+            public void Shoot(WeaponsController runner, ITargetting sender, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {
                 if (runner.GetRecoilHandler(out PlayerWeaponsController recoil))
                 {
@@ -95,11 +95,10 @@ namespace FumoQuake
                                 priority = 50,
                             });
                         }
-                        hitable.Hit(new()
+                        hitable.Hit(new(sender)
                         {
                             Damage = pelletDamage,
                             HitPoint = hit.point,
-                            Sender = runner.GetComponent<ITargetting>() is ITargetting sender ? sender : null,
                         });
                     }
                 }
@@ -163,7 +162,7 @@ namespace FumoQuake
             public int AmmoCost => 1;
             public IGunFireMode.Mode ClickMode => IGunFireMode.Mode.Click;
             public string TextName => "Pistol";
-            public void Shoot(WeaponsController runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
+            public void Shoot(WeaponsController runner, ITargetting Sender, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {
                 if (runner.GetRecoilHandler(out PlayerWeaponsController recoil))
                 {
@@ -176,14 +175,13 @@ namespace FumoQuake
                 {
                     Ray r = RinHelper.RayDot(ray, 0.0003f);
                     QuakeProjectile.CreateProjectile(new() { Direction = r.direction, Faction = OwnerFaction, Origin = r.origin, Speed = 25f },
-                        out QuakeProjectile p);
+                        Sender, out QuakeProjectile p);
 
                     if (p != null)
                     {
                         p.Channel = data.projectileIndex;
                         p.Damage = data.pelletDamage;
                         p.GravityMod = 0f;
-                        p.Sender = runner.GetComponent<ITargetting>() is ITargetting sender ? sender : null;
                         p.HitAction += (QuakeProjectile.HitActionResult hitResult) =>
                         {
                             if (hitResult == QuakeProjectile.HitActionResult.IHit)
@@ -256,9 +254,9 @@ namespace FumoQuake
             public override bool IsProjectileWeapon => true;
             public IGunFireMode.Mode ClickMode => IGunFireMode.Mode.Hold;
 
-            public string TextName => "Nail Gun";
+            public string TextName => "Nails Gun";
 
-            public void Shoot(WeaponsController runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
+            public void Shoot(WeaponsController runner, ITargetting sender, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {
                 if (runner.GetRecoilHandler(out PlayerWeaponsController recoil))
                 {
@@ -266,15 +264,14 @@ namespace FumoQuake
                 }
                 GunSound.Play(ray.origin);
                 Ray r = RinHelper.RayDot(ray, 0.00035f);
-                QuakeProjectile.CreateProjectile(new() { Direction = r.direction, Faction = OwnerFaction, Origin = r.origin, Speed = 72f },
-                    out QuakeProjectile p);
+                QuakeProjectile.CreateProjectile(new() { Direction = r.direction, Faction = OwnerFaction, Origin = r.origin, Speed = 72f }
+                    , sender, out QuakeProjectile p);
 
                 if (p != null)
                 {
                     p.Channel = data.projectileIndex;
                     p.Damage = data.pelletDamage;
                     p.GravityMod = 0.5f;
-                    p.Sender = runner.GetComponent<ITargetting>() is ITargetting sender ? sender : null;
                     p.HitAction += (QuakeProjectile.HitActionResult hitResult) =>
                     {
                         if (hitResult == QuakeProjectile.HitActionResult.IHit)
@@ -346,7 +343,7 @@ namespace FumoQuake
                     data = data,
                 };
             }
-            public void Shoot(WeaponsController runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
+            public void Shoot(WeaponsController runner, ITargetting sender, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {
                 if (runner.GetRecoilHandler(out PlayerWeaponsController recoil))
                 {
@@ -357,7 +354,7 @@ namespace FumoQuake
 
                 Ray r = RinHelper.RayDot(ray, 0.0003f);
                 QuakeProjectile.CreateProjectile(new() { Direction = r.direction, Faction = OwnerFaction, Origin = r.origin, Speed = 26f },
-                    out QuakeProjectile p);
+                    sender, out QuakeProjectile p);
 
                 if (p != null)
                 {
@@ -365,7 +362,6 @@ namespace FumoQuake
                     p.Channel = data.projectileIndex;
                     p.Damage = data.rocketDamage;
                     p.GravityMod = 0.65f;
-                    p.Sender = runner.GetComponent<ITargetting>() is ITargetting sender ? sender : null;
                     p.HitAction += (QuakeProjectile.HitActionResult hitResult) =>
                     {
                         if (hitResult == QuakeProjectile.HitActionResult.IHit)
@@ -399,11 +395,10 @@ namespace FumoQuake
                             float damage = data.rocketDamage * 0.5f + (0f.LerpUnclamped(data.rocketDamage, lerp01));
                             if (hit.IsPlayer)
                                 damage = 4f + 0f.LerpUnclamped(14f, lerp01);
-                            hit.Hit(new()
+                            hit.Hit(new(sender)
                             {
                                 Damage = damage,
                                 HitPoint = item.ClosestPoint(p.FinalizedPosition),
-                                Sender = p.Sender
                             });
                         }
                         if (hitSomething)
@@ -454,7 +449,7 @@ namespace FumoQuake
             public override bool IsProjectileWeapon => false;
             public IGunFireMode.Mode ClickMode => IGunFireMode.Mode.Hold;
             public string TextName => "Gay Laser from Hell";
-            public void Shoot(WeaponsController runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
+            public void Shoot(WeaponsController runner, ITargetting sender, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {
                 if (!data.LGSound.isPlaying) data.LGSound.Play();
                 data.LGSound.loop = true;
@@ -467,11 +462,10 @@ namespace FumoQuake
                     QuakeProjectileRenderer.ProjHitEffect(hit);
                     if (hit.transform.TryGetComponent(out IQuakeHitable hitable))
                     {
-                        hitable.Hit(new()
+                        hitable.Hit(new(sender)
                         {
                             Damage = data.DPS * WeaponShootLockTime,
                             HitPoint = hit.point,
-                            Sender = runner.GetComponent<ITargetting>() is ITargetting sender ? sender : null
                         });
 
                         Mugshot.SetMood(new Mugshot.MoodEntry(0.35f)
@@ -545,7 +539,7 @@ namespace FumoQuake
             public override bool IsProjectileWeapon => false;
             public IGunFireMode.Mode ClickMode => IGunFireMode.Mode.Click;
             public string TextName => "Railgun";
-            public void Shoot(WeaponsController runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
+            public void Shoot(WeaponsController runner, ITargetting sender, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {
                 GunSound.Play(ray.origin);
                 if (runner.GetRecoilHandler(out PlayerWeaponsController recoil))
@@ -561,11 +555,10 @@ namespace FumoQuake
                     QuakeProjectileRenderer.ProjHitEffect(hit);
                     if (hit.transform.TryGetComponent(out IQuakeHitable hitable))
                     {
-                        hitable.Hit(new()
+                        hitable.Hit(new(sender)
                         {
                             Damage = data.ShotDamage,
                             HitPoint = hit.point,
-                            Sender = runner.GetComponent<ITargetting>() is ITargetting sender ? sender : null
                         });
 
                         Mugshot.SetMood(new Mugshot.MoodEntry(1.65f)

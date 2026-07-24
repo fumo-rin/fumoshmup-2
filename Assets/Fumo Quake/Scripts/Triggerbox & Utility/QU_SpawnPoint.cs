@@ -11,7 +11,6 @@ namespace FumoQuake
         static HashSet<QU_SpawnPoint> randomSpawns = new();
         private void OnEnable()
         {
-            Debug.Log("Starting : " + transform.name);
             randomSpawns.Add(this);
         }
         private void Awake()

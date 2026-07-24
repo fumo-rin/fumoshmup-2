@@ -1,31 +1,35 @@
 using rinCore;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace FumoQuake
 {
-    public class Fairy : QuakeEnemy, IQuakeHitable, IStrafe
+    public class Fairy : QuakeEnemy, IQuakeHitable, IStrafe, ITargetting
     {
         [SerializeField] private StrafeController strafeSystem = new();
         public bool TryStrafe(ref Vector3 velocity, ITargetting target)
         {
+            if (!CanSee(target))
+                return false;
             return strafeSystem.TryRunStrafe(transform, ref velocity, target);
         }
         public WeaponsController gun2;
         public GameObject hitGameObject => gameObject;
+
+        public new bool TargetActive => IsAlive;
+
+        public new IEnumerable<Transform> RandomOrderedTargets
+        {
+            get
+            {
+                yield return transform;
+            }
+        }
+
         public void Hit(IQuakeHitable.HitPacket packet)
         {
-            float processed = packet.Damage.Multiply(QuakeSession.IsQuadDamage ? 9f : 1f);
-            float damageTaken = processed.Clamp(0f, CurrentHealth);
-            CurrentHealth -= damageTaken;
-            if (damageTaken > 0f)
-            {
-                Action_DamageAlert(packet);
-            }
-            if (CurrentHealth < 0f + Mathf.Epsilon && IsAlive)
-            {
-                Kill();
-            }
+            HitProcessing.ProcessHit(this, packet);
         }
         void Targetting(ITargetting target)
         {
@@ -56,7 +60,7 @@ namespace FumoQuake
 
             if (targetDistance < 10f)
             {
-                if (gun != null && gun.TryShootWith(targetRay))
+                if (gun != null && gun.TryShootWith(this, targetRay))
                 {
                     float l = gun != null && gun.CurrentWeapon != null && gun.CurrentWeapon.WeaponShootLockTime is float time ? time : 1f;
                     RandomAttackTime = Time.time + l + RNG.FloatRange(1f, 1.7f);
@@ -64,12 +68,12 @@ namespace FumoQuake
             }
             else if (targetDistance > 16f)
             {
-                if (gun2 != null && gun2.TryShootWith(gun2.CurrentWeapon, targetRay))
+                if (gun2 != null && gun2.TryShootWith(gun2.CurrentWeapon, this, targetRay))
                     RandomAttackTime = Time.time + RNG.FloatRange(0.4f, 0.7f);
             }
             else
             {
-                if (gun2 != null && gun2.TryShootWith(targetRay))
+                if (gun2 != null && gun2.TryShootWith(this, targetRay))
                 {
                     RandomAttackTime = Time.time + 0.2f;
                 }

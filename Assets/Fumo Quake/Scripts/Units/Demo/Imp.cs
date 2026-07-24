@@ -9,30 +9,19 @@ using UnityEngine.UIElements;
 using NUnit.Framework;
 namespace FumoQuake
 {
-    public partial class Imp : IStrafe
+    public partial class Imp : QuakeEnemy, IQuakeHitable, IStrafe
     {
         [SerializeField] private StrafeController strafeSystem = new();
         public bool TryStrafe(ref Vector3 velocity, ITargetting target)
         {
+            if (!CanSee(target))
+                return false;
             return strafeSystem.TryRunStrafe(transform, ref velocity, target);
         }
-    }
-    public partial class Imp : QuakeEnemy, IQuakeHitable
-    {
         public GameObject hitGameObject => gameObject;
         public void Hit(IQuakeHitable.HitPacket packet)
         {
-            float processed = packet.Damage.Multiply(QuakeSession.IsQuadDamage ? 9f : 1f);
-            float damageTaken = processed.Clamp(0f, CurrentHealth);
-            CurrentHealth -= damageTaken;
-            if (damageTaken > 0f)
-            {
-                Action_DamageAlert(packet);
-            }
-            if (CurrentHealth < 0f + Mathf.Epsilon && IsAlive)
-            {
-                Kill();
-            }
+            HitProcessing.ProcessHit(this, packet);
         }
         void Targetting(ITargetting target)
         {
@@ -78,7 +67,7 @@ namespace FumoQuake
                         {
                             gun.weaponLockTiming.Stall(RNG.FloatRange(0.15f, 0.35f));
                         }
-                        if (gun.TryShootWith(targetRay) && stallduration > 0f)
+                        if (gun.TryShootWith(this, targetRay) && stallduration > 0f)
                         {
                             StallTimeEnd = stallduration + Time.time;
                         }

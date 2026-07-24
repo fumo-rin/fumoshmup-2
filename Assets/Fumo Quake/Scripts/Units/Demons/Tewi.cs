@@ -11,8 +11,8 @@ namespace FumoQuake
         float jumpDisableTimer;
         [SerializeField] ACWrapper boing;
         public GameObject hitGameObject => gameObject != null ? gameObject : null;
-        public bool TargetActive => hitGameObject.activeInHierarchy;
-        public IEnumerable<Transform> RandomOrderedTargets => new List<Transform>() { transform };
+        public new bool TargetActive => hitGameObject.activeInHierarchy;
+        public new IEnumerable<Transform> RandomOrderedTargets => new List<Transform>() { transform };
         Coroutine chargeJump;
         void JumpPathing(IFumoUnit other)
         {
@@ -160,26 +160,7 @@ namespace FumoQuake
 
         public void Hit(IQuakeHitable.HitPacket packet)
         {
-            float processed = packet.Damage.Multiply(QuakeSession.IsQuadDamage ? 9f : 1f);
-            float damageTaken = processed.Clamp(0f, CurrentHealth);
-            CurrentHealth -= damageTaken;
-            if (damageTaken > 0f)
-            {
-                Action_DamageAlert(packet);
-            }
-            if (CurrentHealth < 0f + Mathf.Epsilon && IsAlive)
-            {
-                Kill(() =>
-                {
-                    GeneralManager.FunnyExplosion(new()
-                    {
-                        is3d = true,
-                        playSound = false,
-                        position = Center,
-                        scale = 0.75f
-                    });
-                });
-            }
+            HitProcessing.ProcessHit(this, packet, HitProcessing.KillExplosion);
         }
 
         protected override void WhenAwake() { }

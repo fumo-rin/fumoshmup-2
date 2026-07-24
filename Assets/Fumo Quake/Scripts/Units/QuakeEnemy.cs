@@ -14,8 +14,36 @@ namespace FumoQuake
         public bool TryStrafe(ref Vector3 velocity, ITargetting target);
     }
     [SelectionBase]
-    public abstract class QuakeEnemy : MonoBehaviour, IFumoUnit
+    public abstract class QuakeEnemy : MonoBehaviour, IFumoUnit, ITargetting
     {
+        protected static class HitProcessing
+        {
+            public static void KillExplosion(QuakeEnemy e)
+            {
+                GeneralManager.FunnyExplosion(new()
+                {
+                    is3d = true,
+                    playSound = false,
+                    position = e.Center,
+                    scale = 0.75f
+                });
+            }
+            public static void ProcessHit(QuakeEnemy e, IQuakeHitable.HitPacket packet, Action<QuakeEnemy> extras = null)
+            {
+                float processed = packet.Damage.Multiply(QuakeSession.IsQuadDamage ? 9f : 1f);
+                float damageTaken = processed.Clamp(0f, e.CurrentHealth);
+                e.CurrentHealth -= damageTaken;
+                if (damageTaken > 0f)
+                {
+                    e.Action_DamageAlert(packet);
+                    e.Action_Alert_OthersWithRange(AliveEnemies, packet, 10f);
+                }
+                if (e.CurrentHealth < 0f + Mathf.Epsilon && e.IsAlive)
+                {
+                    e.Kill(extras);
+                }
+            }
+        }
         [SerializeField] ParticleSystem killParticleTemplate;
         protected void TriggerKillParticle()
         {
@@ -50,7 +78,7 @@ namespace FumoQuake
         #endregion
         #region Vision
         [SerializeField] RinRaycast scan;
-        [SerializeField] RinRaycast friendScan;
+        [SerializeField] RinRaycast alertFriends;
         public Vector3 Center => box.bounds.center;
         public Ray TargetRay(Vector3 other) => new()
         {
@@ -64,6 +92,18 @@ namespace FumoQuake
                 return false;
             }
             return Action_AlertAndLockTarget(AliveEnemies, packet.Sender);
+        }
+        public bool Action_Alert_OthersWithRange(IEnumerable<QuakeEnemy> others, IQuakeHitable.HitPacket packet, float range)
+        {
+            bool changed = false;
+            if (packet.Sender == null)
+                return false;
+            foreach (var item in others.Where(x => x.CurrentPosition.SquareDistanceToLessThan(this.CurrentPosition, range)))
+            {
+                changed = true;
+                item.Action_LockTarget(packet.Sender, 5f);
+            }
+            return changed;
         }
         public bool Action_AlertAndLockTarget(IEnumerable<QuakeEnemy> others, ITargetting target)
         {
@@ -79,7 +119,7 @@ namespace FumoQuake
                     direction = (item.box.bounds.center - box.bounds.center).ScaleToMagnitude(distance),
                     origin = box.bounds.center
                 };
-                if (Physics.Raycast(r, out RaycastHit hit, distance, friendScan.mask))
+                if (Physics.Raycast(r, out RaycastHit hit, distance, alertFriends.mask))
                 {
                     QuakeEnemy other = hit.collider.GetComponentInParent<QuakeEnemy>();
                     if (other != null)
@@ -100,7 +140,7 @@ namespace FumoQuake
         {
             if (target == null)
                 return false;
-            return CanSee(target.RandomOrderedTargets.OrderByRandom().FirstOrDefault().position, scan.distance, out ITargetting result) && result != null;
+            return CanSee(target.Center, scan.distance, out ITargetting result) && result != null;
         }
         public bool CanSee<T>(Vector3 target, float distance, out T other)
         {
@@ -109,7 +149,7 @@ namespace FumoQuake
                 return false;
             Vector3 center = box.bounds.center;
             Ray r = new(center, (target - center).ScaleToMagnitude(scan.distance));
-            if (Physics.Raycast(r, out RaycastHit hit, distance, scan.mask))
+            if (Physics.Raycast(r, out RaycastHit hit, distance, scan.mask, QueryTriggerInteraction.Ignore))
             {
                 other = hit.collider.GetComponentInParent<T>();
                 Debug.DrawLine(r.origin, hit.point, other != null ? ColorHelper.PastelGreen : ColorHelper.PastelRed, 0.5f);
@@ -208,7 +248,7 @@ namespace FumoQuake
         #endregion
         #region Alive Enemies Lookup
         static HashSet<QuakeEnemy> aliveEnemiesLookup;
-        IEnumerable<QuakeEnemy> AliveEnemies
+        public static IEnumerable<QuakeEnemy> AliveEnemies
         {
             get
             {
@@ -250,10 +290,10 @@ namespace FumoQuake
             }
         }
         public static Action<QuakeEnemy> WhenEnemyKilled;
-        public void Kill(Action extras = null)
+        public void Kill(Action<QuakeEnemy> extras = null)
         {
             IsAlive = false;
-            extras?.Invoke();
+            extras?.Invoke(this);
             TriggerQDT(this);
             TriggerKillParticle();
             Destroy(gameObject);
@@ -326,6 +366,16 @@ namespace FumoQuake
         public Vector3 CurrentPosition => transform.position;
 
         public GameObject unitGameObject => gameObject;
+
+        public bool TargetActive => IsAlive;
+
+        public IEnumerable<Transform> RandomOrderedTargets
+        {
+            get
+            {
+                yield return transform;
+            }
+        }
 
         protected abstract void WhenThink(ITargetting target, IFumoUnit targetUnit, float dt);
         protected void Pathing(ref float pathTick, Action<IFumoUnit> a, IFumoUnit target)

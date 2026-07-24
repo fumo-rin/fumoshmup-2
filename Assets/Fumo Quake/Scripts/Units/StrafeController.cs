@@ -58,7 +58,7 @@ namespace FumoQuake
         {
             if (target == null || !target.TargetActive) return false;
 
-            Vector3 targetPos = target.FirstTargetPosition;
+            Vector3 targetPos = target.Center;
             Vector3 toTarget = (targetPos - origin.position).Y(0f);
             float distance = toTarget.magnitude;
 

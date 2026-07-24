@@ -15,5 +15,11 @@ MonoBehaviour:
   bootstrapperScene:
     sceneAsset: {fileID: 102900000, guid: e75c699d11223c94b8e0f3d9d79d65ab, type: 3}
     scenePath: Assets/Fumo Quake/Scenes/Quake/Main/Bootstrapper.unity
+  unloadPreventionScene:
+    sceneAsset: {fileID: 102900000, guid: e38101d94b9df614399b7cf48d4f256a, type: 3}
+    scenePath: Assets/Fumo Quake/Scenes/Quake/Quake Event System Bootstrapper.unity
+  editorStartingScene: {fileID: 11400000, guid: 1d5053d31d0cd634b986de274eb561ef, type: 2}
+  buildStartingScene: {fileID: 11400000, guid: e9c99deb955ffb447bed46abfe484e4b, type: 2}
+  loadStartingSceneInBuild: 1
   scenePairSOFolders:
   - {fileID: 102900000, guid: 1a4c6cfa619e1e045bf002453058524f, type: 3}

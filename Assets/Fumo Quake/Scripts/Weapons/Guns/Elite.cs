@@ -22,7 +22,7 @@ namespace FumoQuake
             }
             public Data ring;
             public override bool IsProjectileWeapon => true;
-            public void Shoot(WeaponsController runner, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
+            public void Shoot(WeaponsController runner, ITargetting sender, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
             {
                 float totalSequenceDuration = 4f * 0.5f;
                 weaponLock.Stall(totalSequenceDuration + WeaponShootLockTime);
@@ -50,7 +50,7 @@ namespace FumoQuake
                                 Faction = OwnerFaction,
                                 Origin = rClone.origin + unitOffset,
                                 Speed = ring.projectileSpeed
-                            }, out QuakeProjectile p);
+                            }, sender, out QuakeProjectile p);
 
                             if (p != null)
                             {
