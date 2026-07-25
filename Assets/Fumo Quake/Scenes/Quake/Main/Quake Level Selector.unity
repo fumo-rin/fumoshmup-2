@@ -398,6 +398,7 @@ MonoBehaviour:
       HighScore: 0
       ScoreDivisor: 100
     LevelSequence: []
+    AllowShotgunStarting: 0
     submitScore: 0
     currentLevelIndex: 0
   levelName: {fileID: 1601311302}
@@ -763,7 +764,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b96a453ce472fcb41af9b8e963cc15ce, type: 2}
   - {fileID: 11400000, guid: 85b89b8fb49a906448c005badd0fbd2c, type: 2}
   - {fileID: 11400000, guid: c802fafc92a6c4f4eac6cb8fd9177f3e, type: 2}
+  editorCollection:
   - {fileID: 11400000, guid: be1b1abb415a68542b0bf0c24183a2f8, type: 2}
+  - {fileID: 11400000, guid: aed432e44f8c2af40989a02b96fc1c55, type: 2}
   template: {fileID: 45596797}
 --- !u!4 &1113518237
 Transform:

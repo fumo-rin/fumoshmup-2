@@ -12,6 +12,15 @@ EditorBuildSettings:
     path: Assets/Fumo Quake/Scenes/Quake/Quake Event System Bootstrapper.unity
     guid: e38101d94b9df614399b7cf48d4f256a
   - enabled: 1
+    path: Assets/Fumo Quake/Scenes/Quake/Main/Quake main Menu.unity
+    guid: f6077efe5f8f2cf469972b2823f8efbc
+  - enabled: 1
+    path: Assets/Fumo Quake/Scenes/Quake/Main/Quake UI Background.unity
+    guid: 3841338a6e565194e928094cd64a6d9e
+  - enabled: 1
+    path: Assets/Fumo Quake/Scenes/Quake/Main/Quake Cutscene.unity
+    guid: 509711b6d19967541b89b49a8c1a4808
+  - enabled: 1
     path: Assets/Fumo Quake/Scenes/Quake/Test Quake World.unity
     guid: eafd6e59a333b6b418784517c1eaa4f6
   - enabled: 1
@@ -27,17 +36,8 @@ EditorBuildSettings:
     path: Assets/Fumo Quake/Scenes/Quake/Yuri Forest.unity
     guid: 18e4cfa202427c240ab324d96a8092fc
   - enabled: 1
-    path: Assets/Fumo Quake/Scenes/Quake/Main/Quake Cutscene.unity
-    guid: 509711b6d19967541b89b49a8c1a4808
-  - enabled: 1
-    path: Assets/Fumo Quake/Scenes/Quake/Main/Quake UI Background.unity
-    guid: 3841338a6e565194e928094cd64a6d9e
-  - enabled: 1
     path: Assets/Fumo Quake/Scenes/Quake/Main/Quake Level Selector.unity
     guid: 85b93bc33b50c5a47b60ce23fb99c97c
-  - enabled: 1
-    path: Assets/Fumo Quake/Scenes/Quake/Main/Quake main Menu.unity
-    guid: f6077efe5f8f2cf469972b2823f8efbc
   - enabled: 1
     path: Assets/Fumo Quake/Scenes/Quake/Main/Quake Rebinds.unity
     guid: e92e84e3fe6902a4a939c6a3b604a5c0
@@ -47,6 +47,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Fumo Quake/Scenes/Quake/Testing/LOS TESTING.unity
     guid: 27807274f37e7b34d9ac21e216189a6e
+  - enabled: 1
+    path: Assets/Fumo Quake/Scenes/Quake/Testing/Trenchbroomish Testing.unity
+    guid: 48bfe435bcf8ef14dbd848ab04fa9df3
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 110e20d7a6ff8ca4b8458fb1fd21f51c, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: 6f979259336e6f24eb17e5e584e7477e, type: 2}

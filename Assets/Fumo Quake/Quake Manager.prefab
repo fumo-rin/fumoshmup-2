@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1721708839
+  GlobalObjectIdHash: 4148535569
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -454,9 +454,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 210b2b9d9248b03429b22eb1e9e33dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: rinCore::rinCore.AudioEngine
-  effectsMixers: []
-  musicMixers: []
-  dialogueMixers: []
+  effectsMixers:
+  - {fileID: 24100000, guid: 2dceb49b28515464b8f65118788082ba, type: 2}
+  - {fileID: 24100000, guid: 2d90163c4095a0a4283cc9766c8294e4, type: 2}
+  musicMixers:
+  - {fileID: 24100000, guid: 5f8d0f335fbb734499fb150c4540d641, type: 2}
+  dialogueMixers:
+  - {fileID: 24100000, guid: e930f3c98e575b74ba8fef009ffbc228, type: 2}
   Source3DSingle: {fileID: 9090212008379670610}
   Source2DSingle: {fileID: 8229709369203078601}
   Source2DSingleNondirectional: {fileID: 7310151143046109300}
@@ -616,6 +620,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7506070606526648821, guid: 0d38c0719d3b9824f8b6fa4fed5f161e, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 4143214190847053575, guid: 2d90163c4095a0a4283cc9766c8294e4, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -686,7 +694,7 @@ PrefabInstance:
     - target: {fileID: 7506070606526648821, guid: 0d38c0719d3b9824f8b6fa4fed5f161e, type: 3}
       propertyPath: OutputAudioMixerGroup
       value: 
-      objectReference: {fileID: 24300002, guid: 2dceb49b28515464b8f65118788082ba, type: 2}
+      objectReference: {fileID: -8199990896432811559, guid: 2dceb49b28515464b8f65118788082ba, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -724,7 +732,7 @@ PrefabInstance:
     - target: {fileID: 4452224936972483695, guid: f897197c2246dcd48bb3804024512c6b, type: 3}
       propertyPath: OutputAudioMixerGroup
       value: 
-      objectReference: {fileID: 24300002, guid: 2d90163c4095a0a4283cc9766c8294e4, type: 2}
+      objectReference: {fileID: 4143214190847053575, guid: 2d90163c4095a0a4283cc9766c8294e4, type: 2}
     - target: {fileID: 4452224936972483695, guid: f897197c2246dcd48bb3804024512c6b, type: 3}
       propertyPath: rolloffCustomCurve.m_Curve.Array.size
       value: 5
@@ -927,7 +935,7 @@ PrefabInstance:
     - target: {fileID: 4452224936972483695, guid: f897197c2246dcd48bb3804024512c6b, type: 3}
       propertyPath: OutputAudioMixerGroup
       value: 
-      objectReference: {fileID: 24300002, guid: 2d90163c4095a0a4283cc9766c8294e4, type: 2}
+      objectReference: {fileID: 4143214190847053575, guid: 2d90163c4095a0a4283cc9766c8294e4, type: 2}
     - target: {fileID: 4452224936972483695, guid: f897197c2246dcd48bb3804024512c6b, type: 3}
       propertyPath: spreadCustomCurve.m_Curve.Array.size
       value: 1
@@ -1140,7 +1148,7 @@ PrefabInstance:
     - target: {fileID: 4452224936972483695, guid: f897197c2246dcd48bb3804024512c6b, type: 3}
       propertyPath: OutputAudioMixerGroup
       value: 
-      objectReference: {fileID: 24300002, guid: 2dceb49b28515464b8f65118788082ba, type: 2}
+      objectReference: {fileID: -8199990896432811559, guid: 2dceb49b28515464b8f65118788082ba, type: 2}
     - target: {fileID: 4452224936972483695, guid: f897197c2246dcd48bb3804024512c6b, type: 3}
       propertyPath: rolloffCustomCurve.m_Curve.Array.size
       value: 3

@@ -53,8 +53,8 @@
             "e551bb900f4c1a940934a305335490b5"
         ],
         "_values": [
-            7,
-            1,
+            10,
+            2,
             20,
             65,
             20,
@@ -87,7 +87,7 @@
         "_viewList": false,
         "_showTabsInMultipleRows": false,
         "_iconSize": 64,
-        "_selectedPaletteId": -8584172960077427374
+        "_selectedPaletteId": -8584172959803082687
     },
     "_floorManager": {
         "_profileKeys": [
@@ -3912,7 +3912,7 @@
             "_origin": {
                 "x": -43.0099983215332,
                 "y": 2.009999990463257,
-                "z": -17.47567367553711
+                "z": -37.57386016845703
             },
             "_rotation": {
                 "x": 0.0,

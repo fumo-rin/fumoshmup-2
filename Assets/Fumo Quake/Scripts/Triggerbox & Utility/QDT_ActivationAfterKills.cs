@@ -10,6 +10,7 @@ namespace FumoQuake
         public Color LabelColor => ColorHelper.PastelOrange.Opacity(50);
         [SerializeField] List<Transform> activationNests = new();
         [SerializeField] List<QuakeEnemy> killRequirement = new();
+        [SerializeField] string activationMessage;
         HashSet<QuakeEnemy> liveList = new();
         private void Awake()
         {
@@ -42,6 +43,10 @@ namespace FumoQuake
                     continue;
                 }
                 item.gameObject.SetActive(true);
+            }
+            if (!string.IsNullOrEmpty(activationMessage))
+            {
+                QuakeTextInfoUI.AddText(activationMessage);
             }
         }
     }

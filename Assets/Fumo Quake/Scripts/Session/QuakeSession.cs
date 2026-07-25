@@ -1,5 +1,3 @@
-using NUnit.Framework;
-using PlasticGui;
 using rinCore;
 using System;
 using System.Collections.Generic;
@@ -16,13 +14,14 @@ namespace FumoQuake
             if (!CurrentAs(out QuakeSession ses) || ses.levelItems == null) return false;
 
             bool hasItem = ses.levelItems.TryGetValue(item, out bool v) && v;
-            bool warned = !ses.ItemWarnTime.TryGetValue(item, out float warnTime) || Time.time > warnTime + 3f;
+            bool isOnCooldown = ses.ItemWarnTime.TryGetValue(item, out float warnTime) && Time.time <= warnTime + 3f;
 
-            if (!hasItem && !warned)
+            if (!hasItem && !isOnCooldown)
             {
                 QuakeTextInfoUI.AddText("Needs that " + item.ToSpacedString().Humanize());
                 ses.ItemWarnTime[item] = Time.time;
             }
+
             return hasItem;
         }
 

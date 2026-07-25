@@ -15,8 +15,16 @@ namespace FumoQuake
         {
             GameSession.StartSession(session);
         }
-        public void SetLevel(rinCore.ScenePairSO pair)
+        public struct settings
         {
+            public Color32 color;
+        }
+        public void SetLevel(rinCore.ScenePairSO pair, settings? settings = null)
+        {
+            settings s = settings ?? new()
+            {
+                color = ColorHelper.White
+            };
             session.LevelSequence = new()
             {
                 pair
@@ -29,7 +37,7 @@ namespace FumoQuake
                 PreserveBrackets = false,
                 RemoveSpaces = false,
                 SpaceByCapitals = false
-            }).ReplaceLineBreaks("#");
+            }).ReplaceLineBreaks("#").Color(s.color);
         }
     }
 }
