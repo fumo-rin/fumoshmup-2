@@ -44,7 +44,7 @@ namespace FumoQuake
                 }
                 return false;
             }
-            QuakeTextInfoUI.AddText("You Gots " + (item is IQuakeTextName n ? n.TextName : "Item"));
+            QuakeTextInfoUI.AddText("You Gots the " + (item is IQuakeTextName n ? n.TextName : "Item"));
             item.IsLocked = false;
             return true;
         }
@@ -61,7 +61,7 @@ namespace FumoQuake
 
                 bool pickup = delta >= 1;
                 if (pickup)
-                    QuakeTextInfoUI.AddText("You Gots the " + delta.ToString("F0") + " " + (item is IQuakeTextName n2 ? n2.TextName + " ammo" : "Item"));
+                    QuakeTextInfoUI.AddText("You Gots " + delta.ToString("F0") + " " + (item is IQuakeTextName n2 ? n2.TextName + " ammo" : "Item"));
                 return pickup;
             }
             return false;
