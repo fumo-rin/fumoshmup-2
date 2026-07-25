@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56a2e8f152cdd254ea1b3f5896d1546e, type: 3}
   m_Name: Quake_Golden Ticket Key
   m_EditorClassIdentifier: rinCore::RinCore.ACWrapper
-  SoundName: Shot 2
+  SoundName: Golden Key
   soundVolume: 1
   <soundClips>k__BackingField:
   - clip: {fileID: 8300000, guid: ef21ab109f3f70948bd76cbd87b208de, type: 3}
@@ -20,8 +20,8 @@ MonoBehaviour:
     PitchOrigin: 1
     Volume: 1
     Muted: 0
-  <soundMode>k__BackingField: 31
+  <soundMode>k__BackingField: 21
   <singleRepeatLockoutTime>k__BackingField: 0.001
-  <Is3D>k__BackingField: 1
+  <Is3D>k__BackingField: 0
   IsNetworked: 0
   <NetworkID>k__BackingField: 0
