@@ -25,10 +25,18 @@ namespace FumoQuake
         {
             public Transform writer, reader;
         }
-        [SerializeField]
-        List<GameObject> detachedObjects = new();
-        [SerializeField]
-        List<followItem> followItems = new();
+        [SerializeField] List<GameObject> detachedObjects = new();
+        [SerializeField] List<GameObject> stateObjects = new();
+        [SerializeField] List<followItem> followItems = new();
+        void StateItemsFrame(bool state)
+        {
+            foreach (var item in stateObjects)
+            {
+                if (item == null)
+                    continue;
+                item.SetActive(state);
+            }
+        }
         void StartFollowItems()
         {
             foreach (var item in detachedObjects)
@@ -220,11 +228,6 @@ namespace FumoQuake
 
         public bool TargetActive => IsAlive;
 
-        private void OnEnable()
-        {
-            IFumoUnit.Player = this;
-            QuakeProjectileRenderer.Observer = transform;
-        }
         private void Update()
         {
             if (GeneralManager.IsPaused || SceneLoader.IsLoading)
@@ -255,10 +258,17 @@ namespace FumoQuake
                 }
             }
         }
+        private void OnEnable()
+        {
+            IFumoUnit.Player = this;
+            QuakeProjectileRenderer.Observer = transform;
+            StateItemsFrame(true);
+        }
         private void OnDisable()
         {
             ITargetting.StaticTarget = null;
             IsAlive = false;
+            StateItemsFrame(false);
         }
 
         Coroutine HitFlash;

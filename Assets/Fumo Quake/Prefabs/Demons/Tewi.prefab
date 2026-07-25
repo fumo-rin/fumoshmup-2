@@ -98,14 +98,14 @@ MonoBehaviour:
   scan:
     mask:
       serializedVersion: 2
-      m_Bits: 585
+      m_Bits: 521
     <distance>k__BackingField: 60
     TI: 1
-  friendScan:
+  alertFriends:
     mask:
       serializedVersion: 2
-      m_Bits: 833
-    <distance>k__BackingField: 60
+      m_Bits: 769
+    <distance>k__BackingField: 50
     TI: 1
   WalkingAnimator: {fileID: 72077356284108178}
   WalkingAnimStringKey: WALKVELOCITY
@@ -118,6 +118,9 @@ MonoBehaviour:
     groundMask:
       serializedVersion: 2
       m_Bits: 841
+    iceTag: Ice
+    ForcedIcePhysicsEndTime: 0
+    ForcedGroundedEndTime: 0
   navigation: {fileID: 6088834311880531775}
   boing: {fileID: 11400000, guid: 4ac843b329622d049ac9ed233f0e87d4, type: 2}
 --- !u!114 &6088834311880531775
@@ -140,7 +143,7 @@ MonoBehaviour:
     destinationTolerance: 1
     stuckThresholdDuration: 0.75
   moveSpeed: 8
-  stopBrakingSpeed: 40
+  Acceleration: 40
   autoRepath: 1
   repathDistance: 2
   repathRateLimit: 0.25

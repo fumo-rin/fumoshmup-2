@@ -99,14 +99,14 @@ MonoBehaviour:
   scan:
     mask:
       serializedVersion: 2
-      m_Bits: 585
+      m_Bits: 521
     <distance>k__BackingField: 40
     TI: 1
-  friendScan:
+  alertFriends:
     mask:
       serializedVersion: 2
-      m_Bits: 833
-    <distance>k__BackingField: 40
+      m_Bits: 769
+    <distance>k__BackingField: 50
     TI: 1
   WalkingAnimator: {fileID: 72077356284108178}
   WalkingAnimStringKey: WALKVELOCITY
@@ -121,6 +121,7 @@ MonoBehaviour:
       m_Bits: 585
     iceTag: Ice
     ForcedIcePhysicsEndTime: 0
+    ForcedGroundedEndTime: 0
   navigation: {fileID: 6088834311880531775}
 --- !u!114 &6088834311880531775
 MonoBehaviour:
@@ -206,8 +207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f347eaa6dc78b2140915a5fd0817dd23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: FumoQuake::FumoQuake.WeaponsController
-  Sender:
-    target: {fileID: 5976487000038940522}
   <CurrentWeapon>k__BackingField:
     rid: 6698477031310229633
   references:

@@ -75,7 +75,7 @@ namespace FumoQuake
 
         bool CollideWith(IFumoUnit targetUnit)
         {
-            if (target != null && target.TargetActive && targetUnit != null && Center.SquareDistanceToLessThan(targetUnit.CurrentPosition, 2f))
+            if (target != null && target.TargetActive && targetUnit != null && Center.SquareDistanceToLessThan(targetUnit.Center, 2f))
             {
                 GeneralManager.FunnyExplosion(new()
                 {
@@ -87,7 +87,7 @@ namespace FumoQuake
 
                 foreach (var item in Physics.OverlapSphere(Center, 7f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
                 {
-                    Vector3 rawDirection = item.transform.position - Center;
+                    Vector3 rawDirection = item.bounds.center - Center;
                     if (rawDirection.sqrMagnitude < 0.001f) continue;
 
                     Vector3 direction = rawDirection.normalized;

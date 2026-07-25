@@ -111,26 +111,34 @@ namespace FumoQuake
                 return false;
             Action_LockTarget(target, 5f);
             bool anyAlerted = false;
-            foreach (var item in others.Where(x => x.target == null && x.CurrentPosition.SquareDistanceToLessThan(CurrentPosition, scan.distance)))
+            foreach (var item in others.Where(x => x != this && x.target == null && x.CurrentPosition.SquareDistanceToLessThan(CurrentPosition, alertFriends.distance)))
             {
                 float distance = item.box.bounds.center.DistanceTo(box.bounds.center);
+
+                if (distance < 0.0001f)
+                    continue;
+
                 Ray r = new()
                 {
-                    direction = (item.box.bounds.center - box.bounds.center).ScaleToMagnitude(distance),
+                    direction = (item.box.bounds.center - box.bounds.center) / distance,
                     origin = box.bounds.center
                 };
-                if (Physics.Raycast(r, out RaycastHit hit, distance, alertFriends.mask))
+                if (Physics.Raycast(r, out RaycastHit hit, distance, alertFriends.mask, QueryTriggerInteraction.Ignore))
                 {
                     QuakeEnemy other = hit.collider.GetComponentInParent<QuakeEnemy>();
                     if (other != null)
                     {
+#if UNITY_EDITOR
                         Debug.DrawLine(r.origin, hit.point, ColorHelper.PastelCyan, 0.5f);
+#endif
                         other.Action_LockTarget(target, 5f);
                         anyAlerted = true;
                     }
                     else
                     {
+#if UNITY_EDITOR
                         Debug.DrawLine(r.origin, hit.point, ColorHelper.Gray1, 0.5f);
+#endif
                     }
                 }
             }
@@ -152,7 +160,9 @@ namespace FumoQuake
             if (Physics.Raycast(r, out RaycastHit hit, distance, scan.mask, QueryTriggerInteraction.Ignore))
             {
                 other = hit.collider.GetComponentInParent<T>();
+#if UNITY_EDITOR
                 Debug.DrawLine(r.origin, hit.point, other != null ? ColorHelper.PastelGreen : ColorHelper.PastelRed, 0.5f);
+#endif
                 return other != null;
             }
             other = default;
@@ -385,6 +395,8 @@ namespace FumoQuake
                 return;
             }
             pathTick = (Time.time.Max(pathTick)) + 0.1f;
+            if (target == null)
+                return;
             a?.Invoke(target);
         }
         protected void Pathing(ref float pathTick, Action<QuakeEnemy, IFumoUnit> a, IFumoUnit target)
@@ -394,6 +406,8 @@ namespace FumoQuake
                 return;
             }
             pathTick = (Time.time.Max(pathTick)) + 0.1f;
+            if (target == null)
+                return;
             a?.Invoke(this, target);
         }
         void Think(IFumoUnit targetUnit, float dt)
@@ -422,7 +436,6 @@ namespace FumoQuake
                     navigation.SetNewTarget(Origin);
                 }
             }
-
             WhenThink(this.target, targetUnit, dt);
         }
         public void SnapTo(Vector3 v, Vector3? offset = null)

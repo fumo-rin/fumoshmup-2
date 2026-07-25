@@ -87,7 +87,7 @@
         "_viewList": false,
         "_showTabsInMultipleRows": false,
         "_iconSize": 64,
-        "_selectedPaletteId": -8584172960226430086
+        "_selectedPaletteId": -8584172960077427374
     },
     "_floorManager": {
         "_profileKeys": [

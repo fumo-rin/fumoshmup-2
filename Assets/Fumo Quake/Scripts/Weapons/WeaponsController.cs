@@ -4,6 +4,8 @@ using rinCore;
 using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
+using UnityEngine.UIElements;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -46,7 +48,13 @@ namespace FumoQuake
         #region Hitscan Actions
         protected void Knockback(RinRaycast cast, RaycastHit hit, float damage)
         {
-            hit.collider.AddImpactVelocity(new Impact(hit, cast.ray, damage * 0.1f));
+            float force = damage * 0.125f;
+            hit.collider.AddImpactVelocity(new Impact(hit, cast.ray, force.Clamp(0.125f, 18f)));
+        }
+        protected void SuperKnockback(RinRaycast cast, RaycastHit hit, float damage)
+        {
+            float force = damage * 0.125f;
+            hit.collider.AddImpactVelocity(new Impact(hit, cast.ray, force.Clamp(0.125f, 40f)));
         }
         protected void HitEffect(RinRaycast cast, RaycastHit hit, float damage)
         {

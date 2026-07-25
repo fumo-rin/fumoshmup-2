@@ -158,6 +158,11 @@ namespace FumoQuake
                     return true;
                 }
                 proj.HitAction?.Invoke(QuakeProjectile.HitActionResult.Terrain);
+                if (hit.collider is Collider hitCol && proj.Damage > 1f)
+                {
+                    float force = (proj.Damage * 0.125f).Clamp(0.2f, 45f);
+                    hitCol.AddImpactVelocity(new Impact(hit.point, movement, force));
+                }
                 return true;
             }
             else

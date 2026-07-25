@@ -79,7 +79,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2591075390494016364
 Transform:
   m_ObjectHideFlags: 0
@@ -183,6 +183,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: FumoQuake::FumoQuake.QuakeController
   detachedObjects:
   - {fileID: 4631322452301112383}
+  stateObjects:
+  - {fileID: 5901045338475037531}
   followItems:
   - writer: {fileID: 422096695168895918}
     reader: {fileID: 4960802815363340175}
@@ -1092,7 +1094,7 @@ MonoBehaviour:
         hitMask:
           serializedVersion: 2
           m_Bits: 897
-        hitDistance: 45
+        hitDistance: 35
         gunAmmo:
           Remaining: 20
           MaxAmmo: 100
@@ -1181,7 +1183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &690951568776660231
 Transform:
   m_ObjectHideFlags: 0

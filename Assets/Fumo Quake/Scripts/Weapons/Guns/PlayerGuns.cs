@@ -454,9 +454,9 @@ namespace FumoQuake
                 if (!data.LGSound.isPlaying) data.LGSound.Play();
                 data.LGSound.loop = true;
                 Ray r = ray;
-                Vector3 endPoint = r.origin + r.direction.ScaleToMagnitude(50f);
+                Vector3 endPoint = r.origin + r.direction.ScaleToMagnitude(35f);
                 SetNewLockTimes(ref weaponLock);
-                if (Physics.Raycast(r, out RaycastHit hit, 50f, data.hitLayer, QueryTriggerInteraction.Ignore))
+                if (Physics.Raycast(r, out RaycastHit hit, 35f, data.hitLayer, QueryTriggerInteraction.Ignore))
                 {
                     endPoint = hit.point;
                     QuakeProjectileRenderer.ProjHitEffect(hit);
@@ -474,7 +474,7 @@ namespace FumoQuake
                             priority = 50,
                         });
                     }
-                    if (hit.collider is Collider c) c.AddImpactVelocity(new Impact(hit, r, 0.35f));
+                    if (hit.collider is Collider c) c.AddImpactVelocity(new Impact(hit, r, 0.45f));
 
                 }
                 ray.origin = ray.origin + new Vector3(0f, -0.5f, 0f);
@@ -549,26 +549,25 @@ namespace FumoQuake
                 Ray r = ray;
                 Vector3 endPoint = r.origin + r.direction.ScaleToMagnitude(50f);
                 SetNewLockTimes(ref weaponLock);
-                if (Physics.Raycast(r, out RaycastHit hit, 50f, data.hitLayer, QueryTriggerInteraction.Ignore))
-                {
-                    endPoint = hit.point;
-                    QuakeProjectileRenderer.ProjHitEffect(hit);
-                    if (hit.transform.TryGetComponent(out IQuakeHitable hitable))
-                    {
-                        hitable.Hit(new(sender)
-                        {
-                            Damage = data.ShotDamage,
-                            HitPoint = hit.point,
-                        });
 
-                        Mugshot.SetMood(new Mugshot.MoodEntry(1.65f)
+                if (new RinRaycast(r, data.hitLayer, 50f, QueryTriggerInteraction.Ignore)
+                    .With(HitEffect)
+                    .With(SuperKnockback)
+                    .Cast(out RaycastHit hit, out IQuakeHitable hitable, data.ShotDamage, true))
+                {
+                    if (IFumoUnit.Player.unitGameObject is GameObject g && hitable.hitGameObject != g)
+                    {
+                        Mugshot.SetMood(new(1.65f)
                         {
                             mood = Mugshot.Mood.Excited,
                             priority = 50,
                         });
                     }
-                    if (hit.collider is Collider c) c.AddImpactVelocity(new Impact(hit, r, 13));
-
+                    hitable.Hit(new(sender)
+                    {
+                        Damage = data.ShotDamage,
+                        HitPoint = hit.point,
+                    });
                 }
                 ray.origin = ray.origin + new Vector3(0f, -0.5f, 0f);
                 IEnumerable<Vector3> line = RinHelper.RayChop.Chop(ray, 0.4f, 75f);

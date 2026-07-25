@@ -170,11 +170,11 @@ MonoBehaviour:
       m_Bits: 585
     <distance>k__BackingField: 999
     TI: 1
-  friendScan:
+  alertFriends:
     mask:
       serializedVersion: 2
-      m_Bits: 833
-    <distance>k__BackingField: 20
+      m_Bits: 769
+    <distance>k__BackingField: 50
     TI: 1
   WalkingAnimator: {fileID: 72077356284108178}
   WalkingAnimStringKey: WALKVELOCITY
@@ -187,6 +187,9 @@ MonoBehaviour:
     groundMask:
       serializedVersion: 2
       m_Bits: 0
+    iceTag: Ice
+    ForcedIcePhysicsEndTime: 0
+    ForcedGroundedEndTime: 0
   navigation: {fileID: 6088834311880531775}
   strafeSystem:
     profiles:
@@ -225,7 +228,7 @@ MonoBehaviour:
     destinationTolerance: 1
     stuckThresholdDuration: 0.75
   moveSpeed: 6.5
-  stopBrakingSpeed: 40
+  Acceleration: 40
   autoRepath: 1
   repathDistance: 2
   repathRateLimit: 0.25
