@@ -84,5 +84,63 @@ namespace FumoQuake
                 };
             }
         }
+
+        [System.Serializable]
+        public class ForkedLineGun : BaseGun, IQuakeShooter
+        {
+            [System.Serializable]
+            public struct data
+            {
+                public int projectileIndex;
+                public int pellets;
+                [Range(2, 15)]
+                public int ForkCount;
+                public float ForkAngle;
+                [SerializeField] List<float> pelletRandomDamage;
+                public float baseProjectileSpeed;
+                public float maxProjectileSpeed;
+                public float RandomDamage => pelletRandomDamage.RandomResult() is float f && f > 0f ? f : 10f;
+            }
+            public data linegun;
+            public override bool IsProjectileWeapon => true;
+            public void Shoot(WeaponsController runner, ITargetting sender, ref IQuakeShooter.WeaponLock weaponLock, Ray ray)
+            {
+                float diffProjectileSpeed = (linegun.maxProjectileSpeed - linegun.baseProjectileSpeed) / linegun.pellets;
+                GunSound.Play(ray.origin);
+                Ray r = RinHelper.RayDot(ray, 0.00f);
+                int count = linegun.ForkCount;
+                for (int i = 0; i < linegun.pellets.Max(1); i++)
+                {
+                    for (int j = 0; j < linegun.ForkCount.Max(1); j++)
+                    {
+                        float lerp01 = count > 1 ? (float)j / (count - 1) : 0.5f;
+                        Ray clone = r.RotateRelative(0f, lerp01.MapFrom01(linegun.ForkAngle * -0.5f, linegun.ForkAngle * 0.5f), 0f);
+                        QuakeProjectile.CreateProjectile(new() { Direction = clone.direction, Faction = OwnerFaction, Origin = clone.origin, Speed = linegun.baseProjectileSpeed + i * diffProjectileSpeed },
+                            sender, out QuakeProjectile p);
+
+                        if (p != null)
+                        {
+                            p.Channel = linegun.projectileIndex;
+                            p.Damage = linegun.RandomDamage;
+                        }
+                    }
+                }
+                SetNewLockTimes(ref weaponLock);
+            }
+
+            public override BaseGun Clone()
+            {
+                return new ForkedLineGun()
+                {
+                    GunSound = GunSound,
+                    WeaponShootLockTime = WeaponShootLockTime,
+                    IsLocked = IsLocked,
+                    optionalIconUI = optionalIconUI,
+                    OwnerFaction = OwnerFaction,
+                    linegun = linegun,
+                    WeaponShootSwapLockDuration = WeaponShootSwapLockDuration,
+                };
+            }
+        }
     }
 }

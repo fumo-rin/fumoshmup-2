@@ -15,5 +15,5 @@ MonoBehaviour:
   bpm: 120
   TrackName: TOUHOU DEALER
   musicClip: {fileID: 8300000, guid: e7a7c2c303191534ba72a1202fb9c8f1, type: 3}
-  clipVolume: 1
+  clipVolume: 0.8
   <dontReplaceSelf>k__BackingField: 1

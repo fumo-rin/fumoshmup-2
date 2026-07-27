@@ -13,8 +13,18 @@ namespace FumoQuake
     {
         public bool TryStrafe(ref Vector3 velocity, ITargetting target);
     }
+    public interface IHealthState
+    {
+        public float HealthState_CurrentHealth { get; }
+        public float HealthState_MaxHealth { get; }
+        public float HealthState_CurrentHealthOfMaxHealth01 =>
+            HealthState_MaxHealth <= 0f
+                ? 0f
+                : Mathf.Clamp01(HealthState_CurrentHealth / Mathf.Max(1f, HealthState_MaxHealth));
+        public float HealthState_OfMaxHealth(float percent) => HealthState_MaxHealth * (percent / 100f);
+    }
     [SelectionBase]
-    public abstract class QuakeEnemy : MonoBehaviour, IFumoUnit, ITargetting
+    public abstract class QuakeEnemy : MonoBehaviour, IFumoUnit, ITargetting, IHealthState
     {
         protected static class HitProcessing
         {
@@ -44,7 +54,10 @@ namespace FumoQuake
                 }
             }
         }
+        #region Particle Death
         [SerializeField] ParticleSystem killParticleTemplate;
+        [SerializeField] ParticleSystem partsParticleTemplate;
+        [SerializeField] int partsCount = 4;
         protected void TriggerKillParticle()
         {
             if (killParticleTemplate != null)
@@ -53,8 +66,22 @@ namespace FumoQuake
                 var item = Instantiate(killParticleTemplate, pos, Quaternion.identity);
                 item.Play();
                 Destroy(item.gameObject, 1f);
+
+                if (partsParticleTemplate != null && partsCount > 0)
+                {
+                    var parts = Instantiate(partsParticleTemplate, pos, Quaternion.identity);
+                    var tsa = parts.textureSheetAnimation;
+                    if (tsa.enabled)
+                    {
+                        tsa.startFrame = new ParticleSystem.MinMaxCurve(0f, 1f);
+                    }
+                    parts.Emit(partsCount);
+
+                    Destroy(parts.gameObject, 2f);
+                }
             }
         }
+        #endregion
         #region Targetting
         Coroutine loseTarget;
         public void Action_LockTarget(ITargetting newTarget, float duration)
@@ -310,6 +337,66 @@ namespace FumoQuake
             WhenEnemyKilled?.Invoke(this);
         }
         #endregion
+        #region Tewi Explosion
+        protected bool Tewi_TryCollideWith(IFumoUnit targetUnit, bool? conditionOverride = null)
+        {
+            bool condition = conditionOverride ??
+                target != null && target.TargetActive && targetUnit != null && Center.SquareDistanceToLessThan(targetUnit.Center, 2f);
+
+            if (condition)
+            {
+                GeneralManager.FunnyExplosion(new()
+                {
+                    is3d = true,
+                    playSound = true,
+                    position = Center,
+                    scale = 2.5f
+                });
+
+                float explosionRadius = 7f;
+
+                foreach (var item in Physics.OverlapSphere(Center, explosionRadius, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
+                {
+                    Vector3 rawDirection = item.bounds.center - Center;
+                    if (rawDirection.sqrMagnitude < 0.001f) continue;
+
+                    Vector3 direction = rawDirection.normalized;
+                    Ray explosiveRay = new Ray(Center, direction);
+
+                    if (Physics.Raycast(explosiveRay, out RaycastHit damageHit, 5f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
+                    {
+                        if (damageHit.transform.TryGetComponent(out IQuakeHitable hitable) && hitable.IsPlayer)
+                        {
+                            float distanceToHit = (damageHit.point - Center).magnitude;
+                            float damagePercent = Mathf.Clamp01(distanceToHit / 5f);
+                            float baseDamage = Mathf.Lerp(60f, 20f, damagePercent);
+
+                            hitable.Hit(new()
+                            {
+                                Damage = baseDamage.Multiply(RNG.FloatRange(0.5f, 1f)),
+                                HitPoint = damageHit.point,
+                                Sender = this,
+                            });
+                        }
+                    }
+
+                    if (Physics.Raycast(explosiveRay, out RaycastHit launchHit, explosionRadius, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
+                    {
+                        float launchDistance = (launchHit.point - Center).magnitude;
+                        float launchPercent = Mathf.Clamp01(launchDistance / explosionRadius);
+                        float calculatedForce = Mathf.Lerp(25f, 9f, launchPercent);
+
+                        launchHit.collider.AddImpactVelocity(new Impact(launchHit, explosiveRay, calculatedForce));
+                    }
+                }
+
+                IsAlive = false;
+                Destroy(gameObject);
+                return true;
+            }
+            return false;
+        }
+        #endregion
         [SerializeField] protected BoxCollider box;
         public BoxCollider UnitCollider => box;
         public Rigidbody UnitRB => navigation.rb;
@@ -331,25 +418,38 @@ namespace FumoQuake
             {
                 RandomAttackTime = gun.RandomAggressionTimeAfterLock(0.6f, 1.25f);
             }
-            WhenStart();
             StartingHealth = CurrentHealth;
+            WhenStart();
         }
         protected abstract void WhenStart();
         private void OnEnable()
         {
-            WhenEnable();
             MaintainAlive(this, true);
             SpawnTime = Time.time;
+            groundKillTime = Time.time + 5f;
+            WhenEnable();
         }
         protected abstract void WhenEnable();
         private void OnDisable()
         {
-            WhenDisable();
             MaintainAlive(this, false);
+            WhenDisable();
         }
         protected abstract void WhenDisable();
+        float groundKillTime;
         private void Update()
         {
+            if (grounded.IsGrounded)
+            {
+                groundKillTime = Time.time + 5f;
+            }
+            else
+            {
+                if (Time.time >= groundKillTime)
+                {
+                    Kill();
+                }
+            }
             if (GeneralManager.IsPaused || SceneLoader.IsLoading)
                 return;
             IFumoUnit targetUnit = IFumoUnit.Player;
@@ -386,6 +486,9 @@ namespace FumoQuake
                 yield return transform;
             }
         }
+
+        public float HealthState_CurrentHealth => CurrentHealth;
+        public float HealthState_MaxHealth => StartingHealth;
 
         protected abstract void WhenThink(ITargetting target, IFumoUnit targetUnit, float dt);
         protected void Pathing(ref float pathTick, Action<IFumoUnit> a, IFumoUnit target)

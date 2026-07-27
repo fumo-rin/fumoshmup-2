@@ -15,5 +15,5 @@ MonoBehaviour:
   bpm: 192
   TrackName: wrath (evil)
   musicClip: {fileID: 8300000, guid: b3bf677f74748f046b911bc9108c235b, type: 3}
-  clipVolume: 1
+  clipVolume: 0.8
   <dontReplaceSelf>k__BackingField: 1

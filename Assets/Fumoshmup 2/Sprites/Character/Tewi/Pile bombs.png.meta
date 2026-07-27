@@ -45,7 +45,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -131,6 +131,94 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Pile bombs_1
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 98
+        width: 33
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4e26ae59af542c469e1e4717aabf8b3
+      internalID: -1368826980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pile bombs_2
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 110
+        width: 30
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cfaa88a0492c1946964619af3da32d1
+      internalID: -1445663286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pile bombs_3
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 110
+        width: 42
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bcd2eaa144921a4dad0673992d2dd1d
+      internalID: 1234707018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pile bombs_4
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 57
+        width: 21
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 447fb062bfe71f54eb0d8b3618fab220
+      internalID: 32910168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -146,6 +234,10 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Pile bombs_0: -1738488078
+      Pile bombs_1: -1368826980
+      Pile bombs_2: -1445663286
+      Pile bombs_3: 1234707018
+      Pile bombs_4: 32910168
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

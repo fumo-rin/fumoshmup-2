@@ -1109,7 +1109,7 @@ MonoBehaviour:
         IsLocked: 1
         data:
           projectileIndex: 0
-          pelletDamage: 15
+          pelletDamage: 20
         gunAmmo:
           Remaining: 80
           MaxAmmo: 200

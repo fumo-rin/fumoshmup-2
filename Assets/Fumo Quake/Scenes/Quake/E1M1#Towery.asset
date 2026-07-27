@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89470abe1f8faed45aee038125f67f9d, type: 3}
   m_Name: E1M1#Towery
   m_EditorClassIdentifier: rinCore::rinCore.ScenePairSO
+  IncludeInBuild: 1
   mainScene:
     sceneAsset: {fileID: 102900000, guid: 6e9706b2635d4a04e862e76e0b2d1808, type: 3}
     scenePath: Assets/Fumo Quake/Scenes/Quake/ToweryQuake.unity

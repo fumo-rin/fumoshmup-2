@@ -15,5 +15,5 @@ MonoBehaviour:
   bpm: 120
   TrackName: shit dealer
   musicClip: {fileID: 8300000, guid: aa71016d47783a74eae330a4f228503f, type: 3}
-  clipVolume: 1
+  clipVolume: 0.8
   <dontReplaceSelf>k__BackingField: 1

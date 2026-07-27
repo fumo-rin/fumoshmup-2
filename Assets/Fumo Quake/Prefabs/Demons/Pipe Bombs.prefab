@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &91716029027536087
+--- !u!1 &2847318017638998025
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,65 +8,89 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4103292760994615506}
-  - component: {fileID: 599691696026125544}
+  - component: {fileID: 8961788348705322533}
+  - component: {fileID: 4524996800306711077}
   m_Layer: 8
-  m_Name: Rifle
+  m_Name: Bombaaaaa
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4103292760994615506
+--- !u!4 &8961788348705322533
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 91716029027536087}
+  m_GameObject: {fileID: 2847318017638998025}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.591, z: -0.258}
+  m_LocalScale: {x: 0.6155764, y: 0.6155764, z: 1.5389409}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5291885350590689793}
+  m_Father: {fileID: 5588142596043676485}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &599691696026125544
-MonoBehaviour:
+--- !u!212 &4524996800306711077
+SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 91716029027536087}
+  m_GameObject: {fileID: 2847318017638998025}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f347eaa6dc78b2140915a5fd0817dd23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: FumoQuake::FumoQuake.WeaponsController
-  <CurrentWeapon>k__BackingField:
-    rid: 4883943131371798874
-  references:
-    version: 2
-    RefIds:
-    - rid: 4883943131371798874
-      type: {class: Fodder/ProjectileLinegun, ns: FumoQuake, asm: FumoQuake}
-      data:
-        optionalIconUI: {fileID: 0}
-        GunSound: {fileID: 11400000, guid: e4f32f2c0633e6c4c8573c1e44f0a57b, type: 2}
-        <OwnerFaction>k__BackingField: 1
-        WeaponShootLockTime: 0.4
-        WeaponShootSwapLockDuration: 0.05
-        IsLocked: 0
-        linegun:
-          projectileIndex: 2
-          pellets: 3
-          pelletRandomDamage:
-          - 8
-          - 10
-          - 12
-          baseProjectileSpeed: 17
-          maxProjectileSpeed: 20
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 129
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 2990ab5081df3d04ca70b92b711f7b8c, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: -1738488078, guid: 537f46be068543c4299ae2d31f661923, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
 --- !u!1 &6140939398317147282
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,7 +117,7 @@ Transform:
   m_GameObject: {fileID: 6140939398317147282}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -121,13 +145,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5291885350590689793}
-  - component: {fileID: 2496791440938911803}
+  - component: {fileID: 5205813919901612555}
   - component: {fileID: 6088834311880531775}
   - component: {fileID: 3945740244485393898}
   - component: {fileID: 8917979159809400363}
-  - component: {fileID: 8650356048947724936}
   m_Layer: 8
-  m_Name: Fairy
+  m_Name: Pipe Bombs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,10 +171,9 @@ Transform:
   m_Children:
   - {fileID: 2744720069306685460}
   - {fileID: 7390039324115394980}
-  - {fileID: 4103292760994615506}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2496791440938911803
+--- !u!114 &5205813919901612555
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -160,54 +182,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 6458174862732137157}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3566927c66a2ac46806e1a183655e68, type: 3}
+  m_Script: {fileID: 11500000, guid: 49191c484cb2be249b2121c177f379c2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: FumoQuake::FumoQuake.Fairy
+  m_EditorClassIdentifier: FumoQuake::FumoQuake.PipebombDemon
   killParticleTemplate: {fileID: 6678268137521243073}
+  partsParticleTemplate: {fileID: 1165556456202525297, guid: c316c12ac7b0065479c22faa1f0d52e2, type: 3}
+  partsCount: 4
   scan:
     mask:
       serializedVersion: 2
-      m_Bits: 585
-    <distance>k__BackingField: 999
-    TI: 1
+      m_Bits: 0
+    <distance>k__BackingField: 0
+    TI: 0
   alertFriends:
     mask:
       serializedVersion: 2
-      m_Bits: 769
-    <distance>k__BackingField: 50
-    TI: 1
+      m_Bits: 0
+    <distance>k__BackingField: 0
+    TI: 0
   WalkingAnimator: {fileID: 72077356284108178}
   WalkingAnimStringKey: WALKVELOCITY
-  gun: {fileID: 8650356048947724936}
-  CurrentHealth: 1500
+  gun: {fileID: 0}
+  CurrentHealth: 100
   lastKnownTarget: {x: 0, y: 0, z: 0}
   box: {fileID: 8917979159809400363}
   grounded:
-    box: {fileID: 0}
+    box: {fileID: 8917979159809400363}
     groundMask:
       serializedVersion: 2
-      m_Bits: 0
+      m_Bits: 841
     iceTag: Ice
     ForcedIcePhysicsEndTime: 0
     ForcedGroundedEndTime: 0
   navigation: {fileID: 6088834311880531775}
-  strafeSystem:
-    profiles:
-    - maxDistance: 6
-      strafeAngle: 30
-      flipMin: 0.3
-      flipMax: 0.7
-      wallScanDistance: 2.75
-      nextFlipTime: 0
-      currentDirectionSign: 0
-    - maxDistance: 15
-      strafeAngle: 80
-      flipMin: 1.25
-      flipMax: 2.25
-      wallScanDistance: 2.75
-      nextFlipTime: 0
-      currentDirectionSign: 0
-  gun2: {fileID: 599691696026125544}
 --- !u!114 &6088834311880531775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,42 +285,9 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 3, z: 2}
-  m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &8650356048947724936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6458174862732137157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f347eaa6dc78b2140915a5fd0817dd23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: FumoQuake::FumoQuake.WeaponsController
-  <CurrentWeapon>k__BackingField:
-    rid: 4883943131371798869
-  references:
-    version: 2
-    RefIds:
-    - rid: 4883943131371798869
-      type: {class: Elite/EliteRingFairy, ns: FumoQuake, asm: FumoQuake}
-      data:
-        optionalIconUI: {fileID: 0}
-        GunSound: {fileID: 11400000, guid: dc5879a9afc24fc48b28c28a33271566, type: 2}
-        <OwnerFaction>k__BackingField: 1
-        WeaponShootLockTime: 2
-        WeaponShootSwapLockDuration: 2
-        IsLocked: 0
-        ring:
-          projectileIndex: 2
-          pellets: 36
-          pelletRandomDamage:
-          - 15
-          - 20
-          projectileSpeed: 9
---- !u!1 &8379617592975844627
+  m_Size: {x: 1, y: 0.5, z: 1}
+  m_Center: {x: 0, y: 0.25, z: 0}
+--- !u!1 &7246698655696649836
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -321,39 +295,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7272721172207906639}
-  - component: {fileID: 326923250005984137}
-  - component: {fileID: 8857370809618886174}
-  m_Layer: 0
-  m_Name: otaku_fairy1
+  - component: {fileID: 6815955796948230306}
+  - component: {fileID: 4481954242743892503}
+  m_Layer: 8
+  m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7272721172207906639
+  m_IsActive: 0
+--- !u!4 &6815955796948230306
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8379617592975844627}
+  m_GameObject: {fileID: 7246698655696649836}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalPosition: {x: 0, y: 0.94000053, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5588142596043676485}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &326923250005984137
+--- !u!212 &4481954242743892503
 SpriteRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8379617592975844627}
+  m_GameObject: {fileID: 7246698655696649836}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -395,38 +368,16 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: a9a533d90b9eeee4580bcc9321d970b1, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 44eadacdb9746a045909f86d10120e1d, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.16470589}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.56, y: 2.56}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!95 &8857370809618886174
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8379617592975844627}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 91d2bfe685a177540afb62b5cf1c8c17, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8665431227861456238
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,7 +408,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7272721172207906639}
+  - {fileID: 6815955796948230306}
+  - {fileID: 8961788348705322533}
   m_Father: {fileID: 2744720069306685460}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &72077356284108178

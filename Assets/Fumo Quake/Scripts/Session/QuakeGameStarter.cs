@@ -1,4 +1,5 @@
 using rinCore;
+using System.Linq;
 using UnityEngine;
 
 namespace FumoQuake
@@ -11,6 +12,10 @@ namespace FumoQuake
         protected override string LeaderboardKey => session.LeaderboardKey;
         protected override void StartGamePayload()
         {
+            if (!GeneralManager.IsEditor)
+            {
+                session.LevelSequence = session.LevelSequence.Where(x => x.IncludeInBuild).ToList();
+            }
             GameSession.StartSession(session);
         }
     }

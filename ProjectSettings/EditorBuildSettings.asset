@@ -48,6 +48,9 @@ EditorBuildSettings:
     path: Assets/Fumo Quake/Scenes/Quake/Testing/LOS TESTING.unity
     guid: 27807274f37e7b34d9ac21e216189a6e
   - enabled: 1
+    path: Assets/Fumo Quake/Scenes/Quake/Testing/Tewi Arena.unity
+    guid: 6b29c2097735dc44ab1e72106d7f5e05
+  - enabled: 1
     path: Assets/Fumo Quake/Scenes/Quake/Testing/Trenchbroomish Testing.unity
     guid: 48bfe435bcf8ef14dbd848ab04fa9df3
   m_configObjects:

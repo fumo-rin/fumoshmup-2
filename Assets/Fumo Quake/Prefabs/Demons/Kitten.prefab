@@ -96,6 +96,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: FumoQuake::FumoQuake.Imp
   killParticleTemplate: {fileID: 6678268137521243073}
+  partsParticleTemplate: {fileID: 1165556456202525297, guid: f701de622afa5ac47a642e30f548a2bf, type: 3}
+  partsCount: 4
   scan:
     mask:
       serializedVersion: 2

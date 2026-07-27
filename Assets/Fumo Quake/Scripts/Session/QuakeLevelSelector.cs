@@ -21,6 +21,14 @@ namespace FumoQuake
         }
         public void SetLevel(rinCore.ScenePairSO pair, settings? settings = null)
         {
+            if (pair == null)
+            {
+                Destroy(gameObject);
+            }
+            if (!GeneralManager.IsEditor && !pair.IncludeInBuild)
+            {
+                Destroy(gameObject);
+            }
             settings s = settings ?? new()
             {
                 color = ColorHelper.White

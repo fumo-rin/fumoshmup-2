@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89470abe1f8faed45aee038125f67f9d, type: 3}
   m_Name: Trenchbroom Testing
   m_EditorClassIdentifier: rinCore::rinCore.ScenePairSO
+  IncludeInBuild: 0
   mainScene:
     sceneAsset: {fileID: 102900000, guid: 48bfe435bcf8ef14dbd848ab04fa9df3, type: 3}
     scenePath: Assets/Fumo Quake/Scenes/Quake/Testing/Trenchbroomish Testing.unity

@@ -10,7 +10,7 @@ namespace FumoQuake
         float nextJumpTime;
         float jumpDisableTimer;
         [SerializeField] ACWrapper boing;
-        public GameObject hitGameObject => gameObject != null ? gameObject : null;
+        public GameObject hitGameObject => this != null && this.IsAlive && gameObject != null ? gameObject : null;
         public new bool TargetActive => hitGameObject.activeInHierarchy;
         public new IEnumerable<Transform> RandomOrderedTargets => new List<Transform>() { transform };
         Coroutine chargeJump;
@@ -73,58 +73,6 @@ namespace FumoQuake
             lastKnownTarget = navPos;
         }
 
-        bool CollideWith(IFumoUnit targetUnit)
-        {
-            if (target != null && target.TargetActive && targetUnit != null && Center.SquareDistanceToLessThan(targetUnit.Center, 2f))
-            {
-                GeneralManager.FunnyExplosion(new()
-                {
-                    is3d = true,
-                    playSound = true,
-                    position = Center,
-                    scale = 2.5f
-                });
-
-                foreach (var item in Physics.OverlapSphere(Center, 7f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
-                {
-                    Vector3 rawDirection = item.bounds.center - Center;
-                    if (rawDirection.sqrMagnitude < 0.001f) continue;
-
-                    Vector3 direction = rawDirection.normalized;
-                    Ray explosiveRay = new Ray(Center, direction);
-
-                    if (Physics.Raycast(explosiveRay, out RaycastHit damageHit, 5f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
-                    {
-                        if (damageHit.transform.TryGetComponent(out IQuakeHitable hitable) && hitable.IsPlayer)
-                        {
-                            float distanceToHit = (damageHit.point - Center).magnitude;
-                            float baseDamage = 40f + (20f - distanceToHit.Clamp(0f, 4f));
-                            hitable.Hit(new()
-                            {
-                                Damage = baseDamage.Multiply(RNG.FloatRange(0.5f, 1f)),
-                                HitPoint = damageHit.point,
-                                Sender = this,
-                            });
-                        }
-                    }
-
-                    if (Physics.Raycast(explosiveRay, out RaycastHit launchHit, 7f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
-                    {
-                        float launchDistance = (launchHit.point - Center).magnitude;
-                        float lerp01 = launchDistance.MapTo01(4f, 12f).Clamp(0f, 1f);
-                        float calculatedForce = lerp01.MapFrom01(45f, 70f);
-
-                        launchHit.collider.AddImpactVelocity(new Impact(launchHit, explosiveRay, calculatedForce));
-                    }
-                }
-
-                IsAlive = false;
-                Destroy(gameObject);
-                return true;
-            }
-            return false;
-        }
-
         protected override void WhenThink(ITargetting target, IFumoUnit targetUnit, float dt)
         {
             if (jumpDisableTimer > 0f)
@@ -132,7 +80,7 @@ namespace FumoQuake
                 jumpDisableTimer -= dt;
             }
 
-            if (CollideWith(targetUnit))
+            if (Tewi_TryCollideWith(targetUnit))
             {
                 return;
             }

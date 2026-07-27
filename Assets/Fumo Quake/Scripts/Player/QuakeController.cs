@@ -131,6 +131,13 @@ namespace FumoQuake
         }
     }
     #endregion
+    #region Healthstate
+    public partial class QuakeController : IHealthState
+    {
+        public float HealthState_CurrentHealth => currentHealth;
+        public float HealthState_MaxHealth => MAX_HEALTH; 
+    }
+    #endregion
     public partial class QuakeController : MonoBehaviour, IFumoUnit, ITargetting, IQuakeHitable
     {
         static QuakeController instance;
@@ -142,14 +149,13 @@ namespace FumoQuake
         {
             get
             {
-                return StoredHealth ?? 100;
+                return StoredHealth ?? MAX_HEALTH;
             }
             set
             {
-                const float MAXHEALTH = 100f;
                 float delta = currentHealth;
-                currentHealth = value.Clamp(0f, MAXHEALTH);
-                StoredHealth = value.Clamp(0f, MAXHEALTH);
+                currentHealth = value.Clamp(0f, MAX_HEALTH);
+                StoredHealth = value.Clamp(0f, MAX_HEALTH);
                 delta = currentHealth - delta;
                 if (delta >= 1f)
                 {
@@ -158,6 +164,7 @@ namespace FumoQuake
 
             }
         }
+        const float MAX_HEALTH = 100f;
         float currentHealth;
         public static float? StoredHealth;
         [SerializeField] QuakeDude quakeMover;
@@ -180,10 +187,10 @@ namespace FumoQuake
         {
             StopHitflash();
             gameObject.SetActive(true);
-            currentHealth = StoredHealth ?? 100f;
+            currentHealth = StoredHealth ?? MAX_HEALTH;
             if (currentHealth <= 0)
             {
-                currentHealth = 100f;
+                currentHealth = MAX_HEALTH;
             }
             StoredHealth = currentHealth;
             IsAlive = true;
@@ -227,9 +234,21 @@ namespace FumoQuake
         }
 
         public bool TargetActive => IsAlive;
-
+        float groundKillTime;
         private void Update()
         {
+            if (quakeMover.ground.IsGrounded)
+            {
+                groundKillTime = Time.time + 5f;
+            }
+            else
+            {
+                if (Time.time >= groundKillTime &&
+                    !Physics.BoxCast(Center, new(1f, 1f, 1f), Vector3.down, Quaternion.identity, 50f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
+                {
+                    Kill();
+                }
+            }
             if (GeneralManager.IsPaused || SceneLoader.IsLoading)
                 return;
             IFumoUnit.Player = this;
@@ -260,6 +279,7 @@ namespace FumoQuake
         }
         private void OnEnable()
         {
+            groundKillTime = Time.time + 5f;
             IFumoUnit.Player = this;
             QuakeProjectileRenderer.Observer = transform;
             StateItemsFrame(true);
@@ -303,31 +323,39 @@ namespace FumoQuake
             hitSound.Play(CurrentPosition);
 
 
-            currentHealth = (currentHealth - processedDamage).Clamp(0f, 100f);
+            currentHealth = (currentHealth - processedDamage).Clamp(0f, MAX_HEALTH);
             StoredHealth = currentHealth;
 
             if (currentHealth <= 0f && !god)
             {
-                if (!QuakeSession.CurrentAs(out QuakeSession ses))
-                {
-                    SceneLoader.MainMenu();
-                }
-                ses.RestartLevel(new()
-                {
-                    Delay = 1.75f,
-                    ForceReload = true,
-                    PostUnloadPayload = () =>
-                    {
-                        PlayerWeaponsController.ResetWeaponState();
-                    }
-                });
-                IsAlive = false;
-                gameObject.SetActive(false);
+                Kill();
             }
             else
             {
                 IsAlive = true;
             }
+        }
+        void Kill()
+        {
+            if (!IsAlive)
+            {
+                return;
+            }
+            if (!QuakeSession.CurrentAs(out QuakeSession ses))
+            {
+                SceneLoader.MainMenu();
+            }
+            ses.RestartLevel(new()
+            {
+                Delay = 1.75f,
+                ForceReload = true,
+                PostUnloadPayload = () =>
+                {
+                    PlayerWeaponsController.ResetWeaponState();
+                }
+            });
+            IsAlive = false;
+            gameObject.SetActive(false);
         }
         private IEnumerator CO_HitflashIframes(float duration)
         {

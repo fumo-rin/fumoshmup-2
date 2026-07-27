@@ -15,5 +15,5 @@ MonoBehaviour:
   bpm: 193
   TrackName: STEAKS
   musicClip: {fileID: 8300000, guid: dc21333d1d4ec1b48b8fb9ce4816ef9d, type: 3}
-  clipVolume: 1
+  clipVolume: 0.8
   <dontReplaceSelf>k__BackingField: 1

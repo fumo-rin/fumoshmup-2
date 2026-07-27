@@ -15,5 +15,5 @@ MonoBehaviour:
   bpm: 207
   TrackName: metal (pipe (bomb))
   musicClip: {fileID: 8300000, guid: 5a25af44c19845c4c9a2b16832bba865, type: 3}
-  clipVolume: 1
+  clipVolume: 0.8
   <dontReplaceSelf>k__BackingField: 1
