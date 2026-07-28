@@ -1,5 +1,4 @@
 using rinCore;
-using Unity.VisualScripting.IonicZip;
 using UnityEngine;
 
 namespace FumoQuake
@@ -9,9 +8,9 @@ namespace FumoQuake
         public GameObject hitGameObject => gameObject;
         public void Hit(IQuakeHitable.HitPacket packet)
         {
-            if (packet.Sender is IFumoUnit unit && Tewi_TryCollideWith(unit, true))
+            if (packet.Sender is IFumoUnit unit && unit.IsAlive && Tewi_TryCollideWith(unit, true))
             {
-
+                unit.IsAlive = false;
             }
             HitProcessing.ProcessHit(this, new()
             {
@@ -39,7 +38,7 @@ namespace FumoQuake
         }
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.transform.TryGetComponent(out IFumoUnit unit) && Tewi_TryCollideWith(unit))
+            if (!collision.transform.TryGetComponent(out PipebombDemon _) && collision.transform.TryGetComponent(out IFumoUnit unit) && Tewi_TryCollideWith(unit))
             {
 
             }
@@ -55,7 +54,9 @@ namespace FumoQuake
                 }
                 extraTick = Time.time + 0.5f;
             }
-            if (Tewi_TryCollideWith(targetUnit))
+            if (Tewi_TryCollideWith(targetUnit, target != null && target.TargetActive
+                && Center.SquareDistanceToLessThan(targetUnit.Center.Z(target.Center.z), 0.5f)
+                && Center.SquareDistanceToLessThan(target.Center, 3f)))
             {
                 return;
             }

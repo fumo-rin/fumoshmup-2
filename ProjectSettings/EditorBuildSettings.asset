@@ -21,20 +21,32 @@ EditorBuildSettings:
     path: Assets/Fumo Quake/Scenes/Quake/Main/Quake Cutscene.unity
     guid: 509711b6d19967541b89b49a8c1a4808
   - enabled: 1
-    path: Assets/Fumo Quake/Scenes/Quake/Test Quake World.unity
+    path: Assets/Fumo Quake/Scenes/Quake/Episode 1/Test Quake World.unity
     guid: eafd6e59a333b6b418784517c1eaa4f6
   - enabled: 1
     path: Assets/Fumo Quake/Scenes/Quake/Quake Unpacker.unity
     guid: 01d5e04d93e5fee408263befae74bb07
   - enabled: 1
-    path: Assets/Fumo Quake/Scenes/Quake/ToweryQuake.unity
+    path: Assets/Fumo Quake/Scenes/Quake/Episode 1/ToweryQuake.unity
     guid: 6e9706b2635d4a04e862e76e0b2d1808
   - enabled: 1
-    path: Assets/Fumo Quake/Scenes/Quake/Quake Worldcup Horde.unity
+    path: Assets/Fumo Quake/Scenes/Quake/Episode 1/Quake Worldcup Horde.unity
     guid: 93ba4878677dfe54f9cc33c8dba747dd
   - enabled: 1
-    path: Assets/Fumo Quake/Scenes/Quake/Yuri Forest.unity
+    path: Assets/Fumo Quake/Scenes/Quake/Episode 1/Yuri Forest.unity
     guid: 18e4cfa202427c240ab324d96a8092fc
+  - enabled: 1
+    path: Assets/Fumo Quake/Scenes/Quake/Episode 1/Cirno Ice Dungeon.unity
+    guid: f1c52705618bf9e4aa79162f33109c7f
+  - enabled: 1
+    path: Assets/Fumo Quake/Scenes/Quake/Episode 1/Tewi Arena.unity
+    guid: 6b29c2097735dc44ab1e72106d7f5e05
+  - enabled: 1
+    path: Assets/Fumo Quake/Scenes/Quake/Episode 1/LOS TESTING.unity
+    guid: 27807274f37e7b34d9ac21e216189a6e
+  - enabled: 1
+    path: Assets/Fumo Quake/Scenes/Quake/Episode 1/Trenchbroomish Testing.unity
+    guid: 48bfe435bcf8ef14dbd848ab04fa9df3
   - enabled: 1
     path: Assets/Fumo Quake/Scenes/Quake/Main/Quake Level Selector.unity
     guid: 85b93bc33b50c5a47b60ce23fb99c97c
@@ -44,15 +56,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Fumo Quake/Scenes/Quake/Main/Quake Winner.unity
     guid: 3e47aa14c1565d54694d35a69f0ad1de
-  - enabled: 1
-    path: Assets/Fumo Quake/Scenes/Quake/Testing/LOS TESTING.unity
-    guid: 27807274f37e7b34d9ac21e216189a6e
-  - enabled: 1
-    path: Assets/Fumo Quake/Scenes/Quake/Testing/Tewi Arena.unity
-    guid: 6b29c2097735dc44ab1e72106d7f5e05
-  - enabled: 1
-    path: Assets/Fumo Quake/Scenes/Quake/Testing/Trenchbroomish Testing.unity
-    guid: 48bfe435bcf8ef14dbd848ab04fa9df3
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 110e20d7a6ff8ca4b8458fb1fd21f51c, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: 6f979259336e6f24eb17e5e584e7477e, type: 2}

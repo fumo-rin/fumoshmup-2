@@ -2082,8 +2082,8 @@
                 "_group": 4,
                 "_conflicted": false,
                 "_keyCombination": {
-                    "_modifiers": 1,
-                    "_keyCode": 117
+                    "_modifiers": 0,
+                    "_keyCode": 114
                 }
             },
             "_pinRotateAStepYCCW": {

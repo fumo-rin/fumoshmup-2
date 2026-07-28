@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89470abe1f8faed45aee038125f67f9d, type: 3}
-  m_Name: ETM0
+  m_Name: E1M5#Cirno's Ice Facility
   m_EditorClassIdentifier: rinCore::rinCore.ScenePairSO
-  IncludeInBuild: 0
+  IncludeInBuild: 1
   mainScene:
-    sceneAsset: {fileID: 102900000, guid: 27807274f37e7b34d9ac21e216189a6e, type: 3}
-    scenePath: Assets/Fumo Quake/Scenes/Quake/Testing/LOS TESTING.unity
+    sceneAsset: {fileID: 102900000, guid: f1c52705618bf9e4aa79162f33109c7f, type: 3}
+    scenePath: Assets/Fumo Quake/Scenes/Quake/Episode 1/Cirno Ice Dungeon.unity
   additiveScenes:
   - sceneAsset: {fileID: 102900000, guid: 01d5e04d93e5fee408263befae74bb07, type: 3}
     scenePath: Assets/Fumo Quake/Scenes/Quake/Quake Unpacker.unity
