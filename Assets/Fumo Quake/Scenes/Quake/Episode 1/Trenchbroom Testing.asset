@@ -15,7 +15,7 @@ MonoBehaviour:
   IncludeInBuild: 0
   mainScene:
     sceneAsset: {fileID: 102900000, guid: 48bfe435bcf8ef14dbd848ab04fa9df3, type: 3}
-    scenePath: Assets/Fumo Quake/Scenes/Quake/E2/Trenchbroomish Testing.unity
+    scenePath: Assets/Fumo Quake/Scenes/Quake/Episode 1/Trenchbroomish Testing.unity
   additiveScenes:
   - sceneAsset: {fileID: 102900000, guid: 01d5e04d93e5fee408263befae74bb07, type: 3}
     scenePath: Assets/Fumo Quake/Scenes/Quake/Quake Unpacker.unity

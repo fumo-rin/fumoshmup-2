@@ -15,7 +15,7 @@ MonoBehaviour:
   IncludeInBuild: 1
   mainScene:
     sceneAsset: {fileID: 102900000, guid: 6e9706b2635d4a04e862e76e0b2d1808, type: 3}
-    scenePath: Assets/Fumo Quake/Scenes/Quake/ToweryQuake.unity
+    scenePath: Assets/Fumo Quake/Scenes/Quake/Episode 1/ToweryQuake.unity
   additiveScenes:
   - sceneAsset: {fileID: 102900000, guid: 01d5e04d93e5fee408263befae74bb07, type: 3}
     scenePath: Assets/Fumo Quake/Scenes/Quake/Quake Unpacker.unity

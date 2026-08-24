@@ -664,7 +664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35ddc5ec895cd8746a20e94dbe03f99c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: rinCore::rinCore.StageMusic
-  music: {fileID: 11400000, guid: 60594d6617ef2734da96dc35a461e7b3, type: 2}
+  music: {fileID: 11400000, guid: dd58120e280910a4c9b0032218659ee9, type: 2}
 --- !u!4 &99402389
 Transform:
   m_ObjectHideFlags: 0

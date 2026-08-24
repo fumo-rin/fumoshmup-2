@@ -15,7 +15,7 @@ MonoBehaviour:
   IncludeInBuild: 1
   mainScene:
     sceneAsset: {fileID: 102900000, guid: 93ba4878677dfe54f9cc33c8dba747dd, type: 3}
-    scenePath: Assets/Fumo Quake/Scenes/Quake/Quake Worldcup Horde.unity
+    scenePath: Assets/Fumo Quake/Scenes/Quake/Episode 1/Quake Worldcup Horde.unity
   additiveScenes:
   - sceneAsset: {fileID: 102900000, guid: 01d5e04d93e5fee408263befae74bb07, type: 3}
     scenePath: Assets/Fumo Quake/Scenes/Quake/Quake Unpacker.unity
