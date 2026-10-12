@@ -123,7 +123,7 @@ namespace FumoShmup2
 
                 const float comboMod = 16f / 100f;
                 int comboSliderNumber = (ComboValue100 % 100f).Multiply(comboMod).ToInt();
-                comboSlider.SetValuesInt(ComboValue100 < 1f ? 0 : comboSliderNumber, 16, 0);
+                comboSlider.SetValuesInt_Nullsafe(ComboValue100 < 1f ? 0 : comboSliderNumber, 16, 0);
                 comboText.text = VisibleCombo <= 1 ? "" : VisibleCombo.ToString() + "x";
 
                 if (Spending)

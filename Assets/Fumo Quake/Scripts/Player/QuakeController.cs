@@ -135,7 +135,7 @@ namespace FumoQuake
     public partial class QuakeController : IHealthState
     {
         public float HealthState_CurrentHealth => currentHealth;
-        public float HealthState_MaxHealth => MAX_HEALTH; 
+        public float HealthState_MaxHealth => MAX_HEALTH;
     }
     #endregion
     public partial class QuakeController : MonoBehaviour, IFumoUnit, ITargetting, IQuakeHitable
@@ -179,7 +179,7 @@ namespace FumoQuake
         }
         private void Start()
         {
-            SceneLoader.WhenFinishedLoadingAdditives += FetchSpawnPoint;
+            RinBus.Bind<Sceneloader_LoadingAdditives_Finished>(WhenSceneLoad);
             ReinitializePlayerState();
             StartFollowItems();
         }
@@ -195,7 +195,7 @@ namespace FumoQuake
             StoredHealth = currentHealth;
             IsAlive = true;
         }
-        private void FetchSpawnPoint()
+        private void WhenSceneLoad(Sceneloader_LoadingAdditives_Finished ev)
         {
             if (QU_SpawnPoint.LoadSpawnpoint(out QU_SpawnPoint selection))
             {
@@ -204,7 +204,7 @@ namespace FumoQuake
         }
         private void OnDestroy()
         {
-            SceneLoader.WhenFinishedLoadingAdditives -= FetchSpawnPoint;
+            RinBus.Release<Sceneloader_LoadingAdditives_Finished>(WhenSceneLoad);
         }
         public IEnumerable<Transform> RandomOrderedTargets
         {
@@ -293,7 +293,7 @@ namespace FumoQuake
 
         Coroutine HitFlash;
         [SerializeField] Volume hitVolume;
-        [SerializeField] ACWrapper hitSound;
+        [SerializeField] ACWrapper hitSound, killSound;
         [SerializeField] ScenePairSO mainMenu;
         float iframeHighestDamage;
         void StopHitflash()
@@ -305,7 +305,12 @@ namespace FumoQuake
         {
             bool god = false;
             if (packet.Damage <= 0f || (packet.Damage <= iframeHighestDamage && HitFlash != null))
+            {
+                hitVolume.weight = 1f;
+                HitFlash = StartCoroutine(CO_HitflashIframes(0.35f));
+                hitSound.Play(CurrentPosition);
                 return;
+            }
 
             float processedDamage = 0f;
             if (HitFlash == null)
@@ -328,6 +333,7 @@ namespace FumoQuake
 
             if (currentHealth <= 0f && !god)
             {
+                killSound.Play(CurrentPosition);
                 Kill();
             }
             else
@@ -362,7 +368,7 @@ namespace FumoQuake
             float remaining = duration;
             while (remaining > 0f)
             {
-                hitVolume.weight = remaining / duration;
+                hitVolume.weight = (remaining / duration).Squared();
                 remaining -= Time.deltaTime;
                 yield return null;
             }

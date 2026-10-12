@@ -101,11 +101,11 @@ namespace FumoShmup2
                 });
             }
         }
-        private void OnDisable()
+        protected override void WhenDisable()
         {
             ForceRemoveAliveEnemy(this);
         }
-        private void OnEnable()
+        protected override void WhenEnable()
         {
             runningAttackMovement = null;
         }
@@ -113,9 +113,9 @@ namespace FumoShmup2
         {
 
         }
-        protected override void WhenUpdate()
+        protected override void WhenUpdate(ExternalMovement movement)
         {
-
+            
         }
     }
 }

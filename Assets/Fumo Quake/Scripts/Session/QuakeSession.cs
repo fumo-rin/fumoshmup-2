@@ -25,7 +25,7 @@ namespace FumoQuake
             return hasItem;
         }
 
-        public static bool AwardItem(QuakeKeyItems item)
+        public static bool AwardItem(QuakeKeyItems item, Vector2 position)
         {
             if (!CurrentAs(out QuakeSession ses) || ses.levelItems == null) return false;
 
@@ -43,6 +43,13 @@ namespace FumoQuake
                 case QuakeKeyItems.QuadDamage:
                     success = true;
                     QuakeTextInfoUI.AddText("Gots Chirumiru! 9x Damage BABYYYYYYYYYYYYYYYYYYYYYY");
+                    new Events_Quake.ChiruMiruDuration()
+                    {
+                        callerPosition = position,
+                        duration = 15f,
+                        startTime = Time.time
+                    }.Publish();
+
                     quadDamageEndTime = Time.time + 15f;
                     break;
                 default:

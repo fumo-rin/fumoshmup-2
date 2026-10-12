@@ -18,7 +18,7 @@ namespace FumoQuake
         }
         protected override bool WhenTriggerEnter(Collider other, IFumoUnit unit)
         {
-            return QuakeSession.AwardItem(SelectedItem);
+            return QuakeSession.AwardItem(SelectedItem, other.bounds.center);
         }
     }
 }

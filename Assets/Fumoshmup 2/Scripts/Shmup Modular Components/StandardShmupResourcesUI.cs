@@ -16,8 +16,8 @@ namespace FumoShmup2
                 return;
             int lives = sess.GetInt(ShmupSession.keys.CurrentLives);
             int bombs = sess.GetInt(ShmupSession.keys.CurrentBombs);
-            playerLivesSlider.SetValuesInt(lives, maxLives, 0);
-            playerBombsSlider.SetValuesInt(bombs, maxBombs, 0);
+            playerLivesSlider.SetValuesInt_Nullsafe(lives, maxLives, 0);
+            playerBombsSlider.SetValuesInt_Nullsafe(bombs, maxBombs, 0);
         }
         private void Start()
         {

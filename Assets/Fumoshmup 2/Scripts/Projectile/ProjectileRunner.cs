@@ -281,7 +281,7 @@ namespace FumoShmup2
     public partial class ProjectileRunner
     {
         [SerializeField] ParticleSystem backdropRenderer;
-        static List<Vector2> backdropIteration;
+        static List<IParticlePosition> backdropIteration;
         private void RenderBackdrop(List<Projectile> projectiles)
         {
             Projectile iteration;
@@ -296,9 +296,9 @@ namespace FumoShmup2
                 }
                 if (iteration.Faction == ProjectileFaction.Player)
                     continue;
-                backdropIteration.Add(iteration.Position);
+                backdropIteration.Add(iteration);
             }
-            backdropRenderer.RenderAnimatedPoints(backdropIteration, 1f, true);
+            backdropRenderer.FC_RenderAnimatedPointsFrame(backdropIteration, 1f, true);
         }
     }
     #endregion
@@ -331,7 +331,7 @@ namespace FumoShmup2
             {
                 return;
             }
-            instance.FlareRenderer.EmitSingleParticleCached(position, velocity, 0f, color);
+            instance.FlareRenderer.FC_EmitSingleParticleCached(position, velocity, 0f, color);
         }
 
         public static int BulletCount => instance == null ? 0 : instance.projectiles.Count;

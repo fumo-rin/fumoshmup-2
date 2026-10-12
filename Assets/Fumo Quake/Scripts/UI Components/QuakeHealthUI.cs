@@ -23,7 +23,7 @@ namespace FumoQuake
         }
         private void LateUpdate()
         {
-            healthSlider.SetValuesInt(Health20Step, 20, 0, false);
+            healthSlider.SetValuesInt_Nullsafe(Health20Step, 20, 0, false);
         }
     }
 }

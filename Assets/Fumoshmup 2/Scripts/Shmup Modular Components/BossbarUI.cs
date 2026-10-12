@@ -68,7 +68,7 @@ namespace FumoShmup2
             if (unit == null)
             {
                 BossNameText.text = "";
-                BossHealthbar.SetValues(0f, 1f, 0f);
+                BossHealthbar.SetValues_Nullsafe(0f, 1f, 0f);
                 BossHealthText.text = "";
                 return false;
             }
@@ -82,7 +82,7 @@ namespace FumoShmup2
             BossNameText.text = bossName;
             if (unit is EnemyUnit e)
             {
-                BossHealthbar.SetValues(e.HealthPercent100, 100f, 0f);
+                BossHealthbar.SetValues_Nullsafe(e.HealthPercent100, 100f, 0f);
                 SetupNotches(e);
                 DamageText(e);
                 void DamageText(EnemyUnit e)

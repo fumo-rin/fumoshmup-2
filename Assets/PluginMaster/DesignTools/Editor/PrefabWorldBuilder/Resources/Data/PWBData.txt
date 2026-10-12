@@ -80,7 +80,7 @@
             2,
             39,
             2,
-            1,
+            3,
             1,
             18
         ]
@@ -91,7 +91,7 @@
         "_viewList": false,
         "_showTabsInMultipleRows": false,
         "_iconSize": 64,
-        "_selectedPaletteId": -8584172960077427374
+        "_selectedPaletteId": -8584172960226430086
     },
     "_floorManager": {
         "_profileKeys": [
@@ -3916,7 +3916,7 @@
             "_origin": {
                 "x": -43.0099983215332,
                 "y": 2.009999990463257,
-                "z": -5.847434997558594
+                "z": -28.711320877075197
             },
             "_rotation": {
                 "x": 0.0,

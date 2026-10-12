@@ -13,7 +13,7 @@ namespace FumoQuake
         Player = 5,
         Enemy = 1,
     }
-    public class QuakeProjectile
+    public class QuakeProjectile : IParticlePosition
     {
         public enum HitActionResult
         {
@@ -52,6 +52,9 @@ namespace FumoQuake
             HitPoint = FinalizedPosition,
             Sender = Sender
         };
+
+        public Vector3 ParticlePosition => FinalizedPosition;
+
         public struct SingleProjectilePacket
         {
             public Vector3 Origin;
@@ -173,7 +176,7 @@ namespace FumoQuake
             return false;
         }
         Vector3 observerPosition;
-        List<Vector3> particlePositions = new();
+        List<IParticlePosition> particlePositions = new();
         private void Update()
         {
             if (Observer != null) observerPosition = Observer.transform.position;
@@ -203,10 +206,10 @@ namespace FumoQuake
                             hit.Hit(proj.HitPacket);
                         }
                     }
-                    particlePositions.Add(proj.FinalizedPosition);
+                    particlePositions.Add(proj);
                 }
                 ParticleSystem ps = particleIndex[i];
-                ps.RenderAnimatedPoints_3D(particlePositions, 2f, true);
+                ps.FC_RenderAnimatedPointsFrame_3D(particlePositions, 2f, true);
 
             }
         }

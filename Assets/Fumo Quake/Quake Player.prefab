@@ -203,7 +203,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 833
   hitVolume: {fileID: 4391357742412293561}
-  hitSound: {fileID: 11400000, guid: 9d9984bb7f8437c47b2358c6a9068c05, type: 2}
+  hitSound: {fileID: 11400000, guid: 1b1990903df54e0449c8ea1a57340a8a, type: 2}
+  killSound: {fileID: 11400000, guid: e6aad5532aa24674a8c2edf51173e5ec, type: 2}
   mainMenu: {fileID: 11400000, guid: 1d5053d31d0cd634b986de274eb561ef, type: 2}
 --- !u!114 &6740695995016855003
 MonoBehaviour:
@@ -234,6 +235,7 @@ MonoBehaviour:
       Friction: 6
       StopSpeed: 2.5
       AirAcceleration: 2
+      AirWishSpeed: 8
       MaxOverspeed: 12
   rb: {fileID: 3215627415013197841}
   cameraPivot: {fileID: 8548529468576564111}
@@ -887,8 +889,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4631322452301112383}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.3499999, z: -0.010000229}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.3500004, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

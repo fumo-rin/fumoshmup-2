@@ -34,7 +34,7 @@ namespace FumoShmup2
                 while (tracked != null && tracked.IsAlive)
                 {
                     ShmupWorldspace.MapWorldspaceToNormalized(tracked.CurrentPosition, out Vector2 space, true);
-                    s.SetValues(space.x, 1f, 0f);
+                    s.SetValues_Nullsafe(space.x, 1f, 0f);
                     yield return null;
                 }
                 Destroy(s.gameObject);

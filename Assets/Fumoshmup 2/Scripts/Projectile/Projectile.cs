@@ -609,7 +609,7 @@ namespace FumoShmup2
         }
     }
     #endregion
-    public partial class Projectile
+    public partial class Projectile : IParticlePosition
     {
         public struct ProjectileDamage
         {
@@ -697,6 +697,9 @@ namespace FumoShmup2
         }
         public ProjectileDefineSO data;
         public float HalfLength => data == null ? 0f : data.HalfLength;
+
+        public Vector3 ParticlePosition => Position;
+
         public void SetActive(bool state)
         {
             this.IsActive = state;

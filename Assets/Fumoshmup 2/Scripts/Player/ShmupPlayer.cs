@@ -47,6 +47,9 @@ public partial class ShmupPlayer : IHit
         }
     }
     public float IframesDurationLeft => (iframesEndTime - Time.time).Max(0f);
+
+    public override Cardinal Facing => Cardinal.Up;
+
     public void SendHit(IHit.HitPacket packet, out float damageDealt)
     {
         damageDealt = 0f;
@@ -194,6 +197,20 @@ public partial class ShmupPlayer : IHit
             currentHit = null;
         }
     }
+
+    public override bool WhenProjectileHit(rinCore.Bullet.Projectile.HitPacket packet, out float processedDealtDamage)
+    {
+        SendHit(new IHit.HitPacket()
+        {
+            damagePacket = new()
+            {
+                BaseDamage = packet.Damage,
+                Owner = packet.Sender as ShmupUnit,
+            },
+            position = packet.Point
+        }, out processedDealtDamage);
+        return processedDealtDamage > 0f;
+    }
 }
 #endregion
 public partial class ShmupPlayer : ShmupUnit
@@ -244,8 +261,21 @@ public partial class ShmupPlayer : ShmupUnit
     {
         base.WhenStart();
     }
-    protected override void WhenUpdate()
+
+
+    protected override void WhenDisable()
     {
+
+    }
+
+    protected override void WhenEnable()
+    {
+
+    }
+
+    protected override void WhenUpdate(ExternalMovement movement)
+    {
+
         if (GeneralManager.IsPaused)
             return;
         void MoveLoop()

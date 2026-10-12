@@ -32,20 +32,20 @@ namespace FumoShmup2
         internal static readonly List<PointItem> items = new();
         public static int ItemCount => items == null ? 0 : items.Count;
         [SerializeField] ParticleSystem itemParticle, cashInRenderer;
-        internal static readonly List<Vector2> pointItemPositions = new(50000);
-        internal static readonly List<Vector2> cashInItemPositions = new(50000);
-        internal static List<Vector2> PointItems => GetPointItemPositions();
-        internal static List<Vector2> ChargedPointItems => GetCashInItemPositions();
-        private static List<Vector2> GetPointItemPositions()
+        internal static readonly List<IParticlePosition> pointItemPositions = new(50000);
+        internal static readonly List<IParticlePosition> cashInItemPositions = new(50000);
+        internal static List<IParticlePosition> PointItems => GetPointItemPositions();
+        internal static List<IParticlePosition> ChargedPointItems => GetCashInItemPositions();
+        private static List<IParticlePosition> GetPointItemPositions()
         {
             pointItemPositions.Clear();
             for (int i = 0; i < items.Count; i++)
             {
-                pointItemPositions.Add(items[i].Position);
+                pointItemPositions.Add(items[i]);
             }
             return pointItemPositions;
         }
-        private static List<Vector2> GetCashInItemPositions()
+        private static List<IParticlePosition> GetCashInItemPositions()
         {
             cashInItemPositions.Clear();
             for (int i = 0; i < items.Count; i++)
@@ -53,7 +53,7 @@ namespace FumoShmup2
                 var item = items[i];
                 if (!item.scoringCashIn)
                     continue;
-                cashInItemPositions.Add(item.Position);
+                cashInItemPositions.Add(item);
             }
             return cashInItemPositions;
         }
@@ -124,8 +124,8 @@ namespace FumoShmup2
                     continue;
                 }
             }
-            itemParticle.RenderAnimatedPoints(PointItems, 3f, false);
-            cashInRenderer.RenderAnimatedPoints(ChargedPointItems, 3f, false);
+            itemParticle.FC_RenderAnimatedPointsFrame(PointItems, 3f, false);
+            cashInRenderer.FC_RenderAnimatedPointsFrame(ChargedPointItems, 3f, false);
             focusWasHeld = ShmupInput.Focus;
         }
         private static void Create(Vector2 worldPosition, bool scoringCashIn, double scoreValue)
@@ -142,7 +142,7 @@ namespace FumoShmup2
             pointItemPositions.Clear();
         }
     }
-    public class PointItem
+    public class PointItem : IParticlePosition
     {
         private static readonly float GravityStrength = -5.5f;
         private static readonly float MaxFallSpeed = -5.5f;
@@ -151,6 +151,9 @@ namespace FumoShmup2
         public float minimumPickupTime;
         public Vector2 Position { get; set; }
         public Vector2 Velocity { get; private set; }
+
+        public Vector3 ParticlePosition => Position;
+
         public PointItem(Vector2 position)
         {
             this.Position = position;

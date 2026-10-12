@@ -5,6 +5,7 @@ using System.Collections;
 using System.Linq;
 using UnityEditor;
 using System;
+using TMPro;
 
 namespace FumoShmup2
 {
@@ -106,7 +107,7 @@ namespace FumoShmup2
                 {
                     yield return delay.WaitForSeconds();
                     Vector2 rng = (RNG.SeededRandomVector2.normalized * RNG.FloatRange(randomRadiusRange.x, randomRadiusRange.y));
-                    ps.PlayCachedOnce(position + rng);
+                    ps.FC_deprecated_PlayCachedOnce(position + rng);
                     deathSound.Play(position + rng);
                 }
                 CO_Play(e.CurrentPosition).RunRoutine();
@@ -1068,6 +1069,11 @@ namespace FumoShmup2
             IframesEndTime = duration + Time.time;
         }
         public override bool HasIframes => IframesEndTime > Time.time && IframesEndTime > 0f;
+
+        public override Cardinal Facing => throw new NotImplementedException();
+
+        public override Vector2 CurrentPosition => base.CurrentPosition;
+
         protected override void WhenAwake()
         {
             bool hasPhases = HasPhases;
@@ -1106,15 +1112,6 @@ namespace FumoShmup2
                 damageCap = new(4f, 1f / 20f);
                 StallAttackLoop(0.9f, null);
             }
-        }
-        private void OnDisable()
-        {
-            ClearAllActions();
-            StopAllCoroutines();
-            CalculateAlive();
-        }
-        private void OnEnable()
-        {
         }
         private void LateUpdate()
         {
@@ -1174,18 +1171,46 @@ namespace FumoShmup2
             }
             return isAlive;
         }
-        protected override void WhenUpdate()
+        protected override void WhenUpdate(ExternalMovement movement)
         {
             if (damageCap != null)
             {
                 damageCap.TickEMA();
             }
-            base.WhenUpdate();
+
+            base.WhenUpdate(movement);
             AttacksStarterLoop();
         }
         private void OnValidate()
         {
             ValidatePhaseLoops();
+        }
+
+        public override bool WhenProjectileHit(rinCore.Bullet.Projectile.HitPacket packet, out float processedDealtDamage)
+        {
+            IHit.HitPacket p = new()
+            {
+                damagePacket = new()
+                {
+                    BaseDamage = packet.Damage,
+                    Owner = packet.Sender as ShmupUnit,
+                }
+            };
+            SendHit(p, out processedDealtDamage);
+            return processedDealtDamage > 0f;
+        }
+
+        protected override void WhenDisable()
+        {
+
+            ClearAllActions();
+            StopAllCoroutines();
+            CalculateAlive();
+        }
+
+        protected override void WhenEnable()
+        {
+
         }
     }
 }

@@ -194,7 +194,7 @@ namespace FumoShmup2
         }
         private void SetBossSkip(float value)
         {
-            bossWarp.SetValues(value, 9, 0);
+            bossWarp.SetValues_Nullsafe(value, 9, 0);
             ShmupPracticeMode.SetBossSkip(value.Floor().ToInt());
             bossWarpText.text = "Boss Warp : " + value.ToInt().ToString();
         }

@@ -18,6 +18,7 @@ MonoBehaviour:
   unloadPreventionScene:
     sceneAsset: {fileID: 102900000, guid: e38101d94b9df614399b7cf48d4f256a, type: 3}
     scenePath: Assets/Fumo Quake/Scenes/Quake/Quake Event System Bootstrapper.unity
+  absoluteMainMenu: {fileID: 11400000, guid: 1d5053d31d0cd634b986de274eb561ef, type: 2}
   editorStartingScene: {fileID: 11400000, guid: 1d5053d31d0cd634b986de274eb561ef, type: 2}
   buildStartingScene: {fileID: 11400000, guid: e9c99deb955ffb447bed46abfe484e4b, type: 2}
   loadStartingSceneInBuild: 1

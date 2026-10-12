@@ -74,7 +74,7 @@ namespace FumoQuake
             {
                 if (runner.GetRecoilHandler(out PlayerWeaponsController recoil))
                 {
-                    recoil.AddRecoil(18f);
+                    recoil.AddRecoil(35f);
                 }
                 GunSound.Play(ray.origin);
                 float pelletDamage = shotgun.damageTotal / shotgun.pellets.Max(1);
@@ -166,7 +166,7 @@ namespace FumoQuake
             {
                 if (runner.GetRecoilHandler(out PlayerWeaponsController recoil))
                 {
-                    recoil.AddRecoil(1.9f);
+                    recoil.AddRecoil(3.9f);
                 }
                 SetNewLockTimes(ref weaponLock);
                 GunSound.Play(ray.origin);
@@ -260,7 +260,7 @@ namespace FumoQuake
             {
                 if (runner.GetRecoilHandler(out PlayerWeaponsController recoil))
                 {
-                    recoil.AddRecoil(2.25f);
+                    recoil.AddRecoil(5.25f);
                 }
                 GunSound.Play(ray.origin);
                 Ray r = RinHelper.RayDot(ray, 0.00035f);
@@ -347,7 +347,7 @@ namespace FumoQuake
             {
                 if (runner.GetRecoilHandler(out PlayerWeaponsController recoil))
                 {
-                    recoil.AddRecoil(11f);
+                    recoil.AddRecoil(16f);
                 }
                 SetNewLockTimes(ref weaponLock);
                 GunSound.Play(ray.origin);
@@ -544,7 +544,7 @@ namespace FumoQuake
                 GunSound.Play(ray.origin);
                 if (runner.GetRecoilHandler(out PlayerWeaponsController recoil))
                 {
-                    recoil.AddRecoil(32f);
+                    recoil.AddRecoil(45f);
                 }
                 Ray r = ray;
                 Vector3 endPoint = r.origin + r.direction.ScaleToMagnitude(50f);
